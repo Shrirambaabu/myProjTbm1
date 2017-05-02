@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
  * Created by Admin on 5/2/2017.
  */
 
-public class ForgetPassword  extends AppCompatActivity {
+public class ForgetPasswordActivity extends AppCompatActivity {
 
 
     @Override

@@ -14,15 +14,4 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-    public void forgetPassword(View view) {
-        Intent intent =new Intent(MainActivity.this,ForgetPassword.class);
-    }
-
-    public void login(View view) {
-        Intent intent = new Intent(MainActivity.this,Login.class);
-    }
-
-    public void register(View view) {
-        Intent intent = new Intent(MainActivity.this,Register.class);
-    }
 }
