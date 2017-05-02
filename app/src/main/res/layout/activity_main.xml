@@ -95,7 +95,8 @@
             android:layout_marginTop="@dimen/margin_4dp"
             android:text="@string/forgot_password"
             android:textColor="@color/colorAccent"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:onClick="forgetPassword"/>
 
         <Button
             android:id="@+id/signInButton"
@@ -109,7 +110,8 @@
             android:background="@drawable/ripple_effect"
             android:text="@string/login"
             android:textColor="@color/colorAccent"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:onClick="login"/>
 
         <LinearLayout
             android:id="@+id/LinearLayoutRegister"
@@ -137,7 +139,8 @@
                 android:background="@drawable/ripple_effect"
                 android:text="@string/register"
                 android:textColor="@color/colorAccent"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:onClick="register"/>
 
         </LinearLayout>
 
