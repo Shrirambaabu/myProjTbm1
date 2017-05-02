@@ -14,6 +14,6 @@
     <string name="registerButton">Register</string>
 
     <string name="submit">Submit</string>
-    <string name="password_Hint">PASSWORD WILL BE SENT TO YOUR EMAIL ADDRESS</string>
+    <string name="password_Hint">Password will be sent to your Email Address</string>
     <string name="check_box_message">I\'m Interested to Receive Interview Calls</string>
 </resources>

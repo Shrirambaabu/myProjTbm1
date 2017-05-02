@@ -9,134 +9,144 @@
     tools:context="blueangels.com.layouts.MainActivity">
 
     <ImageView
-        android:layout_alignParentTop="true"
         android:id="@+id/imageViewLogo"
         android:layout_width="140dp"
         android:layout_height="140dp"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="18dp"
         app:srcCompat="@drawable/logo" />
 
     <LinearLayout
-        android:id="@+id/linearLayoutEmail"
+        android:id="@+id/LinearLayoutContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/imageViewLogo"
-        android:orientation="horizontal"
-        android:weightSum="8">
-
-        <ImageView
-            android:id="@+id/imageViewEmail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="18dp"
-            android:layout_weight="2"
-            app:srcCompat="@drawable/ic_mail_outline_white_48dp" />
-
-        <android.support.v7.widget.AppCompatEditText
-            android:id="@+id/editTextEmail"
-            android:layout_width="250dp"
-            android:layout_height="48dp"
-            android:layout_marginEnd="18dp"
-            android:layout_weight="6"
-            android:hint="@string/emailHint"
-            android:inputType="textEmailAddress"
-            android:textColor="@color/colorAccent"
-            app:backgroundTint="@color/colorAccent"
-            android:textColorHint="@color/colorAccent" />
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:id="@+id/LinearLayoutPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="8"
-        android:layout_centerVertical="true"
-        android:layout_alignParentStart="true">
-
-        <ImageView
-            android:id="@+id/imageViewPassword"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="18dp"
-            android:layout_weight="2"
-            app:srcCompat="@drawable/ic_lock_outline_white_48dp" />
-
-        <android.support.v7.widget.AppCompatEditText
-            android:id="@+id/editTextPassword"
-            android:layout_width="250dp"
-            android:layout_height="48dp"
-            android:hint="@string/hint_password"
-            android:inputType="textPassword"
-            android:layout_marginEnd="18dp"
-            android:layout_weight="6"
-            app:backgroundTint="@color/colorAccent"
-            android:textColor="@color/colorAccent"
-            android:textColorHint="@color/colorAccent" />
-
-    </LinearLayout>
-
-    <TextView
-        android:layout_below="@+id/LinearLayoutPassword"
-        android:id="@+id/forgotPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
-        android:layout_marginEnd="18dp"
-        android:layout_marginStart="72dp"
-        android:text="@string/forgot_password"
-        android:textColor="@color/colorAccent"
-        android:textSize="20sp"/>
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_marginTop="18dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginEnd="72dp"
-        android:layout_marginStart="72dp"
-        android:text="@string/login"
-        android:textSize="18sp"
-        android:id="@+id/signInButton"
-        android:textColor="@color/colorAccent"
+        android:layout_marginStart="@dimen/margin_16"
+        android:layout_marginEnd="@dimen/margin_16"
         android:background="@drawable/ripple_effect"
-        android:layout_below="@id/forgotPassword"/>
+        android:layout_below="@id/imageViewLogo"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/linearLayoutEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/margin_16"
+            android:weightSum="8">
+
+            <ImageView
+                android:id="@+id/imageViewEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="18dp"
+                android:layout_weight="2"
+                app:srcCompat="@drawable/ic_mail_outline_white_48dp" />
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/editTextEmail"
+                android:layout_width="250dp"
+                android:layout_height="48dp"
+                android:layout_marginEnd="18dp"
+                android:layout_weight="6"
+                android:hint="@string/emailHint"
+                android:inputType="textEmailAddress"
+                android:textColor="@color/colorAccent"
+                android:textColorHint="@color/colorAccent"
+                app:backgroundTint="@color/colorAccent" />
+
+        </LinearLayout>
 
 
-    <LinearLayout
-        android:id="@+id/LinearLayoutRegister"
-        android:layout_below="@+id/signInButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="18dp"
-        android:gravity="bottom"
-        android:layout_alignParentBottom="true"
-        android:weightSum="6">
+        <LinearLayout
+            android:id="@+id/LinearLayoutPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/margin_16"
+            android:weightSum="8">
+
+            <ImageView
+                android:id="@+id/imageViewPassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="18dp"
+                android:layout_weight="2"
+                app:srcCompat="@drawable/ic_lock_outline_white_48dp" />
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/editTextPassword"
+                android:layout_width="250dp"
+                android:layout_height="48dp"
+                android:layout_marginEnd="18dp"
+                android:layout_weight="6"
+                android:hint="@string/hint_password"
+                android:inputType="textPassword"
+                android:textColor="@color/colorAccent"
+                android:textColorHint="@color/colorAccent"
+                app:backgroundTint="@color/colorAccent" />
+
+        </LinearLayout>
+
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="4"
-            android:text="@string/not_a_member"
-            android:textColor="@color/colorAccent"
-            android:layout_marginStart="18dp"
-            android:textSize="18sp"/>
-
-        <Button
-            android:id="@+id/button"
+            android:id="@+id/forgotPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="18dp"
-            android:layout_weight="2"
-            android:background="@drawable/ripple_effect"
-            android:text="@string/register"
+            android:layout_marginStart="72dp"
+            android:layout_marginTop="18dp"
+            android:text="@string/forgot_password"
             android:textColor="@color/colorAccent"
-            android:textSize="16sp" />
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/signInButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/forgotPassword"
+            android:layout_centerHorizontal="true"
+            android:layout_marginEnd="72dp"
+            android:layout_marginStart="72dp"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/ripple_effect"
+            android:text="@string/login"
+            android:textColor="@color/colorAccent"
+            android:textSize="18sp" />
+
+        <LinearLayout
+            android:id="@+id/LinearLayoutRegister"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_16"
+            android:layout_marginBottom="18dp"
+            android:gravity="bottom"
+            android:orientation="horizontal"
+            android:weightSum="6">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="18dp"
+                android:layout_weight="4"
+                android:text="@string/not_a_member"
+                android:textColor="@color/colorAccent"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="18dp"
+                android:layout_weight="2"
+                android:layout_gravity="bottom"
+                android:background="@drawable/ripple_effect"
+                android:text="@string/register"
+                android:textColor="@color/colorAccent"
+                android:textSize="16sp" />
+
+        </LinearLayout>
 
     </LinearLayout>
+
 
 </RelativeLayout>

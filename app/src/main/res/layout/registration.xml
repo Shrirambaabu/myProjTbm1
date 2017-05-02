@@ -10,7 +10,9 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:layout_marginStart="@dimen/margin_16"
+        android:background="@drawable/ripple_effect">
 
         <TextView
             android:layout_gravity="center"
