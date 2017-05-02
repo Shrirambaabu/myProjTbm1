@@ -10,8 +10,8 @@
 
     <ImageView
         android:id="@+id/imageViewLogo"
-        android:layout_width="140dp"
-        android:layout_height="140dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         app:srcCompat="@drawable/logo" />
@@ -20,18 +20,18 @@
         android:id="@+id/LinearLayoutContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_16"
-        android:layout_marginEnd="@dimen/margin_16"
-        android:background="@drawable/ripple_effect"
         android:layout_below="@id/imageViewLogo"
+        android:layout_marginEnd="@dimen/margin_16"
+        android:layout_marginStart="@dimen/margin_16"
+        android:background="@drawable/ripple_effect"
         android:orientation="vertical">
 
         <LinearLayout
             android:id="@+id/linearLayoutEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_marginTop="@dimen/margin_16"
+            android:orientation="horizontal"
             android:weightSum="8">
 
             <ImageView
@@ -62,7 +62,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="@dimen/margin_16"
             android:weightSum="8">
 
             <ImageView
@@ -92,12 +91,11 @@
             android:id="@+id/forgotPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="18dp"
-            android:layout_marginStart="72dp"
-            android:layout_marginTop="18dp"
+            android:layout_marginStart="@dimen/margin_20"
+            android:layout_marginTop="@dimen/margin_4dp"
             android:text="@string/forgot_password"
             android:textColor="@color/colorAccent"
-            android:textSize="20sp" />
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/signInButton"
@@ -117,9 +115,8 @@
             android:id="@+id/LinearLayoutRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_16"
             android:layout_marginBottom="18dp"
-            android:gravity="bottom"
+            android:layout_marginTop="@dimen/margin_16"
             android:orientation="horizontal"
             android:weightSum="6">
 
@@ -134,11 +131,9 @@
 
             <Button
                 android:id="@+id/button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="18dp"
+                android:layout_width="0dp"
+                android:layout_height="36dp"
                 android:layout_weight="2"
-                android:layout_gravity="bottom"
                 android:background="@drawable/ripple_effect"
                 android:text="@string/register"
                 android:textColor="@color/colorAccent"
