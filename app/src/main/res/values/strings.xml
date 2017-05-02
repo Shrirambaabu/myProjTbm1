@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Layouts</string>
+    <string name="app_name">iGotPlaced</string>
     <string name="emailHint">albert.jeo@gmail.com</string>
     <string name="forgot_password"><u>Forgot Password?</u></string>
     <string name="not_a_member">Not a Member?</string>
@@ -17,4 +17,5 @@
     <string name="password_Hint">Password will be sent to your Email Address</string>
     <string name="check_box_message">I\'m Interested to Receive Interview Calls</string>
     <string name="igp">iGOTPLACED</string>
+    <string name="forgot_password_title">Forgot Password</string>
 </resources>

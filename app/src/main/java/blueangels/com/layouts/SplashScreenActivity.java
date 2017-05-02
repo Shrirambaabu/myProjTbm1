@@ -11,11 +11,14 @@ import android.support.v7.app.AppCompatActivity;
 public class SplashScreenActivity extends AppCompatActivity {
 
     // Splash screen timer
-    private static int SPLASH_TIME_OUT = 1000;
+    private static int SPLASH_TIME_OUT = 2000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        getSupportActionBar().hide();
+
         setContentView(R.layout.splash_screen);
 
         new Handler().postDelayed(new Runnable() {

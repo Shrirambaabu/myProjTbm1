@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/colorPrimary">
+    android:background="@color/colorBackground">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,6 +12,7 @@
         android:layout_centerVertical="true"
         android:orientation="vertical"
         android:layout_marginStart="@dimen/margin_16"
+        android:layout_marginEnd="@dimen/margin_16"
         android:background="@drawable/ripple_effect">
 
         <TextView
@@ -20,7 +21,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/registration"
-            android:textColor="@color/colorAccent"
+            android:textColor="@color/white"
             android:textSize="28sp"
             android:layout_marginTop="16dp"
             android:textStyle="bold" />
@@ -33,9 +34,9 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:inputType="text"
-            android:textColor="@color/colorAccent"
+            android:textColor="@color/white"
             android:textColorHint="@color/colorAccent"
-            android:backgroundTint="@color/colorAccent"
+            app:backgroundTint="@color/colorAccent"
             android:hint="@string/full_name"/>
 
         <android.support.v7.widget.AppCompatEditText
@@ -46,7 +47,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:textColor="@color/colorAccent"
+            android:textColor="@color/white"
             android:textColorHint="@color/colorAccent"
             app:backgroundTint="@color/colorAccent"
             android:hint="@string/e_mail_address"/>
@@ -67,7 +68,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:textColor="@color/colorAccent"
+            android:textColor="@color/white"
             android:textColorHint="@color/colorAccent"
             app:backgroundTint="@color/colorAccent"
             android:hint="@string/college_name"/>
@@ -81,7 +82,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:textColor="@color/colorAccent"
+            android:textColor="@color/white"
             android:textColorHint="@color/colorAccent"
             app:backgroundTint="@color/colorAccent"
             android:hint="@string/department"/>
@@ -102,7 +103,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/ripple_effect"
             android:text="@string/registerButton"
-            android:textColor="@color/colorAccent"
+            android:textColor="@color/white"
             android:layout_gravity="end"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
