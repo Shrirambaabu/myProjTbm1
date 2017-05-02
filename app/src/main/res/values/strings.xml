@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Layouts</string>
+    <string name="emailHint">albert.jeo@gmail.com</string>
+    <string name="forgot_password"><u>Forgot Password?</u></string>
+    <string name="not_a_member">Not a Member?</string>
+    <string name="register">Register</string>
+    <string name="login">Login</string>
+</resources>
