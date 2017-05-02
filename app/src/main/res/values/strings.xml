@@ -5,7 +5,6 @@
     <string name="not_a_member">Not a Member?</string>
     <string name="register">Register</string>
     <string name="login">Login</string>
-<<<<<<< HEAD
     <string name="registration">Registration</string>
     <string name="full_name">Full Name</string>
     <string name="e_mail_address">E-mail Address</string>
@@ -13,8 +12,7 @@
     <string name="department">Department</string>
     <string name="college_name">College Name</string>
     <string name="registerButton">Register</string>
-=======
+
     <string name="submit">Submit</string>
     <string name="password_Hint">PASSWORD WILL BE SENT TO YOUR EMAIL ADDRESS</string>
->>>>>>> 458473197091fc54a0d4f0d35431a0e921b6e517
 </resources>
