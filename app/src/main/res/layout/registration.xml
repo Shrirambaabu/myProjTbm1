@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorPrimary">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_gravity="center"
+            android:id="@+id/textViewRegistration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/registration"
+            android:textColor="@color/colorAccent"
+            android:textSize="28sp"
+            android:layout_marginTop="16dp"
+            android:textStyle="bold" />
+
+        <android.support.v7.widget.AppCompatEditText
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:id="@+id/editViewName"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:inputType="text"
+            android:textColor="@color/colorAccent"
+            android:textColorHint="@color/colorAccent"
+            android:backgroundTint="@color/colorAccent"
+            android:hint="@string/full_name"/>
+
+        <android.support.v7.widget.AppCompatEditText
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:id="@+id/editViewEmail"
+            android:inputType="textEmailAddress"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:textColor="@color/colorAccent"
+            android:textColorHint="@color/colorAccent"
+            app:backgroundTint="@color/colorAccent"
+            android:hint="@string/e_mail_address"/>
+
+        <android.support.v7.widget.AppCompatSpinner
+            android:id="@+id/dept_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            app:backgroundTint="@color/colorAccent"/>
+
+        <android.support.v7.widget.AppCompatEditText
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:id="@+id/editViewCollegeName"
+            android:inputType="textEmailAddress"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:textColor="@color/colorAccent"
+            android:textColorHint="@color/colorAccent"
+            app:backgroundTint="@color/colorAccent"
+            android:hint="@string/college_name"/>
+
+
+        <android.support.v7.widget.AppCompatEditText
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:id="@+id/editViewDepartment"
+            android:inputType="textEmailAddress"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:textColor="@color/colorAccent"
+            android:textColorHint="@color/colorAccent"
+            app:backgroundTint="@color/colorAccent"
+            android:hint="@string/department"/>
+
+        <android.support.v7.widget.AppCompatCheckBox
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/checkBox"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/check_box_message"
+            android:textSize="16sp"
+            app:buttonTint="@color/colorAccent"
+            android:textColor="@color/colorAccent"/>
+
+        <android.support.v7.widget.AppCompatButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ripple_effect"
+            android:text="@string/registerButton"
+            android:textColor="@color/colorAccent"
+            android:layout_gravity="end"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:textSize="20sp"
+            android:textAllCaps="false"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp"
+            android:id="@+id/register_button"/>
+
+    </LinearLayout>
+
+
+</RelativeLayout>
