@@ -1,13 +1,9 @@
 package blueangels.com.layouts;
 
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 
-/**
- * Created by Ashith VL on 5/2/2017.
- */
-
-class ForgetPasswordActivity extends AppCompatActivity {
+public class RegisterPasswordActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -15,7 +11,6 @@ class ForgetPasswordActivity extends AppCompatActivity {
 
         getSupportActionBar().hide();
 
-        setContentView(R.layout.activity_forget_password);
+        setContentView(R.layout.activity_register_password);
     }
-
 }

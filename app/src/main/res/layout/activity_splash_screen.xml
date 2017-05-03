@@ -14,18 +14,7 @@
             android:id="@+id/imgLogo"
             android:layout_width="250dp"
             android:layout_height="250dp"
-            android:src="@drawable/logo" />
-
-        <TextView
-            android:id="@+id/LogoTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/igp"
-            android:textAllCaps="false"
-            android:textColor="@color/colorAccent"
-            android:textSize="32dp"
-            android:layout_gravity="center"
-            android:textStyle="italic|bold" />
+            android:src="@drawable/splashlogo" />
 
     </LinearLayout>
 

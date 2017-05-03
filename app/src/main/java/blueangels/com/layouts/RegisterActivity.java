@@ -15,7 +15,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         getSupportActionBar().hide();
 
-        setContentView(R.layout.registration);
+        setContentView(R.layout.activity_registration);
     }
 
 }

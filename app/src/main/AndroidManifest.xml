@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="blueangels.com.layouts">
 
-
     <application
         android:allowBackup="true"
         android:icon="@drawable/logo"
@@ -30,6 +29,7 @@
             android:name=".ForgetPasswordActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
+        <activity android:name=".RegisterPasswordActivity"></activity>
     </application>
 
 </manifest>

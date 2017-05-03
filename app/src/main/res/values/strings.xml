@@ -18,4 +18,14 @@
     <string name="check_box_message">I\'m Interested to Receive Interview Calls</string>
     <string name="igp">iGOTPLACED</string>
     <string name="forgot_password_title">Forgot Password</string>
+    <string name="profile_details">Profile Details</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="submit_btn">Submit</string>
+    <string name="Define_your_dream_job_interest">Define Your Dream Job Interest</string>
+    <string name="details_for_interview">Details For Interview</string>
+    <string name="phone_number">Mobile Number</string>
+    <string name="current_location">Current Location</string>
+    <string name="select_minimum_of_one_industry_company_to_get_started">Select Minimum of One Industry/Company to Get Started</string>
+    <string name="contact">Make sure to provide your Mobile Number and Location Details.So that you can be contacted for Interviews</string>
 </resources>

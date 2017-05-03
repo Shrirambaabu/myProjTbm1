@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 
 /**
  * Created by Admin on 5/2/2017.
@@ -20,7 +18,7 @@ public class LoginActivity extends AppCompatActivity {
 
         getSupportActionBar().hide();
 
-        setContentView(R.layout.login_main);
+        setContentView(R.layout.activity_login_main);
     }
 
 
