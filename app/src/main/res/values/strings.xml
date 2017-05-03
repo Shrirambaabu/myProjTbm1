@@ -28,4 +28,5 @@
     <string name="current_location">Current Location</string>
     <string name="select_minimum_of_one_industry_company_to_get_started">Select Minimum of One Industry/Company to Get Started</string>
     <string name="contact">Make sure to provide your Mobile Number and Location Details.So that you can be contacted for Interviews</string>
+    <string name="industry">Industry</string>
 </resources>

@@ -103,6 +103,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/button_style"
             android:text="@string/registerButton"
+            android:onClick="registerNew"
             android:textColor="@color/white"
             android:layout_gravity="end"
             android:layout_marginTop="@dimen/margin_16"
