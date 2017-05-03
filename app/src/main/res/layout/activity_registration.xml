@@ -13,7 +13,7 @@
         android:orientation="vertical"
         android:layout_marginStart="@dimen/margin_16"
         android:layout_marginEnd="@dimen/margin_16"
-        android:background="@drawable/ripple_effect">
+        android:background="@drawable/button_style">
 
         <TextView
             android:layout_gravity="center"
@@ -101,7 +101,7 @@
         <android.support.v7.widget.AppCompatButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/ripple_effect"
+            android:background="@drawable/button_style"
             android:text="@string/registerButton"
             android:textColor="@color/white"
             android:layout_gravity="end"
