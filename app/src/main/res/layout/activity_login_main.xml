@@ -52,8 +52,8 @@
                 android:hint="@string/emailHint"
                 android:inputType="textEmailAddress"
                 android:textColor="@color/white"
-                android:textColorHint="@color/colorAccent"
-                app:backgroundTint="@color/colorAccent" />
+                android:textColorHint="@color/white"
+                app:backgroundTint="@color/white" />
 
         </LinearLayout>
 
@@ -84,8 +84,8 @@
                 android:hint="@string/hint_password"
                 android:inputType="textPassword"
                 android:textColor="@color/white"
-                android:textColorHint="@color/colorAccent"
-                app:backgroundTint="@color/colorAccent" />
+                android:textColorHint="@color/white"
+                app:backgroundTint="@color/white" />
 
         </LinearLayout>
 
@@ -110,7 +110,7 @@
             android:layout_marginTop="@dimen/margin_18"
             android:background="@drawable/button_style"
             android:text="@string/login"
-            android:textColor="@color/white"
+            android:textColor="@color/colorAccent"
             android:textSize="18sp"
             android:onClick="login"/>
 
@@ -139,7 +139,7 @@
                 android:layout_weight="2"
                 android:background="@drawable/button_style"
                 android:text="@string/register"
-                android:textColor="@color/white"
+                android:textColor="@color/colorAccent"
                 android:textSize="16sp"
                 android:onClick="register"/>
 
