@@ -29,4 +29,11 @@
     <string name="select_minimum_of_one_industry_company_to_get_started">Select Minimum of One Industry/Company to Get Started</string>
     <string name="contact">Make sure to provide your Mobile Number and Location Details.So that you can be contacted for Interviews</string>
     <string name="industry">Industry</string>
+    <string name="about_Us">About Us</string>
+    <string name="socialPlacement">Social placement preparation platform for students to share, learn, connect and collaborate.</string>
+    <string name="neverMiss">* Never miss any placement events.</string>
+    <string name="getNotified">* Get notified and be connected.</string>
+    <string name="attendEvents">* Attend events, share and discuss about placement experiences.</string>
+    <string name="connectWith">* Connect with experts “Carrier Mentors” and get guidance from real time interviewers.</string>
+    <string name="subscribe">Subsrcibe to our newsletter for latest updates about our site for universe.</string>
 </resources>
