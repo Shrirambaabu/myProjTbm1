@@ -169,7 +169,6 @@
                     android:layout_height="20dp"
                     android:layout_gravity="center"
                     android:layout_marginStart="@dimen/margin_16"
-
                     app:srcCompat="@drawable/wlogo" />
 
                 <android.support.v7.widget.AppCompatEditText
@@ -177,7 +176,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/margin_18"
-
                     android:text="+91 87547 98211"
                     android:textColor="@color/white"
                     app:backgroundTint="@color/colorAccent" />
@@ -188,7 +186,6 @@
                     android:layout_height="20dp"
                     android:layout_gravity="center"
                     android:layout_marginStart="@dimen/margin_16"
-
                     app:srcCompat="@drawable/wlogo" />
 
                 <android.support.v7.widget.AppCompatEditText
@@ -196,7 +193,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/margin_18"
-
                     android:text="+91 87547 98211"
                     android:textColor="@color/white"
                     app:backgroundTint="@color/colorAccent" />
