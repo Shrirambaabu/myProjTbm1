@@ -164,7 +164,7 @@
                 android:weightSum="8">
 
                 <ImageView
-                    android:id="@+id/whatsApp"
+                    android:id="@+id/whatsApp1"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_gravity="center"
@@ -173,7 +173,7 @@
                     app:srcCompat="@drawable/wlogo" />
 
                 <android.support.v7.widget.AppCompatEditText
-                    android:id="@+id/whatsApp1"
+                    android:id="@+id/whatsApp11"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/margin_18"
@@ -183,7 +183,7 @@
                     app:backgroundTint="@color/colorAccent" />
 
                 <ImageView
-                    android:id="@+id/whatsApp23"
+                    android:id="@+id/whatsApp2"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_gravity="center"
@@ -192,7 +192,7 @@
                     app:srcCompat="@drawable/wlogo" />
 
                 <android.support.v7.widget.AppCompatEditText
-                    android:id="@+id/whatsApp2"
+                    android:id="@+id/whatsApp21"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/margin_18"
