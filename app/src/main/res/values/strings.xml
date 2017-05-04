@@ -39,7 +39,9 @@
     <string name="address">No 4 Park side road,\n Nungambakkam,\nChennai 600034.</string>
 
 
-    <string name="year_prompt">Year Of Passout</string>
+    <string name="year_prompt">
+        <item>Year Of Passout </item>
+    </string>
 
     <string-array name="year_arrays">
 <item>  -- Select the passout year -- </item>
