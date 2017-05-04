@@ -42,7 +42,7 @@
     <string name="year_prompt">Year Of Passout</string>
 
     <string-array name="year_arrays">
-
+<item>  --Select the passout year -- </item>
         <item>2018</item>
         <item>2017</item>
         <item>2016</item>
