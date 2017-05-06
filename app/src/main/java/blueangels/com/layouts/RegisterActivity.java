@@ -11,8 +11,9 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Toast;
+import android.widget.ScrollView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -27,8 +28,9 @@ import blueangels.com.layouts.Validation.Validation;
 public class RegisterActivity extends AppCompatActivity{
 
     private String[] passOutYear;
+    private ScrollView scrollView;
     private AppCompatEditText nameEditText, emailEditText;
-    private AppCompatAutoCompleteTextView CollegeEditText, departmentEditText;
+    private AppCompatAutoCompleteTextView collegeEditText, departmentEditText;
     private AppCompatSpinner passOutYearSpinner;
     private TextInputLayout inputLayoutName, inputLayoutEmail, inputLayoutCollege, inputLayoutDepartment;
 
@@ -63,19 +65,11 @@ public class RegisterActivity extends AppCompatActivity{
 
     }
 
-    private void addingListener() {
-        nameEditText.addTextChangedListener(new CustomWatcher(nameEditText));
-        emailEditText.addTextChangedListener(new CustomWatcher(emailEditText));
-        CollegeEditText.addTextChangedListener(new CustomWatcher(CollegeEditText));
-        departmentEditText.addTextChangedListener(new CustomWatcher(departmentEditText));
-
-    }
-
     private void addressingView() {
 
         nameEditText = (AppCompatEditText) findViewById(R.id.editViewName);
         emailEditText = (AppCompatEditText) findViewById(R.id.editViewEmail);
-        CollegeEditText = (AppCompatAutoCompleteTextView) findViewById(R.id.editViewCollegeName);
+        collegeEditText = (AppCompatAutoCompleteTextView) findViewById(R.id.editViewCollegeName);
         departmentEditText = (AppCompatAutoCompleteTextView) findViewById(R.id.editViewDepartment);
 
         passOutYearSpinner = (AppCompatSpinner) findViewById(R.id.passed_out_year_spinner);
@@ -85,11 +79,31 @@ public class RegisterActivity extends AppCompatActivity{
         inputLayoutCollege = (TextInputLayout) findViewById(R.id.viewCollege);
         inputLayoutDepartment = (TextInputLayout) findViewById(R.id.viewDepartment);
 
+        scrollView = (ScrollView)findViewById(R.id.scroll_view_activity_register);
+        scrollView.setDescendantFocusability(ViewGroup.FOCUS_BEFORE_DESCENDANTS);
+        scrollView.setFocusable(true);
+        scrollView.setFocusableInTouchMode(true);
+
     }
 
+
+    private void addingListener() {
+        nameEditText.addTextChangedListener(new CustomWatcher(nameEditText));
+        emailEditText.addTextChangedListener(new CustomWatcher(emailEditText));
+        collegeEditText.addTextChangedListener(new CustomWatcher(collegeEditText));
+        departmentEditText.addTextChangedListener(new CustomWatcher(departmentEditText));
+
+
+        scrollView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                v.requestFocusFromTouch();
+                return false;
+            }
+        });
+
+    }
     public void registerNew(View view) {
-
-
 
         submitRegistrationDetails();
 
@@ -104,7 +118,7 @@ public class RegisterActivity extends AppCompatActivity{
             return;
         }
 
-        if (!Validation.validateCollege(CollegeEditText, inputLayoutCollege, RegisterActivity.this)) {
+        if (!Validation.validateCollege(collegeEditText, inputLayoutCollege, RegisterActivity.this)) {
             return;
         }
 
@@ -117,11 +131,11 @@ public class RegisterActivity extends AppCompatActivity{
     }
 
 
-    public class CustomWatcher implements TextWatcher {
+    private class CustomWatcher implements TextWatcher {
 
         private View view;
 
-        public CustomWatcher(View view) {
+        CustomWatcher(View view) {
             this.view = view;
         }
 
@@ -140,7 +154,7 @@ public class RegisterActivity extends AppCompatActivity{
                     Validation.validateEmail(emailEditText, inputLayoutEmail, RegisterActivity.this);
                     break;
                 case R.id.editViewCollegeName:
-                    Validation.validateCollege(CollegeEditText, inputLayoutCollege, RegisterActivity.this);
+                    Validation.validateCollege(collegeEditText, inputLayoutCollege, RegisterActivity.this);
                     break;
                 case R.id.editViewDepartment:
                     Validation.validateDepartment(departmentEditText, inputLayoutDepartment, RegisterActivity.this);

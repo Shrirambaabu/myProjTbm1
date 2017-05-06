@@ -60,11 +60,11 @@ public class ForgetPasswordActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), "Email send Successfully", Toast.LENGTH_SHORT).show();
     }
 
-    public class CustomWatcher implements TextWatcher {
+    private class CustomWatcher implements TextWatcher {
 
         private View view;
 
-        public CustomWatcher(View view) {
+        CustomWatcher(View view) {
             this.view = view;
         }
 
