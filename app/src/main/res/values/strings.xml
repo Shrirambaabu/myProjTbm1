@@ -47,6 +47,7 @@
     <string name="err_msg_email">Enter valid email address</string>
     <string name="err_msg_college">Enter Your College Name</string>
     <string name="err_msg_departmrnt">Enter Your Department</string>
+    <string name="err_msg_password">Password Should be more than 4 Characters</string>
 
     <string-array name="year_arrays">
         <item>2025</item>

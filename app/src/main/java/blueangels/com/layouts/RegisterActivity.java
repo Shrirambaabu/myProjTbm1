@@ -1,5 +1,6 @@
 package blueangels.com.layouts;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -88,8 +89,7 @@ public class RegisterActivity extends AppCompatActivity{
 
     public void registerNew(View view) {
 
-        /*Intent registrationCompleteIntent = new Intent(RegisterActivity.this, RegisterPasswordActivity.class);
-        startActivity(registrationCompleteIntent);*/
+
 
         submitRegistrationDetails();
 
@@ -112,8 +112,8 @@ public class RegisterActivity extends AppCompatActivity{
             return;
         }
 
-
-        Toast.makeText(getApplicationContext(), "Registration Successful", Toast.LENGTH_SHORT).show();
+        Intent registrationCompleteIntent = new Intent(RegisterActivity.this, RegisterPasswordActivity.class);
+        startActivity(registrationCompleteIntent);
     }
 
 

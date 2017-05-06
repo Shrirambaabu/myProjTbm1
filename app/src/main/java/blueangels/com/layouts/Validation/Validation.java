@@ -19,7 +19,7 @@ import blueangels.com.layouts.RegisterActivity;
 
 public class Validation {
 
-    public static boolean validateName(AppCompatEditText nameEditText, TextInputLayout inputLayoutName,Activity activity) {
+    public static boolean validateName(AppCompatEditText nameEditText, TextInputLayout inputLayoutName, Activity activity) {
         if (nameEditText.getText().toString().trim().isEmpty() || nameEditText.getText().length() < 3) {
             inputLayoutName.setError(activity.getString(R.string.err_msg_name));
             requestFocus(nameEditText, activity);
@@ -31,7 +31,7 @@ public class Validation {
         return true;
     }
 
-    public static boolean validateEmail(AppCompatEditText emailEditText, TextInputLayout inputLayoutEmail,Activity activity) {
+    public static boolean validateEmail(AppCompatEditText emailEditText, TextInputLayout inputLayoutEmail, Activity activity) {
         String email = emailEditText.getText().toString().trim();
 
         if (email.isEmpty() || !isValidEmail(email)) {
@@ -61,7 +61,7 @@ public class Validation {
         return true;
     }
 
-    public static boolean validateDepartment(AppCompatAutoCompleteTextView departmentEditText, TextInputLayout inputLayoutDepartment,Activity activity) {
+    public static boolean validateDepartment(AppCompatAutoCompleteTextView departmentEditText, TextInputLayout inputLayoutDepartment, Activity activity) {
         if (departmentEditText.getText().toString().trim().isEmpty() || departmentEditText.getText().length() < 3) {
             inputLayoutDepartment.setError(activity.getString(R.string.err_msg_departmrnt));
             requestFocus(departmentEditText, activity);
@@ -73,7 +73,41 @@ public class Validation {
         return true;
     }
 
-    public static void requestFocus(View view,Activity activity) {
+
+    public static boolean validatePassword(AppCompatEditText passwordEditText, TextInputLayout inputLayoutpassword, Activity activity) {
+        if (passwordEditText.getText().toString().trim().isEmpty() || passwordEditText.getText().length() < 4) {
+            inputLayoutpassword.setError(activity.getString(R.string.err_msg_password));
+            requestFocus(passwordEditText, activity);
+            return false;
+        } else {
+            inputLayoutpassword.setErrorEnabled(false);
+        }
+        return true;
+    }
+
+
+    public static boolean validateMobileNumber(AppCompatEditText mobileNumberEditText, TextInputLayout inputLayoutmobileNumber, Activity activity) {
+
+        if (mobileNumberEditText.getText().toString().trim().isEmpty() || mobileNumberEditText.getText().length() < 10) {
+            requestFocus(mobileNumberEditText, activity);
+            return false;
+        } else {
+            inputLayoutmobileNumber.setErrorEnabled(false);
+        }
+        return true;
+    }
+
+    public static boolean validateLocation(AppCompatEditText locationEditText, TextInputLayout inputLayoutlocation, Activity activity) {
+        if (locationEditText.getText().toString().trim().isEmpty() || locationEditText.getText().length() < 2) {
+            requestFocus(locationEditText, activity);
+            return false;
+        } else {
+            inputLayoutlocation.setErrorEnabled(false);
+        }
+        return true;
+    }
+
+    public static void requestFocus(View view, Activity activity) {
         if (view.requestFocus()) {
             activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
         }
