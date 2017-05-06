@@ -25,7 +25,7 @@ import blueangels.com.layouts.Validation.Validation;
  * Created by Admin on 5/2/2017.
  */
 
-public class RegisterActivity extends AppCompatActivity{
+public class RegisterActivity extends AppCompatActivity {
 
     private String[] passOutYear;
     private ScrollView scrollView;
@@ -79,7 +79,7 @@ public class RegisterActivity extends AppCompatActivity{
         inputLayoutCollege = (TextInputLayout) findViewById(R.id.viewCollege);
         inputLayoutDepartment = (TextInputLayout) findViewById(R.id.viewDepartment);
 
-        scrollView = (ScrollView)findViewById(R.id.scroll_view_activity_register);
+        scrollView = (ScrollView) findViewById(R.id.scroll_view_activity_register);
         scrollView.setDescendantFocusability(ViewGroup.FOCUS_BEFORE_DESCENDANTS);
         scrollView.setFocusable(true);
         scrollView.setFocusableInTouchMode(true);
@@ -103,6 +103,7 @@ public class RegisterActivity extends AppCompatActivity{
         });
 
     }
+
     public void registerNew(View view) {
 
         submitRegistrationDetails();

@@ -2,13 +2,14 @@ package blueangels.com.layouts;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatEditText;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import blueangels.com.layouts.Validation.Validation;
 
@@ -20,6 +21,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private AppCompatEditText passwordEditText, emailEditText;
     private Button loginBtn;
+    private TextInputLayout inputLayoutEmail;
     private String URL = "http://192.168.43.80:8080/login/rest/loginService/login";
 
     @Override
@@ -35,13 +37,12 @@ public class LoginActivity extends AppCompatActivity {
 
         addingListener();
 
-
     }
-
 
     private void addressingView() {
         emailEditText = (AppCompatEditText) findViewById(R.id.editTextEmail);
         passwordEditText = (AppCompatEditText) findViewById(R.id.editTextPassword);
+        inputLayoutEmail = (TextInputLayout) findViewById(R.id.viewEmail);
         loginBtn = (Button) findViewById(R.id.signInButton);
     }
 
@@ -54,8 +55,11 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void login(View view) {
-        Intent loginIntent = new Intent(LoginActivity.this, MainActivity.class);
-        startActivity(loginIntent);
+        
+        submitLoginDetails();
+        
+        /*Intent loginIntent = new Intent(LoginActivity.this, MainActivity.class);
+        startActivity(loginIntent);*/
 
         /*StringRequest request = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>(){
             @Override
@@ -87,13 +91,22 @@ public class LoginActivity extends AppCompatActivity {
 */
     }
 
+    private void submitLoginDetails() {
+        if (!Validation.validateEmail(emailEditText, inputLayoutEmail, LoginActivity.this)) {
+            return;
+        }
+
+        Toast.makeText(getApplicationContext(), "Logged IN Successfully", Toast.LENGTH_SHORT).show();
+
+    }
+
     public void register(View view) {
         Intent registrationIntent = new Intent(LoginActivity.this, RegisterActivity.class);
         startActivity(registrationIntent);
     }
 
 
-    /*public class CustomWatcher implements TextWatcher {
+    public class CustomWatcher implements TextWatcher {
 
         private View view;
 
@@ -109,20 +122,13 @@ public class LoginActivity extends AppCompatActivity {
 
         public void afterTextChanged(Editable editable) {
             switch (view.getId()) {
-                case R.id.editViewName:
-                    Validation.validateName(nameEditText, inputLayoutName, LoginActivity.this);
-                    break;
+                
                 case R.id.editViewEmail:
                     Validation.validateEmail(emailEditText, inputLayoutEmail, LoginActivity.this);
                     break;
-                case R.id.editViewCollegeName:
-                    Validation.validateCollege(CollegeEditText, inputLayoutCollege, LoginActivity.this);
-                    break;
-                case R.id.editViewDepartment:
-                    Validation.validateDepartment(departmentEditText, inputLayoutDepartment, LoginActivity.this);
-                    break;
+
             }
         }
-    }*/
+    }
 
 }
