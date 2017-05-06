@@ -2,13 +2,12 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorBackground">
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -18,7 +17,6 @@
             android:layout_margin="@dimen/margin_16"
             android:background="@drawable/button_style"
             android:orientation="vertical">
-
 
             <TextView
                 android:id="@+id/textViewRegistration"
@@ -32,12 +30,13 @@
                 android:textStyle="bold" />
 
             <android.support.design.widget.TextInputLayout
-                android:id="@+id/fullName"
+                android:id="@+id/name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/margin_16"
                 android:layout_marginStart="@dimen/margin_16"
                 android:layout_marginTop="@dimen/margin_16"
+                app:errorTextAppearance="@style/error_appearance"
                 android:textColorHint="@color/white">
 
 
@@ -59,6 +58,7 @@
                 android:layout_marginEnd="@dimen/margin_16"
                 android:layout_marginStart="@dimen/margin_16"
                 android:layout_marginTop="@dimen/margin_16"
+                app:errorTextAppearance="@style/error_appearance"
                 android:textColorHint="@color/white">
 
 
@@ -101,6 +101,7 @@
                 android:layout_marginEnd="@dimen/margin_16"
                 android:layout_marginStart="@dimen/margin_16"
                 android:layout_marginTop="@dimen/margin_16"
+                app:errorTextAppearance="@style/error_appearance"
                 android:textColorHint="@color/white">
 
                 <android.support.v7.widget.AppCompatAutoCompleteTextView
@@ -115,17 +116,18 @@
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
-                android:id="@+id/editViewDepartment"
+                android:id="@+id/viewDepartment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/margin_16"
                 android:layout_marginStart="@dimen/margin_16"
                 android:layout_marginTop="@dimen/margin_16"
+                app:errorTextAppearance="@style/error_appearance"
                 android:textColorHint="@color/white">
 
 
                 <android.support.v7.widget.AppCompatAutoCompleteTextView
-                    android:id="@+id/viewDepartment"
+                    android:id="@+id/editViewDepartment"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:hint="@string/department"

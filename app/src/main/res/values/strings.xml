@@ -43,6 +43,10 @@
         <item>Year Of Passout </item>
     </string>
     <string name="select_the_year_of_passout">Select the year of PassOut</string>
+    <string name="err_msg_name">Enter Your Full Name</string>
+    <string name="err_msg_email">Enter valid email address</string>
+    <string name="err_msg_college">Enter Your College Name</string>
+    <string name="err_msg_departmrnt">Enter Your Department</string>
 
     <string-array name="year_arrays">
         <item>2025</item>
