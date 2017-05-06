@@ -1,5 +1,6 @@
 package blueangels.com.layouts.Validation;
 
+import android.app.Activity;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.AppCompatAutoCompleteTextView;
 import android.support.v7.widget.AppCompatEditText;
@@ -18,10 +19,10 @@ import blueangels.com.layouts.RegisterActivity;
 
 public class Validation {
 
-    public static boolean validateName(AppCompatEditText nameEditText, TextInputLayout inputLayoutName, RegisterActivity registerActivity) {
+    public static boolean validateName(AppCompatEditText nameEditText, TextInputLayout inputLayoutName,Activity activity) {
         if (nameEditText.getText().toString().trim().isEmpty() || nameEditText.getText().length() < 3) {
-            inputLayoutName.setError(registerActivity.getString(R.string.err_msg_name));
-            requestFocus(nameEditText, registerActivity);
+            inputLayoutName.setError(activity.getString(R.string.err_msg_name));
+            requestFocus(nameEditText, activity);
             return false;
         } else {
             inputLayoutName.setErrorEnabled(false);
@@ -30,12 +31,12 @@ public class Validation {
         return true;
     }
 
-    public static boolean validateEmail(AppCompatEditText emailEditText, TextInputLayout inputLayoutEmail, RegisterActivity registerActivity) {
+    public static boolean validateEmail(AppCompatEditText emailEditText, TextInputLayout inputLayoutEmail,Activity activity) {
         String email = emailEditText.getText().toString().trim();
 
         if (email.isEmpty() || !isValidEmail(email)) {
-            inputLayoutEmail.setError(registerActivity.getString(R.string.err_msg_email));
-            requestFocus(emailEditText, registerActivity);
+            inputLayoutEmail.setError(activity.getString(R.string.err_msg_email));
+            requestFocus(emailEditText, activity);
             return false;
         } else {
             inputLayoutEmail.setErrorEnabled(false);
@@ -48,10 +49,10 @@ public class Validation {
         return !TextUtils.isEmpty(email) && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
-    public static boolean validateCollege(AppCompatAutoCompleteTextView collegeEditText, TextInputLayout inputLayoutCollege, RegisterActivity registerActivity) {
+    public static boolean validateCollege(AppCompatAutoCompleteTextView collegeEditText, TextInputLayout inputLayoutCollege, Activity activity) {
         if (collegeEditText.getText().toString().trim().isEmpty() || collegeEditText.getText().length() < 3) {
-            inputLayoutCollege.setError(registerActivity.getString(R.string.err_msg_college));
-            requestFocus(collegeEditText, registerActivity);
+            inputLayoutCollege.setError(activity.getString(R.string.err_msg_college));
+            requestFocus(collegeEditText, activity);
             return false;
         } else {
             inputLayoutCollege.setErrorEnabled(false);
@@ -60,10 +61,10 @@ public class Validation {
         return true;
     }
 
-    public static boolean validateDepartment(AppCompatAutoCompleteTextView departmentEditText, TextInputLayout inputLayoutDepartment, RegisterActivity registerActivity) {
+    public static boolean validateDepartment(AppCompatAutoCompleteTextView departmentEditText, TextInputLayout inputLayoutDepartment,Activity activity) {
         if (departmentEditText.getText().toString().trim().isEmpty() || departmentEditText.getText().length() < 3) {
-            inputLayoutDepartment.setError(registerActivity.getString(R.string.err_msg_departmrnt));
-            requestFocus(departmentEditText, registerActivity);
+            inputLayoutDepartment.setError(activity.getString(R.string.err_msg_departmrnt));
+            requestFocus(departmentEditText, activity);
             return false;
         } else {
             inputLayoutDepartment.setErrorEnabled(false);
@@ -72,9 +73,9 @@ public class Validation {
         return true;
     }
 
-    public static void requestFocus(View view, RegisterActivity registerActivity) {
+    public static void requestFocus(View view,Activity activity) {
         if (view.requestFocus()) {
-            registerActivity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+            activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
         }
     }
 

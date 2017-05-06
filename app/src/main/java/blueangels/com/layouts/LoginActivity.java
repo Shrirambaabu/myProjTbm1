@@ -4,8 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatEditText;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+
+import blueangels.com.layouts.Validation.Validation;
 
 /**
  * Created by Admin on 5/2/2017.
@@ -13,8 +18,8 @@ import android.widget.Button;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private AppCompatEditText email, password;
-    private Button logIn;
+    private AppCompatEditText passwordEditText, emailEditText;
+    private Button loginBtn;
     private String URL = "http://192.168.43.80:8080/login/rest/loginService/login";
 
     @Override
@@ -25,10 +30,22 @@ public class LoginActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_login_main);
 
-        email = (AppCompatEditText) findViewById(R.id.editTextEmail);
-        password = (AppCompatEditText) findViewById(R.id.editTextPassword);
-       logIn = (Button) findViewById(R.id.signInButton);
 
+        addressingView();
+
+        addingListener();
+
+
+    }
+
+
+    private void addressingView() {
+        emailEditText = (AppCompatEditText) findViewById(R.id.editTextEmail);
+        passwordEditText = (AppCompatEditText) findViewById(R.id.editTextPassword);
+        loginBtn = (Button) findViewById(R.id.signInButton);
+    }
+
+    private void addingListener() {
     }
 
     public void forgetPassword(View view) {
@@ -74,5 +91,38 @@ public class LoginActivity extends AppCompatActivity {
         Intent registrationIntent = new Intent(LoginActivity.this, RegisterActivity.class);
         startActivity(registrationIntent);
     }
+
+
+    /*public class CustomWatcher implements TextWatcher {
+
+        private View view;
+
+        public CustomWatcher(View view) {
+            this.view = view;
+        }
+
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        }
+
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        }
+
+        public void afterTextChanged(Editable editable) {
+            switch (view.getId()) {
+                case R.id.editViewName:
+                    Validation.validateName(nameEditText, inputLayoutName, LoginActivity.this);
+                    break;
+                case R.id.editViewEmail:
+                    Validation.validateEmail(emailEditText, inputLayoutEmail, LoginActivity.this);
+                    break;
+                case R.id.editViewCollegeName:
+                    Validation.validateCollege(CollegeEditText, inputLayoutCollege, LoginActivity.this);
+                    break;
+                case R.id.editViewDepartment:
+                    Validation.validateDepartment(departmentEditText, inputLayoutDepartment, LoginActivity.this);
+                    break;
+            }
+        }
+    }*/
 
 }

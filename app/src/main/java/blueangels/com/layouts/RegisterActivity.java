@@ -43,7 +43,8 @@ public class RegisterActivity extends AppCompatActivity{
 
         addingListener();
 
-        String[] passOutYear = getResources().getStringArray(R.array.year_arrays);
+        passOutYear = getResources().getStringArray(R.array.year_arrays);
+
         settingPassOutYearSpinner(passOutYear);
 
 
