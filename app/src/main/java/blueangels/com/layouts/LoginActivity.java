@@ -32,7 +32,6 @@ public class LoginActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_login_main);
 
-
         addressingView();
 
         addingListener();
@@ -47,6 +46,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void addingListener() {
+        emailEditText.addTextChangedListener(new CustomWatcher(emailEditText));
     }
 
     public void forgetPassword(View view) {
@@ -55,7 +55,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void login(View view) {
-        
+
         submitLoginDetails();
         
         /*Intent loginIntent = new Intent(LoginActivity.this, MainActivity.class);
@@ -122,7 +122,7 @@ public class LoginActivity extends AppCompatActivity {
 
         public void afterTextChanged(Editable editable) {
             switch (view.getId()) {
-                
+
                 case R.id.editViewEmail:
                     Validation.validateEmail(emailEditText, inputLayoutEmail, LoginActivity.this);
                     break;

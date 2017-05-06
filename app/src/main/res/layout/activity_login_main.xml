@@ -31,6 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_16"
+            android:focusableInTouchMode="true"
             android:orientation="horizontal"
             android:weightSum="10">
 
@@ -50,6 +51,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/margin_18"
                 android:layout_weight="9"
+                app:errorTextAppearance="@style/error_appearance"
                 android:textColorHint="@color/white">
 
 
