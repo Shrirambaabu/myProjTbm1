@@ -1,6 +1,5 @@
 package blueangels.com.layouts;
 
-import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,7 +14,8 @@ public class RegisterPasswordActivity extends AppCompatActivity {
 
 
     private AppCompatEditText passwordEditText, confirmPasswordEditText, mobileNumberEditText, locationEditText;
-    private TextInputLayout inputLayoutPassword, inputLayoutconfirmPassword, inputLayoutmobileNumber, inputLayoutlocation;
+    private TextInputLayout inputLayoutPassword, inputLayoutConfirmPassword, inputLayoutMobileNumber, inputLayoutLocation;
+
 
 
 
@@ -46,9 +46,9 @@ public class RegisterPasswordActivity extends AppCompatActivity {
         locationEditText = (AppCompatEditText) findViewById(R.id.editViewLocation);
 
         inputLayoutPassword = (TextInputLayout) findViewById(R.id.editViewPasswordTextInputLayout);
-        inputLayoutconfirmPassword = (TextInputLayout) findViewById(R.id.editViewConfirmPasswordTextInputLayout);
-        inputLayoutmobileNumber = (TextInputLayout) findViewById(R.id.editViewMobileNumberTextInputLayout);
-        inputLayoutlocation = (TextInputLayout) findViewById(R.id.editViewLocationTextInputLayout);
+        inputLayoutConfirmPassword = (TextInputLayout) findViewById(R.id.editViewConfirmPasswordTextInputLayout);
+        inputLayoutMobileNumber = (TextInputLayout) findViewById(R.id.editViewMobileNumberTextInputLayout);
+        inputLayoutLocation = (TextInputLayout) findViewById(R.id.editViewLocationTextInputLayout);
 
 
     }
@@ -63,13 +63,13 @@ public class RegisterPasswordActivity extends AppCompatActivity {
         if (!Validation.validatePassword(passwordEditText, inputLayoutPassword, RegisterPasswordActivity.this)) {
             return;
         }
-        if(!Validation.validatePassword(confirmPasswordEditText, inputLayoutconfirmPassword, RegisterPasswordActivity.this)){
+        if(!Validation.validatePassword(confirmPasswordEditText, inputLayoutConfirmPassword, RegisterPasswordActivity.this)){
             return;
         }
-        if (!Validation.validateMobileNumber(mobileNumberEditText, inputLayoutmobileNumber, RegisterPasswordActivity.this)){
+        if (!Validation.validateMobileNumber(mobileNumberEditText, inputLayoutMobileNumber, RegisterPasswordActivity.this)){
             return;
         }
-        if (!Validation.validateLocation(locationEditText, inputLayoutlocation, RegisterPasswordActivity.this)){
+        if (!Validation.validateLocation(locationEditText, inputLayoutLocation, RegisterPasswordActivity.this)){
             return;
         }
     }
@@ -93,13 +93,13 @@ public class RegisterPasswordActivity extends AppCompatActivity {
                     Validation.validatePassword(passwordEditText, inputLayoutPassword, RegisterPasswordActivity.this);
                     break;
                 case R.id.editViewConfirmPassword:
-                    Validation.validatePassword(confirmPasswordEditText, inputLayoutconfirmPassword, RegisterPasswordActivity.this);
+                    Validation.validatePassword(confirmPasswordEditText, inputLayoutConfirmPassword, RegisterPasswordActivity.this);
                     break;
                 case R.id.editViewMobileNumber:
-                    Validation.validateMobileNumber(mobileNumberEditText, inputLayoutmobileNumber, RegisterPasswordActivity.this);
+                    Validation.validateMobileNumber(mobileNumberEditText, inputLayoutMobileNumber, RegisterPasswordActivity.this);
                     break;
                 case R.id.editViewLocation:
-                    Validation.validateLocation(locationEditText, inputLayoutlocation, RegisterPasswordActivity.this);
+                    Validation.validateLocation(locationEditText, inputLayoutLocation, RegisterPasswordActivity.this);
                     break;
             }
         }

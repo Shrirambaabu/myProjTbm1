@@ -74,35 +74,35 @@ public class Validation {
     }
 
 
-    public static boolean validatePassword(AppCompatEditText passwordEditText, TextInputLayout inputLayoutpassword, Activity activity) {
+    public static boolean validatePassword(AppCompatEditText passwordEditText, TextInputLayout inputLayoutPassword, Activity activity) {
         if (passwordEditText.getText().toString().trim().isEmpty() || passwordEditText.getText().length() < 4) {
-            inputLayoutpassword.setError(activity.getString(R.string.err_msg_password));
+            inputLayoutPassword.setError(activity.getString(R.string.err_msg_password));
             requestFocus(passwordEditText, activity);
             return false;
         } else {
-            inputLayoutpassword.setErrorEnabled(false);
+            inputLayoutPassword.setErrorEnabled(false);
         }
         return true;
     }
 
 
-    public static boolean validateMobileNumber(AppCompatEditText mobileNumberEditText, TextInputLayout inputLayoutmobileNumber, Activity activity) {
+    public static boolean validateMobileNumber(AppCompatEditText mobileNumberEditText, TextInputLayout inputLayoutMobileNumber, Activity activity) {
 
         if (mobileNumberEditText.getText().toString().trim().isEmpty() || mobileNumberEditText.getText().length() < 10) {
             requestFocus(mobileNumberEditText, activity);
             return false;
         } else {
-            inputLayoutmobileNumber.setErrorEnabled(false);
+            inputLayoutMobileNumber.setErrorEnabled(false);
         }
         return true;
     }
 
-    public static boolean validateLocation(AppCompatEditText locationEditText, TextInputLayout inputLayoutlocation, Activity activity) {
+    public static boolean validateLocation(AppCompatEditText locationEditText, TextInputLayout inputLayoutLocation, Activity activity) {
         if (locationEditText.getText().toString().trim().isEmpty() || locationEditText.getText().length() < 2) {
             requestFocus(locationEditText, activity);
             return false;
         } else {
-            inputLayoutlocation.setErrorEnabled(false);
+            inputLayoutLocation.setErrorEnabled(false);
         }
         return true;
     }
