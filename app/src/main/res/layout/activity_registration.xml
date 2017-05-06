@@ -93,7 +93,6 @@
                 android:layout_marginTop="@dimen/margin_16"
                 android:textColorHint="@color/white">
 
-
                 <android.support.v7.widget.AppCompatAutoCompleteTextView
                     android:id="@+id/editViewCollegeName"
                     android:layout_width="match_parent"
