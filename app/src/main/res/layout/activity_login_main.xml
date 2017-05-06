@@ -14,7 +14,6 @@
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_gravity="center"
-        android:layout_marginTop="@dimen/margin_20"
         app:srcCompat="@drawable/logo" />
 
     <LinearLayout

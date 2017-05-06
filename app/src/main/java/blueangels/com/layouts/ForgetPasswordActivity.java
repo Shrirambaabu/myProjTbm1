@@ -42,7 +42,7 @@ public class ForgetPasswordActivity extends AppCompatActivity {
     private void addressingView() {
 
         emailEditText = (AppCompatEditText) findViewById(R.id.editTextEmail);
-        inputLayoutEmail = (TextInputLayout) findViewById(R.id.linearLayoutEmail);
+        inputLayoutEmail = (TextInputLayout) findViewById(R.id.textInputLayoutEmail);
 
     }
 
