@@ -28,7 +28,7 @@ public class RegisterPasswordActivity extends AppCompatActivity {
     private AppCompatEditText passwordEditText, confirmPasswordEditText, mobileNumberEditText;
     private AppCompatAutoCompleteTextView locationEditText;
     private TextInputLayout inputLayoutPassword, inputLayoutConfirmPassword, inputLayoutMobileNumber, inputLayoutLocation;
-    private AppCompatSpinner industrySpinnerOne, industrySpinnerTwo,industrySpinnerThree, companySpinnerOne, companySpinnerTwo,companySpinnerThree;
+    private AppCompatSpinner industrySpinnerOne, industrySpinnerTwo, industrySpinnerThree, companySpinnerOne, companySpinnerTwo, companySpinnerThree;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,79 +48,31 @@ public class RegisterPasswordActivity extends AppCompatActivity {
     }
 
     private void settingPassOutYearSpinner(String[] passOutYear) {
-        {
 
-            List<String> yearList = new ArrayList<String>();
+        List<String> yearList = new ArrayList<String>();
 
-            Collections.addAll(yearList, passOutYear);
+        Collections.addAll(yearList, passOutYear);
 
-            ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item_custom, yearList);
-            industrySpinnerOne.setPrompt("  -- Select the Passout Year -- ");
-            industrySpinnerOne.setAdapter(spinnerArrayAdapter);
+        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item_custom, yearList);
+        industrySpinnerOne.setPrompt("  -- Select the Passout Year -- ");
+        industrySpinnerOne.setAdapter(spinnerArrayAdapter);
 
-        }
-        {
+        companySpinnerOne.setPrompt("  -- Select the Passout Year -- ");
+        companySpinnerOne.setAdapter(spinnerArrayAdapter);
 
-            List<String> yearList = new ArrayList<String>();
+        industrySpinnerTwo.setPrompt("  -- Select the Passout Year -- ");
+        industrySpinnerTwo.setAdapter(spinnerArrayAdapter);
 
-            Collections.addAll(yearList, passOutYear);
+        companySpinnerTwo.setPrompt("  -- Select the Passout Year -- ");
 
-            ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item_custom, yearList);
-            companySpinnerOne.setPrompt("  -- Select the Passout Year -- ");
-            companySpinnerOne.setAdapter(spinnerArrayAdapter);
+        industrySpinnerThree.setPrompt("  -- Select the Passout Year -- ");
+        industrySpinnerThree.setAdapter(spinnerArrayAdapter);
 
-        }
-        {
-
-            List<String> yearList = new ArrayList<String>();
-
-            Collections.addAll(yearList, passOutYear);
-
-            ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item_custom, yearList);
-           industrySpinnerTwo.setPrompt("  -- Select the Passout Year -- ");
-            industrySpinnerTwo.setAdapter(spinnerArrayAdapter);
-
-        }
-        {
-
-            List<String> yearList = new ArrayList<String>();
-
-            Collections.addAll(yearList, passOutYear);
-
-            ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item_custom, yearList);
-            companySpinnerTwo.setPrompt("  -- Select the Passout Year -- ");
-            companySpinnerTwo.setAdapter(spinnerArrayAdapter);
-
-        }
-        {
-
-            List<String> yearList = new ArrayList<String>();
-
-            Collections.addAll(yearList, passOutYear);
-
-            ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item_custom, yearList);
-            industrySpinnerThree.setPrompt("  -- Select the Passout Year -- ");
-            industrySpinnerThree.setAdapter(spinnerArrayAdapter);
-
-        }
-        {
-
-            List<String> yearList = new ArrayList<String>();
-
-            Collections.addAll(yearList, passOutYear);
-
-            ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item_custom, yearList);
-            companySpinnerThree.setPrompt("  -- Select the Passout Year -- ");
-            companySpinnerThree.setAdapter(spinnerArrayAdapter);
-
-        }
+        companySpinnerThree.setPrompt("  -- Select the Passout Year -- ");
+        companySpinnerThree.setAdapter(spinnerArrayAdapter);
 
 
     }
-
-
-
-
 
     private void addressingView() {
         passwordEditText = (AppCompatEditText) findViewById(R.id.editViewPassword);
@@ -128,15 +80,13 @@ public class RegisterPasswordActivity extends AppCompatActivity {
         mobileNumberEditText = (AppCompatEditText) findViewById(R.id.editViewMobileNumber);
         locationEditText = (AppCompatAutoCompleteTextView) findViewById(R.id.editViewLocation);
 
+        industrySpinnerOne = (AppCompatSpinner) findViewById(R.id.industry_spinner1);
+        industrySpinnerTwo = (AppCompatSpinner) findViewById(R.id.industry_spinner2);
+        industrySpinnerThree = (AppCompatSpinner) findViewById(R.id.industry_spinner3);
 
-        industrySpinnerOne=(AppCompatSpinner) findViewById(R.id.industry_spinner1);
-        industrySpinnerTwo=(AppCompatSpinner) findViewById(R.id.industry_spinner2);
-        industrySpinnerThree=(AppCompatSpinner) findViewById(R.id.industry_spinner3);
-
-        companySpinnerOne=(AppCompatSpinner) findViewById(R.id.company_spinner1);
-        companySpinnerTwo=(AppCompatSpinner) findViewById(R.id.company_spinner2);
-        companySpinnerThree=(AppCompatSpinner) findViewById(R.id.company_spinner3);
-
+        companySpinnerOne = (AppCompatSpinner) findViewById(R.id.company_spinner1);
+        companySpinnerTwo = (AppCompatSpinner) findViewById(R.id.company_spinner2);
+        companySpinnerThree = (AppCompatSpinner) findViewById(R.id.company_spinner3);
 
 
         inputLayoutPassword = (TextInputLayout) findViewById(R.id.ViewPasswordTextInputLayout);
@@ -144,7 +94,7 @@ public class RegisterPasswordActivity extends AppCompatActivity {
         inputLayoutMobileNumber = (TextInputLayout) findViewById(R.id.ViewMobileNumberTextInputLayout);
         inputLayoutLocation = (TextInputLayout) findViewById(R.id.ViewLocationTextInputLayout);
 
-        scrollView = (ScrollView)findViewById(R.id.scroll_view_activity_register_password);
+        scrollView = (ScrollView) findViewById(R.id.scroll_view_activity_register_password);
         scrollView.setDescendantFocusability(ViewGroup.FOCUS_BEFORE_DESCENDANTS);
         scrollView.setFocusable(true);
         scrollView.setFocusableInTouchMode(true);
@@ -156,6 +106,7 @@ public class RegisterPasswordActivity extends AppCompatActivity {
         confirmPasswordEditText.addTextChangedListener(new CustomWatcher(confirmPasswordEditText));
         mobileNumberEditText.addTextChangedListener(new CustomWatcher(mobileNumberEditText));
         locationEditText.addTextChangedListener(new CustomWatcher(locationEditText));
+
         scrollView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {

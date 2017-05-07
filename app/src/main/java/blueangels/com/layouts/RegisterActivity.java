@@ -1,8 +1,10 @@
 package blueangels.com.layouts;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatAutoCompleteTextView;
 import android.support.v7.widget.AppCompatEditText;
@@ -12,8 +14,12 @@ import android.text.TextWatcher;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ScrollView;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -33,6 +39,7 @@ public class RegisterActivity extends AppCompatActivity {
     private AppCompatAutoCompleteTextView collegeEditText, departmentEditText;
     private AppCompatSpinner passOutYearSpinner;
     private TextInputLayout inputLayoutName, inputLayoutEmail, inputLayoutCollege, inputLayoutDepartment;
+    private Button registerBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,7 +109,37 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
+        passOutYearSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position == 0) {
+                    //
+                    setSpinnerError(passOutYearSpinner,"Field can't be empty");
+                }else {
+                    // Your code to process the selection
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
     }
+
+    private void setSpinnerError(Spinner spinner, String error){
+        View selectedView = spinner.getSelectedView();
+        if (selectedView != null && selectedView instanceof TextView) {
+            spinner.requestFocus();
+            TextView selectedTextView = (TextView) selectedView;
+            selectedTextView.setError("error"); // any name of the error will do
+            selectedTextView.setTextColor(ContextCompat.getColor(RegisterActivity.this,R.color.colorAccent)); //text color in which you want your error message to be displayed
+            selectedTextView.setText(error); // actual error message
+            spinner.performClick(); // to open the spinner list if error is found.
+        }
+    }
+
 
     public void registerNew(View view) {
 

@@ -7,6 +7,7 @@
     android:background="@color/colorBackground"
     android:focusableInTouchMode="true"
     android:orientation="vertical"
+    android:gravity="center"
     tools:context="blueangels.com.layouts.MainActivity">
 
     <ImageView
