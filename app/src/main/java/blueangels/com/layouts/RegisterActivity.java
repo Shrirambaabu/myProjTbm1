@@ -1,10 +1,8 @@
 package blueangels.com.layouts;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatAutoCompleteTextView;
 import android.support.v7.widget.AppCompatEditText;
@@ -18,14 +16,13 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ScrollView;
-import android.widget.Spinner;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import blueangels.com.layouts.Validation.Validation;
+import blueangels.com.layouts.Utils.Utils;
+import blueangels.com.layouts.Utils.Validation;
 
 /**
  * Created by Admin on 5/2/2017.
@@ -33,7 +30,7 @@ import blueangels.com.layouts.Validation.Validation;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private String[] passOutYear;
+    private String yearPassOutSpinnerValue = null;
     private ScrollView scrollView;
     private AppCompatEditText nameEditText, emailEditText;
     private AppCompatAutoCompleteTextView collegeEditText, departmentEditText;
@@ -53,7 +50,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         addingListener();
 
-        passOutYear = getResources().getStringArray(R.array.year_arrays);
+        String[] passOutYear = getResources().getStringArray(R.array.year_arrays);
 
         settingPassOutYearSpinner(passOutYear);
 
@@ -113,10 +110,11 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position == 0) {
-                    //
-                    setSpinnerError(passOutYearSpinner,"Field can't be empty");
-                }else {
+                    //setting error if not clicked
+                    Utils.setSpinnerError(passOutYearSpinner, "Field can't be empty", RegisterActivity.this);
+                } else {
                     // Your code to process the selection
+                    yearPassOutSpinnerValue = passOutYearSpinner.getSelectedItem().toString();
                 }
             }
 
@@ -126,18 +124,6 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-    }
-
-    private void setSpinnerError(Spinner spinner, String error){
-        View selectedView = spinner.getSelectedView();
-        if (selectedView != null && selectedView instanceof TextView) {
-            spinner.requestFocus();
-            TextView selectedTextView = (TextView) selectedView;
-            selectedTextView.setError("error"); // any name of the error will do
-            selectedTextView.setTextColor(ContextCompat.getColor(RegisterActivity.this,R.color.colorAccent)); //text color in which you want your error message to be displayed
-            selectedTextView.setText(error); // actual error message
-            spinner.performClick(); // to open the spinner list if error is found.
-        }
     }
 
 
@@ -153,6 +139,13 @@ public class RegisterActivity extends AppCompatActivity {
         }
 
         if (!Validation.validateEmail(emailEditText, inputLayoutEmail, RegisterActivity.this)) {
+            return;
+        }
+
+        if (yearPassOutSpinnerValue == null) {
+            passOutYearSpinner.setFocusable(true);
+            passOutYearSpinner.setFocusableInTouchMode(true);
+            passOutYearSpinner.requestFocus();
             return;
         }
 

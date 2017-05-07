@@ -11,7 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import blueangels.com.layouts.Validation.Validation;
+import blueangels.com.layouts.Utils.Validation;
 
 /**
  * Created by Admin on 5/2/2017.

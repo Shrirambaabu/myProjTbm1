@@ -9,7 +9,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Toast;
 
-import blueangels.com.layouts.Validation.Validation;
+import blueangels.com.layouts.Utils.Validation;
 
 /**
  * Created by Ashith VL on 5/2/2017.

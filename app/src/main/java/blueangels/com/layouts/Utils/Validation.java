@@ -1,4 +1,4 @@
-package blueangels.com.layouts.Validation;
+package blueangels.com.layouts.Utils;
 
 import android.app.Activity;
 import android.support.design.widget.TextInputLayout;

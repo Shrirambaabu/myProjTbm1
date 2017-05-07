@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import blueangels.com.layouts.Validation.Validation;
+import blueangels.com.layouts.Utils.Validation;
 
 public class RegisterPasswordActivity extends AppCompatActivity {
 
