@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatAutoCompleteTextView;
+import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatSpinner;
 import android.text.Editable;
@@ -16,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ScrollView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -36,7 +39,9 @@ public class RegisterActivity extends AppCompatActivity {
     private AppCompatAutoCompleteTextView collegeEditText, departmentEditText;
     private AppCompatSpinner passOutYearSpinner;
     private TextInputLayout inputLayoutName, inputLayoutEmail, inputLayoutCollege, inputLayoutDepartment;
-    private Button registerBtn;
+    private AppCompatButton registerBtn;
+    private AppCompatCheckBox checkBoxIntrested;
+    private boolean checkBoxIntrestedBoolean = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +93,10 @@ public class RegisterActivity extends AppCompatActivity {
         scrollView.setFocusable(true);
         scrollView.setFocusableInTouchMode(true);
 
+        checkBoxIntrested = (AppCompatCheckBox) findViewById(R.id.checkBox);
+
+        registerBtn = (AppCompatButton) findViewById(R.id.register_button);
+
     }
 
 
@@ -96,7 +105,6 @@ public class RegisterActivity extends AppCompatActivity {
         emailEditText.addTextChangedListener(new CustomWatcher(emailEditText));
         collegeEditText.addTextChangedListener(new CustomWatcher(collegeEditText));
         departmentEditText.addTextChangedListener(new CustomWatcher(departmentEditText));
-
 
         scrollView.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -124,12 +132,23 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-    }
+        checkBoxIntrested.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(checkBoxIntrested.isChecked())
+                {
+                    checkBoxIntrestedBoolean = checkBoxIntrested.isChecked();
+                }
+            }
+        });
 
+        registerBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-    public void registerNew(View view) {
-
-        submitRegistrationDetails();
+                submitRegistrationDetails();
+            }
+        });
 
     }
 

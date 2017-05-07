@@ -71,10 +71,10 @@ public class RegisterPasswordActivity extends AppCompatActivity {
         companySpinnerThree.setPrompt("  -- Select the Passout Year -- ");
         companySpinnerThree.setAdapter(spinnerArrayAdapter);
 
-
     }
 
     private void addressingView() {
+
         passwordEditText = (AppCompatEditText) findViewById(R.id.editViewPassword);
         confirmPasswordEditText = (AppCompatEditText) findViewById(R.id.editViewConfirmPassword);
         mobileNumberEditText = (AppCompatEditText) findViewById(R.id.editViewMobileNumber);
