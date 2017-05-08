@@ -1,6 +1,5 @@
 package blueangels.com.layouts;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -11,18 +10,29 @@ import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatSpinner;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import blueangels.com.layouts.Utils.Utils;
 import blueangels.com.layouts.Utils.Validation;
@@ -42,6 +52,7 @@ public class RegisterActivity extends AppCompatActivity {
     private AppCompatButton registerBtn;
     private AppCompatCheckBox checkBoxIntrested;
     private boolean checkBoxIntrestedBoolean = false;
+    private String URL = "http://192.168.43.80:8080/login/rest/loginService/register";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,8 +146,7 @@ public class RegisterActivity extends AppCompatActivity {
         checkBoxIntrested.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(checkBoxIntrested.isChecked())
-                {
+                if (checkBoxIntrested.isChecked()) {
                     checkBoxIntrestedBoolean = checkBoxIntrested.isChecked();
                 }
             }
@@ -176,8 +186,56 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
-        Intent registrationCompleteIntent = new Intent(RegisterActivity.this, RegisterPasswordActivity.class);
-        startActivity(registrationCompleteIntent);
+        register();
+
+        /*Intent registrationCompleteIntent = new Intent(RegisterActivity.this, RegisterPasswordActivity.class);
+        startActivity(registrationCompleteIntent);*/
+    }
+
+    private void register() {
+
+        StringRequest request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String s) {
+
+
+                Log.d("error", "" + s);
+
+                if (s.equals("true")) {
+                    Toast.makeText(RegisterActivity.this, "Registration Successful", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(RegisterActivity.this, "Can't Register", Toast.LENGTH_LONG).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Toast.makeText(RegisterActivity.this, "Some error occurred -> " + volleyError, Toast.LENGTH_LONG).show();
+                ;
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> parameters = new HashMap<String, String>();
+                parameters.put("name", nameEditText.getText().toString());
+                parameters.put("email", emailEditText.getText().toString());
+                parameters.put("year", yearPassOutSpinnerValue);
+                parameters.put("colg", collegeEditText.getText().toString());
+                parameters.put("dept", departmentEditText.getText().toString());
+                parameters.put("check", String.valueOf(checkBoxIntrestedBoolean));
+                return parameters;
+            }
+        };
+
+        int MY_SOCKET_TIMEOUT_MS = 30000;//30 seconds - change to what you want
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                MY_SOCKET_TIMEOUT_MS,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        RequestQueue rQueue = Volley.newRequestQueue(RegisterActivity.this);
+        rQueue.add(request);
+
     }
 
 

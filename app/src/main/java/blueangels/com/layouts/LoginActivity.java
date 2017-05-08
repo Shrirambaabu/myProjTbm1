@@ -7,9 +7,27 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatEditText;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import blueangels.com.layouts.Utils.Validation;
 
@@ -27,8 +45,6 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        ;
 
         if (getSupportActionBar() != null)
             getSupportActionBar().hide();
@@ -50,6 +66,19 @@ public class LoginActivity extends AppCompatActivity {
 
     private void addingListener() {
         emailEditText.addTextChangedListener(new CustomWatcher(emailEditText));
+
+        loginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                submitLoginDetails();
+
+        /*Intent loginIntent = new Intent(LoginActivity.this, MainActivity.class);
+        startActivity(loginIntent);*/
+
+            }
+        });
+
     }
 
     public void forgetPassword(View view) {
@@ -57,49 +86,56 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(forgetPasswordIntent);
     }
 
-    public void login(View view) {
-
-        submitLoginDetails();
-        
-        /*Intent loginIntent = new Intent(LoginActivity.this, MainActivity.class);
-        startActivity(loginIntent);*/
-
-        /*StringRequest request = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>(){
-            @Override
-            public void onResponse(String s) {
-                if(s.equals("true")){
-                    Toast.makeText(LoginActivity.this, "Login Successful"+s, Toast.LENGTH_LONG).show();
-                }
-                else{
-                    Toast.makeText(LoginActivity.this, "Incorrect Details", Toast.LENGTH_LONG).show();
-                }
-            }
-        },new Response.ErrorListener(){
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                Toast.makeText(LoginActivity.this, "Some error occurred -> "+volleyError, Toast.LENGTH_LONG).show();;
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> parameters = new HashMap<String, String>();
-                parameters.put("email", email.getText().toString());
-                parameters.put("password", password.getText().toString());
-                return parameters;
-            }
-        };
-
-        RequestQueue rQueue = Volley.newRequestQueue(LoginActivity.this);
-        rQueue.add(request);
-*/
-    }
-
     private void submitLoginDetails() {
         if (!Validation.validateEmail(emailEditText, inputLayoutEmail, LoginActivity.this)) {
             return;
         }
 
-        Toast.makeText(getApplicationContext(), "Logged IN Successfully", Toast.LENGTH_SHORT).show();
+        login();
+
+        /*Toast.makeText(getApplicationContext(), "Logged in Successfully", Toast.LENGTH_SHORT).show();*/
+
+    }
+
+    private void login() {
+
+        StringRequest request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String s) {
+
+
+                if (s.equals("true")) {
+                    Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(LoginActivity.this, "Incorrect Details", Toast.LENGTH_LONG).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                //Toast.makeText(LoginActivity.this, "Some error occurred -> "+volleyError, Toast.LENGTH_LONG).show();
+
+                Log.d("error", "" + volleyError);
+
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> parameters = new HashMap<String, String>();
+                parameters.put("email", emailEditText.getText().toString().trim());
+                parameters.put("password", passwordEditText.getText().toString().trim());
+                return parameters;
+            }
+        };
+
+        int MY_SOCKET_TIMEOUT_MS = 30000;//30 seconds - change to what you want
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                MY_SOCKET_TIMEOUT_MS,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        RequestQueue rQueue = Volley.newRequestQueue(LoginActivity.this);
+        rQueue.add(request);
 
     }
 
@@ -109,11 +145,11 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    public class CustomWatcher implements TextWatcher {
+    private class CustomWatcher implements TextWatcher {
 
         private View view;
 
-        public CustomWatcher(View view) {
+        CustomWatcher(View view) {
             this.view = view;
         }
 
