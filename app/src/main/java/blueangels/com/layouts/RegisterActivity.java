@@ -228,8 +228,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
                 break;
             case R.id.register_button:
                 submitRegistrationDetails();
-
-                Toast.makeText(RegisterActivity.this,yearPassOutSpinnerValue,Toast.LENGTH_LONG).show();
                 break;
         }
     }
