@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatAutoCompleteTextView;
+import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatSpinner;
 import android.text.Editable;
@@ -23,12 +24,13 @@ import java.util.List;
 import blueangels.com.layouts.Utils.Utils;
 import blueangels.com.layouts.Utils.Validation;
 
-public class RegisterPasswordActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class RegisterPasswordActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnTouchListener, View.OnClickListener {
 
     private String[] passOutYear;
     private String industrySpinnerOneValue = null, industrySpinnerTwoValue = null, industrySpinnerThreeValue = null;
     private String companySpinnerOneValue = null, companySpinnerTwoValue = null, companySpinnerThreeValue = null;
     private ScrollView scrollView;
+    private AppCompatButton regBtn;
     private AppCompatEditText passwordEditText, confirmPasswordEditText, mobileNumberEditText;
     private AppCompatAutoCompleteTextView locationEditText;
     private TextInputLayout inputLayoutPassword, inputLayoutConfirmPassword, inputLayoutMobileNumber, inputLayoutLocation;
@@ -87,6 +89,7 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
         companySpinnerTwo = (AppCompatSpinner) findViewById(R.id.company_spinner2);
         companySpinnerThree = (AppCompatSpinner) findViewById(R.id.company_spinner3);
 
+        regBtn = (AppCompatButton) findViewById(R.id.register_submit);
 
         inputLayoutPassword = (TextInputLayout) findViewById(R.id.ViewPasswordTextInputLayout);
         inputLayoutConfirmPassword = (TextInputLayout) findViewById(R.id.ViewConfirmPasswordTextInputLayout);
@@ -106,13 +109,9 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
         mobileNumberEditText.addTextChangedListener(new CustomWatcher(mobileNumberEditText));
         locationEditText.addTextChangedListener(new CustomWatcher(locationEditText));
 
-        scrollView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                v.requestFocusFromTouch();
-                return false;
-            }
-        });
+        scrollView.setOnTouchListener(this);
+
+        regBtn.setOnClickListener(this);
 
         industrySpinnerOne.setOnItemSelectedListener(this);
         industrySpinnerTwo.setOnItemSelectedListener(this);
@@ -120,13 +119,6 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
         companySpinnerOne.setOnItemSelectedListener(this);
         companySpinnerTwo.setOnItemSelectedListener(this);
         companySpinnerThree.setOnItemSelectedListener(this);
-
-    }
-
-
-    public void RegistrationSuccess(View view) {
-
-        finalRegistrationSuccess();
 
     }
 
@@ -237,6 +229,21 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        v.requestFocusFromTouch();
+        return false;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.register_submit:
+                finalRegistrationSuccess();
+                break;
+        }
     }
 
     private class CustomWatcher implements TextWatcher {

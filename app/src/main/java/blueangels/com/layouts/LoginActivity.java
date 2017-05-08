@@ -103,7 +103,6 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onResponse(String s) {
 
-
                 if (s.equals("true")) {
                     Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
                 } else {
