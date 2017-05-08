@@ -10,7 +10,6 @@ import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatSpinner;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,7 +40,7 @@ import blueangels.com.layouts.Utils.Validation;
  * Created by Admin on 5/2/2017.
  */
 
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity implements View.OnTouchListener, AdapterView.OnItemSelectedListener, View.OnClickListener {
 
     private String yearPassOutSpinnerValue = null;
     private ScrollView scrollView;
@@ -116,44 +115,12 @@ public class RegisterActivity extends AppCompatActivity {
         collegeEditText.addTextChangedListener(new CustomWatcher(collegeEditText));
         departmentEditText.addTextChangedListener(new CustomWatcher(departmentEditText));
 
-        scrollView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                v.requestFocusFromTouch();
-                return false;
-            }
-        });
+        scrollView.setOnTouchListener(this);
 
-        passOutYearSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position != 0) {
-                    yearPassOutSpinnerValue = passOutYearSpinner.getSelectedItem().toString();
-                }
-            }
+        passOutYearSpinner.setOnItemSelectedListener(this);
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-        checkBoxIntrested.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (checkBoxIntrested.isChecked()) {
-                    checkBoxIntrestedBoolean = checkBoxIntrested.isChecked();
-                }
-            }
-        });
-
-        registerBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                submitRegistrationDetails();
-            }
-        });
+        checkBoxIntrested.setOnClickListener(this);
+        registerBtn.setOnClickListener(this);
 
     }
 
@@ -194,9 +161,6 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onResponse(String s) {
 
-
-                Log.d("error", "" + s);
-
                 if (s.equals("true")) {
                     Toast.makeText(RegisterActivity.this, "Registration Successful", Toast.LENGTH_LONG).show();
                 } else {
@@ -232,6 +196,38 @@ public class RegisterActivity extends AppCompatActivity {
         RequestQueue rQueue = Volley.newRequestQueue(RegisterActivity.this);
         rQueue.add(request);
 
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        v.requestFocusFromTouch();
+        return false;
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        if (position != 0) {
+            yearPassOutSpinnerValue = passOutYearSpinner.getSelectedItem().toString();
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.checkBox:
+                if (checkBoxIntrested.isChecked()) {
+                    checkBoxIntrestedBoolean = checkBoxIntrested.isChecked();
+                }
+                break;
+            case R.id.register_button:
+                submitRegistrationDetails();
+                break;
+        }
     }
 
 

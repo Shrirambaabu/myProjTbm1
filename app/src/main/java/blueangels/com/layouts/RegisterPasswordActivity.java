@@ -200,9 +200,7 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        int spinnerId = parent.getId();
-
-        switch (spinnerId) {
+        switch (parent.getId()) {
             case R.id.industry_spinner1:
                 if (position != 0) {
                     industrySpinnerOneValue = industrySpinnerOne.getSelectedItem().toString();
