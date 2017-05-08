@@ -209,28 +209,28 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
                 break;
             case R.id.industry_spinner2:
                 if (position != 0) {
-                    industrySpinnerTwoValue = companySpinnerOne.getSelectedItem().toString();
+                    industrySpinnerTwoValue = industrySpinnerTwo.getSelectedItem().toString();
                 }else{
                     industrySpinnerTwoValue = null;
                 }
                 break;
             case R.id.company_spinner2:
                 if (position != 0) {
-                    companySpinnerTwoValue = companySpinnerOne.getSelectedItem().toString();
+                    companySpinnerTwoValue = companySpinnerTwo.getSelectedItem().toString();
                 }else{
                     companySpinnerTwoValue = null;
                 }
                 break;
             case R.id.industry_spinner3:
                 if (position != 0) {
-                    industrySpinnerThreeValue = companySpinnerOne.getSelectedItem().toString();
+                    industrySpinnerThreeValue = industrySpinnerThree.getSelectedItem().toString();
                 }else{
                     industrySpinnerThreeValue = null;
                 }
                 break;
             case R.id.company_spinner3:
                 if (position != 0) {
-                    companySpinnerThreeValue = companySpinnerOne.getSelectedItem().toString();
+                    companySpinnerThreeValue = companySpinnerThree.getSelectedItem().toString();
                 }else{
                     companySpinnerThreeValue = null;
                 }
