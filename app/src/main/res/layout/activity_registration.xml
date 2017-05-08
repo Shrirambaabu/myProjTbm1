@@ -91,7 +91,6 @@
                 android:layout_marginEnd="@dimen/margin_16"
                 android:layout_marginStart="@dimen/margin_16"
                 android:layout_marginTop="4dp"
-                android:spinnerMode="dialog"
                 style="@android:style/Widget.Holo.Light.Spinner"
                 app:backgroundTint="@color/white" />
 

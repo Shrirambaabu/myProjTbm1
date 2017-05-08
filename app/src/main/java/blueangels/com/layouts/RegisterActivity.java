@@ -80,7 +80,6 @@ public class RegisterActivity extends AppCompatActivity {
         Collections.addAll(yearList, passOutYear);
 
         ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item_custom, yearList);
-        passOutYearSpinner.setPrompt("  -- Select the Passout Year -- ");
         passOutYearSpinner.setAdapter(spinnerArrayAdapter);
 
     }
@@ -130,7 +129,7 @@ public class RegisterActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position == 0) {
                     //setting error if not clicked
-                    Utils.setSpinnerError(passOutYearSpinner, "Field can't be empty", RegisterActivity.this);
+
                 } else {
                     // Your code to process the selection
                     yearPassOutSpinnerValue = passOutYearSpinner.getSelectedItem().toString();
@@ -175,6 +174,7 @@ public class RegisterActivity extends AppCompatActivity {
             passOutYearSpinner.setFocusable(true);
             passOutYearSpinner.setFocusableInTouchMode(true);
             passOutYearSpinner.requestFocus();
+            Utils.setSpinnerError(passOutYearSpinner, "Field can't be empty", RegisterActivity.this);
             return;
         }
 
@@ -211,7 +211,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 Toast.makeText(RegisterActivity.this, "Some error occurred -> " + volleyError, Toast.LENGTH_LONG).show();
-                ;
+
             }
         }) {
             @Override

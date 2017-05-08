@@ -53,6 +53,7 @@
     <string name="err_msg_mobile">Enter a valid Mobile Number</string>
 
     <string-array name="year_arrays">
+        <item>  -- Select the Passout Year -- </item>
         <item>2025</item>
         <item>2024</item>
         <item>2023</item>
