@@ -60,6 +60,7 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
         Collections.addAll(yearList, passOutYear);
 
         ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item_custom, yearList);
+
         industrySpinnerOne.setAdapter(spinnerArrayAdapter);
 
         companySpinnerOne.setAdapter(spinnerArrayAdapter);
@@ -147,14 +148,14 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
                 return;
             }
         }
-        if (industrySpinnerTwoValue != null || companySpinnerTwoValue != null) {
-            if (industrySpinnerTwoValue == null) {
+        if (industrySpinnerTwoValue == null || companySpinnerTwoValue == null) {
+            if (industrySpinnerTwoValue == null && companySpinnerTwoValue != null) {
                 industrySpinnerTwo.setFocusable(true);
                 industrySpinnerTwo.setFocusableInTouchMode(true);
                 industrySpinnerTwo.requestFocus();
                 Utils.setSpinnerError(industrySpinnerTwo, "Field can't be empty", RegisterPasswordActivity.this);
                 return;
-            } else if (companySpinnerTwoValue == null) {
+            } else if (industrySpinnerTwoValue != null && companySpinnerTwoValue == null) {
                 companySpinnerTwo.setFocusable(true);
                 companySpinnerTwo.setFocusableInTouchMode(true);
                 companySpinnerTwo.requestFocus();
@@ -163,14 +164,14 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
             }
         }
 
-        if (industrySpinnerThreeValue != null || companySpinnerThreeValue == null) {
-            if (industrySpinnerThreeValue == null) {
+        if (industrySpinnerThreeValue == null || companySpinnerThreeValue == null) {
+            if (industrySpinnerThreeValue == null && companySpinnerThreeValue != null) {
                 industrySpinnerThree.setFocusable(true);
                 industrySpinnerThree.setFocusableInTouchMode(true);
                 industrySpinnerThree.requestFocus();
                 Utils.setSpinnerError(industrySpinnerThree, "Field can't be empty", RegisterPasswordActivity.this);
                 return;
-            } else if (companySpinnerThreeValue == null) {
+            } else  if (industrySpinnerThreeValue != null && companySpinnerThreeValue == null){
                 companySpinnerThree.setFocusable(true);
                 companySpinnerThree.setFocusableInTouchMode(true);
                 companySpinnerThree.requestFocus();
