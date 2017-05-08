@@ -25,7 +25,7 @@ import blueangels.com.layouts.Utils.Validation;
 
 public class RegisterPasswordActivity extends AppCompatActivity {
 
-    private String[] passOutYear;
+    private String[] passOutYear ;
     private String industrySpinnerOneValue = null, industrySpinnerTwoValue = null, industrySpinnerThreeValue = null;
     private String companySpinnerOneValue = null, companySpinnerTwoValue = null, companySpinnerThreeValue = null;
     private ScrollView scrollView;
