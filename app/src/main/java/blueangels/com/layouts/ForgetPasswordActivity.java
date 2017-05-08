@@ -7,6 +7,7 @@ import android.support.v7.widget.AppCompatEditText;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import blueangels.com.layouts.Utils.Validation;
@@ -15,40 +16,39 @@ import blueangels.com.layouts.Utils.Validation;
  * Created by Ashith VL on 5/2/2017.
  */
 
-public class ForgetPasswordActivity extends AppCompatActivity {
+public class ForgetPasswordActivity extends AppCompatActivity implements View.OnClickListener {
 
 
     private AppCompatEditText emailEditText;
     private TextInputLayout inputLayoutEmail;
-    
+    private Button forgetPasswordSubmit;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        getSupportActionBar().hide();
+
+        if (getSupportActionBar() != null)
+            getSupportActionBar().hide();
 
         setContentView(R.layout.activity_forget_password);
 
         addressingView();
 
         addingListener();
-        
+
     }
 
     private void addingListener() {
         emailEditText.addTextChangedListener(new CustomWatcher(emailEditText));
+        forgetPasswordSubmit.setOnClickListener(this);
     }
 
     private void addressingView() {
 
         emailEditText = (AppCompatEditText) findViewById(R.id.editTextEmail);
         inputLayoutEmail = (TextInputLayout) findViewById(R.id.textInputLayoutEmail);
-
-    }
-
-    public void forgetPassword(View view) {
-
-        submittingForgetPassword();
+        forgetPasswordSubmit = (Button) findViewById(R.id.forget_password_button);
 
     }
 
@@ -58,6 +58,15 @@ public class ForgetPasswordActivity extends AppCompatActivity {
         }
 
         Toast.makeText(getApplicationContext(), "Email send Successfully", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.forget_password_button:
+                submittingForgetPassword();
+                break;
+        }
     }
 
     private class CustomWatcher implements TextWatcher {
