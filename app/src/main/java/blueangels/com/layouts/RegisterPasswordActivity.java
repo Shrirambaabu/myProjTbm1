@@ -158,6 +158,8 @@ public class RegisterPasswordActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position == 0) {
                     Utils.setSpinnerError(industrySpinnerTwo, "Field can't be empty", RegisterPasswordActivity.this);
+                }else{
+                    industrySpinnerTwoValue=industrySpinnerTwo.getSelectedItem().toString();
                 }
             }
 
@@ -172,6 +174,8 @@ public class RegisterPasswordActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position == 0) {
                     Utils.setSpinnerError(companySpinnerTwo, "Field can't be empty", RegisterPasswordActivity.this);
+                }else{
+                    companySpinnerTwoValue=companySpinnerTwo.getSelectedItem().toString();
                 }
             }
 
@@ -186,6 +190,8 @@ public class RegisterPasswordActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position == 0) {
                     Utils.setSpinnerError(industrySpinnerThree, "Field can't be empty", RegisterPasswordActivity.this);
+                }else{
+                    industrySpinnerThreeValue=industrySpinnerThree.getSelectedItem().toString();
                 }
             }
 
@@ -200,6 +206,8 @@ public class RegisterPasswordActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position == 0) {
                     Utils.setSpinnerError(companySpinnerThree, "Field can't be empty", RegisterPasswordActivity.this);
+                }else{
+                    companySpinnerThreeValue=companySpinnerThree.getSelectedItem().toString();
                 }
             }
 
