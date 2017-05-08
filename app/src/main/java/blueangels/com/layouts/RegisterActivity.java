@@ -127,11 +127,7 @@ public class RegisterActivity extends AppCompatActivity {
         passOutYearSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position == 0) {
-                    //setting error if not clicked
-
-                } else {
-                    // Your code to process the selection
+                if (position != 0) {
                     yearPassOutSpinnerValue = passOutYearSpinner.getSelectedItem().toString();
                 }
             }
