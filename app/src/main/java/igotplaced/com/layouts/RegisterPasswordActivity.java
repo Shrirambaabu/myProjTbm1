@@ -101,7 +101,7 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
         industrySpinnerTwo = (AppCompatSpinner) findViewById(R.id.industry_spinner2);
         industrySpinnerThree = (AppCompatSpinner) findViewById(R.id.industry_spinner3);
 
-        /*companySpinnerOne = (AppCompatSpinner) findViewById(R.id.company_spinner1);*/
+        companySpinnerOne = (AppCompatSpinner) findViewById(R.id.company_spinner1);
         companySpinnerTwo = (AppCompatSpinner) findViewById(R.id.company_spinner2);
         companySpinnerThree = (AppCompatSpinner) findViewById(R.id.company_spinner3);
 
