@@ -1,4 +1,4 @@
-package blueangels.com.layouts;
+package igotplaced.com.layouts;
 
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
@@ -21,10 +21,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import blueangels.com.layouts.Adapters.SpinnerCheckBoxAdapter;
-import blueangels.com.layouts.Model.SpinnerWithCheckBox;
-import blueangels.com.layouts.Utils.Utils;
-import blueangels.com.layouts.Utils.Validation;
+import igotplaced.com.layouts.Adapters.SpinnerCheckBoxAdapter;
+import igotplaced.com.layouts.Model.SpinnerWithCheckBox;
+import igotplaced.com.layouts.Utils.Utils;
+import igotplaced.com.layouts.Utils.Validation;
 
 public class RegisterPasswordActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnTouchListener, View.OnClickListener {
 

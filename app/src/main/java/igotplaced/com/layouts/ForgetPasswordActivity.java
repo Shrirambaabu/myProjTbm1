@@ -1,4 +1,4 @@
-package blueangels.com.layouts;
+package igotplaced.com.layouts;
 
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import blueangels.com.layouts.Utils.Validation;
+import igotplaced.com.layouts.Utils.Validation;
 
 /**
  * Created by Ashith VL on 5/2/2017.

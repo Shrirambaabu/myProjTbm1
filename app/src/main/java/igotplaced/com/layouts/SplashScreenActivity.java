@@ -1,4 +1,4 @@
-package blueangels.com.layouts;
+package igotplaced.com.layouts;
 
 import android.content.Intent;
 import android.os.Bundle;

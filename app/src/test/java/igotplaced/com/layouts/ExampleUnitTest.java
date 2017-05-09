@@ -1,4 +1,4 @@
-package blueangels.com.layouts;
+package igotplaced.com.layouts;
 
 import org.junit.Test;
 

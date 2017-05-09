@@ -1,4 +1,4 @@
-package blueangels.com.layouts.Utils;
+package igotplaced.com.layouts.Utils;
 
 import android.app.Activity;
 import android.support.v4.content.ContextCompat;
@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import blueangels.com.layouts.R;
+import igotplaced.com.layouts.R;
 
 /**
  * Created by Ashith VL on 5/7/2017.

@@ -4,7 +4,7 @@ android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
     defaultConfig {
-        applicationId "blueangels.com.layouts"
+        applicationId "igotplaced.com.layouts"
         minSdkVersion 19
         targetSdkVersion 25
         versionCode 1

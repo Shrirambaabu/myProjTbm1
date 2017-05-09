@@ -1,4 +1,4 @@
-package blueangels.com.layouts.Utils;
+package igotplaced.com.layouts.Utils;
 
 import android.app.Activity;
 import android.support.design.widget.TextInputLayout;
@@ -8,7 +8,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
 
-import blueangels.com.layouts.R;
+import igotplaced.com.layouts.R;
 
 /**
  * Created by Ashith VL on 5/6/2017.

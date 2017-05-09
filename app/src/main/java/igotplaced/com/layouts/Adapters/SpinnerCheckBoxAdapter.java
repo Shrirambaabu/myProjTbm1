@@ -1,4 +1,4 @@
-package blueangels.com.layouts.Adapters;
+package igotplaced.com.layouts.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,8 +12,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import blueangels.com.layouts.Model.SpinnerWithCheckBox;
-import blueangels.com.layouts.R;
+import igotplaced.com.layouts.Model.SpinnerWithCheckBox;
+import igotplaced.com.layouts.R;
 
 /**
  * Created by Ashith VL on 5/8/2017.

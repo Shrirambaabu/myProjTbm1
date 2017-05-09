@@ -1,4 +1,4 @@
-package blueangels.com.layouts;
+package igotplaced.com.layouts;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -34,8 +34,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import blueangels.com.layouts.Utils.Utils;
-import blueangels.com.layouts.Utils.Validation;
+import igotplaced.com.layouts.Utils.Utils;
+import igotplaced.com.layouts.Utils.Validation;
 
 /**
  * Created by Admin on 5/2/2017.

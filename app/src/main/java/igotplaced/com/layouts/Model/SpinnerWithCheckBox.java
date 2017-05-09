@@ -1,4 +1,4 @@
-package blueangels.com.layouts.Model;
+package igotplaced.com.layouts.Model;
 
 /**
  * Created by Ashith VL on 5/8/2017.

@@ -8,7 +8,7 @@
     android:focusableInTouchMode="true"
     android:orientation="vertical"
     android:gravity="center"
-    tools:context="blueangels.com.layouts.MainActivity">
+    tools:context="igotplaced.com.layouts.MainActivity">
 
     <ImageView
         android:id="@+id/imageViewLogo"
