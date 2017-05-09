@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/colorPrimary"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:maxLines="1"
+        android:textSize="18sp"
+        android:padding="@dimen/margin_4dp"
+        android:textColor="@color/white"
+        android:layout_margin="@dimen/margin_4dp"
+        android:textAlignment="gravity" />
+
+    <CheckBox
+        android:id="@+id/checkbox_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="@dimen/margin_4dp"
+        app:buttonTint="@color/white" />
+</RelativeLayout>

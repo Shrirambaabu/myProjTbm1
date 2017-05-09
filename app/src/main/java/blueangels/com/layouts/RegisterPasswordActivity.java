@@ -21,6 +21,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import blueangels.com.layouts.Adapters.SpinnerCheckBoxAdapter;
+import blueangels.com.layouts.Model.SpinnerWithCheckBox;
 import blueangels.com.layouts.Utils.Utils;
 import blueangels.com.layouts.Utils.Validation;
 
@@ -35,6 +37,7 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
     private AppCompatAutoCompleteTextView locationEditText;
     private TextInputLayout inputLayoutPassword, inputLayoutConfirmPassword, inputLayoutMobileNumber, inputLayoutLocation;
     private AppCompatSpinner industrySpinnerOne, industrySpinnerTwo, industrySpinnerThree, companySpinnerOne, companySpinnerTwo, companySpinnerThree;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,8 +65,20 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
         ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item_custom, yearList);
 
         industrySpinnerOne.setAdapter(spinnerArrayAdapter);
+/*
+        companySpinnerOne.setAdapter(spinnerArrayAdapter);*/
 
-        companySpinnerOne.setAdapter(spinnerArrayAdapter);
+
+        ArrayList<SpinnerWithCheckBox> spinnerWithCheckBoxes = new ArrayList<>();
+
+        for (int i = 0; i < yearList.size(); i++) {
+            SpinnerWithCheckBox spinnerWithCheckBox = new SpinnerWithCheckBox();
+            spinnerWithCheckBox.setTitle(yearList.get(i));
+            spinnerWithCheckBox.setSelected(false);
+            spinnerWithCheckBoxes.add(spinnerWithCheckBox);
+        }
+
+        companySpinnerOne.setAdapter(new SpinnerCheckBoxAdapter(RegisterPasswordActivity.this, 0, spinnerWithCheckBoxes));
 
         industrySpinnerTwo.setAdapter(spinnerArrayAdapter);
 
@@ -171,7 +186,7 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
                 industrySpinnerThree.requestFocus();
                 Utils.setSpinnerError(industrySpinnerThree, "Field can't be empty", RegisterPasswordActivity.this);
                 return;
-            } else  if (industrySpinnerThreeValue != null && companySpinnerThreeValue == null){
+            } else if (industrySpinnerThreeValue != null && companySpinnerThreeValue == null) {
                 companySpinnerThree.setFocusable(true);
                 companySpinnerThree.setFocusableInTouchMode(true);
                 companySpinnerThree.requestFocus();
@@ -197,42 +212,43 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
             case R.id.industry_spinner1:
                 if (position != 0) {
                     industrySpinnerOneValue = industrySpinnerOne.getSelectedItem().toString();
-                }else{
+                } else {
                     industrySpinnerOneValue = null;
                 }
                 break;
             case R.id.company_spinner1:
                 if (position != 0) {
                     companySpinnerOneValue = companySpinnerOne.getSelectedItem().toString();
-                }else{
+                    Toast.makeText(getApplicationContext(),companySpinnerOneValue ,Toast.LENGTH_LONG).show();
+                } else {
                     companySpinnerOneValue = null;
                 }
                 break;
             case R.id.industry_spinner2:
                 if (position != 0) {
                     industrySpinnerTwoValue = industrySpinnerTwo.getSelectedItem().toString();
-                }else{
+                } else {
                     industrySpinnerTwoValue = null;
                 }
                 break;
             case R.id.company_spinner2:
                 if (position != 0) {
                     companySpinnerTwoValue = companySpinnerTwo.getSelectedItem().toString();
-                }else{
+                } else {
                     companySpinnerTwoValue = null;
                 }
                 break;
             case R.id.industry_spinner3:
                 if (position != 0) {
                     industrySpinnerThreeValue = industrySpinnerThree.getSelectedItem().toString();
-                }else{
+                } else {
                     industrySpinnerThreeValue = null;
                 }
                 break;
             case R.id.company_spinner3:
                 if (position != 0) {
                     companySpinnerThreeValue = companySpinnerThree.getSelectedItem().toString();
-                }else{
+                } else {
                     companySpinnerThreeValue = null;
                 }
                 break;
