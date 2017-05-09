@@ -21,15 +21,15 @@ import blueangels.com.layouts.R;
 
 public class SpinnerCheckBoxAdapter extends ArrayAdapter<SpinnerWithCheckBox> {
     private Context mContext;
-    private ArrayList<SpinnerWithCheckBox> listState;
-    private SpinnerCheckBoxAdapter myAdapter;
+    private ArrayList<SpinnerWithCheckBox> spinnerWithCheckBoxArrayList;
+    private SpinnerCheckBoxAdapter spinnerCheckBoxAdapter;
     private boolean isFromView = false;
 
     public SpinnerCheckBoxAdapter(Context context, int resource, List<SpinnerWithCheckBox> objects) {
         super(context, resource, objects);
         this.mContext = context;
-        this.listState = (ArrayList<SpinnerWithCheckBox>) objects;
-        this.myAdapter = this;
+        this.spinnerWithCheckBoxArrayList = (ArrayList<SpinnerWithCheckBox>) objects;
+        this.spinnerCheckBoxAdapter = this;
     }
 
     @Override
@@ -56,11 +56,11 @@ public class SpinnerCheckBoxAdapter extends ArrayAdapter<SpinnerWithCheckBox> {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        holder.mTextView.setText(listState.get(position).getTitle());
+        holder.mTextView.setText(spinnerWithCheckBoxArrayList.get(position).getTitle());
 
         // To check weather checked event fire from getview() or user input
         isFromView = true;
-        holder.mCheckBox.setChecked(listState.get(position).isSelected());
+        holder.mCheckBox.setChecked(spinnerWithCheckBoxArrayList.get(position).isSelected());
         isFromView = false;
 
         if ((position == 0)) {
@@ -74,16 +74,8 @@ public class SpinnerCheckBoxAdapter extends ArrayAdapter<SpinnerWithCheckBox> {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 int getPosition = (Integer) buttonView.getTag();
-
-                if (!isFromView) {
-                    if (!listState.get(getPosition).isSelected()) {
-                        if (isChecked) {
-                            for (int i = 0; i < listState.size(); i++) {
-                                listState.get(i).setSelected(true);
-                            }
-                        }
-                    }
-                    myAdapter.notifyDataSetChanged();
+                if(isChecked){
+                    holder.mCheckBox.setChecked(spinnerWithCheckBoxArrayList.get(getPosition).isSelected());
                 }
             }
         });
