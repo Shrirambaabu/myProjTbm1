@@ -1,6 +1,7 @@
 package igotplaced.com.layouts;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
@@ -12,6 +13,7 @@ import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatSpinner;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +36,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,7 +49,7 @@ import static igotplaced.com.layouts.Utils.Utils.BaseUri;
  * Created by Admin on 5/2/2017.
  */
 
-public class RegisterActivity extends AppCompatActivity implements View.OnTouchListener, AdapterView.OnItemSelectedListener, View.OnClickListener {
+public class RegisterActivity extends AppCompatActivity implements View.OnTouchListener, View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     private String yearPassOutSpinnerValue = null;
     private ScrollView scrollView;
@@ -59,13 +60,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
     private AppCompatButton registerBtn;
     private AppCompatCheckBox checkBoxIntrested;
     private boolean checkBoxIntrestedBoolean = false;
+    private ArrayAdapter<String> spinnerArrayAdapter;
 
 
-    private List<String> yearArrayList = new ArrayList<String>();
-
-
-    private ProgressDialog pDialog = new ProgressDialog(this);
-
+    private ProgressDialog pDialog;
 
     private String URL = "http://192.168.43.80:8080/login/rest/loginService/register";
 
@@ -83,28 +81,23 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
 
         settingPassOutYearSpinner();
 
-
     }
 
     private void settingPassOutYearSpinner() {
 
         List<String> yearList = networkYearSpinnerArrayRequest();
 
-        /*String[] passOutYear = getResources().getStringArray(R.array.year_arrays);
+        spinnerArrayAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item_custom, yearList);
 
-        List<String> yearList = new ArrayList<String>();
-
-        Collections.addAll(yearList, passOutYear);*/
-
-        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item_custom, yearList);
         passOutYearSpinner.setAdapter(spinnerArrayAdapter);
 
     }
 
     private List<String> networkYearSpinnerArrayRequest() {
 
-        String Url =  BaseUri + "/spinner/yearofpassout";
+        final List<String> yearArrayList = new ArrayList<String>();
 
+        pDialog = new ProgressDialog(RegisterActivity.this);
         pDialog.setMessage("Loading...");
         pDialog.show();
 
@@ -113,28 +106,22 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
             public void onResponse(JSONArray response) {
                 pDialog.dismiss();
 
-                for (int i=0; i<response.length(); i++) {
-                    String name = null;
+                for (int i = 0; i < response.length(); i++) {
                     try {
                         yearArrayList.add(String.valueOf(response.get(i)));
+                        spinnerArrayAdapter.notifyDataSetChanged();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
-
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Toast.makeText(RegisterActivity.this, error.toString(), Toast.LENGTH_LONG).show();
 
             }
         });
-
-        int MY_SOCKET_TIMEOUT_MS = 30000;//30 seconds - change to what you want
-        jsonArrayRequest.setRetryPolicy(new DefaultRetryPolicy(
-                MY_SOCKET_TIMEOUT_MS,
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
         RequestQueue rQueue = Volley.newRequestQueue(RegisterActivity.this);
         rQueue.add(jsonArrayRequest);
@@ -178,12 +165,20 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
 
         passOutYearSpinner.setOnItemSelectedListener(this);
 
+/*
+        passOutYearSpinner.setOnItemSelectedListener(new SpinnerOnItemSelectedListener());*/
+
         checkBoxIntrested.setOnClickListener(this);
         registerBtn.setOnClickListener(this);
 
     }
 
     private void submitRegistrationDetails() {
+
+
+        Toast.makeText(getApplicationContext(), "On Item Select : \n" + passOutYearSpinner.getSelectedItem(),
+                Toast.LENGTH_LONG).show();
+
         if (!Validation.validateName(nameEditText, inputLayoutName, RegisterActivity.this)) {
             return;
         }
@@ -267,7 +262,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         if (position != 0) {
             yearPassOutSpinnerValue = passOutYearSpinner.getSelectedItem().toString();
-        }else{
+            Toast.makeText(RegisterActivity.this, yearPassOutSpinnerValue, Toast.LENGTH_LONG).show();
+        } else {
             yearPassOutSpinnerValue = null;
         }
     }
@@ -324,4 +320,18 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
         }
     }
 
+ /*   private class SpinnerOnItemSelectedListener implements AdapterView.OnItemSelectedListener {
+
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+            Toast.makeText(parent.getContext(), "On Item Select : \n" + parent.getItemAtPosition(position).toString(),
+                    Toast.LENGTH_LONG).show();
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+
+        }
+    }*/
 }
