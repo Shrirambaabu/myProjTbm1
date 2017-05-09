@@ -21,8 +21,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import igotplaced.com.layouts.Adapters.SpinnerCheckBoxAdapter;
-import igotplaced.com.layouts.Model.SpinnerWithCheckBox;
 import igotplaced.com.layouts.Utils.Utils;
 import igotplaced.com.layouts.Utils.Validation;
 

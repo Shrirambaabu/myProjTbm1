@@ -6,7 +6,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-
+        <item name="android:dropDownListViewStyle">@style/mySpinnerStyle</item>
     </style>
 
     <style name="NoActionBar" parent="@android:style/Theme.Holo.Light">
@@ -22,4 +22,11 @@
         <item name="android:textColor">@color/colorAccent</item>
         <item name="android:textSize">12sp</item>
     </style>
+
+    <style name="mySpinnerStyle" parent="android:Widget.ListView.DropDown">
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:divider">@color/white</item>
+        <item name="android:dividerHeight">1dp</item>
+    </style>
+
 </resources>
