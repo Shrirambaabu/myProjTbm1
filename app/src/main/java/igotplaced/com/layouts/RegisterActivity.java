@@ -1,5 +1,6 @@
 package igotplaced.com.layouts;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
@@ -25,8 +26,12 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -36,6 +41,8 @@ import java.util.Map;
 
 import igotplaced.com.layouts.Utils.Utils;
 import igotplaced.com.layouts.Utils.Validation;
+
+import static igotplaced.com.layouts.Utils.Utils.BaseUri;
 
 /**
  * Created by Admin on 5/2/2017.
@@ -52,6 +59,14 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
     private AppCompatButton registerBtn;
     private AppCompatCheckBox checkBoxIntrested;
     private boolean checkBoxIntrestedBoolean = false;
+
+
+    private List<String> yearArrayList = new ArrayList<String>();
+
+
+    private ProgressDialog pDialog = new ProgressDialog(this);
+
+
     private String URL = "http://192.168.43.80:8080/login/rest/loginService/register";
 
     @Override
@@ -66,22 +81,65 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
 
         addingListener();
 
-        String[] passOutYear = getResources().getStringArray(R.array.year_arrays);
-
-        settingPassOutYearSpinner(passOutYear);
+        settingPassOutYearSpinner();
 
 
     }
 
-    private void settingPassOutYearSpinner(String[] passOutYear) {
+    private void settingPassOutYearSpinner() {
+
+        List<String> yearList = networkYearSpinnerArrayRequest();
+
+        /*String[] passOutYear = getResources().getStringArray(R.array.year_arrays);
 
         List<String> yearList = new ArrayList<String>();
 
-        Collections.addAll(yearList, passOutYear);
+        Collections.addAll(yearList, passOutYear);*/
 
         ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item_custom, yearList);
         passOutYearSpinner.setAdapter(spinnerArrayAdapter);
 
+    }
+
+    private List<String> networkYearSpinnerArrayRequest() {
+
+        String Url =  BaseUri + "/spinner/yearofpassout";
+
+        pDialog.setMessage("Loading...");
+        pDialog.show();
+
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(BaseUri + "/spinner/yearofpassout", new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                pDialog.dismiss();
+
+                for (int i=0; i<response.length(); i++) {
+                    String name = null;
+                    try {
+                        yearArrayList.add(String.valueOf(response.get(i)));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+
+        int MY_SOCKET_TIMEOUT_MS = 30000;//30 seconds - change to what you want
+        jsonArrayRequest.setRetryPolicy(new DefaultRetryPolicy(
+                MY_SOCKET_TIMEOUT_MS,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        RequestQueue rQueue = Volley.newRequestQueue(RegisterActivity.this);
+        rQueue.add(jsonArrayRequest);
+
+        return yearArrayList;
     }
 
     private void addressingView() {
