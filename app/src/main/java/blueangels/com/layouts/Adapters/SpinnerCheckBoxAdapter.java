@@ -74,9 +74,6 @@ public class SpinnerCheckBoxAdapter extends ArrayAdapter<SpinnerWithCheckBox> {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 int getPosition = (Integer) buttonView.getTag();
-                if(isChecked){
-                    holder.mCheckBox.setChecked(spinnerWithCheckBoxArrayList.get(getPosition).isSelected());
-                }
             }
         });
         return convertView;
