@@ -65,20 +65,8 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
         ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item_custom, yearList);
 
         industrySpinnerOne.setAdapter(spinnerArrayAdapter);
-/*
-        companySpinnerOne.setAdapter(spinnerArrayAdapter);*/
 
-
-        ArrayList<SpinnerWithCheckBox> spinnerWithCheckBoxes = new ArrayList<>();
-
-        for (int i = 0; i < yearList.size(); i++) {
-            SpinnerWithCheckBox spinnerWithCheckBox = new SpinnerWithCheckBox();
-            spinnerWithCheckBox.setTitle(yearList.get(i));
-            spinnerWithCheckBox.setSelected(false);
-            spinnerWithCheckBoxes.add(spinnerWithCheckBox);
-        }
-
-        companySpinnerOne.setAdapter(new SpinnerCheckBoxAdapter(RegisterPasswordActivity.this, 0, spinnerWithCheckBoxes));
+        companySpinnerOne.setAdapter(spinnerArrayAdapter);
 
         industrySpinnerTwo.setAdapter(spinnerArrayAdapter);
 
@@ -219,7 +207,6 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
             case R.id.company_spinner1:
                 if (position != 0) {
                     companySpinnerOneValue = companySpinnerOne.getSelectedItem().toString();
-                    Toast.makeText(getApplicationContext(),companySpinnerOneValue ,Toast.LENGTH_LONG).show();
                 } else {
                     companySpinnerOneValue = null;
                 }
