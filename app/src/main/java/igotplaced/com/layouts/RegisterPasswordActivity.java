@@ -27,10 +27,8 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import igotplaced.com.layouts.Utils.Utils;
@@ -69,29 +67,16 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
 
         addingListener();
 
-       /*
-       *Setting industry spinner value
-        */
-        String[] industryDisplay = {"All Industries", "ACCOUNTING", "APPAREL AND  FASHION", "KPMG IMPACT", "INTERNET", "AUTOMOTIVE", "BANKING", "CONSULTING", "E-COMMERCE", "EDUCATION", "E-LEARNING", "FINANCIAL SERVICES", "FMCG", "FOOD AND BEVERAGES", "FURNITURE", "HEALTHCARE", "HOSPITALITY AND TOURISM", "INVESTMENT BANKING", "IT INDUSTRY", "LOGISTICS AND SUPPLY CHAIN", "MARKETING AND ADVERTISING", "REAL ESTATE", "RETAIL", "TELECOMMUNICATIONS", "VENTURE CAPITAL AND PRIVATE EQUITY", "MECHANICAL"};
+       //Setting industry spinner value
+        settingIndustrySpinner();
 
-        ArrayList<String> industryDisplayList = new ArrayList<String>(Arrays.asList(industryDisplay));
-
-        settingIndustrySpinner(industryDisplayList);
-
-/*
-Setting company spinner value
- */
-        String[] companyDisplay = {"KPMG IMPACT", "LIMEROAD", "SNAPDEAL", "PAYTM", "FLIPKART", "OLA CABS", "COMMONFLOOR", "INFIBEAM", "TINYOWL", "LOCALBANYA", "THRILLOPHILIA", "OLX ", "MYSMARTPRICE", "ZIMMBER", "PEPPERFRY", "BABYCHAKRA", "ZOPPER", "TRUEBIL", "ADPUSHUP", "SAAVN", "STITCHWOOD", "ZOOMO", "BUYHATKE", "HOUSEJOY", "LinkedIn", "WalmartLabs", "Intuit", "Credit Suisse", "DROOM", "VISTEON", "DEUTSCHE BANK", "AXIS BANK", "MCKINSEY", "BCG", "DELOITTE", "TIGER ANALYTICS", "REDBUS", "SIMPLILEARN", "PLANCESS", "TOPPR", "FLATCHAT", "GROFERS", "AMERICAN EXPRESS", "ITC", "SPOONJOY", "FOODPANDA", "HOLACHEF", "SWIGGY", "FABFURNISH", "MYDENTIST", "LYBRATE", "STAYZILLA", "HOLIDAYIQ", "Goldman Sachs", "TCS", "INFOSYS", "WIPRO", "Cognizant Technology Solutions ", "IBM", "HCL Technologies", "Tech Mahindra", "Oracle", "iGate", "L&T Infotech", "Thoughtworks", "Zoho", "Mindtree", "Accenture", "Aricent", "Ericsson", "Microsoft", "JABONG", "QUIKR", "MERITNATION", "Capgemini", "Google", "VMware", "Adobe Systems", "Yahoo", "Arista Networks", "Cisco Systems", "EMC Corporation", "Nvidia", "McAfee, Inc.", "Amadeus Software Labs", "Tejas Networks", "iGotPlaced", "POLARIS NETWORKS", "EXOTEL", "VERIZON", "WHIRLPOOL"};
-
-        ArrayList<String> companyDisplayList = new ArrayList<String>(Arrays.asList(companyDisplay));
-
-        settingCompanySpinner(companyDisplayList);
-
+        //Setting company spinner value
+        settingCompanySpinner();
 
     }
 
 
-    private void settingIndustrySpinner(ArrayList<String> industryDisplayList) {
+    private void settingIndustrySpinner() {
 
         List<String> industryList = networkIndustrySpinnerOneArrayRequest();
         ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item_custom, industryList);
@@ -101,13 +86,13 @@ Setting company spinner value
         industrySpinnerThree.setAdapter(spinnerArrayAdapter);
     }
 
-    private void settingCompanySpinner(ArrayList<String> companyDisplayList) {
+    private void settingCompanySpinner() {
+
         List<String> companyList = networkCompanySpinnerOneArrayRequest();
         ArrayAdapter<String> companyArrayAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item_custom, companyList);
 
-
-        companySpinnerTwo.setAdapter(companyArrayAdapter);
         companySpinnerOne.setAdapter(companyArrayAdapter);
+        companySpinnerTwo.setAdapter(companyArrayAdapter);
         companySpinnerThree.setAdapter(companyArrayAdapter);
 
     }
@@ -121,7 +106,7 @@ Setting company spinner value
         pDialog.setMessage("Loading...");
         pDialog.show();
 
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(BaseUri + "/spinner/industrySpinnerOne", new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(BaseUri + "/spinner/industry", new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 pDialog.dismiss();
@@ -151,6 +136,9 @@ Setting company spinner value
 
     private List<String> networkCompanySpinnerOneArrayRequest() {
 
+        final List<String> companySpinnerOneArrayList = new ArrayList<String>();
+
+        return companySpinnerOneArrayList;
     }
 
 
