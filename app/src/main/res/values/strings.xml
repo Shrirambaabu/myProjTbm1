@@ -71,4 +71,32 @@
         <item>2011</item>
         <item>2010</item>
     </string-array>
+    <string-array name="industrySpinnerList">
+        <item> All Industries</item>
+        <item>ACCOUNTING</item>
+        <item>APPAREL AND  FASHION</item>
+        <item>INTERNET</item>
+        <item>AUTOMOTIVE</item>
+        <item>BANKING</item>
+        <item>CONSULTING</item>
+        <item>E-COMMERCE</item>
+        <item>EDUCATION</item>
+        <item>E-LEARNING</item>
+        <item>FINANCIAL SERVICES</item>
+        <item>FMCG</item>
+        <item>FOOD AND BEVERAGES</item>
+        <item>FURNITURE</item>
+        <item>HEALTHCARE</item>
+        <item>HOSPITALITY AND TOURISM</item>
+        <item>INVESTMENT BANKING</item>
+        <item>IT INDUSTRY</item>
+        <item>LOGISTICS AND SUPPLY CHAIN</item>
+        <item>MARKETING AND ADVERTISING</item>
+        <item>REAL ESTATE</item>
+        <item>RETAIL</item>
+        <item>TELECOMMUNICATIONS</item>
+        <item>VENTURE CAPITAL AND PRIVATE EQUITY</item>
+        <item>MECHANICAL</item>
+    </string-array>
+
 </resources>

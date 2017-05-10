@@ -1,5 +1,6 @@
 package igotplaced.com.layouts;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -17,16 +18,29 @@ import android.widget.ArrayAdapter;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 import igotplaced.com.layouts.Utils.Utils;
 import igotplaced.com.layouts.Utils.Validation;
 
+import static igotplaced.com.layouts.Utils.Utils.BaseUri;
+
 public class RegisterPasswordActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnTouchListener, View.OnClickListener {
 
-    private String[] passOutYear;
+
     private String industrySpinnerOneValue = null, industrySpinnerTwoValue = null, industrySpinnerThreeValue = null;
     private String companySpinnerOneValue = null, companySpinnerTwoValue = null, companySpinnerThreeValue = null;
     private ScrollView scrollView;
@@ -35,6 +49,12 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
     private AppCompatAutoCompleteTextView locationEditText;
     private TextInputLayout inputLayoutPassword, inputLayoutConfirmPassword, inputLayoutMobileNumber, inputLayoutLocation;
     private AppCompatSpinner industrySpinnerOne, industrySpinnerTwo, industrySpinnerThree, companySpinnerOne, companySpinnerTwo, companySpinnerThree;
+
+    private ArrayAdapter<String> industrySpinnerOneArrayAdapter;
+    private ArrayAdapter<String> industrySpinnerTwoArrayAdapter;
+    private ArrayAdapter<String> industrySpinnerThreeArrayAdapter;
+
+    private ProgressDialog pDialog;
 
 
     @Override
@@ -49,32 +69,90 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
 
         addingListener();
 
-        passOutYear = getResources().getStringArray(R.array.year_arrays);
+       /*
+       *Setting industry spinner value
+        */
+        String[] industryDisplay = {"All Industries", "ACCOUNTING", "APPAREL AND  FASHION", "KPMG IMPACT", "INTERNET", "AUTOMOTIVE", "BANKING", "CONSULTING", "E-COMMERCE", "EDUCATION", "E-LEARNING", "FINANCIAL SERVICES", "FMCG", "FOOD AND BEVERAGES", "FURNITURE", "HEALTHCARE", "HOSPITALITY AND TOURISM", "INVESTMENT BANKING", "IT INDUSTRY", "LOGISTICS AND SUPPLY CHAIN", "MARKETING AND ADVERTISING", "REAL ESTATE", "RETAIL", "TELECOMMUNICATIONS", "VENTURE CAPITAL AND PRIVATE EQUITY", "MECHANICAL"};
 
-        settingPassOutYearSpinner(passOutYear);
+        ArrayList<String> industryDisplayList = new ArrayList<String>(Arrays.asList(industryDisplay));
+
+        settingIndustrySpinner(industryDisplayList);
+
+/*
+Setting company spinner value
+ */
+        String[] companyDisplay = {"KPMG IMPACT", "LIMEROAD", "SNAPDEAL", "PAYTM", "FLIPKART", "OLA CABS", "COMMONFLOOR", "INFIBEAM", "TINYOWL", "LOCALBANYA", "THRILLOPHILIA", "OLX ", "MYSMARTPRICE", "ZIMMBER", "PEPPERFRY", "BABYCHAKRA", "ZOPPER", "TRUEBIL", "ADPUSHUP", "SAAVN", "STITCHWOOD", "ZOOMO", "BUYHATKE", "HOUSEJOY", "LinkedIn", "WalmartLabs", "Intuit", "Credit Suisse", "DROOM", "VISTEON", "DEUTSCHE BANK", "AXIS BANK", "MCKINSEY", "BCG", "DELOITTE", "TIGER ANALYTICS", "REDBUS", "SIMPLILEARN", "PLANCESS", "TOPPR", "FLATCHAT", "GROFERS", "AMERICAN EXPRESS", "ITC", "SPOONJOY", "FOODPANDA", "HOLACHEF", "SWIGGY", "FABFURNISH", "MYDENTIST", "LYBRATE", "STAYZILLA", "HOLIDAYIQ", "Goldman Sachs", "TCS", "INFOSYS", "WIPRO", "Cognizant Technology Solutions ", "IBM", "HCL Technologies", "Tech Mahindra", "Oracle", "iGate", "L&T Infotech", "Thoughtworks", "Zoho", "Mindtree", "Accenture", "Aricent", "Ericsson", "Microsoft", "JABONG", "QUIKR", "MERITNATION", "Capgemini", "Google", "VMware", "Adobe Systems", "Yahoo", "Arista Networks", "Cisco Systems", "EMC Corporation", "Nvidia", "McAfee, Inc.", "Amadeus Software Labs", "Tejas Networks", "iGotPlaced", "POLARIS NETWORKS", "EXOTEL", "VERIZON", "WHIRLPOOL"};
+
+        ArrayList<String> companyDisplayList = new ArrayList<String>(Arrays.asList(companyDisplay));
+
+        settingCompanySpinner(companyDisplayList);
+
+
     }
 
-    private void settingPassOutYearSpinner(String[] passOutYear) {
 
-        List<String> yearList = new ArrayList<String>();
+    private void settingIndustrySpinner(ArrayList<String> industryDisplayList) {
 
-        Collections.addAll(yearList, passOutYear);
-
-        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item_custom, yearList);
+        List<String> industryList = networkIndustrySpinnerOneArrayRequest();
+        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item_custom, industryList);
 
         industrySpinnerOne.setAdapter(spinnerArrayAdapter);
-
-        companySpinnerOne.setAdapter(spinnerArrayAdapter);
-
         industrySpinnerTwo.setAdapter(spinnerArrayAdapter);
-
-        companySpinnerTwo.setAdapter(spinnerArrayAdapter);
-
         industrySpinnerThree.setAdapter(spinnerArrayAdapter);
+    }
 
-        companySpinnerThree.setAdapter(spinnerArrayAdapter);
+    private void settingCompanySpinner(ArrayList<String> companyDisplayList) {
+        List<String> companyList = networkCompanySpinnerOneArrayRequest();
+        ArrayAdapter<String> companyArrayAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item_custom, companyList);
+
+
+        companySpinnerTwo.setAdapter(companyArrayAdapter);
+        companySpinnerOne.setAdapter(companyArrayAdapter);
+        companySpinnerThree.setAdapter(companyArrayAdapter);
 
     }
+
+
+    private List<String> networkIndustrySpinnerOneArrayRequest() {
+
+        final List<String> industrySpinnerOneArrayList = new ArrayList<String>();
+
+        pDialog = new ProgressDialog(RegisterPasswordActivity.this);
+        pDialog.setMessage("Loading...");
+        pDialog.show();
+
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(BaseUri + "/spinner/industrySpinnerOne", new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                pDialog.dismiss();
+
+                for (int i = 0; i < response.length(); i++) {
+                    try {
+                        industrySpinnerOneArrayList.add(String.valueOf(response.get(i)));
+                        industrySpinnerOneArrayAdapter.notifyDataSetChanged();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(RegisterPasswordActivity.this, error.toString(), Toast.LENGTH_LONG).show();
+
+            }
+        });
+
+        RequestQueue rQueue = Volley.newRequestQueue(RegisterPasswordActivity.this);
+        rQueue.add(jsonArrayRequest);
+
+        return industrySpinnerOneArrayList;
+    }
+
+    private List<String> networkCompanySpinnerOneArrayRequest() {
+
+    }
+
 
     private void addressingView() {
 
