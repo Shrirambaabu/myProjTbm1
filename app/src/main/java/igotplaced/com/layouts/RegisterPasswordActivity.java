@@ -88,6 +88,22 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
 
     private void settingCompanySpinner() {
 
+
+        String[] companyDisplay = {"KPMG IMPACT", "LIMEROAD", "SNAPDEAL", "PAYTM", "FLIPKART", "OLA CABS",
+                "COMMONFLOOR", "INFIBEAM", "TINYOWL", "LOCALBANYA", "THRILLOPHILIA", "OLX ", "MYSMARTPRICE",
+                "ZIMMBER", "PEPPERFRY", "BABYCHAKRA", "ZOPPER", "TRUEBIL", "ADPUSHUP", "SAAVN", "STITCHWOOD",
+                "ZOOMO", "BUYHATKE", "HOUSEJOY", "LinkedIn", "WalmartLabs", "Intuit", "Credit Suisse", "DROOM",
+                "VISTEON", "DEUTSCHE BANK", "AXIS BANK", "MCKINSEY", "BCG", "DELOITTE", "TIGER ANALYTICS", "REDBUS",
+                "SIMPLILEARN", "PLANCESS", "TOPPR", "FLATCHAT", "GROFERS", "AMERICAN EXPRESS", "ITC", "SPOONJOY",
+                "FOODPANDA", "HOLACHEF", "SWIGGY", "FABFURNISH", "MYDENTIST", "LYBRATE", "STAYZILLA", "HOLIDAYIQ",
+                "Goldman Sachs", "TCS", "INFOSYS", "WIPRO", "Cognizant Technology Solutions ", "IBM", "HCL Technologies",
+                "Tech Mahindra", "Oracle", "iGate", "L&T Infotech", "Thoughtworks", "Zoho", "Mindtree", "Accenture",
+                "Aricent", "Ericsson", "Microsoft", "JABONG", "QUIKR", "MERITNATION", "Capgemini", "Google", "VMware",
+                "Adobe Systems", "Yahoo", "Arista Networks", "Cisco Systems", "EMC Corporation", "Nvidia",
+                "McAfee, Inc.", "Amadeus Software Labs", "Tejas Networks", "iGotPlaced", "POLARIS NETWORKS",
+                "EXOTEL", "VERIZON", "WHIRLPOOL"};
+
+
         List<String> companyList = networkCompanySpinnerOneArrayRequest();
         ArrayAdapter<String> companyArrayAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item_custom, companyList);
 

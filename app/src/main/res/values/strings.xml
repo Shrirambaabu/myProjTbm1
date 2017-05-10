@@ -42,6 +42,7 @@
     <string name="year_prompt">
         <item>Year Of Passout </item>
     </string>
+
     <string name="select_the_year_of_pass_out">Select the year of PassOut</string>
     <string name="err_msg_name">Enter Your Full Name</string>
     <string name="err_msg_email">Enter valid email address</string>
@@ -52,51 +53,5 @@
     <string name="err_msg_location">Enter valid location</string>
     <string name="err_msg_mobile">Enter a valid Mobile Number</string>
 
-    <string-array name="year_arrays">
-        <item>  -- Select the Passout Year -- </item>
-        <item>2025</item>
-        <item>2024</item>
-        <item>2023</item>
-        <item>2022</item>
-        <item>2021</item>
-        <item>2020</item>
-        <item>2019</item>
-        <item>2018</item>
-        <item>2017</item>
-        <item>2016</item>
-        <item>2015</item>
-        <item>2014</item>
-        <item>2013</item>
-        <item>2012</item>
-        <item>2011</item>
-        <item>2010</item>
-    </string-array>
-    <string-array name="industrySpinnerList">
-        <item> All Industries</item>
-        <item>ACCOUNTING</item>
-        <item>APPAREL AND  FASHION</item>
-        <item>INTERNET</item>
-        <item>AUTOMOTIVE</item>
-        <item>BANKING</item>
-        <item>CONSULTING</item>
-        <item>E-COMMERCE</item>
-        <item>EDUCATION</item>
-        <item>E-LEARNING</item>
-        <item>FINANCIAL SERVICES</item>
-        <item>FMCG</item>
-        <item>FOOD AND BEVERAGES</item>
-        <item>FURNITURE</item>
-        <item>HEALTHCARE</item>
-        <item>HOSPITALITY AND TOURISM</item>
-        <item>INVESTMENT BANKING</item>
-        <item>IT INDUSTRY</item>
-        <item>LOGISTICS AND SUPPLY CHAIN</item>
-        <item>MARKETING AND ADVERTISING</item>
-        <item>REAL ESTATE</item>
-        <item>RETAIL</item>
-        <item>TELECOMMUNICATIONS</item>
-        <item>VENTURE CAPITAL AND PRIVATE EQUITY</item>
-        <item>MECHANICAL</item>
-    </string-array>
 
 </resources>
