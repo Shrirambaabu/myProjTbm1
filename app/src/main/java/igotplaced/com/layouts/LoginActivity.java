@@ -26,6 +26,8 @@ import java.util.Map;
 
 import igotplaced.com.layouts.Utils.Validation;
 
+import static igotplaced.com.layouts.Utils.Utils.BaseUri;
+
 /**
  * Created by Admin on 5/2/2017.
  */
@@ -35,7 +37,7 @@ public class LoginActivity extends AppCompatActivity {
     private AppCompatEditText passwordEditText, emailEditText;
     private Button loginBtn;
     private TextInputLayout inputLayoutEmail;
-    private String URL = "http://192.168.43.80:8080/login/rest/loginService/login";
+    private String URL = BaseUri+"/loginService/login";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,8 +90,6 @@ public class LoginActivity extends AppCompatActivity {
 
         login();
 
-        /*Toast.makeText(getApplicationContext(), "Logged in Successfully", Toast.LENGTH_SHORT).show();*/
-
     }
 
     private void login() {
@@ -97,6 +97,8 @@ public class LoginActivity extends AppCompatActivity {
         StringRequest request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
+
+                Log.d("error", "Res" + s);
 
                 if (s.equals("true")) {
                     Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
@@ -107,9 +109,8 @@ public class LoginActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                //Toast.makeText(LoginActivity.this, "Some error occurred -> "+volleyError, Toast.LENGTH_LONG).show();
 
-                Log.d("error", "" + volleyError);
+                Log.d("error", "Err" + volleyError);
 
             }
         }) {
@@ -122,7 +123,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         };
 
-        int MY_SOCKET_TIMEOUT_MS = 30000;//30 seconds - change to what you want
+        int MY_SOCKET_TIMEOUT_MS = 3000;//30 seconds - change to what you want
         request.setRetryPolicy(new DefaultRetryPolicy(
                 MY_SOCKET_TIMEOUT_MS,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
