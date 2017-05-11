@@ -32,9 +32,12 @@ public class ForgetPasswordActivity extends AppCompatActivity implements View.On
             getSupportActionBar().hide();
 
         setContentView(R.layout.activity_forget_password);
-
+        /**
+         *    User defined function to
+         *    map xml file to object
+         **/
         addressingView();
-
+// Adding click Listener
         addingListener();
 
     }
@@ -51,7 +54,7 @@ public class ForgetPasswordActivity extends AppCompatActivity implements View.On
         forgetPasswordSubmit = (Button) findViewById(R.id.forget_password_button);
 
     }
-
+// performs action when submit is clicked
     private void submittingForgetPassword() {
         if (!Validation.validateEmail(emailEditText, inputLayoutEmail, ForgetPasswordActivity.this)) {
             return;
@@ -64,11 +67,11 @@ public class ForgetPasswordActivity extends AppCompatActivity implements View.On
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.forget_password_button:
-                submittingForgetPassword();
+                submittingForgetPassword();//forget password submit method
                 break;
         }
     }
-
+//customWatcher
     private class CustomWatcher implements TextWatcher {
 
         private View view;

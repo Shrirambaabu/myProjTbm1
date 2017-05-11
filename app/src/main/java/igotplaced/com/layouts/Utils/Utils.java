@@ -20,8 +20,11 @@ import igotplaced.com.layouts.R;
  */
 
 public class Utils {
-
+//Ashith IP
     public static String BaseUri = "http://192.168.43.80:8080/IgotplacedRestWebService/webapi";
+    /*  // Baabu IP
+    public static String BaseUri = "http://192.168.43.225:8012/IgotplacedRestWebService/webapi";
+    */
 
     public static void setSpinnerError(Spinner spinner, String error, Activity activity) {
         View selectedView = spinner.getSelectedView();

@@ -75,10 +75,15 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
             getSupportActionBar().hide();
         setContentView(R.layout.activity_registration);
 
+        /**
+         *    User defined function to
+         *    map xml file to object
+         **/
         addressingView();
 
+// Adding click Listener
         addingListener();
-
+//Performs action when spinner is clicked
         settingPassOutYearSpinner();
 
     }
@@ -93,6 +98,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
 
     }
 
+
+// Passes JSON values to Spinner
     private List<String> networkYearSpinnerArrayRequest() {
 
         final List<String> yearArrayList = new ArrayList<String>();
@@ -122,11 +129,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
 
             }
         });
-
+// Adding request to request queue
         RequestQueue rQueue = Volley.newRequestQueue(RegisterActivity.this);
         rQueue.add(jsonArrayRequest);
 
-        return yearArrayList;
+        return yearArrayList;//displays the selected spinner value
     }
 
     private void addressingView() {
@@ -178,7 +185,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
 
         Toast.makeText(getApplicationContext(), "On Item Select : \n" + passOutYearSpinner.getSelectedItem(),
                 Toast.LENGTH_LONG).show();
-
+//Validates the enetered details
         if (!Validation.validateName(nameEditText, inputLayoutName, RegisterActivity.this)) {
             return;
         }
@@ -246,7 +253,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
                 MY_SOCKET_TIMEOUT_MS,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-
+// Adding request to request queue
         RequestQueue rQueue = Volley.newRequestQueue(RegisterActivity.this);
         rQueue.add(request);
 
@@ -287,7 +294,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
         }
     }
 
-
+//CustomWatcher
     private class CustomWatcher implements TextWatcher {
 
         private View view;

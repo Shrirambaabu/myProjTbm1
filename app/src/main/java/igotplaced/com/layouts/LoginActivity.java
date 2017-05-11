@@ -42,19 +42,24 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
     private AppCompatEditText passwordEditText, emailEditText;
     private Button loginBtn;
     private TextInputLayout inputLayoutEmail;
-    private String URL = BaseUri+"/loginService/login";
+    private String URL = BaseUri + "/loginService/login"; // Login URL
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        // Hides the Action bar
         if (getSupportActionBar() != null)
             getSupportActionBar().hide();
 
         setContentView(R.layout.activity_login_main);
 
+        /**
+         *    User defined function to
+         *    map xml file to object
+         **/
         addressingView();
 
+// Adding click Listener
         addingListener();
 
     }
@@ -66,7 +71,7 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
     @Override
     public void onNetworkConnectionChanged(boolean isConnected) {
 
-        Utils.showDialogue(LoginActivity.this,"Sorry! Not connected to internet");
+        Utils.showDialogue(LoginActivity.this, "Sorry! Not connected to internet");
     }
 
     @Override
@@ -75,6 +80,7 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
         // register connection status listener
         MyApplication.getInstance().setConnectivityListener(LoginActivity.this);
     }
+
 
     private void addressingView() {
         emailEditText = (AppCompatEditText) findViewById(R.id.editTextEmail);
@@ -89,7 +95,7 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                // Steps for Login
                 submitLoginDetails();
 
         /*Intent loginIntent = new Intent(LoginActivity.this, MainActivity.class);
@@ -100,28 +106,33 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
 
     }
 
+    /**
+     * Redirects to new activity when
+     * forget password is clicked
+     */
     public void forgetPassword(View view) {
         Intent forgetPasswordIntent = new Intent(LoginActivity.this, ForgetPasswordActivity.class);
         startActivity(forgetPasswordIntent);
     }
 
+
     private void submitLoginDetails() {
         if (!Validation.validateEmail(emailEditText, inputLayoutEmail, LoginActivity.this)) {
             return;
         }
-
-        Utils.checkConnection(loginBtn,LoginActivity.this);
-
+//Broadcast receiver to check internet connection
+        Utils.checkConnection(loginBtn, LoginActivity.this);
+//Performs action when Login button is clicked
         login();
 
     }
 
     private void login() {
-
+//Requests the data from webservice using volley
         StringRequest request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
-
+                // Verify the data and return the Toast message
                 if (s.equals("true")) {
                     Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
                 } else {
@@ -131,8 +142,13 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-
-                Utils.showDialogue(LoginActivity.this,"Sorry! Server Error");
+                /**
+                 *  Returns error message when,
+                 *  server is down,
+                 *  incorrect IP
+                 *  Server not deployed
+                 */
+                Utils.showDialogue(LoginActivity.this, "Sorry! Server Error");
             }
         }) {
             @Override
@@ -144,12 +160,13 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
             }
         };
 
-        int MY_SOCKET_TIMEOUT_MS = 3000;//30 seconds - change to what you want
+        int MY_SOCKET_TIMEOUT_MS = 3000;//3 seconds - change to what you want
         request.setRetryPolicy(new DefaultRetryPolicy(
                 MY_SOCKET_TIMEOUT_MS,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
+// Adding request to request queue
         RequestQueue rQueue = Volley.newRequestQueue(LoginActivity.this);
         rQueue.add(request);
 
@@ -160,7 +177,7 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
         startActivity(registrationIntent);
     }
 
-
+    //CustomWatcher
     private class CustomWatcher implements TextWatcher {
 
         private View view;

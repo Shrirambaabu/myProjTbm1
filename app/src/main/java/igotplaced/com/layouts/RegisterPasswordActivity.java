@@ -62,7 +62,10 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
         if (getSupportActionBar() != null)
             getSupportActionBar().hide();
         setContentView(R.layout.activity_register_password);
-
+        /**
+         *    User defined function to
+         *    map xml file to object
+         **/
         addressingView();
 
         addingListener();
@@ -113,7 +116,7 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
 
     }
 
-
+//Pases JSON value to spinner
     private List<String> networkIndustrySpinnerOneArrayRequest() {
 
         final List<String> industrySpinnerOneArrayList = new ArrayList<String>();
@@ -143,11 +146,11 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
 
             }
         });
-
+// Adding request to request queue
         RequestQueue rQueue = Volley.newRequestQueue(RegisterPasswordActivity.this);
         rQueue.add(jsonArrayRequest);
 
-        return industrySpinnerOneArrayList;
+        return industrySpinnerOneArrayList;//displays the selected spinner value
     }
 
     private List<String> networkCompanySpinnerOneArrayRequest() {
@@ -205,7 +208,7 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
         companySpinnerThree.setOnItemSelectedListener(this);
 
     }
-
+// Validate the user entered details
     private void finalRegistrationSuccess() {
         if (!Validation.validatePassword(passwordEditText, inputLayoutPassword, RegisterPasswordActivity.this)) {
             return;
@@ -341,7 +344,7 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
                 break;
         }
     }
-
+//CustomWatcher
     private class CustomWatcher implements TextWatcher {
         private View view;
 
