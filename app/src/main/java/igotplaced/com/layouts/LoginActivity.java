@@ -1,5 +1,6 @@
 package igotplaced.com.layouts;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
@@ -8,6 +9,7 @@ import android.support.v7.widget.AppCompatEditText;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -24,6 +26,9 @@ import com.android.volley.toolbox.Volley;
 import java.util.HashMap;
 import java.util.Map;
 
+import igotplaced.com.layouts.Utils.ConnectivityReceiver;
+import igotplaced.com.layouts.Utils.MyApplication;
+import igotplaced.com.layouts.Utils.Utils;
 import igotplaced.com.layouts.Utils.Validation;
 
 import static igotplaced.com.layouts.Utils.Utils.BaseUri;
@@ -32,7 +37,7 @@ import static igotplaced.com.layouts.Utils.Utils.BaseUri;
  * Created by Admin on 5/2/2017.
  */
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements ConnectivityReceiver.ConnectivityReceiverListener {
 
     private AppCompatEditText passwordEditText, emailEditText;
     private Button loginBtn;
@@ -52,6 +57,23 @@ public class LoginActivity extends AppCompatActivity {
 
         addingListener();
 
+    }
+
+    /**
+     * Callback will be triggered when there is change in
+     * network connection
+     */
+    @Override
+    public void onNetworkConnectionChanged(boolean isConnected) {
+
+        Utils.showDialogue(LoginActivity.this,"Sorry! Not connected to internet");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // register connection status listener
+        MyApplication.getInstance().setConnectivityListener(LoginActivity.this);
     }
 
     private void addressingView() {
@@ -88,6 +110,8 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
+        Utils.checkConnection(loginBtn,LoginActivity.this);
+
         login();
 
     }
@@ -97,8 +121,6 @@ public class LoginActivity extends AppCompatActivity {
         StringRequest request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
-
-                Log.d("error", "Res" + s);
 
                 if (s.equals("true")) {
                     Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
@@ -110,8 +132,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
 
-                Log.d("error", "Err" + volleyError);
-
+                Utils.showDialogue(LoginActivity.this,"Sorry! Server Error");
             }
         }) {
             @Override
