@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
@@ -51,6 +52,10 @@ import static igotplaced.com.layouts.Utils.Utils.BaseUri;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnTouchListener, View.OnClickListener, AdapterView.OnItemSelectedListener {
 
+
+    String[] college={"Android ","java","IOS","SQL","JDBC","Web services"};
+
+
     private String yearPassOutSpinnerValue = null;
     private ScrollView scrollView;
     private AppCompatEditText nameEditText, emailEditText;
@@ -75,6 +80,15 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
         if (getSupportActionBar() != null)
             getSupportActionBar().hide();
         setContentView(R.layout.activity_registration);
+
+
+        //Creating the instance of ArrayAdapter containing list of language names
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>
+                (this,android.R.layout.select_dialog_item,college);
+        //Getting the instance of AutoCompleteTextView
+        AutoCompleteTextView college = (AutoCompleteTextView) findViewById(R.id.editViewCollegeName);
+        college.setThreshold(1);
+        college.setAdapter(adapter);
 
         addressingView();
 
