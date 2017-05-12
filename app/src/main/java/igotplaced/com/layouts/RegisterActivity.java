@@ -65,7 +65,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
 
     private ProgressDialog pDialog;
 
-    private String URL = "http://192.168.43.80:8080/login/rest/loginService/register";
+    private String URL = BaseUri+"/registrationService/register";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,15 +76,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
             getSupportActionBar().hide();
         setContentView(R.layout.activity_registration);
 
-        /**
-         *    User defined function to
-         *    map xml file to object
-         **/
         addressingView();
 
-// Adding click Listener
         addingListener();
-//Performs action when spinner is clicked
+
         settingPassOutYearSpinner();
 
     }
@@ -98,8 +94,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
 
     }
 
-
-// Passes JSON values to Spinner
     private List<String> networkYearSpinnerArrayRequest() {
 
         final List<String> yearArrayList = new ArrayList<String>();
@@ -125,15 +119,23 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+
                 Toast.makeText(RegisterActivity.this, error.toString(), Toast.LENGTH_LONG).show();
 
             }
         });
-// Adding request to request queue
+
+
+        int MY_SOCKET_TIMEOUT_MS = 3000;//3 seconds - change to what you want
+        jsonArrayRequest.setRetryPolicy(new DefaultRetryPolicy(
+                MY_SOCKET_TIMEOUT_MS,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
         RequestQueue rQueue = Volley.newRequestQueue(RegisterActivity.this);
         rQueue.add(jsonArrayRequest);
 
-        return yearArrayList;//displays the selected spinner value
+        return yearArrayList;
     }
 
     private void addressingView() {
@@ -183,9 +185,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
     private void submitRegistrationDetails() {
 
 
-        Toast.makeText(getApplicationContext(), "On Item Select : \n" + passOutYearSpinner.getSelectedItem(),
-                Toast.LENGTH_LONG).show();
-//Validates the enetered details
+
         if (!Validation.validateName(nameEditText, inputLayoutName, RegisterActivity.this)) {
             return;
         }
@@ -210,10 +210,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
             return;
         }
 
-      /*  register();*/
+        register();
 
-        Intent registrationCompleteIntent = new Intent(RegisterActivity.this, RegisterPasswordActivity.class);
-        startActivity(registrationCompleteIntent);
+        /*Intent registrationCompleteIntent = new Intent(RegisterActivity.this, RegisterPasswordActivity.class);
+        startActivity(registrationCompleteIntent);*/
     }
 
     private void register() {
@@ -222,11 +222,16 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
             @Override
             public void onResponse(String s) {
 
+                Toast.makeText(RegisterActivity.this, "returned -> " + s, Toast.LENGTH_LONG).show();
+
+
+/*
                 if (s.equals("true")) {
                     Toast.makeText(RegisterActivity.this, "Registration Successful", Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(RegisterActivity.this, "Can't Register", Toast.LENGTH_LONG).show();
-                }
+                }*/
+
             }
         }, new Response.ErrorListener() {
             @Override
@@ -243,7 +248,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
                 parameters.put("year", yearPassOutSpinnerValue);
                 parameters.put("colg", collegeEditText.getText().toString());
                 parameters.put("dept", departmentEditText.getText().toString());
-                parameters.put("check", String.valueOf(checkBoxIntrestedBoolean));
+                parameters.put("check", String.valueOf((checkBoxIntrestedBoolean) ? 1 : 0));
                 return parameters;
             }
         };
@@ -253,7 +258,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
                 MY_SOCKET_TIMEOUT_MS,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-// Adding request to request queue
+
         RequestQueue rQueue = Volley.newRequestQueue(RegisterActivity.this);
         rQueue.add(request);
 
@@ -269,7 +274,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         if (position != 0) {
             yearPassOutSpinnerValue = passOutYearSpinner.getSelectedItem().toString();
-            Toast.makeText(RegisterActivity.this, yearPassOutSpinnerValue, Toast.LENGTH_LONG).show();
         } else {
             yearPassOutSpinnerValue = null;
         }
@@ -294,7 +298,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
         }
     }
 
-//CustomWatcher
+
     private class CustomWatcher implements TextWatcher {
 
         private View view;

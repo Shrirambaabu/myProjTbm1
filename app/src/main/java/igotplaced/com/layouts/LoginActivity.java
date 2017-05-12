@@ -1,6 +1,5 @@
 package igotplaced.com.layouts;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
@@ -8,8 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatEditText;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -47,7 +44,10 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Hides the Action bar
+
+        /**
+         *Hides the Action bar
+         **/
         if (getSupportActionBar() != null)
             getSupportActionBar().hide();
 
@@ -136,7 +136,7 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
                 if (s.equals("true")) {
                     Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(LoginActivity.this, "Incorrect Details", Toast.LENGTH_LONG).show();
+                    Utils.showDialogue(LoginActivity.this, "Sorry!!! Incorrect Password");
                 }
             }
         }, new Response.ErrorListener() {
@@ -173,6 +173,7 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
     }
 
     public void register(View view) {
+
         Intent registrationIntent = new Intent(LoginActivity.this, RegisterActivity.class);
         startActivity(registrationIntent);
     }
