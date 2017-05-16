@@ -11,6 +11,7 @@ import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatSpinner;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +39,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import igotplaced.com.layouts.Utils.CustomAutoCompleteView;
 import igotplaced.com.layouts.Utils.Utils;
 import igotplaced.com.layouts.Utils.Validation;
 
@@ -53,14 +55,13 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
     private String yearPassOutSpinnerValue = null;
     private ScrollView scrollView;
     private AppCompatEditText nameEditText, emailEditText;
-    private AppCompatAutoCompleteTextView collegeEditText, departmentEditText;
+    private CustomAutoCompleteView collegeEditText, departmentEditText;
     private AppCompatSpinner passOutYearSpinner;
     private TextInputLayout inputLayoutName, inputLayoutEmail, inputLayoutCollege, inputLayoutDepartment;
     private AppCompatButton registerBtn;
     private AppCompatCheckBox checkBoxIntrested;
     private boolean checkBoxIntrestedBoolean = false;
-    private ArrayAdapter<String> spinnerArrayAdapter;
-
+    private ArrayAdapter<String> spinnerArrayAdapter,departmentAutoCompleteAdapter;
 
     private ProgressDialog pDialog;
 
@@ -91,20 +92,123 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
         spinnerArrayAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item_custom, yearList);
 
         passOutYearSpinner.setAdapter(spinnerArrayAdapter);
+/*
 
-        List<String>  collegeList = networkCollegeAutoCompleteRequest();
+
+        List<String> collegeList = networkCollegeAutoCompleteRequest();
 
         String[] college = collegeList.toArray(new String[collegeList.size()]);
+*/
+
+        String[] college = {"C", "C++", "Java", ".NET", "iPhone", "Android", "ASP.NET", "PHP"};
+
+        //Creating the instance of ArrayAdapter containing list of language names
+        ArrayAdapter<String> CollegeAutoCompleteAdapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item, college);
+
+        //Getting the instance of AutoCompleteTextView
+        AutoCompleteTextView AutoCompleteTextView = (AutoCompleteTextView) findViewById(R.id.editViewCollegeName);
+        AutoCompleteTextView.setThreshold(3);
+        AutoCompleteTextView.setAdapter(CollegeAutoCompleteAdapter);
+
+
+
+/*
+        List<String> DepartmentList = networkDepartmentAutoCompleteRequest();
+
+        String[] department = DepartmentList.toArray(new String[DepartmentList.size()]);
+
+        Toast.makeText(RegisterActivity.this, "" + DepartmentList.toString(), Toast.LENGTH_LONG).show();*/
 
 
         //Creating the instance of ArrayAdapter containing list of language names
-        ArrayAdapter<String> ColgAutoCompleteadapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item, college);
-        //Getting the instance of AutoCompleteTextView
-        AutoCompleteTextView AutoCompleteTextView = (AutoCompleteTextView) findViewById(R.id.editViewCollegeName);
-        AutoCompleteTextView.setThreshold(1);
-        AutoCompleteTextView.setAdapter(ColgAutoCompleteadapter);
+        departmentAutoCompleteAdapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item);
+
+        departmentEditText.setThreshold(3);
+        departmentEditText.setAdapter(departmentAutoCompleteAdapter);
+
+        departmentEditText.addTextChangedListener(new TextWatcher() {
+            private boolean shouldAutoComplete = true;
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                shouldAutoComplete = true;
+                for (int position = 0; position < departmentAutoCompleteAdapter.getCount(); position++) {
+                    if (departmentAutoCompleteAdapter.getItem(position).equalsIgnoreCase(s.toString())) {
+                        shouldAutoComplete = false;
+                        break;
+                    }
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (shouldAutoComplete) {
+                    networkDepartmentAutoCompleteRequest(s.toString());
+                    departmentEditText.showDropDown();
+                }
+
+            }
+        });
 
 
+    }
+
+
+    private void networkDepartmentAutoCompleteRequest(String keyword) {
+/*
+
+        final List<String> DepartmentList = new ArrayList<String>();
+
+        pDialog = new ProgressDialog(RegisterActivity.this);
+        pDialog.setMessage("LoadingAU...");
+        pDialog.show();
+*/
+
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(BaseUri + "/autocompleteService/searchDepartment/"+keyword, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+              /*  pDialog.dismiss();
+*/
+                Log.d("error", response.toString());
+
+                for (int i = 0; i < response.length(); i++) {
+                    try {
+                        departmentAutoCompleteAdapter.clear();
+                        departmentAutoCompleteAdapter.add(String.valueOf(response.get(i)));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+/*
+                pDialog.dismiss();*/
+                Log.d("error", "here22" + error.toString());
+            }
+        });
+/*
+
+        Toast.makeText(RegisterActivity.this, "" + DepartmentList.toString(), Toast.LENGTH_LONG).show();*/
+
+        int MY_SOCKET_TIMEOUT_MS = 3000;//3 seconds - change to what you want
+        jsonArrayRequest.setRetryPolicy(new DefaultRetryPolicy(
+                MY_SOCKET_TIMEOUT_MS,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        RequestQueue rQueue = Volley.newRequestQueue(RegisterActivity.this);
+        rQueue.add(jsonArrayRequest);
+
+/*
+        return DepartmentList;*/
     }
 
     private List<String> networkCollegeAutoCompleteRequest() {
@@ -112,13 +216,17 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
         final List<String> ColgList = new ArrayList<String>();
 
         pDialog = new ProgressDialog(RegisterActivity.this);
-        pDialog.setMessage("Loading...");
+        pDialog.setMessage("LoadingAU...");
         pDialog.show();
 
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(BaseUri + "/autoCompleteService/searchCollege", new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(BaseUri + "/autocompleteService/searchCollege", new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 pDialog.dismiss();
+
+                Log.d("error", response.toString());
+
+                Toast.makeText(RegisterActivity.this, "" + response.toString(), Toast.LENGTH_LONG).show();
 
                 for (int i = 0; i < response.length(); i++) {
                     try {
@@ -133,8 +241,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
             @Override
             public void onErrorResponse(VolleyError error) {
 
+                pDialog.dismiss();
                 Toast.makeText(RegisterActivity.this, error.toString(), Toast.LENGTH_LONG).show();
 
+                Log.d("error", "here22" + error.toString());
             }
         });
 
@@ -151,18 +261,22 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
         return ColgList;
     }
 
+
     private List<String> networkYearSpinnerArrayRequest() {
 
         final List<String> yearArrayList = new ArrayList<String>();
 
-        pDialog = new ProgressDialog(RegisterActivity.this);
+       /* pDialog = new ProgressDialog(RegisterActivity.this);
         pDialog.setMessage("Loading...");
-        pDialog.show();
+        pDialog.show();*/
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(BaseUri + "/spinner/yearofpassout", new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                pDialog.dismiss();
+               /* pDialog.dismiss();*/
+
+                Log.d("error", response.toString());
+
 
                 for (int i = 0; i < response.length(); i++) {
                     try {
@@ -176,9 +290,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+             /*   pDialog.dismiss();*/
 
                 Toast.makeText(RegisterActivity.this, error.toString(), Toast.LENGTH_LONG).show();
-
+                Log.d("error", "here" + error.toString());
             }
         });
 
@@ -199,8 +314,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
 
         nameEditText = (AppCompatEditText) findViewById(R.id.editViewName);
         emailEditText = (AppCompatEditText) findViewById(R.id.editViewEmail);
-        collegeEditText = (AppCompatAutoCompleteTextView) findViewById(R.id.editViewCollegeName);
-        departmentEditText = (AppCompatAutoCompleteTextView) findViewById(R.id.editViewDepartment);
+        collegeEditText = (CustomAutoCompleteView) findViewById(R.id.editViewCollegeName);
+        departmentEditText = (CustomAutoCompleteView) findViewById(R.id.editViewDepartment);
 
         passOutYearSpinner = (AppCompatSpinner) findViewById(R.id.passed_out_year_spinner);
 

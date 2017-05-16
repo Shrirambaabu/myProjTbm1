@@ -104,7 +104,7 @@
                 app:errorTextAppearance="@style/error_appearance"
                 android:textColorHint="@color/white">
 
-                <android.support.v7.widget.AppCompatAutoCompleteTextView
+                <igotplaced.com.layouts.Utils.CustomAutoCompleteView
                     android:id="@+id/editViewCollegeName"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
@@ -127,8 +127,7 @@
                 app:errorTextAppearance="@style/error_appearance"
                 android:textColorHint="@color/white">
 
-
-                <android.support.v7.widget.AppCompatAutoCompleteTextView
+                <igotplaced.com.layouts.Utils.CustomAutoCompleteView
                     android:id="@+id/editViewDepartment"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
@@ -139,6 +138,7 @@
                     android:textColor="@color/white"
                     android:textColorHint="@color/white"
                     app:backgroundTint="@color/white" />
+
             </android.support.design.widget.TextInputLayout>
 
             <android.support.v7.widget.AppCompatCheckBox
