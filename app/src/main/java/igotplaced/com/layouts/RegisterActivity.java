@@ -149,8 +149,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
             @Override
             public void afterTextChanged(Editable s) {
                 if (shouldAutoComplete) {
-                    networkDepartmentAutoCompleteRequest(s.toString());
-                    departmentEditText.showDropDown();
+                    if(s.toString().length()>2){
+                        networkDepartmentAutoCompleteRequest(s.toString());
+                        departmentEditText.showDropDown();
+                    }
                 }
 
             }
