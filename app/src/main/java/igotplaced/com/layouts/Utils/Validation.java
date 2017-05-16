@@ -58,8 +58,32 @@ public class Validation {
         return true;
     }
 
+    public static boolean validateCollegeCheck(AppCompatAutoCompleteTextView collegeEditText,String college ,TextInputLayout inputLayoutCollege, Activity activity) {
+        if (collegeEditText.getText().toString().trim().isEmpty() || collegeEditText.getText().length() < 3 || college == null) {
+            inputLayoutCollege.setError(activity.getString(R.string.err_msg_college));
+            requestFocus(collegeEditText, activity);
+            return false;
+        } else {
+            inputLayoutCollege.setErrorEnabled(false);
+        }
+
+        return true;
+    }
+
     public static boolean validateDepartment(AppCompatAutoCompleteTextView departmentEditText, TextInputLayout inputLayoutDepartment, Activity activity) {
         if (departmentEditText.getText().toString().trim().isEmpty() || departmentEditText.getText().length() < 3) {
+            inputLayoutDepartment.setError(activity.getString(R.string.err_msg_department));
+            requestFocus(departmentEditText, activity);
+            return false;
+        } else {
+            inputLayoutDepartment.setErrorEnabled(false);
+        }
+
+        return true;
+    }
+
+    public static boolean validateDepartmentCheck(AppCompatAutoCompleteTextView departmentEditText,String department, TextInputLayout inputLayoutDepartment, Activity activity) {
+        if (departmentEditText.getText().toString().trim().isEmpty() || departmentEditText.getText().length() < 3 || department == null) {
             inputLayoutDepartment.setError(activity.getString(R.string.err_msg_department));
             requestFocus(departmentEditText, activity);
             return false;

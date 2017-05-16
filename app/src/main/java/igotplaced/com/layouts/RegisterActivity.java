@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.AppCompatAutoCompleteTextView;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.AppCompatEditText;
@@ -61,9 +60,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
     private AppCompatButton registerBtn;
     private AppCompatCheckBox checkBoxIntrested;
     private boolean checkBoxIntrestedBoolean = false;
-    private ArrayAdapter<String> spinnerArrayAdapter,departmentAutoCompleteAdapter;
+    private ArrayAdapter<String> spinnerArrayAdapter,departmentAutoCompleteAdapter, collegeAutoCompleteAdapter;
 
     private ProgressDialog pDialog;
+
+    private String department,college;
 
     private String URL = BaseUri + "/registrationService/register";
 
@@ -75,7 +76,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
         if (getSupportActionBar() != null)
             getSupportActionBar().hide();
         setContentView(R.layout.activity_registration);
-
 
         addressingView();
 
@@ -92,39 +92,61 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
         spinnerArrayAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item_custom, yearList);
 
         passOutYearSpinner.setAdapter(spinnerArrayAdapter);
-/*
 
+        collegeAutoCompleteAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item_custom);
 
-        List<String> collegeList = networkCollegeAutoCompleteRequest();
+        collegeEditText.setThreshold(4);
+        collegeEditText.setAdapter(collegeAutoCompleteAdapter);
 
-        String[] college = collegeList.toArray(new String[collegeList.size()]);
-*/
+        collegeEditText.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                college = collegeAutoCompleteAdapter.getItem(position);
+            }
+        });
 
-        String[] college = {"C", "C++", "Java", ".NET", "iPhone", "Android", "ASP.NET", "PHP"};
+        collegeEditText.addTextChangedListener(new TextWatcher() {
+            private boolean shouldAutoComplete = true;
 
-        //Creating the instance of ArrayAdapter containing list of language names
-        ArrayAdapter<String> CollegeAutoCompleteAdapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item, college);
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-        //Getting the instance of AutoCompleteTextView
-        AutoCompleteTextView AutoCompleteTextView = (AutoCompleteTextView) findViewById(R.id.editViewCollegeName);
-        AutoCompleteTextView.setThreshold(3);
-        AutoCompleteTextView.setAdapter(CollegeAutoCompleteAdapter);
+            }
 
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                shouldAutoComplete = true;
+                for (int position = 0; position < collegeAutoCompleteAdapter.getCount(); position++) {
+                    if (collegeAutoCompleteAdapter.getItem(position).equalsIgnoreCase(s.toString())) {
+                        shouldAutoComplete = false;
+                        college = null;
+                        break;
+                    }
+                }
+            }
 
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (shouldAutoComplete) {
+                    if(s.toString().length()>2){
+                        networkCollegeAutoCompleteRequest(s.toString());
+                        collegeEditText.showDropDown();
+                    }
+                }
+            }
+        });
 
-/*
-        List<String> DepartmentList = networkDepartmentAutoCompleteRequest();
-
-        String[] department = DepartmentList.toArray(new String[DepartmentList.size()]);
-
-        Toast.makeText(RegisterActivity.this, "" + DepartmentList.toString(), Toast.LENGTH_LONG).show();*/
-
-
-        //Creating the instance of ArrayAdapter containing list of language names
-        departmentAutoCompleteAdapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item);
+        departmentAutoCompleteAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item_custom);
 
         departmentEditText.setThreshold(3);
         departmentEditText.setAdapter(departmentAutoCompleteAdapter);
+
+        departmentEditText.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                department = departmentAutoCompleteAdapter.getItem(position);
+            }
+        });
 
         departmentEditText.addTextChangedListener(new TextWatcher() {
             private boolean shouldAutoComplete = true;
@@ -140,6 +162,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
                 for (int position = 0; position < departmentAutoCompleteAdapter.getCount(); position++) {
                     if (departmentAutoCompleteAdapter.getItem(position).equalsIgnoreCase(s.toString())) {
                         shouldAutoComplete = false;
+                        department = null;
                         break;
                     }
                 }
@@ -158,30 +181,17 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
             }
         });
 
-
     }
 
-
     private void networkDepartmentAutoCompleteRequest(String keyword) {
-/*
-
-        final List<String> DepartmentList = new ArrayList<String>();
-
-        pDialog = new ProgressDialog(RegisterActivity.this);
-        pDialog.setMessage("LoadingAU...");
-        pDialog.show();
-*/
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(BaseUri + "/autocompleteService/searchDepartment/"+keyword, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-              /*  pDialog.dismiss();
-*/
-                Log.d("error", response.toString());
 
+                departmentAutoCompleteAdapter.clear();
                 for (int i = 0; i < response.length(); i++) {
                     try {
-                        departmentAutoCompleteAdapter.clear();
                         departmentAutoCompleteAdapter.add(String.valueOf(response.get(i)));
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -191,14 +201,16 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-/*
-                pDialog.dismiss();*/
-                Log.d("error", "here22" + error.toString());
+                /**
+                 *  Returns error message when,
+                 *  server is down,
+                 *  incorrect IP
+                 *  Server not deployed
+                 */
+                Utils.showDialogue(RegisterActivity.this, "Sorry! Server Error");
             }
         });
-/*
 
-        Toast.makeText(RegisterActivity.this, "" + DepartmentList.toString(), Toast.LENGTH_LONG).show();*/
 
         int MY_SOCKET_TIMEOUT_MS = 3000;//3 seconds - change to what you want
         jsonArrayRequest.setRetryPolicy(new DefaultRetryPolicy(
@@ -209,44 +221,35 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
         RequestQueue rQueue = Volley.newRequestQueue(RegisterActivity.this);
         rQueue.add(jsonArrayRequest);
 
-/*
-        return DepartmentList;*/
     }
 
-    private List<String> networkCollegeAutoCompleteRequest() {
+    private void networkCollegeAutoCompleteRequest(String keyword) {
 
-        final List<String> ColgList = new ArrayList<String>();
 
-        pDialog = new ProgressDialog(RegisterActivity.this);
-        pDialog.setMessage("LoadingAU...");
-        pDialog.show();
-
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(BaseUri + "/autocompleteService/searchCollege", new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(BaseUri + "/autocompleteService/searchCollege/"+keyword, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                pDialog.dismiss();
 
-                Log.d("error", response.toString());
-
-                Toast.makeText(RegisterActivity.this, "" + response.toString(), Toast.LENGTH_LONG).show();
-
+                collegeAutoCompleteAdapter.clear();
                 for (int i = 0; i < response.length(); i++) {
                     try {
-                        ColgList.add(String.valueOf(response.get(i)));
-                        spinnerArrayAdapter.notifyDataSetChanged();
+                        collegeAutoCompleteAdapter.add(String.valueOf(response.get(i)));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
+
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
-                pDialog.dismiss();
-                Toast.makeText(RegisterActivity.this, error.toString(), Toast.LENGTH_LONG).show();
-
-                Log.d("error", "here22" + error.toString());
+            /**
+             *  Returns error message when,
+             *  server is down,
+             *  incorrect IP
+             *  Server not deployed
+             */
+            Utils.showDialogue(RegisterActivity.this, "Sorry! Server Error");
             }
         });
 
@@ -260,7 +263,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
         RequestQueue rQueue = Volley.newRequestQueue(RegisterActivity.this);
         rQueue.add(jsonArrayRequest);
 
-        return ColgList;
     }
 
 
@@ -268,17 +270,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
 
         final List<String> yearArrayList = new ArrayList<String>();
 
-       /* pDialog = new ProgressDialog(RegisterActivity.this);
-        pDialog.setMessage("Loading...");
-        pDialog.show();*/
-
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(BaseUri + "/spinner/yearofpassout", new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-               /* pDialog.dismiss();*/
-
-                Log.d("error", response.toString());
-
 
                 for (int i = 0; i < response.length(); i++) {
                     try {
@@ -292,10 +286,13 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-             /*   pDialog.dismiss();*/
-
-                Toast.makeText(RegisterActivity.this, error.toString(), Toast.LENGTH_LONG).show();
-                Log.d("error", "here" + error.toString());
+                /**
+                 *  Returns error message when,
+                 *  server is down,
+                 *  incorrect IP
+                 *  Server not deployed
+                 */
+                Utils.showDialogue(RegisterActivity.this, "Sorry! Server Error");
             }
         });
 
@@ -375,11 +372,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
             return;
         }
 
-        if (!Validation.validateCollege(collegeEditText, inputLayoutCollege, RegisterActivity.this)) {
+        if (!Validation.validateCollegeCheck(collegeEditText, college,inputLayoutCollege, RegisterActivity.this)) {
             return;
         }
 
-        if (!Validation.validateDepartment(departmentEditText, inputLayoutDepartment, RegisterActivity.this)) {
+        if (!Validation.validateDepartmentCheck(departmentEditText, department,inputLayoutDepartment, RegisterActivity.this)) {
             return;
         }
 
@@ -395,22 +392,22 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
             @Override
             public void onResponse(String s) {
 
-                Toast.makeText(RegisterActivity.this, "returned -> " + s, Toast.LENGTH_LONG).show();
-
-
-/*
-                if (s.equals("true")) {
+                if (Integer.parseInt(s) != 0) {
                     Toast.makeText(RegisterActivity.this, "Registration Successful", Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(RegisterActivity.this, "Can't Register", Toast.LENGTH_LONG).show();
-                }*/
+                    Utils.showDialogue(RegisterActivity.this, "Sorry!!! Already Registered with this email id");                }
 
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                Toast.makeText(RegisterActivity.this, "Some error occurred -> " + volleyError, Toast.LENGTH_LONG).show();
-
+                /**
+                 *  Returns error message when,
+                 *  server is down,
+                 *  incorrect IP
+                 *  Server not deployed
+                 */
+                Utils.showDialogue(RegisterActivity.this, "Sorry! Server Error");
             }
         }) {
             @Override
@@ -504,18 +501,4 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
         }
     }
 
- /*   private class SpinnerOnItemSelectedListener implements AdapterView.OnItemSelectedListener {
-
-        @Override
-        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-            Toast.makeText(parent.getContext(), "On Item Select : \n" + parent.getItemAtPosition(position).toString(),
-                    Toast.LENGTH_LONG).show();
-        }
-
-        @Override
-        public void onNothingSelected(AdapterView<?> parent) {
-
-        }
-    }*/
 }
