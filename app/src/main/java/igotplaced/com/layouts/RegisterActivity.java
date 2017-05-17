@@ -1,6 +1,7 @@
 package igotplaced.com.layouts;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -61,8 +62,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
     private AppCompatCheckBox checkBoxIntrested;
     private boolean checkBoxIntrestedBoolean = false;
     private ArrayAdapter<String> spinnerArrayAdapter,departmentAutoCompleteAdapter, collegeAutoCompleteAdapter;
-
-    private ProgressDialog pDialog;
 
     private String department,college;
 
@@ -382,8 +381,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
 
         register();
 
-        /*Intent registrationCompleteIntent = new Intent(RegisterActivity.this, RegisterPasswordActivity.class);
-        startActivity(registrationCompleteIntent);*/
+
     }
 
     private void register() {
@@ -394,6 +392,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
 
                 if (Integer.parseInt(s) != 0) {
                     Toast.makeText(RegisterActivity.this, "Registration Successful", Toast.LENGTH_LONG).show();
+                    Intent registrationCompleteIntent = new Intent(RegisterActivity.this, RegisterPasswordActivity.class);
+                    registrationCompleteIntent.putExtra("id",Integer.parseInt(s));
+                    registrationCompleteIntent.putExtra("interest",String.valueOf((checkBoxIntrestedBoolean) ? 1 : 0));
+                    startActivity(registrationCompleteIntent);
                 } else {
                     Utils.showDialogue(RegisterActivity.this, "Sorry!!! Already Registered with this email id");                }
 

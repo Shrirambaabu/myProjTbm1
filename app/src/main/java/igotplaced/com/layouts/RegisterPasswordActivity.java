@@ -28,7 +28,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import igotplaced.com.layouts.Utils.Utils;
@@ -48,9 +47,8 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
     private TextInputLayout inputLayoutPassword, inputLayoutConfirmPassword, inputLayoutMobileNumber, inputLayoutLocation;
     private AppCompatSpinner industrySpinnerOne, industrySpinnerTwo, industrySpinnerThree, companySpinnerOne, companySpinnerTwo, companySpinnerThree;
 
-    private ArrayAdapter<String> industrySpinnerOneArrayAdapter;
-    private ArrayAdapter<String> industrySpinnerTwoArrayAdapter;
-    private ArrayAdapter<String> industrySpinnerThreeArrayAdapter;
+    private ArrayAdapter<String> spinnerArrayAdapter,companyArrayAdapter;
+    private List<String> industrySpinnerArrayList;
 
     private ProgressDialog pDialog;
 
@@ -81,8 +79,8 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
 
     private void settingIndustrySpinner() {
 
-        List<String> industryList = networkIndustrySpinnerOneArrayRequest();
-        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item_custom, industryList);
+        List<String> industryList = networkIndustrySpinnerArrayRequest();
+        spinnerArrayAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item_custom, industryList);
 
         industrySpinnerOne.setAdapter(spinnerArrayAdapter);
         industrySpinnerTwo.setAdapter(spinnerArrayAdapter);
@@ -91,24 +89,8 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
 
     private void settingCompanySpinner() {
 
-
-        String[] companyDisplay = {"KPMG IMPACT", "LIMEROAD", "SNAPDEAL", "PAYTM", "FLIPKART", "OLA CABS",
-                "COMMONFLOOR", "INFIBEAM", "TINYOWL", "LOCALBANYA", "THRILLOPHILIA", "OLX ", "MYSMARTPRICE",
-                "ZIMMBER", "PEPPERFRY", "BABYCHAKRA", "ZOPPER", "TRUEBIL", "ADPUSHUP", "SAAVN", "STITCHWOOD",
-                "ZOOMO", "BUYHATKE", "HOUSEJOY", "LinkedIn", "WalmartLabs", "Intuit", "Credit Suisse", "DROOM",
-                "VISTEON", "DEUTSCHE BANK", "AXIS BANK", "MCKINSEY", "BCG", "DELOITTE", "TIGER ANALYTICS", "REDBUS",
-                "SIMPLILEARN", "PLANCESS", "TOPPR", "FLATCHAT", "GROFERS", "AMERICAN EXPRESS", "ITC", "SPOONJOY",
-                "FOODPANDA", "HOLACHEF", "SWIGGY", "FABFURNISH", "MYDENTIST", "LYBRATE", "STAYZILLA", "HOLIDAYIQ",
-                "Goldman Sachs", "TCS", "INFOSYS", "WIPRO", "Cognizant Technology Solutions ", "IBM", "HCL Technologies",
-                "Tech Mahindra", "Oracle", "iGate", "L&T Infotech", "Thoughtworks", "Zoho", "Mindtree", "Accenture",
-                "Aricent", "Ericsson", "Microsoft", "JABONG", "QUIKR", "MERITNATION", "Capgemini", "Google", "VMware",
-                "Adobe Systems", "Yahoo", "Arista Networks", "Cisco Systems", "EMC Corporation", "Nvidia",
-                "McAfee, Inc.", "Amadeus Software Labs", "Tejas Networks", "iGotPlaced", "POLARIS NETWORKS",
-                "EXOTEL", "VERIZON", "WHIRLPOOL"};
-
-
-        List<String> companyList = networkCompanySpinnerOneArrayRequest();
-        ArrayAdapter<String> companyArrayAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item_custom, companyList);
+        List<String> companyList = networkCompanySpinnerArrayRequest();
+        companyArrayAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item_custom, companyList);
 
         companySpinnerOne.setAdapter(companyArrayAdapter);
         companySpinnerTwo.setAdapter(companyArrayAdapter);
@@ -117,23 +99,18 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
     }
 
 //Pases JSON value to spinner
-    private List<String> networkIndustrySpinnerOneArrayRequest() {
+    private List<String> networkIndustrySpinnerArrayRequest() {
 
-        final List<String> industrySpinnerOneArrayList = new ArrayList<String>();
-
-        pDialog = new ProgressDialog(RegisterPasswordActivity.this);
-        pDialog.setMessage("Loading...");
-        pDialog.show();
+        industrySpinnerArrayList = new ArrayList<String>();
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(BaseUri + "/spinner/industry", new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                pDialog.dismiss();
 
                 for (int i = 0; i < response.length(); i++) {
                     try {
-                        industrySpinnerOneArrayList.add(String.valueOf(response.get(i)));
-                        industrySpinnerOneArrayAdapter.notifyDataSetChanged();
+                        industrySpinnerArrayList.add(String.valueOf(response.get(i)));
+                        spinnerArrayAdapter.notifyDataSetChanged();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -146,14 +123,14 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
 
             }
         });
-// Adding request to request queue
+        // Adding request to request queue
         RequestQueue rQueue = Volley.newRequestQueue(RegisterPasswordActivity.this);
         rQueue.add(jsonArrayRequest);
-
-        return industrySpinnerOneArrayList;//displays the selected spinner value
+        //displays the selected spinner value
+        return industrySpinnerArrayList;
     }
 
-    private List<String> networkCompanySpinnerOneArrayRequest() {
+    private List<String> networkCompanySpinnerArrayRequest() {
 
         final List<String> companySpinnerOneArrayList = new ArrayList<String>();
 
