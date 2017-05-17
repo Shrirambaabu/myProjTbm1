@@ -352,6 +352,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
 
     }
 
+
     private void submitRegistrationDetails() {
 
 
@@ -378,6 +379,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
         if (!Validation.validateDepartmentCheck(departmentEditText, department,inputLayoutDepartment, RegisterActivity.this)) {
             return;
         }
+
 
         register();
 

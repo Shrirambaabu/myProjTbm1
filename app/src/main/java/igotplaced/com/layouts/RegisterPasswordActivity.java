@@ -6,6 +6,7 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatAutoCompleteTextView;
 import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatSpinner;
 import android.text.Editable;
@@ -46,15 +47,21 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
     private AppCompatAutoCompleteTextView locationEditText;
     private TextInputLayout inputLayoutPassword, inputLayoutConfirmPassword, inputLayoutMobileNumber, inputLayoutLocation;
     private AppCompatSpinner industrySpinnerOne, industrySpinnerTwo, industrySpinnerThree, companySpinnerOne, companySpinnerTwo, companySpinnerThree;
+    private AppCompatCheckBox checkBoxPassword;
+    private boolean checkBoxPasswordBoolean = false;
 
-    private ArrayAdapter<String> spinnerArrayAdapter,companyArrayAdapter;
+    private ArrayAdapter<String> spinnerArrayAdapter, companyArrayAdapter;
     private List<String> industrySpinnerArrayList;
 
     private ProgressDialog pDialog;
+    private  Bundle extras;
+    String userid, interest;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+       extras = getIntent().getExtras();
 
         super.onCreate(savedInstanceState);
         if (getSupportActionBar() != null)
@@ -68,11 +75,15 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
 
         addingListener();
 
-       //Setting industry spinner value
+        //Setting industry spinner value
         settingIndustrySpinner();
 
         //Setting company spinner value
         settingCompanySpinner();
+
+        userid = extras.getString("id");
+        interest = extras.getString("interest");
+
 
     }
 
@@ -98,7 +109,7 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
 
     }
 
-//Pases JSON value to spinner
+    //Pases JSON value to spinner
     private List<String> networkIndustrySpinnerArrayRequest() {
 
         industrySpinnerArrayList = new ArrayList<String>();
@@ -153,6 +164,7 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
         companySpinnerTwo = (AppCompatSpinner) findViewById(R.id.company_spinner2);
         companySpinnerThree = (AppCompatSpinner) findViewById(R.id.company_spinner3);
 
+        checkBoxPassword = (AppCompatCheckBox) findViewById(R.id.checkBoxPassword);
         regBtn = (AppCompatButton) findViewById(R.id.register_submit);
 
         inputLayoutPassword = (TextInputLayout) findViewById(R.id.ViewPasswordTextInputLayout);
@@ -175,6 +187,7 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
 
         scrollView.setOnTouchListener(this);
 
+        checkBoxPassword.setOnClickListener(this);
         regBtn.setOnClickListener(this);
 
         industrySpinnerOne.setOnItemSelectedListener(this);
@@ -185,7 +198,8 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
         companySpinnerThree.setOnItemSelectedListener(this);
 
     }
-// Validate the user entered details
+
+    // Validate the user entered details
     private void finalRegistrationSuccess() {
         if (!Validation.validatePassword(passwordEditText, inputLayoutPassword, RegisterPasswordActivity.this)) {
             return;
@@ -321,7 +335,8 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
                 break;
         }
     }
-//CustomWatcher
+
+    //CustomWatcher
     private class CustomWatcher implements TextWatcher {
         private View view;
 
