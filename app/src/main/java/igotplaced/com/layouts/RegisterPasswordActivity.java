@@ -1,6 +1,5 @@
 package igotplaced.com.layouts;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
@@ -36,7 +36,7 @@ import igotplaced.com.layouts.Utils.Validation;
 
 import static igotplaced.com.layouts.Utils.Utils.BaseUri;
 
-public class RegisterPasswordActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnTouchListener, View.OnClickListener {
+public class RegisterPasswordActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnTouchListener, View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
 
     private String industrySpinnerOneValue = null, industrySpinnerTwoValue = null, industrySpinnerThreeValue = null;
@@ -53,15 +53,12 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
     private ArrayAdapter<String> spinnerArrayAdapter, companyArrayAdapter;
     private List<String> industrySpinnerArrayList;
 
-    private ProgressDialog pDialog;
-    private  Bundle extras;
-    String userid, interest;
+    private Bundle extras;
+    String userId, interest;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-       extras = getIntent().getExtras();
 
         super.onCreate(savedInstanceState);
         if (getSupportActionBar() != null)
@@ -71,9 +68,14 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
          *    User defined function to
          *    map xml file to object
          **/
+
+        initialization();
+
         addressingView();
 
         addingListener();
+
+        settingCheckBoxValue();
 
         //Setting industry spinner value
         settingIndustrySpinner();
@@ -81,12 +83,20 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
         //Setting company spinner value
         settingCompanySpinner();
 
-        userid = extras.getString("id");
-        interest = extras.getString("interest");
-
-
     }
 
+    private void settingCheckBoxValue() {
+        checkBoxPassword.setChecked(Boolean.parseBoolean(interest));
+    }
+
+    private void initialization() {
+
+        extras = getIntent().getExtras();
+
+        userId = extras.getString("id");
+        interest = extras.getString("interest");
+
+    }
 
     private void settingIndustrySpinner() {
 
@@ -109,7 +119,7 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
 
     }
 
-    //Pases JSON value to spinner
+    //Passes JSON value to spinner
     private List<String> networkIndustrySpinnerArrayRequest() {
 
         industrySpinnerArrayList = new ArrayList<String>();
@@ -187,7 +197,8 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
 
         scrollView.setOnTouchListener(this);
 
-        checkBoxPassword.setOnClickListener(this);
+        checkBoxPassword.setOnCheckedChangeListener(this);
+
         regBtn.setOnClickListener(this);
 
         industrySpinnerOne.setOnItemSelectedListener(this);
@@ -257,12 +268,16 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
             }
         }
 
-        if (!Validation.validateMobileNumber(mobileNumberEditText, inputLayoutMobileNumber, RegisterPasswordActivity.this)) {
-            return;
+        if(checkBoxPassword.isChecked()){
+
+            if (!Validation.validateMobileNumber(mobileNumberEditText, inputLayoutMobileNumber, RegisterPasswordActivity.this)) {
+                return;
+            }
+            if (!Validation.validateLocation(locationEditText, inputLayoutLocation, RegisterPasswordActivity.this)) {
+                return;
+            }
         }
-        if (!Validation.validateLocation(locationEditText, inputLayoutLocation, RegisterPasswordActivity.this)) {
-            return;
-        }
+
 
         Toast.makeText(getApplicationContext(), "Registration Successfully", Toast.LENGTH_SHORT).show();
 
@@ -336,6 +351,18 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
         }
     }
 
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+        if (isChecked) {
+            mobileNumberEditText.setEnabled(true);
+            locationEditText.setEnabled(true);
+        } else {
+            mobileNumberEditText.setEnabled(false);
+            locationEditText.setEnabled(false);
+        }
+    }
+
     //CustomWatcher
     private class CustomWatcher implements TextWatcher {
         private View view;
@@ -359,9 +386,11 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
                     Validation.validatePassword(confirmPasswordEditText, inputLayoutConfirmPassword, RegisterPasswordActivity.this);
                     break;
                 case R.id.editViewMobileNumber:
+                    if(checkBoxPassword.isChecked())
                     Validation.validateMobileNumber(mobileNumberEditText, inputLayoutMobileNumber, RegisterPasswordActivity.this);
                     break;
                 case R.id.editViewLocation:
+                    if(checkBoxPassword.isChecked())
                     Validation.validateLocation(locationEditText, inputLayoutLocation, RegisterPasswordActivity.this);
                     break;
             }

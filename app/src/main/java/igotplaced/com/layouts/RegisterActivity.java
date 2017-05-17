@@ -396,7 +396,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
                     Toast.makeText(RegisterActivity.this, "Registration Successful", Toast.LENGTH_LONG).show();
                     Intent registrationCompleteIntent = new Intent(RegisterActivity.this, RegisterPasswordActivity.class);
                     registrationCompleteIntent.putExtra("id",Integer.parseInt(s));
-                    registrationCompleteIntent.putExtra("interest",String.valueOf((checkBoxIntrestedBoolean) ? 1 : 0));
+                    registrationCompleteIntent.putExtra("interest",String.valueOf(checkBoxIntrestedBoolean));
                     startActivity(registrationCompleteIntent);
                 } else {
                     Utils.showDialogue(RegisterActivity.this, "Sorry!!! Already Registered with this email id");                }
