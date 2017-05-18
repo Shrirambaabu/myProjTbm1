@@ -23,6 +23,8 @@ import com.android.volley.toolbox.Volley;
 import java.util.HashMap;
 import java.util.Map;
 
+import igotplaced.com.layouts.Utils.ConnectivityReceiver;
+import igotplaced.com.layouts.Utils.MyApplication;
 import igotplaced.com.layouts.Utils.Utils;
 import igotplaced.com.layouts.Utils.Validation;
 
@@ -32,7 +34,7 @@ import static igotplaced.com.layouts.Utils.Utils.BaseUri;
  * Created by Ashith VL on 5/2/2017.
  */
 
-public class ForgetPasswordActivity extends AppCompatActivity implements View.OnClickListener {
+public class ForgetPasswordActivity extends AppCompatActivity implements View.OnClickListener , ConnectivityReceiver.ConnectivityReceiverListener  {
 
 
     private AppCompatEditText emailEditText;
@@ -59,6 +61,20 @@ public class ForgetPasswordActivity extends AppCompatActivity implements View.On
         addingListener();
 
     }
+
+    @Override
+    public void onNetworkConnectionChanged(boolean isConnected) {
+
+        Utils.showDialogue(ForgetPasswordActivity.this, "Sorry! Not connected to internet");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // register connection status listener
+        MyApplication.getInstance().setConnectivityListener(ForgetPasswordActivity.this);
+    }
+
 
     private void addingListener() {
         emailEditText.addTextChangedListener(new CustomWatcher(emailEditText));

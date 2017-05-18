@@ -39,7 +39,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import igotplaced.com.layouts.Utils.ConnectivityReceiver;
 import igotplaced.com.layouts.Utils.CustomAutoCompleteView;
+import igotplaced.com.layouts.Utils.MyApplication;
 import igotplaced.com.layouts.Utils.Utils;
 import igotplaced.com.layouts.Utils.Validation;
 
@@ -49,7 +51,7 @@ import static igotplaced.com.layouts.Utils.Utils.BaseUri;
  * Created by Admin on 5/2/2017.
  */
 
-public class RegisterActivity extends AppCompatActivity implements View.OnTouchListener, View.OnClickListener, AdapterView.OnItemSelectedListener {
+public class RegisterActivity extends AppCompatActivity implements View.OnTouchListener, ConnectivityReceiver.ConnectivityReceiverListener, View.OnClickListener, AdapterView.OnItemSelectedListener {
 
 
     private String yearPassOutSpinnerValue = null;
@@ -83,6 +85,21 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
         networkSettingSpinnerAndAutoComplete();
 
     }
+
+    @Override
+    public void onNetworkConnectionChanged(boolean isConnected) {
+
+        Utils.showDialogue(RegisterActivity.this, "Sorry! Not connected to internet");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // register connection status listener
+        MyApplication.getInstance().setConnectivityListener(RegisterActivity.this);
+    }
+
+
 
     private void networkSettingSpinnerAndAutoComplete() {
 

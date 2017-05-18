@@ -40,12 +40,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import igotplaced.com.layouts.Utils.ConnectivityReceiver;
+import igotplaced.com.layouts.Utils.MyApplication;
 import igotplaced.com.layouts.Utils.Utils;
 import igotplaced.com.layouts.Utils.Validation;
 
 import static igotplaced.com.layouts.Utils.Utils.BaseUri;
 
-public class RegisterPasswordActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnTouchListener, View.OnClickListener, CompoundButton.OnCheckedChangeListener {
+public class RegisterPasswordActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, ConnectivityReceiver.ConnectivityReceiverListener, View.OnTouchListener, View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
 
     private String industrySpinnerOneValue = "", industrySpinnerTwoValue = "", industrySpinnerThreeValue = "";
@@ -96,6 +98,20 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
         settingCompanySpinner();
 
     }
+    @Override
+    public void onNetworkConnectionChanged(boolean isConnected) {
+
+        Utils.showDialogue(RegisterPasswordActivity.this, "Sorry! Not connected to internet");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // register connection status listener
+        MyApplication.getInstance().setConnectivityListener(RegisterPasswordActivity.this);
+    }
+
+
 
     private void settingCheckBoxValue() {
         Toast.makeText(RegisterPasswordActivity.this,""+interest,Toast.LENGTH_LONG).show();
