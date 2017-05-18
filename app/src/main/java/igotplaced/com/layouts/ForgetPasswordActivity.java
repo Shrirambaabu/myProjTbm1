@@ -72,13 +72,12 @@ public class ForgetPasswordActivity extends AppCompatActivity implements View.On
         forgetPasswordSubmit = (Button) findViewById(R.id.forget_password_button);
 
     }
-// performs action when submit is clicked
+
+    // performs action when submit is clicked
     private void submittingForgetPassword() {
         if (!Validation.validateEmail(emailEditText, inputLayoutEmail, ForgetPasswordActivity.this)) {
             return;
         }
-
-        Toast.makeText(getApplicationContext(), "Email send Successfully", Toast.LENGTH_SHORT).show();
 
         forgetPassword();
 
@@ -91,10 +90,14 @@ public class ForgetPasswordActivity extends AppCompatActivity implements View.On
             public void onResponse(String s) {
 
                 if (Integer.parseInt(s) != 0) {
+
+                    Toast.makeText(getApplicationContext(), "Email send Successfully", Toast.LENGTH_SHORT).show();
+
                     Intent loginCompleteIntent = new Intent(ForgetPasswordActivity.this, LoginActivity.class);
                     startActivity(loginCompleteIntent);
                 } else {
-                    Utils.showDialogue(ForgetPasswordActivity.this, "Sorry!!! Wrong email id");                }
+                    Utils.showDialogue(ForgetPasswordActivity.this, "Sorry!!! Wrong email id");
+                }
 
             }
         }, new Response.ErrorListener() {
@@ -136,7 +139,8 @@ public class ForgetPasswordActivity extends AppCompatActivity implements View.On
                 break;
         }
     }
-//customWatcher
+
+    //customWatcher
     private class CustomWatcher implements TextWatcher {
 
         private View view;
