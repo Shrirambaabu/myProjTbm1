@@ -448,7 +448,7 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
                     registrationCompleteIntent.putExtra("interest",String.valueOf(checkBoxIntrestedBoolean));
                     startActivity(registrationCompleteIntent);*/
                 } else {
-                    Utils.showDialogue(RegisterPasswordActivity.this, "Sorry!!! Already Registered with this email id");
+                    Utils.showDialogue(RegisterPasswordActivity.this, "Already Updated Your Profile!!!");
                 }
 
             }
