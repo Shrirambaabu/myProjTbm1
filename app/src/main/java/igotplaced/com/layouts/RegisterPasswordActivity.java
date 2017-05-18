@@ -35,8 +35,10 @@ import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import igotplaced.com.layouts.Utils.Utils;
 import igotplaced.com.layouts.Utils.Validation;
@@ -370,8 +372,8 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
         if (!Validation.validatePasswordConfirmPassword(passwordEditText, confirmPasswordEditText, inputLayoutConfirmPassword, RegisterPasswordActivity.this)) {
             return;
         }
-        if (industrySpinnerOneValue == "" || companySpinnerOneValue == "") {
-            if (industrySpinnerOneValue == "") {
+        if (Objects.equals(industrySpinnerOneValue, "") || Objects.equals(companySpinnerOneValue, "")) {
+            if (Objects.equals(industrySpinnerOneValue, "")) {
                 industrySpinnerOne.setFocusable(true);
                 industrySpinnerOne.setFocusableInTouchMode(true);
                 industrySpinnerOne.requestFocus();
@@ -385,14 +387,14 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
                 return;
             }
         }
-        if (industrySpinnerTwoValue == "" || companySpinnerTwoValue == "") {
-            if (industrySpinnerTwoValue == "" && companySpinnerTwoValue != "") {
+        if (Objects.equals(industrySpinnerTwoValue, "") || Objects.equals(companySpinnerTwoValue, "")) {
+            if (Objects.equals(industrySpinnerTwoValue, "") && !Objects.equals(companySpinnerTwoValue, "")) {
                 industrySpinnerTwo.setFocusable(true);
                 industrySpinnerTwo.setFocusableInTouchMode(true);
                 industrySpinnerTwo.requestFocus();
                 Utils.setSpinnerError(industrySpinnerTwo, "Field can't be empty", RegisterPasswordActivity.this);
                 return;
-            } else if (industrySpinnerTwoValue != "" && companySpinnerTwoValue == "") {
+            } else if (!Objects.equals(industrySpinnerTwoValue, "") && Objects.equals(companySpinnerTwoValue, "")) {
                 companySpinnerTwo.setFocusable(true);
                 companySpinnerTwo.setFocusableInTouchMode(true);
                 companySpinnerTwo.requestFocus();
@@ -401,14 +403,14 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
             }
         }
 
-        if (industrySpinnerThreeValue == "" || companySpinnerThreeValue == "") {
-            if (industrySpinnerThreeValue == "" && companySpinnerThreeValue != "") {
+        if (Objects.equals(industrySpinnerThreeValue, "") || Objects.equals(companySpinnerThreeValue, "")) {
+            if (Objects.equals(industrySpinnerThreeValue, "") && !Objects.equals(companySpinnerThreeValue, "")) {
                 industrySpinnerThree.setFocusable(true);
                 industrySpinnerThree.setFocusableInTouchMode(true);
                 industrySpinnerThree.requestFocus();
                 Utils.setSpinnerError(industrySpinnerThree, "Field can't be empty", RegisterPasswordActivity.this);
                 return;
-            } else if (industrySpinnerThreeValue != "" && companySpinnerThreeValue == "") {
+            } else if (!Objects.equals(industrySpinnerThreeValue, "") && Objects.equals(companySpinnerThreeValue, "")) {
                 companySpinnerThree.setFocusable(true);
                 companySpinnerThree.setFocusableInTouchMode(true);
                 companySpinnerThree.requestFocus();
@@ -476,6 +478,17 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
                 parameters.put("phone", mobileNumberEditText.getText().toString());
                 parameters.put("interest", interest);
                 parameters.put("location", locationEditText.getText().toString());
+                return checkParams(parameters);
+            }
+
+            private Map<String,String> checkParams(Map<String, String> parameters) {
+                Iterator<Map.Entry<String, String>> it = parameters.entrySet().iterator();
+                while (it.hasNext()) {
+                    Map.Entry<String, String> pairs = (Map.Entry<String, String>)it.next();
+                    if(pairs.getValue()==null){
+                        parameters.put(pairs.getKey(), "");
+                    }
+                }
                 return parameters;
             }
         };
