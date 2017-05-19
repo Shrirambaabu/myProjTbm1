@@ -1,5 +1,6 @@
 package igotplaced.com.layouts;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -67,7 +68,7 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
 
     private String URL = BaseUri + "/registrationService/registerPassword";
 
-    private Bundle extras;
+    private Intent intent;
     String userId, interest;
 
 
@@ -98,6 +99,7 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
         settingCompanySpinner();
 
     }
+
     @Override
     public void onNetworkConnectionChanged(boolean isConnected) {
 
@@ -112,14 +114,13 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
     }
 
 
-
     private void settingCheckBoxValue() {
-        Toast.makeText(RegisterPasswordActivity.this,""+interest,Toast.LENGTH_LONG).show();
+        Toast.makeText(RegisterPasswordActivity.this, "" + interest, Toast.LENGTH_LONG).show();
         if (Boolean.parseBoolean(interest)) {
             checkBoxPassword.setChecked(true);
             mobileNumberEditText.setEnabled(true);
             locationEditText.setEnabled(true);
-        }else{
+        } else {
             checkBoxPassword.setChecked(false);
             mobileNumberEditText.setEnabled(false);
             locationEditText.setEnabled(false);
@@ -128,10 +129,10 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
 
     private void initialization() {
 
-        extras = getIntent().getExtras();
+        intent = getIntent();
 
-        userId = extras.getString("id");
-        interest = extras.getString("interest");
+        userId = intent.getStringExtra("id");
+        interest = intent.getStringExtra("interest");
 
     }
 
@@ -476,7 +477,7 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
                  *  server is down,
                  *  incorrect IP
                  *  Server not deployed
-                 */Log.d("error",""+volleyError);
+                 */Log.d("error", "" + volleyError);
                 Utils.showDialogue(RegisterPasswordActivity.this, "Sorry! Server Error");
             }
         }) {
@@ -492,16 +493,16 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
                 parameters.put("company2", companySpinnerTwoValue);
                 parameters.put("company3", companySpinnerThreeValue);
                 parameters.put("phone", mobileNumberEditText.getText().toString());
-                parameters.put("interest", interest);
+                parameters.put("interest", String.valueOf((Boolean.parseBoolean(interest)) ? 1 : 0));
                 parameters.put("location", locationEditText.getText().toString());
                 return checkParams(parameters);
             }
 
-            private Map<String,String> checkParams(Map<String, String> parameters) {
+            private Map<String, String> checkParams(Map<String, String> parameters) {
                 Iterator<Map.Entry<String, String>> it = parameters.entrySet().iterator();
                 while (it.hasNext()) {
-                    Map.Entry<String, String> pairs = (Map.Entry<String, String>)it.next();
-                    if(pairs.getValue()==null){
+                    Map.Entry<String, String> pairs = (Map.Entry<String, String>) it.next();
+                    if (pairs.getValue() == null) {
                         parameters.put(pairs.getKey(), "");
                     }
                 }
