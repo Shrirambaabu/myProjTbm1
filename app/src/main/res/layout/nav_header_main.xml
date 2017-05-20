@@ -28,12 +28,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/margin_16"
+            android:textSize="16sp"
+            android:textColor="@color/white"
             android:text="NAme"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
         <TextView
             android:id="@+id/email"
             android:text="@string/e_mail_address"
+            android:textSize="14sp"
+            android:textColor="@color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
