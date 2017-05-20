@@ -39,9 +39,10 @@ public class Utils {
         }
     }
 
-    public static void checkConnection(View view, Activity activity) {
+    public static boolean checkConnection(View view, Activity activity) {
         boolean isConnected = ConnectivityReceiver.isConnected();
         showSnack(isConnected, view, activity);
+        return isConnected;
     }
 
     // Showing the status in Snackbar

@@ -95,7 +95,11 @@ public class ForgetPasswordActivity extends AppCompatActivity implements View.On
             return;
         }
 
-        forgetPassword();
+        if (Utils.checkConnection(forgetPasswordSubmit, ForgetPasswordActivity.this)) {
+            forgetPassword();
+        }else{
+            Utils.showDialogue(ForgetPasswordActivity.this, "Sorry! Not connected to internet");
+        }
 
     }
 

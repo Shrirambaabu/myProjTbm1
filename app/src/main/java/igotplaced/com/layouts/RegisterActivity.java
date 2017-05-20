@@ -396,9 +396,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
         if (!Validation.validateDepartmentCheck(departmentEditText, department,inputLayoutDepartment, RegisterActivity.this)) {
             return;
         }
-
-
-        register();
+        if (Utils.checkConnection(registerBtn, RegisterActivity.this)) {
+            register();
+        }else{
+            Utils.showDialogue(RegisterActivity.this, "Sorry! Not connected to internet");
+        }
 
 
     }

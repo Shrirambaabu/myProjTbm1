@@ -59,7 +59,7 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
          **/
         addressingView();
 
-// Adding click Listener
+        // Adding click Listener
         addingListener();
 
     }
@@ -70,7 +70,6 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
      */
     @Override
     public void onNetworkConnectionChanged(boolean isConnected) {
-
         Utils.showDialogue(LoginActivity.this, "Sorry! Not connected to internet");
     }
 
@@ -111,8 +110,12 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
      * forget password is clicked
      */
     public void forgetPassword(View view) {
-        Intent forgetPasswordIntent = new Intent(LoginActivity.this, ForgetPasswordActivity.class);
-        startActivity(forgetPasswordIntent);
+        if (Utils.checkConnection(loginBtn, LoginActivity.this)) {
+            Intent forgetPasswordIntent = new Intent(LoginActivity.this, ForgetPasswordActivity.class);
+            startActivity(forgetPasswordIntent);
+        }else{
+            Utils.showDialogue(LoginActivity.this, "Sorry! Not connected to internet");
+        }
     }
 
 
@@ -120,11 +123,13 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
         if (!Validation.validateEmail(emailEditText, inputLayoutEmail, LoginActivity.this)) {
             return;
         }
-//Broadcast receiver to check internet connection
-        Utils.checkConnection(loginBtn, LoginActivity.this);
-//Performs action when Login button is clicked
-        login();
-
+        //Broadcast receiver to check internet connection
+        if (Utils.checkConnection(loginBtn, LoginActivity.this)) {
+            //Performs action when Login button is clicked
+            login();
+        }else{
+            Utils.showDialogue(LoginActivity.this, "Sorry! Not connected to internet");
+        }
     }
 
     private void login() {
@@ -173,9 +178,12 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
     }
 
     public void register(View view) {
-
-        Intent registrationIntent = new Intent(LoginActivity.this, RegisterActivity.class);
-        startActivity(registrationIntent);
+        if (Utils.checkConnection(loginBtn, LoginActivity.this)) {
+            Intent registrationIntent = new Intent(LoginActivity.this, RegisterActivity.class);
+            startActivity(registrationIntent);
+        }else{
+            Utils.showDialogue(LoginActivity.this, "Sorry! Not connected to internet");
+        }
     }
 
     //CustomWatcher

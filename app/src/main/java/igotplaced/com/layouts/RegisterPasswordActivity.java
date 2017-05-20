@@ -445,8 +445,12 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
                 return;
             }
         }
+        if (Utils.checkConnection(regBtn, RegisterPasswordActivity.this)) {
+            register();
+        }else{
+            Utils.showDialogue(RegisterPasswordActivity.this, "Sorry! Not connected to internet");
+        }
 
-        register();
 
         /*Toast.makeText(getApplicationContext(), "Registration Successfully", Toast.LENGTH_SHORT).show();*/
 
