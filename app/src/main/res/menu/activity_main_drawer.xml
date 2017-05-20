@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group
+        android:id="@+id/group1"
+        android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/home"
+            android:icon="@drawable/ic_lock_outline_white_36dp"
+            android:title="@string/home" />
+
+        <item
+            android:id="@+id/notification"
+            android:icon="@drawable/ic_lock_outline_white_36dp"
+            android:title="@string/notification" />
+
+        <item
+            android:id="@+id/recent_feeds"
+            android:icon="@drawable/ic_lock_outline_white_36dp"
+            android:title="@string/recent_feeds" />
+
+        <item
+            android:id="@+id/recently_got_placed"
+            android:icon="@drawable/ic_lock_outline_white_36dp"
+            android:title="@string/recently_got_placed" />
+
+        <item
+            android:id="@+id/testimonial"
+            android:icon="@drawable/ic_lock_outline_white_36dp"
+            android:title="@string/testimonial" />
+
+        <item
+            android:id="@+id/blog"
+            android:icon="@drawable/ic_lock_outline_white_36dp"
+            android:title="@string/blog" />
+
+    </group>
+
+    <group
+        android:id="@+id/group2"
+        android:checkableBehavior="single">
+
+
+        <item
+            android:id="@+id/settings"
+            android:icon="@drawable/ic_lock_outline_white_36dp"
+            android:title="@string/settings" />
+
+
+        <item
+            android:id="@+id/privacy_policy"
+            android:icon="@drawable/ic_lock_outline_white_36dp"
+            android:title="@string/privacy_policy" />
+
+        <item
+            android:id="@+id/terms_and_conditions"
+            android:icon="@drawable/ic_lock_outline_white_36dp"
+            android:title="@string/terms_and_conditions" />
+
+        <item
+            android:id="@+id/about_us"
+            android:icon="@drawable/ic_lock_outline_white_36dp"
+            android:title="@string/about_us" />
+
+    </group>
+
+</menu>

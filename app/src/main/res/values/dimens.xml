@@ -8,4 +8,6 @@
     <dimen name="margin_24">24dp</dimen>
     <dimen name="margin_8">8dp</dimen>
     <dimen name="margin_48">48dp</dimen>
+    <dimen name="margin_75">75dp</dimen>
+    <dimen name="margin_96">96dp</dimen>
 </resources>

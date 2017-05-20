@@ -98,8 +98,8 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
                 // Steps for Login
                 submitLoginDetails();
 
-        /*Intent loginIntent = new Intent(LoginActivity.this, MainActivity.class);
-        startActivity(loginIntent);*/
+                Intent loginIntent = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(loginIntent);
 
             }
         });

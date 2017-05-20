@@ -52,6 +52,22 @@
     <string name="err_msg_confirm_password">Passwords didn\'t Match!!!</string>
     <string name="err_msg_location">Enter valid location</string>
     <string name="err_msg_mobile">Enter a valid Mobile Number</string>
+    <string name="home">Home</string>
+    <string name="notification">Notification</string>
+    <string name="recent_feeds">Recent Feeds</string>
+    <string name="recently_got_placed">Recently Got Placed</string>
+    <string name="testimonial">Testimonials</string>
+    <string name="blog">Blog</string>
+    <string name="settings">Settings</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="terms_and_conditions">Terms and Conditions</string>
+    <string name="about_us">About Us</string>
+    <string name="openDrawer">openDrawer</string>
+    <string name="closeDrawer">closeDrawer</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="logo">logo</string>
 
 
 </resources>
