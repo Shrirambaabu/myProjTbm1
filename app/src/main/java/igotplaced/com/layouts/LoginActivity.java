@@ -97,9 +97,6 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
                 // Steps for Login
                 submitLoginDetails();
 
-                Intent loginIntent = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(loginIntent);
-
             }
         });
 
@@ -140,6 +137,9 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
                 // Verify the data and return the Toast message
                 if (s.equals("true")) {
                     Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
+                    Intent loginIntent = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(loginIntent);
+
                 } else {
                     Utils.showDialogue(LoginActivity.this, "Sorry!!! Incorrect Password");
                 }

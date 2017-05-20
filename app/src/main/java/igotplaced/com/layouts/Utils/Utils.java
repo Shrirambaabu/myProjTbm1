@@ -41,7 +41,7 @@ public class Utils {
 
     public static boolean checkConnection(View view, Activity activity) {
         boolean isConnected = ConnectivityReceiver.isConnected();
-        showSnack(isConnected, view, activity);
+       // showSnack(isConnected, view, activity);
         return isConnected;
     }
 
