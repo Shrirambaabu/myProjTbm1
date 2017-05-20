@@ -227,7 +227,7 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
         });
 
 
-        int MY_SOCKET_TIMEOUT_MS = 3000;//3 seconds - change to what you want
+        int MY_SOCKET_TIMEOUT_MS = 5000;//3 seconds - change to what you want
         jsonArrayRequest.setRetryPolicy(new DefaultRetryPolicy(
                 MY_SOCKET_TIMEOUT_MS,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
@@ -272,7 +272,7 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
         });
 
 
-        int MY_SOCKET_TIMEOUT_MS = 3000;//3 seconds - change to what you want
+        int MY_SOCKET_TIMEOUT_MS = 5000;//3 seconds - change to what you want
         jsonArrayRequest.setRetryPolicy(new DefaultRetryPolicy(
                 MY_SOCKET_TIMEOUT_MS,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
@@ -315,7 +315,7 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
         });
 
 
-        int MY_SOCKET_TIMEOUT_MS = 3000;//3 seconds - change to what you want
+        int MY_SOCKET_TIMEOUT_MS = 5000;//3 seconds - change to what you want
         jsonArrayRequest.setRetryPolicy(new DefaultRetryPolicy(
                 MY_SOCKET_TIMEOUT_MS,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
