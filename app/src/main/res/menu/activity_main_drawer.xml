@@ -11,6 +11,12 @@
             android:title="@string/home" />
 
         <item
+            android:id="@+id/profile"
+            android:icon="@drawable/ic_lock_outline_white_36dp"
+            android:title="@string/profile" />
+
+
+        <item
             android:id="@+id/notification"
             android:icon="@drawable/ic_lock_outline_white_36dp"
             android:title="@string/notification" />
