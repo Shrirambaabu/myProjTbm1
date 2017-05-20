@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="igotplaced.com.layouts">
 
-
     <supports-screens android:xlargeScreens="true" />
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -22,7 +21,6 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -43,6 +41,16 @@
             android:name="igotplaced.com.layouts.RegisterPasswordActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
+
+         
+        <receiver
+            android:name=".Utils.ConnectivityReceiver"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>
