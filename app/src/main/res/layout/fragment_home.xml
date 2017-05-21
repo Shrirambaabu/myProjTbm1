@@ -106,6 +106,7 @@
                 android:text="@string/recent_feed"
                 android:textColor="@color/white"
                 android:textSize="28sp"
+                android:maxLines="1"
                 android:layout_marginTop="@dimen/margin_16"
                 android:layout_marginEnd="@dimen/margin_8"
                 android:gravity="end"/>
@@ -117,13 +118,94 @@
                 android:paddingTop="24dp">
 
                 <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recycler_view_list"
+                    android:id="@+id/recycler_view_feed"
                     android:layout_width="match_parent"
                     android:layout_height="160dp"
                     android:layout_gravity="center_vertical"
                     android:orientation="horizontal" />
 
             </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/our_awesome_mentors"
+                android:textColor="@color/white"
+                android:maxLines="1"
+                android:textSize="28sp"
+                android:layout_marginTop="@dimen/margin_16"
+                android:layout_marginEnd="@dimen/margin_8"
+                android:gravity="end"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:paddingTop="24dp">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycler_view_mentors"
+                    android:layout_width="match_parent"
+                    android:layout_height="160dp"
+                    android:layout_gravity="center_vertical"
+                    android:orientation="horizontal" />
+
+            </LinearLayout>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/recently_got_placed_home"
+                android:textColor="@color/white"
+                android:maxLines="1"
+                android:textSize="28sp"
+                android:layout_marginTop="@dimen/margin_16"
+                android:layout_marginEnd="@dimen/margin_8"
+                android:gravity="end"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:paddingTop="24dp">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycler_view_recently_got_placed"
+                    android:layout_width="match_parent"
+                    android:layout_height="160dp"
+                    android:layout_gravity="center_vertical"
+                    android:orientation="horizontal" />
+
+            </LinearLayout>
+
+            <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/testimonials"
+            android:textColor="@color/white"
+            android:maxLines="1"
+            android:textSize="28sp"
+            android:layout_marginTop="@dimen/margin_16"
+            android:layout_marginEnd="@dimen/margin_8"
+            android:gravity="end"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:paddingTop="24dp">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycler_view_testimonials"
+                    android:layout_width="match_parent"
+                    android:layout_height="160dp"
+                    android:layout_gravity="center_vertical"
+                    android:orientation="horizontal" />
+
+            </LinearLayout>
+
+
 
         </LinearLayout>
 
