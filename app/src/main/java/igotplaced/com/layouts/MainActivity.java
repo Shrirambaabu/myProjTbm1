@@ -1,8 +1,11 @@
 package igotplaced.com.layouts;
 
 import android.app.SearchManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.NavigationView;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -12,6 +15,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.MediaController;
+import android.widget.VideoView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,16 +24,56 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
+    String pathOfFile = "https://www.youtube.com/watch?v=cAyqOHF0XFk";
+    private VideoView videoView;
+    private MediaController mediaController;
+    private CollapsingToolbarLayout collapsingToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         // Initializing Toolbar and setting it as the actionbar
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        videoView = (VideoView) findViewById(R.id.video_header);
+
+        mediaController = new MediaController(MainActivity.this);
+        mediaController.setAnchorView(videoView);
+        mediaController.hide();
+        Uri uri = Uri.parse(pathOfFile);
+        videoView.setMediaController(mediaController);
+        videoView.setVideoURI(uri);
+
+        videoView.start();
+
+
+
+        /*mediaController = new MediaController(MainActivity.this);
+        mediaController.setAnchorView(videoView);
+        mediaController.hide();
+        Uri uri = Uri.parse(pathOfFile);
+        videoView.setMediaController(mediaController);
+        videoView.setVideoURI(uri);
+        videoView.requestFocus();
+        videoView.seekTo(9000);
+        videoView.start();
+
+        videoView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                videoView.start();
+                mediaController.show();
+            }
+        });*/
+
+        collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapse_toolbar);
+        collapsingToolbar.setTitle("iGotPlaced");
+        collapsingToolbar.setCollapsedTitleTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
+        collapsingToolbar.setExpandedTitleColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
+
         //Initializing NavigationView
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
         navigationView.setCheckedItem(R.id.home);
@@ -53,21 +98,31 @@ public class MainActivity extends AppCompatActivity {
                     //Replacing the main content with ContentFragment Which is our Inbox View;
                     case R.id.home:
 
-                        HomeFragment homeFragment = new HomeFragment();
-                        android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                        fragmentTransaction.replace(R.id.frame, homeFragment);
-                        fragmentTransaction.commit();
-                        return true;
-
-/*                  case R.id.profile:
+                        videoView.setVisibility(View.VISIBLE);
+                        collapsingToolbar.setTitleEnabled(true);
 
                         HomeFragment homeFragment = new HomeFragment();
-                        android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                        fragmentTransaction.replace(R.id.frame, homeFragment);
-                        fragmentTransaction.commit();
+                        android.support.v4.app.FragmentTransaction fragmentHomeTransaction = getSupportFragmentManager().beginTransaction();
+                        fragmentHomeTransaction.replace(R.id.frame, homeFragment);
+                        fragmentHomeTransaction.commit();
                         return true;
 
-                    case R.id.notification:
+                    case R.id.profile:
+
+                        videoView.setVisibility(View.GONE);
+                        collapsingToolbar.setTitleEnabled(false);
+
+                        ProfileFragment profileFragment = new ProfileFragment();
+                        android.support.v4.app.FragmentTransaction fragmentProfileTransaction = getSupportFragmentManager().beginTransaction();
+                        fragmentProfileTransaction.replace(R.id.frame, profileFragment);
+                        fragmentProfileTransaction.commit();
+                        return true;
+
+ /*                     case R.id.notification:
+
+                        videoView.setVisibility(View.GONE);
+                        collapsingToolbar.setTitleEnabled(false);
+
 
                         HomeFragment homeFragment = new HomeFragment();
                         android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -77,6 +132,10 @@ public class MainActivity extends AppCompatActivity {
 
                     case R.id.recent_feeds:
 
+                        videoView.setVisibility(View.GONE);
+                        collapsingToolbar.setTitleEnabled(false);
+
+
                         HomeFragment homeFragment = new HomeFragment();
                         android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                         fragmentTransaction.replace(R.id.frame, homeFragment);
@@ -84,6 +143,10 @@ public class MainActivity extends AppCompatActivity {
                         return true;
 
                     case R.id.recently_got_placed:
+
+                        videoView.setVisibility(View.GONE);
+                        collapsingToolbar.setTitleEnabled(false);
+
 
                         HomeFragment homeFragment = new HomeFragment();
                         android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -93,6 +156,10 @@ public class MainActivity extends AppCompatActivity {
 
                     case R.id.testimonial:
 
+                        videoView.setVisibility(View.GONE);
+                        collapsingToolbar.setTitleEnabled(false);
+
+
                         HomeFragment homeFragment = new HomeFragment();
                         android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                         fragmentTransaction.replace(R.id.frame, homeFragment);
@@ -100,6 +167,10 @@ public class MainActivity extends AppCompatActivity {
                         return true;
 
                     case R.id.blog:
+
+                        videoView.setVisibility(View.GONE);
+                        collapsingToolbar.setTitleEnabled(false);
+
 
                         HomeFragment homeFragment = new HomeFragment();
                         android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -109,6 +180,10 @@ public class MainActivity extends AppCompatActivity {
 
                     case R.id.settings:
 
+                        videoView.setVisibility(View.GONE);
+                        collapsingToolbar.setTitleEnabled(false);
+
+
                         HomeFragment homeFragment = new HomeFragment();
                         android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                         fragmentTransaction.replace(R.id.frame, homeFragment);
@@ -116,6 +191,10 @@ public class MainActivity extends AppCompatActivity {
                         return true;
 
                     case R.id.privacy_policy:
+
+                        videoView.setVisibility(View.GONE);
+                        collapsingToolbar.setTitleEnabled(false);
+
 
                         HomeFragment homeFragment = new HomeFragment();
                         android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -125,6 +204,10 @@ public class MainActivity extends AppCompatActivity {
 
                     case R.id.terms_and_conditions:
 
+                        videoView.setVisibility(View.GONE);
+                        collapsingToolbar.setTitleEnabled(false);
+
+
                         HomeFragment homeFragment = new HomeFragment();
                         android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                         fragmentTransaction.replace(R.id.frame, homeFragment);
@@ -133,6 +216,10 @@ public class MainActivity extends AppCompatActivity {
 
                     default:
 /*
+                        videoView.setVisibility(View.GONE);
+                        collapsingToolbar.setTitleEnabled(false);
+
+
                         HomeFragment homeFragment = new HomeFragment();
                         android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                         fragmentTransaction.replace(R.id.frame, homeFragment);

@@ -117,6 +117,16 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
 
 
     private void submitLoginDetails() {
+
+
+
+
+        Intent loginIntent = new Intent(LoginActivity.this, MainActivity.class);
+        startActivity(loginIntent);
+
+
+
+
         if (!Validation.validateEmail(emailEditText, inputLayoutEmail, LoginActivity.this)) {
             return;
         }
