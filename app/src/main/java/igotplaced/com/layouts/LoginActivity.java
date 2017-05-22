@@ -1,5 +1,6 @@
 package igotplaced.com.layouts;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
@@ -36,6 +37,7 @@ import static igotplaced.com.layouts.Utils.Utils.BaseUri;
 
 public class LoginActivity extends AppCompatActivity implements ConnectivityReceiver.ConnectivityReceiverListener {
 
+    private ProgressDialog pDialog;
     private AppCompatEditText passwordEditText, emailEditText;
     private Button loginBtn;
     private TextInputLayout inputLayoutEmail;
@@ -140,10 +142,17 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
     }
 
     private void login() {
+
+        // Showing progress dialog
+        pDialog = new ProgressDialog(LoginActivity.this);
+        pDialog.setMessage("Loading...");
+        pDialog.onBackPressed();
+        pDialog.show();
 //Requests the data from webservice using volley
         StringRequest request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
+                pDialog.dismiss();
                 // Verify the data and return the Toast message
                 if (s.equals("true")) {
                     Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
@@ -157,6 +166,7 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+                pDialog.dismiss();
                 /**
                  *  Returns error message when,
                  *  server is down,

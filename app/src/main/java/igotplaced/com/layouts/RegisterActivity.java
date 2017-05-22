@@ -313,7 +313,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
         });
 
 
-        int MY_SOCKET_TIMEOUT_MS = 3000;//3 seconds - change to what you want
+        int MY_SOCKET_TIMEOUT_MS = 5000;//5 seconds - change to what you want
         jsonArrayRequest.setRetryPolicy(new DefaultRetryPolicy(
                 MY_SOCKET_TIMEOUT_MS,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
