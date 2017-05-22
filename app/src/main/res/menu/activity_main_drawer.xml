@@ -7,39 +7,31 @@
 
         <item
             android:id="@+id/home"
-            android:icon="@drawable/ic_lock_outline_white_36dp"
+            android:icon="@drawable/ic_home_black_24dp"
             android:title="@string/home" />
 
         <item
             android:id="@+id/profile"
-            android:icon="@drawable/ic_lock_outline_white_36dp"
+            android:icon="@drawable/ic_person_black_24dp"
             android:title="@string/profile" />
 
 
         <item
             android:id="@+id/notification"
-            android:icon="@drawable/ic_lock_outline_white_36dp"
+            android:icon="@drawable/ic_notifications_black_24dp"
             android:title="@string/notification" />
 
-        <item
-            android:id="@+id/recent_feeds"
-            android:icon="@drawable/ic_lock_outline_white_36dp"
-            android:title="@string/recent_feeds" />
-
-        <item
-            android:id="@+id/recently_got_placed"
-            android:icon="@drawable/ic_lock_outline_white_36dp"
-            android:title="@string/recently_got_placed" />
-
-        <item
-            android:id="@+id/testimonial"
-            android:icon="@drawable/ic_lock_outline_white_36dp"
-            android:title="@string/testimonial" />
 
         <item
             android:id="@+id/blog"
-            android:icon="@drawable/ic_lock_outline_white_36dp"
+            android:icon="@drawable/ic_blog_24dp"
             android:title="@string/blog" />
+
+        <item
+            android:id="@+id/settings"
+            android:icon="@drawable/ic_settings_black_24dp"
+            android:title="@string/settings" />
+
 
     </group>
 
@@ -49,24 +41,15 @@
 
 
         <item
-            android:id="@+id/settings"
-            android:icon="@drawable/ic_lock_outline_white_36dp"
-            android:title="@string/settings" />
-
-
-        <item
             android:id="@+id/privacy_policy"
-            android:icon="@drawable/ic_lock_outline_white_36dp"
             android:title="@string/privacy_policy" />
 
         <item
             android:id="@+id/terms_and_conditions"
-            android:icon="@drawable/ic_lock_outline_white_36dp"
             android:title="@string/terms_and_conditions" />
 
         <item
             android:id="@+id/about_us"
-            android:icon="@drawable/ic_lock_outline_white_36dp"
             android:title="@string/about_us" />
 
     </group>
