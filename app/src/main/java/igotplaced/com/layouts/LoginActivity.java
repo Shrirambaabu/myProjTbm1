@@ -146,6 +146,7 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
         // Showing progress dialog
         pDialog = new ProgressDialog(LoginActivity.this);
         pDialog.setMessage("Loading...");
+        pDialog.setIcon(R.drawable.logo);
         pDialog.onBackPressed();
         pDialog.show();
 //Requests the data from webservice using volley
@@ -184,6 +185,7 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
                 return parameters;
             }
         };
+
 
         int MY_SOCKET_TIMEOUT_MS = 3000;//3 seconds - change to what you want
         request.setRetryPolicy(new DefaultRetryPolicy(
