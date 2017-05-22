@@ -119,6 +119,7 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
 
 
     private void submitLoginDetails() {
+/*
 
 
 
@@ -127,6 +128,7 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
         startActivity(loginIntent);
 
 
+*/
 
 
         if (!Validation.validateEmail(emailEditText, inputLayoutEmail, LoginActivity.this)) {
