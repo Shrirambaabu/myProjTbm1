@@ -74,11 +74,11 @@
     <string name="events">Events</string>
     <string name="interview_experience">Interview Experience</string>
     <string name="questions">Questions</string>
-    <string name="recent_feed">-----Recent Feeds</string>
+    <string name="recent_feed">----- Recent Feeds</string>
     <string name="more">more</string>
-    <string name="our_awesome_mentors">-----Our Awesome Mentors</string>
-    <string name="recently_got_placed_home">-----Recently Got Placed</string>
-    <string name="testimonials">-----Testimonials</string>
+    <string name="our_awesome_mentors">----- Our Awesome Mentors</string>
+    <string name="recently_got_placed_home">----- Recently Got Placed</string>
+    <string name="testimonials">----- Testimonials</string>
 
 
 </resources>

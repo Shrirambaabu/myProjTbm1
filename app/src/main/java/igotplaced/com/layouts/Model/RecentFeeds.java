@@ -14,6 +14,9 @@ public class RecentFeeds {
     private String Name;
     private String ImageName;
 
+    public RecentFeeds() {
+    }
+
     public RecentFeeds(String type, String question, String industryName, String companyName, String modifiedBy, String name, String imageName) {
         Type = type;
         Question = question;

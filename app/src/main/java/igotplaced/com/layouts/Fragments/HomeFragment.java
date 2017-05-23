@@ -1,4 +1,4 @@
-package igotplaced.com.layouts;
+package igotplaced.com.layouts.Fragments;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -10,18 +10,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.JsonArrayRequest;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import igotplaced.com.layouts.CustomAdapter.RecyclerAdapterRecentFeeds;
 import igotplaced.com.layouts.Model.RecentFeeds;
+import igotplaced.com.layouts.R;
 import igotplaced.com.layouts.Utils.NetworkController;
 
 import static igotplaced.com.layouts.Utils.Utils.BaseUri;
@@ -34,7 +36,7 @@ public class HomeFragment extends Fragment {
     private RequestQueue queue;
     private List<RecentFeeds> recentFeedsList = new ArrayList<RecentFeeds>();
     private RecyclerAdapterRecentFeeds recyclerAdapterRecentFeeds;
-    private RecyclerView my_recycler_view;
+
 
     public HomeFragment() {
         // Required empty public constructor
@@ -45,37 +47,52 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-
+        //getting context
         context = getContext();
+        //mapping RecyclerView
+        RecyclerView my_recycler_view = (RecyclerView) view.findViewById(R.id.recycler_view_feed);
+        //feeding values to RecyclerView using custom RecyclerView adapter
+        recyclerAdapterRecentFeeds  = new RecyclerAdapterRecentFeeds(context,recentFeedsList);
 
-        my_recycler_view = (RecyclerView) view.findViewById(R.id.recycler_view_feed);
-
+        //setting fixed size
         my_recycler_view.setHasFixedSize(true);
-
-        recyclerAdapterRecentFeeds = new RecyclerAdapterRecentFeeds(context, recentFeedsList);
-
-        my_recycler_view.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
-
+        //setting horizontal layout
+        my_recycler_view.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
+        //setting RecyclerView adapter
         my_recycler_view.setAdapter(recyclerAdapterRecentFeeds);
         //Getting Instance of Volley Request Queue
         queue = NetworkController.getInstance(context).getRequestQueue();
         //Volley's inbuilt class to make Json array request
-        makeJsonObjectRequestRecentFeeds();
+        makeJsonArrayRequestRecentFeeds();
 
 
         return view;
     }
 
-    private void makeJsonObjectRequestRecentFeeds() {
+    private void makeJsonArrayRequestRecentFeeds() {
 
-        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET, BaseUri + "/homeService/recentFeeds", null, new Response.Listener<JSONObject>() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(BaseUri + "/homeService/recentFeeds", new Response.Listener<JSONArray>() {
 
             @Override
-            public void onResponse(JSONObject response) {
-                Log.d("error", response.toString());
+            public void onResponse(JSONArray response) {
 
+                for (int i = 0; i < response.length(); i++) {
+                    try {
+                        JSONObject obj = response.getJSONObject(i);
+                        RecentFeeds recentFeeds = new RecentFeeds(obj.getString("type"), obj.getString("question"), obj.getString("industryname"), obj.getString("companyname"), obj.getString("modified_by"), obj.getString("name"), obj.getString("imgname"));
+                        // adding movie to recentFeedsList array
+                        recentFeedsList.add(recentFeeds);
 
+                    } catch (Exception e) {
+                        Log.d("error", e.getMessage());
+                        System.out.println(e.getMessage());
+                    } finally {
+                        //Notify adapter about data changes
+                        recyclerAdapterRecentFeeds.notifyDataSetChanged();
+                    }
+                }
             }
+
         }, new Response.ErrorListener() {
 
             @Override
@@ -85,9 +102,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        // Adding request to request queue
-        queue.add(jsonObjReq);
-
+        queue.add(jsonArrayRequest);
     }
 
     @Override

@@ -120,7 +120,7 @@
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recycler_view_feed"
                     android:layout_width="match_parent"
-                    android:layout_height="160dp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:orientation="horizontal" />
 
@@ -146,7 +146,7 @@
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recycler_view_mentors"
                     android:layout_width="match_parent"
-                    android:layout_height="160dp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:orientation="horizontal" />
 
@@ -173,7 +173,7 @@
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recycler_view_recently_got_placed"
                     android:layout_width="match_parent"
-                    android:layout_height="160dp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:orientation="horizontal" />
 
@@ -199,7 +199,7 @@
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recycler_view_testimonials"
                     android:layout_width="match_parent"
-                    android:layout_height="160dp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:orientation="horizontal" />
 
