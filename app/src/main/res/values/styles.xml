@@ -35,4 +35,8 @@
         <item name="android:dividerHeight">1dp</item>
     </style>
 
+    <style name="MyCustomTabLayout" parent="Widget.Design.TabLayout">
+        <item name="tabIndicatorColor">@color/colorAccent</item>
+    </style>
+
 </resources>
