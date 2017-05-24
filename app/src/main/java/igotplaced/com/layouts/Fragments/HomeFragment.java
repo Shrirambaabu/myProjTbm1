@@ -43,13 +43,15 @@ public class HomeFragment extends Fragment {
     private List<RecentFeeds> recentFeedsList = new ArrayList<RecentFeeds>();
     private RecyclerAdapterRecentFeeds recyclerAdapterRecentFeeds;
 
+    private View view;
+
     private List<MentorsHome> mentorsHomeList = new ArrayList<MentorsHome>();
     private RecyclerAdapterMentorsHome recyclerAdapterMentorsHome;
 
     private List<RecentlyGotPlaced> recentlyGotPlacedList = new ArrayList<RecentlyGotPlaced>();
     private RecyclerAdapterRecentlyGotPlaced recyclerAdapterRecentlyGotPlaced;
 
-    private List<Testimonials> testmonialsList = new ArrayList<Testimonials>();
+    private List<Testimonials> testimonialsList = new ArrayList<Testimonials>();
     private RecyclerAdapterTestimonials recyclerAdapterTestimonials;
 
 
@@ -61,9 +63,17 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        view = inflater.inflate(R.layout.fragment_home, container, false);
         //getting context
         context = getContext();
+
+        settingRecyclerView(view);
+
+        return view;
+    }
+
+    private void settingRecyclerView(View view) {
+
         //mapping RecyclerView
         RecyclerView my_recycler_view = (RecyclerView) view.findViewById(R.id.recycler_view_feed);
         //feeding values to RecyclerView using custom RecyclerView adapter
@@ -118,7 +128,7 @@ public class HomeFragment extends Fragment {
         //mapping RecyclerView
         RecyclerView testimonials_view = (RecyclerView) view.findViewById(R.id.recycler_view_testimonials);
         //feeding values to RecyclerView using custom RecyclerView adapter
-        recyclerAdapterTestimonials = new RecyclerAdapterTestimonials(context, testmonialsList);
+        recyclerAdapterTestimonials = new RecyclerAdapterTestimonials(context, testimonialsList);
 
         //setting fixed size
         testimonials_view.setHasFixedSize(true);
@@ -131,8 +141,8 @@ public class HomeFragment extends Fragment {
         //Volley's inbuilt class to make Json array request
         makeJsonArrayRequestTestimonials();
 
-        return view;
     }
+
 
     private void makeJsonArrayRequestTestimonials() {
 
@@ -146,8 +156,8 @@ public class HomeFragment extends Fragment {
                     try {
                         JSONObject obj = response.getJSONObject(i);
                         Testimonials testimonials = new Testimonials(obj.getString("feedback"), obj.getString("user_name"),obj.getString("college"), obj.getString("imgname"));
-                        // adding movie to testmonialsList array
-                        testmonialsList.add(testimonials);
+                        // adding movie to testimonialsList array
+                        testimonialsList.add(testimonials);
 
                     } catch (Exception e) {
                         Log.d("error", e.getMessage());
