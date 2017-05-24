@@ -11,6 +11,7 @@ import com.android.volley.toolbox.NetworkImageView;
 
 import java.util.List;
 
+import igotplaced.com.layouts.Model.MentorsHome;
 import igotplaced.com.layouts.Model.RecentFeeds;
 import igotplaced.com.layouts.R;
 import igotplaced.com.layouts.Utils.NetworkController;
@@ -31,6 +32,7 @@ public class RecyclerAdapterRecentFeeds  extends RecyclerView.Adapter<RecyclerAd
         this.feedsList = feedsList;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
+
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

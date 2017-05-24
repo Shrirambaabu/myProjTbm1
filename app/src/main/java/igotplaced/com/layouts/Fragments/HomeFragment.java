@@ -21,8 +21,14 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import igotplaced.com.layouts.CustomAdapter.RecyclerAdapterMentorsHome;
 import igotplaced.com.layouts.CustomAdapter.RecyclerAdapterRecentFeeds;
+import igotplaced.com.layouts.CustomAdapter.RecyclerAdapterRecentlyGotPlaced;
+import igotplaced.com.layouts.CustomAdapter.RecyclerAdapterTestimonials;
+import igotplaced.com.layouts.Model.MentorsHome;
 import igotplaced.com.layouts.Model.RecentFeeds;
+import igotplaced.com.layouts.Model.RecentlyGotPlaced;
+import igotplaced.com.layouts.Model.Testimonials;
 import igotplaced.com.layouts.R;
 import igotplaced.com.layouts.Utils.NetworkController;
 
@@ -36,6 +42,15 @@ public class HomeFragment extends Fragment {
     private RequestQueue queue;
     private List<RecentFeeds> recentFeedsList = new ArrayList<RecentFeeds>();
     private RecyclerAdapterRecentFeeds recyclerAdapterRecentFeeds;
+
+    private List<MentorsHome> mentorsHomeList = new ArrayList<MentorsHome>();
+    private RecyclerAdapterMentorsHome recyclerAdapterMentorsHome;
+
+    private List<RecentlyGotPlaced> recentlyGotPlacedList = new ArrayList<RecentlyGotPlaced>();
+    private RecyclerAdapterRecentlyGotPlaced recyclerAdapterRecentlyGotPlaced;
+
+    private List<Testimonials> testmonialsList = new ArrayList<Testimonials>();
+    private RecyclerAdapterTestimonials recyclerAdapterTestimonials;
 
 
     public HomeFragment() {
@@ -52,7 +67,7 @@ public class HomeFragment extends Fragment {
         //mapping RecyclerView
         RecyclerView my_recycler_view = (RecyclerView) view.findViewById(R.id.recycler_view_feed);
         //feeding values to RecyclerView using custom RecyclerView adapter
-        recyclerAdapterRecentFeeds  = new RecyclerAdapterRecentFeeds(context,recentFeedsList);
+        recyclerAdapterRecentFeeds = new RecyclerAdapterRecentFeeds(context, recentFeedsList);
 
         //setting fixed size
         my_recycler_view.setHasFixedSize(true);
@@ -66,8 +81,183 @@ public class HomeFragment extends Fragment {
         makeJsonArrayRequestRecentFeeds();
 
 
+        //mapping RecyclerView
+        RecyclerView my_mentor_view = (RecyclerView) view.findViewById(R.id.recycler_view_mentors);
+        //feeding values to RecyclerView using custom RecyclerView adapter
+        recyclerAdapterMentorsHome = new RecyclerAdapterMentorsHome(context, mentorsHomeList);
+
+        //setting fixed size
+        my_mentor_view.setHasFixedSize(true);
+        //setting horizontal layout
+        my_mentor_view.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
+        //setting RecyclerView adapter
+        my_mentor_view.setAdapter(recyclerAdapterMentorsHome);
+        //Getting Instance of Volley Request Queue
+        queue = NetworkController.getInstance(context).getRequestQueue();
+        //Volley's inbuilt class to make Json array request
+        makeJsonArrayRequestMentorsHome();
+
+
+        //mapping RecyclerView
+        RecyclerView recently_placed_view = (RecyclerView) view.findViewById(R.id.recycler_view_recently_got_placed);
+        //feeding values to RecyclerView using custom RecyclerView adapter
+        recyclerAdapterRecentlyGotPlaced = new RecyclerAdapterRecentlyGotPlaced(context, recentlyGotPlacedList);
+
+        //setting fixed size
+        recently_placed_view.setHasFixedSize(true);
+        //setting horizontal layout
+        recently_placed_view.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
+        //setting RecyclerView adapter
+        recently_placed_view.setAdapter(recyclerAdapterRecentlyGotPlaced);
+        //Getting Instance of Volley Request Queue
+        queue = NetworkController.getInstance(context).getRequestQueue();
+        //Volley's inbuilt class to make Json array request
+        makeJsonArrayRequestRecentlyGotPlaced();
+
+
+        //mapping RecyclerView
+        RecyclerView testimonials_view = (RecyclerView) view.findViewById(R.id.recycler_view_testimonials);
+        //feeding values to RecyclerView using custom RecyclerView adapter
+        recyclerAdapterTestimonials = new RecyclerAdapterTestimonials(context, testmonialsList);
+
+        //setting fixed size
+        testimonials_view.setHasFixedSize(true);
+        //setting horizontal layout
+        testimonials_view.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
+        //setting RecyclerView adapter
+        testimonials_view.setAdapter(recyclerAdapterTestimonials);
+        //Getting Instance of Volley Request Queue
+        queue = NetworkController.getInstance(context).getRequestQueue();
+        //Volley's inbuilt class to make Json array request
+        makeJsonArrayRequestTestimonials();
+
         return view;
     }
+
+    private void makeJsonArrayRequestTestimonials() {
+
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(BaseUri + "/homeService/testimonials", new Response.Listener<JSONArray>() {
+
+            @Override
+            public void onResponse(JSONArray response) {
+
+                for (int i = 0; i < response.length(); i++) {
+                    Log.d("error", response.toString());
+                    try {
+                        JSONObject obj = response.getJSONObject(i);
+                        Testimonials testimonials = new Testimonials(obj.getString("feedback"), obj.getString("user_name"),obj.getString("college"), obj.getString("imgname"));
+                        // adding movie to testmonialsList array
+                        testmonialsList.add(testimonials);
+
+                    } catch (Exception e) {
+                        Log.d("error", e.getMessage());
+                        System.out.println(e.getMessage());
+                    } finally {
+                        //Notify adapter about data changes
+                        recyclerAdapterTestimonials.notifyDataSetChanged();
+                    }
+                }
+            }
+
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("error", "Error: " + error.getMessage());
+
+            }
+        });
+
+        queue.add(jsonArrayRequest);
+
+
+    }
+
+
+
+
+
+
+    private void makeJsonArrayRequestRecentlyGotPlaced() {
+
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(BaseUri + "/homeService/recentlyGotPlaced", new Response.Listener<JSONArray>() {
+
+            @Override
+            public void onResponse(JSONArray response) {
+
+                for (int i = 0; i < response.length(); i++) {
+                    Log.d("error", response.toString());
+                    try {
+                        JSONObject obj = response.getJSONObject(i);
+                        RecentlyGotPlaced recentlyGotPlaced = new RecentlyGotPlaced(obj.getString("imgname"), obj.getString("username"), obj.getString("feedback"));
+                        // adding movie to recentlyGotPlacedList array
+                        recentlyGotPlacedList.add(recentlyGotPlaced);
+
+                    } catch (Exception e) {
+                        Log.d("error", e.getMessage());
+                        System.out.println(e.getMessage());
+                    } finally {
+                        //Notify adapter about data changes
+                        recyclerAdapterRecentlyGotPlaced.notifyDataSetChanged();
+                    }
+                }
+            }
+
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("error", "Error: " + error.getMessage());
+
+            }
+        });
+
+        queue.add(jsonArrayRequest);
+
+
+    }
+
+
+    private void makeJsonArrayRequestMentorsHome() {
+
+
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(BaseUri + "/homeService/mentors", new Response.Listener<JSONArray>() {
+
+            @Override
+            public void onResponse(JSONArray response) {
+
+                for (int i = 0; i < response.length(); i++) {
+                    Log.d("error", response.toString());
+                    try {
+                        JSONObject obj = response.getJSONObject(i);
+                        MentorsHome mentorsHome = new MentorsHome(obj.getString("imgname"), obj.getString("name"), obj.getString("designation"), obj.getString("company"), obj.getString("linkedin"));
+                        // adding movie to mentorsHomeList array
+                        mentorsHomeList.add(mentorsHome);
+
+                    } catch (Exception e) {
+                        Log.d("error", e.getMessage());
+                        System.out.println(e.getMessage());
+                    } finally {
+                        //Notify adapter about data changes
+                        recyclerAdapterMentorsHome.notifyDataSetChanged();
+                    }
+                }
+            }
+
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("error", "Error: " + error.getMessage());
+
+            }
+        });
+
+        queue.add(jsonArrayRequest);
+
+
+    }
+
 
     private void makeJsonArrayRequestRecentFeeds() {
 

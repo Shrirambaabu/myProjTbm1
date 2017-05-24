@@ -11,7 +11,6 @@ import com.android.volley.toolbox.NetworkImageView;
 
 import java.util.List;
 
-import igotplaced.com.layouts.Model.MentorsHome;
 import igotplaced.com.layouts.Model.Testimonials;
 import igotplaced.com.layouts.R;
 import igotplaced.com.layouts.Utils.NetworkController;
@@ -20,13 +19,13 @@ import igotplaced.com.layouts.Utils.NetworkController;
  * Created by Admin on 5/24/2017.
  */
 
-public class RecyclerAdapterTestmonials extends RecyclerView.Adapter<RecyclerAdapterTestmonials.MyViewHolder> {
+public class RecyclerAdapterTestimonials extends RecyclerView.Adapter<RecyclerAdapterTestimonials.MyViewHolder> {
 
     private List<Testimonials> testimonialsList;
     private Context context;
     private LayoutInflater inflater;
 
-    public RecyclerAdapterTestmonials(Context context, List<Testimonials> testimonialsList) {
+    public RecyclerAdapterTestimonials(Context context, List<Testimonials> testimonialsList) {
 
         this.context = context;
         this.testimonialsList = testimonialsList;
