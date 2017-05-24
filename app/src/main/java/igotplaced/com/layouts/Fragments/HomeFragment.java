@@ -77,6 +77,7 @@ public class HomeFragment extends Fragment {
             public void onResponse(JSONArray response) {
 
                 for (int i = 0; i < response.length(); i++) {
+                    Log.d("error", response.toString());
                     try {
                         JSONObject obj = response.getJSONObject(i);
                         RecentFeeds recentFeeds = new RecentFeeds(obj.getString("type"), obj.getString("question"), obj.getString("industryname"), obj.getString("companyname"), obj.getString("modified_by"), obj.getString("name"), obj.getString("imgname"));

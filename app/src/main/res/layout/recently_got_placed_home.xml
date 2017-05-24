@@ -13,7 +13,7 @@
         android:padding="@dimen/margin_4dp"
         android:weightSum="3">
 
-        <ImageView
+        <com.android.volley.toolbox.NetworkImageView
             android:id="@+id/recently_placed_profile_img"
             android:layout_width="48dp"
             android:layout_height="56dp"

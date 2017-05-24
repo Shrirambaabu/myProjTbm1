@@ -27,7 +27,7 @@
         android:padding="@dimen/margin_4dp"
         android:weightSum="9">
 
-        <ImageView
+        <com.android.volley.toolbox.NetworkImageView
             android:id="@+id/testimonial_profile_img"
             android:layout_width="64dp"
             android:layout_height="64dp"

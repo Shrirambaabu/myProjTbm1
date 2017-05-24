@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:padding="@dimen/margin_8">
 
-    <ImageView
+    <com.android.volley.toolbox.NetworkImageView
         android:id="@+id/mentor_img"
         android:layout_width="130dp"
         android:layout_height="130dp"
@@ -60,7 +60,7 @@
         android:padding="@dimen/margin_4dp"
         android:weightSum="3">
 
-        <ImageView
+        <com.android.volley.toolbox.NetworkImageView
             android:id="@+id/linked_in_logo"
             android:layout_width="48dp"
             android:layout_height="48dp"
