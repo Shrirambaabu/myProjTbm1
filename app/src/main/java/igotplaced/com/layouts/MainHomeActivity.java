@@ -15,6 +15,9 @@ import igotplaced.com.layouts.Fragments.EventFragment;
 import igotplaced.com.layouts.Fragments.InterviewFragment;
 import igotplaced.com.layouts.Fragments.PostFragment;
 import igotplaced.com.layouts.Fragments.QuestionsFragment;
+import igotplaced.com.layouts.Utils.Utils;
+
+import static igotplaced.com.layouts.Utils.Utils.pushFragment;
 
 
 public class MainHomeActivity extends AppCompatActivity {
@@ -54,23 +57,23 @@ public class MainHomeActivity extends AppCompatActivity {
     protected void selectFragment(MenuItem item) {
 
         item.setChecked(true);
-
+        FragmentManager fragmentManager = getFragmentManager();
         switch (item.getItemId()) {
             case R.id.post_home:
                 // Action to perform when post Menu item is selected.
-                pushFragment(new PostFragment());
+                pushFragment(new PostFragment(),fragmentManager);
                 break;
             case R.id.interview_experience_home:
                 // Action to perform when interview Menu item is selected.
-                pushFragment(new InterviewFragment());
+                pushFragment(new InterviewFragment(),fragmentManager);
                 break;
             case R.id.events:
                 // Action to perform when events Menu item is selected.
-                pushFragment(new EventFragment());
+                pushFragment(new EventFragment(),fragmentManager);
                 break;
             case R.id.questions:
                 // Action to perform when questions Menu item is selected.
-                pushFragment(new QuestionsFragment());
+                pushFragment(new QuestionsFragment(),fragmentManager);
                 break;
         }
     }
@@ -82,17 +85,5 @@ public class MainHomeActivity extends AppCompatActivity {
      *
      * @param fragment An instance of Fragment to show into the given id.
      */
-    protected void pushFragment(Fragment fragment) {
-        if (fragment == null)
-            return;
 
-        FragmentManager fragmentManager = getFragmentManager();
-        if (fragmentManager != null) {
-            FragmentTransaction ft = fragmentManager.beginTransaction();
-            if (ft != null) {
-                ft.replace(R.id.rootLayout, fragment);
-                ft.commit();
-            }
-        }
-    }
 }

@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -141,7 +142,44 @@ public class HomeFragment extends Fragment {
         //Volley's inbuilt class to make Json array request
         makeJsonArrayRequestTestimonials();
 
+
+        Button postButton = (Button) view.findViewById(R.id.postButtonHome);
+        postButton.setOnClickListener(new View.OnClickListener() {
+
+
+            @Override
+            public void onClick(View v) {
+
+
+
+            }
+        });
+
+        Button interviewButton = (Button) view.findViewById(R.id.interviewButtonHome);
+        interviewButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        Button eventButton = (Button) view.findViewById(R.id.eventsButtonHome);
+        eventButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        Button questionsButton = (Button) view.findViewById(R.id.questionsButtonHome);
+        questionsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
+
 
 
     private void makeJsonArrayRequestTestimonials() {
@@ -312,4 +350,6 @@ public class HomeFragment extends Fragment {
 
 
     }
+
+
 }

@@ -2,6 +2,9 @@ package igotplaced.com.layouts.Utils;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.support.design.widget.Snackbar;
@@ -102,6 +105,16 @@ public class Utils {
     }
 
 
-
+    public static void pushFragment(Fragment fragment, FragmentManager fragmentManager) {
+        if (fragment == null)
+            return;
+        if (fragmentManager != null) {
+            FragmentTransaction ft = fragmentManager.beginTransaction();
+            if (ft != null) {
+                ft.replace(R.id.rootLayout, fragment);
+                ft.commit();
+            }
+        }
+    }
 
 }
