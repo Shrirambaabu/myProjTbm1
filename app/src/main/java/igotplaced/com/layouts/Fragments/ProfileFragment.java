@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -48,17 +47,18 @@ public class ProfileFragment extends Fragment {
         viewPager = (ViewPager) view.findViewById(R.id.viewpager);
 
         setupViewPager(viewPager);
-        // Give the TabLayout the ViewPager
-        tabLayout = (TabLayout) view.findViewById(R.id.sliding_tabs);
 
-        setupTabIcons();
+        setupTabIcons(view);
 
 
         return view;
 
     }
 
-    private void setupTabIcons() {
+    private void setupTabIcons(View view) {
+
+        // Give the TabLayout the ViewPager
+        tabLayout = (TabLayout) view.findViewById(R.id.sliding_tabs);
         tabLayout.post(new Runnable() {
             @Override
             public void run() {
@@ -76,7 +76,9 @@ public class ProfileFragment extends Fragment {
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
         adapter.addFragment(new ProfilePostFragment());
-        adapter.addFragment(new ProfileInterviewQuestionFragment());
+        adapter.addFragment(new ProfileInterviewExperienceFragment());
+        adapter.addFragment(new ProfileEventsFragment());
+        adapter.addFragment(new ProfileQuestionFragment());
         viewPager.setAdapter(adapter);
     }
 

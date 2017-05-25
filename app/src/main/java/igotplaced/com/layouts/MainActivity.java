@@ -26,13 +26,15 @@ import android.widget.VideoView;
 import igotplaced.com.layouts.Fragments.HomeFragment;
 import igotplaced.com.layouts.Fragments.ProfileFragment;
 
+import static igotplaced.com.layouts.Utils.Utils.BaseImageUri;
+
 public class MainActivity extends AppCompatActivity {
 
     //Defining Variables
     private Toolbar toolbar;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
-    String pathOfFile = "http://r5---sn-q4f7sn7s.googlevideo.com/videoplayback?upn=OqpxjLRqkTY&mv=u&ms=au&mt=1495520325&lmt=1471248974662777&mn=sn-q4f7sn7s&pl=19&signature=0BD5E4CA93C19778E8BA1274D52FD460AFA3F8DD.E305FA631250984FA078FAD4D6B7C3733ECC0353&id=o-APyRWJpmpqc2K4n0C0xNuzr8RbS06TloMhu0w8u3DtnE&dur=54.056&ratebypass=yes&ipbits=0&expire=1495542173&ei=PdUjWbCeHYyPugWyybr4Dw&sparams=dur%2Cei%2Cid%2Cip%2Cipbits%2Citag%2Clmt%2Cmime%2Cmm%2Cmn%2Cms%2Cmv%2Cpl%2Cratebypass%2Csource%2Cupn%2Cexpire&ip=23.106.83.2&mm=31&source=youtube&key=yt6&itag=22&mime=video%2Fmp4&title=How+it+works+-+iGotPlaced+Social+Placement+Preparation+Explained%21";
+    String pathOfFile = BaseImageUri+"/video/iGotPlaced.mp4";
     private VideoView videoView;
     private MediaController mediaController;
     private Boolean isMainFragment;

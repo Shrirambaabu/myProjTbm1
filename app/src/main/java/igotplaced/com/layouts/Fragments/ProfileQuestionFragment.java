@@ -10,17 +10,16 @@ import android.view.ViewGroup;
 
 import igotplaced.com.layouts.R;
 
-
-public class ProfileInterviewQuestionFragment extends Fragment {
-    public ProfileInterviewQuestionFragment() {
+public class ProfileQuestionFragment extends Fragment {
+    public ProfileQuestionFragment() {
         // Required empty public constructor
     }
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile_interview_question, container, false);
+        return inflater.inflate(R.layout.fragment_profile_question, container, false);
     }
+
+
 }
