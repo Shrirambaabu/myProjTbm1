@@ -6,7 +6,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
 
     <application
         android:name=".Utils.MyApplication"
@@ -17,32 +17,32 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="igotplaced.com.layouts.SplashScreenActivity"
+            android:name=".SplashScreenActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="igotplaced.com.layouts.MainActivity" />
+        <activity android:name=".MainActivity" />
         <activity
-            android:name="igotplaced.com.layouts.LoginActivity"
+            android:name=".LoginActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
         <activity
-            android:name="igotplaced.com.layouts.RegisterActivity"
+            android:name=".RegisterActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
         <activity
-            android:name="igotplaced.com.layouts.ForgetPasswordActivity"
+            android:name=".ForgetPasswordActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
         <activity
-            android:name="igotplaced.com.layouts.RegisterPasswordActivity"
+            android:name=".RegisterPasswordActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
-
          
         <receiver
             android:name=".Utils.ConnectivityReceiver"
@@ -52,6 +52,7 @@
             </intent-filter>
         </receiver>
 
+        <activity android:name=".MainHomeActivity" />
     </application>
 
 </manifest>

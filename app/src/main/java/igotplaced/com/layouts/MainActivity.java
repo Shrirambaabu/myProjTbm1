@@ -21,6 +21,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.MediaController;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import igotplaced.com.layouts.Fragments.HomeFragment;
@@ -67,10 +68,11 @@ public class MainActivity extends AppCompatActivity {
         videoView.setVideoURI(uri);
 
         videoView.start();
+        Toast.makeText(getApplicationContext(),pathOfFile,Toast.LENGTH_LONG).show(); 
 
+/*
 
-
-        /*mediaController = new MediaController(MainActivity.this);
+        mediaController = new MediaController(MainActivity.this);
         mediaController.setAnchorView(videoView);
         mediaController.hide();
         Uri uri = Uri.parse(pathOfFile);
@@ -85,8 +87,10 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 videoView.start();
                 mediaController.show();
+
             }
-        });*/
+        });
+*/
 
         toolBar();
 

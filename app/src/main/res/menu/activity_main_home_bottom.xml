@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/post_home"
+        android:icon="@drawable/ic_mail_outline_white_36dp"
+        android:title="@string/post"/>
+
+
+    <item
+        android:id="@+id/interview_experience_home"
+        android:icon="@drawable/ic_timeline_white_24dp"
+        android:title="@string/interview_experience"/>
+
+    <item
+        android:id="@+id/events"
+        android:icon="@drawable/ic_event_white_24dp"
+        android:title="@string/events"/>
+    <item
+        android:id="@+id/questions"
+        android:icon="@drawable/ic_forum_white_24dp"
+        android:title="@string/questions"/>
+
+</menu>

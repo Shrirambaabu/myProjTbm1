@@ -173,7 +173,7 @@
                         android:maxLines="1"
                         android:text="@string/recent_feed"
                         android:textColor="@color/colorPrimaryDark"
-                        android:textSize="28sp" />
+                        android:textSize="24sp" />
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/recycler_view_feed"
@@ -215,7 +215,7 @@
                         android:maxLines="1"
                         android:text="@string/our_awesome_mentors"
                         android:textColor="@color/colorPrimaryDark"
-                        android:textSize="28sp" />
+                        android:textSize="24sp" />
 
 
                     <android.support.v7.widget.RecyclerView
@@ -246,6 +246,7 @@
                     android:padding="@dimen/margin_2">
 
 
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -255,8 +256,7 @@
                         android:maxLines="1"
                         android:text="@string/recently_got_placed_home"
                         android:textColor="@color/colorPrimaryDark"
-                        android:textSize="28sp" />
-
+                        android:textSize="24sp" />
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/recycler_view_recently_got_placed"
@@ -266,6 +266,7 @@
                         android:orientation="horizontal" />
 
                 </LinearLayout>
+
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
@@ -290,10 +291,9 @@
                         android:layout_marginEnd="@dimen/margin_8"
                         android:layout_marginTop="@dimen/margin_16"
                         android:gravity="end"
-                        android:maxLines="1"
                         android:text="@string/testimonials"
                         android:textColor="@color/colorPrimaryDark"
-                        android:textSize="28sp" />
+                        android:textSize="24sp" />
 
 
                     <android.support.v7.widget.RecyclerView
