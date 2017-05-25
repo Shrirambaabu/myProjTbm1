@@ -1,26 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/button_style"
+    android:layout_width="320dp"
+    android:layout_height="256dp"
+    android:background="@drawable/home_button_style"
     android:orientation="vertical"
-    android:padding="@dimen/margin_8">
+    android:layout_margin="@dimen/margin_4dp">
 
     <com.android.volley.toolbox.NetworkImageView
+        android:layout_marginTop="@dimen/margin_8"
         android:id="@+id/mentor_img"
-        android:layout_width="130dp"
-        android:layout_height="130dp"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
         android:layout_gravity="center"
-        android:padding="@dimen/margin_8"
+        android:padding="@dimen/margin_2"
         android:src="@drawable/logo" />
 
     <TextView
         android:id="@+id/mentor_name"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
         android:maxLines="1"
-        android:padding="@dimen/margin_8"
+        android:padding="@dimen/margin_2"
         android:text="Our Awesome Mentors Name"
         android:textAllCaps="false"
         android:textColor="@color/white"
@@ -29,11 +30,11 @@
 
     <TextView
         android:id="@+id/mentor_profession"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
         android:maxLines="1"
-        android:padding="@dimen/margin_8"
+        android:padding="@dimen/margin_2"
         android:text="mentor_profession"
         android:textAllCaps="false"
         android:textColor="@color/white"
@@ -42,9 +43,9 @@
 
     <TextView
         android:id="@+id/mentor_company"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
         android:maxLines="1"
         android:padding="@dimen/margin_4dp"
         android:text="mentor_company"
@@ -57,8 +58,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_gravity="center"
-        android:padding="@dimen/margin_4dp"
-        android:weightSum="3">
+        android:weightSum="5">
 
         <com.android.volley.toolbox.NetworkImageView
             android:id="@+id/linked_in_logo"
@@ -75,9 +75,8 @@
             android:gravity="center|start"
             android:maxLines="1"
             android:text="mentor_linked_in"
-            android:layout_weight="2"
+            android:layout_weight="4"
             android:textAllCaps="false"
-
             android:textColor="@color/white"
             android:textSize="24sp" />
     </LinearLayout>

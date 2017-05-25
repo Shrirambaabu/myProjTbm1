@@ -1,30 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="256dp"
     android:layout_height="wrap_content"
-    android:background="@drawable/button_style"
+    android:background="@drawable/home_button_style"
     android:orientation="vertical"
-    android:padding="@dimen/margin_8">
+    android:layout_margin="@dimen/margin_4dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="@dimen/margin_4dp"
-        android:weightSum="3">
+        android:orientation="horizontal">
 
         <com.android.volley.toolbox.NetworkImageView
             android:id="@+id/recently_placed_profile_img"
             android:layout_width="48dp"
             android:layout_height="56dp"
-            android:layout_weight="1"
             android:src="@drawable/logo" />
 
         <TextView
             android:id="@+id/recently_placed_profile_name"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="2"
+            android:layout_weight="1"
             android:gravity="center|start"
             android:maxLines="1"
             android:text="THARUNBHARATh "
@@ -37,16 +34,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="@dimen/margin_4dp"
-        android:weightSum="8">
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/recently_placed_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_4dp"
-            android:layout_weight="7"
+            android:layout_weight="1"
             android:gravity="center|start"
             android:maxLines="2"
             android:padding="@dimen/margin_4dp"
@@ -57,11 +52,12 @@
 
         <Button
             android:id="@+id/recently_placed_more_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_width="80dp"
+            android:layout_height="36dp"
+            android:layout_gravity="center|end"
             android:background="@drawable/button_style"
             android:gravity="center"
+            android:padding="@dimen/margin_2"
             android:maxLines="1"
             android:text="@string/more"
             android:textAllCaps="true"
