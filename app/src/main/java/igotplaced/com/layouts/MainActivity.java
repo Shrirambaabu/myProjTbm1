@@ -1,5 +1,6 @@
 package igotplaced.com.layouts;
 
+import android.app.FragmentManager;
 import android.app.SearchManager;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -7,7 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
@@ -39,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private VideoView videoView;
     private MediaController mediaController;
     private Boolean isMainFragment;
-    private FragmentManager fragmentManager;
+    private android.support.v4.app.FragmentManager fragmentManager;
     private CollapsingToolbarLayout collapsingToolbar;
 
     @Override
@@ -99,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
         navigationDrawer();
 
         HomeFragment homeFragment = new HomeFragment();
-        android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.frame, homeFragment);
         fragmentTransaction.commit();
 

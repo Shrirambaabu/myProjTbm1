@@ -3,6 +3,7 @@ package igotplaced.com.layouts.Fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -34,9 +35,10 @@ import igotplaced.com.layouts.R;
 import igotplaced.com.layouts.Utils.NetworkController;
 
 import static igotplaced.com.layouts.Utils.Utils.BaseUri;
+import static igotplaced.com.layouts.Utils.Utils.pushFragment;
 
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements View.OnClickListener {
 
 
     private Context context;
@@ -55,6 +57,8 @@ public class HomeFragment extends Fragment {
     private List<Testimonials> testimonialsList = new ArrayList<Testimonials>();
     private RecyclerAdapterTestimonials recyclerAdapterTestimonials;
 
+    private FragmentManager fragmentManager;
+
 
     public HomeFragment() {
         // Required empty public constructor
@@ -66,7 +70,7 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_home, container, false);
         //getting context
-        context = getContext();
+        context = getActivity().getApplicationContext();
 
         settingRecyclerView(view);
 
@@ -156,12 +160,7 @@ public class HomeFragment extends Fragment {
         });
 
         Button interviewButton = (Button) view.findViewById(R.id.interviewButtonHome);
-        interviewButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
+        interviewButton.setOnClickListener(this);
 
         Button eventButton = (Button) view.findViewById(R.id.eventsButtonHome);
         eventButton.setOnClickListener(new View.OnClickListener() {
@@ -352,4 +351,14 @@ public class HomeFragment extends Fragment {
     }
 
 
+    @Override
+    public void onClick(View v) {
+
+        fragmentManager = getFragmentManager();
+        switch (v.getId()) {
+            case R.id.interviewButtonHome:
+                pushFragment(new InterviewFragment(),fragmentManager);
+                break;
+        }
+    }
 }
