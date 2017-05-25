@@ -1,6 +1,7 @@
 package igotplaced.com.layouts.CustomAdapter;
 
 import android.content.Context;
+import android.provider.SyncStateContract;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import igotplaced.com.layouts.Model.MentorsHome;
 import igotplaced.com.layouts.Model.RecentFeeds;
 import igotplaced.com.layouts.R;
 import igotplaced.com.layouts.Utils.NetworkController;
+import igotplaced.com.layouts.Utils.Utils;
 
 /**
  * Created by Admin on 5/23/2017.
@@ -47,7 +49,7 @@ public class RecyclerAdapterMentorsHome  extends RecyclerView.Adapter<RecyclerAd
         holder.mentor_name.setText(mentorsList.getMentorName());
         holder.mentor_profession.setText(mentorsList.getMentorProfession());
         holder.mentor_company.setText(mentorsList.getMentorCompany());
-        holder.mentor_img.setImageUrl(mentorsList.getImageName(),NetworkController.getInstance(context).getImageLoader());
+        holder.mentor_img.setImageUrl(Utils.BaseImageUri+mentorsList.getImageName(), NetworkController.getInstance(context).getImageLoader());
         holder.linked_in_logo.setImageUrl(mentorsList.getImageName(), NetworkController.getInstance(context).getImageLoader());
 
     }
