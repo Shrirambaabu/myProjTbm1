@@ -1,14 +1,19 @@
 package igotplaced.com.layouts;
 
 import android.app.SearchManager;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
@@ -30,12 +35,21 @@ public class MainActivity extends AppCompatActivity {
     String pathOfFile = "http://r5---sn-q4f7sn7s.googlevideo.com/videoplayback?upn=OqpxjLRqkTY&mv=u&ms=au&mt=1495520325&lmt=1471248974662777&mn=sn-q4f7sn7s&pl=19&signature=0BD5E4CA93C19778E8BA1274D52FD460AFA3F8DD.E305FA631250984FA078FAD4D6B7C3733ECC0353&id=o-APyRWJpmpqc2K4n0C0xNuzr8RbS06TloMhu0w8u3DtnE&dur=54.056&ratebypass=yes&ipbits=0&expire=1495542173&ei=PdUjWbCeHYyPugWyybr4Dw&sparams=dur%2Cei%2Cid%2Cip%2Cipbits%2Citag%2Clmt%2Cmime%2Cmm%2Cmn%2Cms%2Cmv%2Cpl%2Cratebypass%2Csource%2Cupn%2Cexpire&ip=23.106.83.2&mm=31&source=youtube&key=yt6&itag=22&mime=video%2Fmp4&title=How+it+works+-+iGotPlaced+Social+Placement+Preparation+Explained%21";
     private VideoView videoView;
     private MediaController mediaController;
+    private Boolean isMainFragment;
+    private FragmentManager fragmentManager;
     private CollapsingToolbarLayout collapsingToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        fragmentManager = getSupportFragmentManager();
+
+        if (savedInstanceState == null) {
+            isMainFragment = true;
+            fragmentManager.beginTransaction().replace(R.id.home, new HomeFragment()).commit();
+        }
 
         // Initializing Toolbar and setting it as the actionbar
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -72,10 +86,30 @@ public class MainActivity extends AppCompatActivity {
             }
         });*/
 
+        toolBar();
+
+        navigation();
+
+        navigationDrawer();
+
+        HomeFragment homeFragment = new HomeFragment();
+        android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.frame, homeFragment);
+        fragmentTransaction.commit();
+
+    }
+
+    private void toolBar() {
+
         collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapse_toolbar);
         collapsingToolbar.setTitle("iGotPlaced");
         collapsingToolbar.setCollapsedTitleTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
         collapsingToolbar.setExpandedTitleColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
+
+    }
+
+    private void navigation() {
+
 
         //Initializing NavigationView
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
@@ -103,6 +137,7 @@ public class MainActivity extends AppCompatActivity {
 
                         videoView.setVisibility(View.VISIBLE);
                         collapsingToolbar.setTitleEnabled(true);
+                        isMainFragment = true;
 
                         HomeFragment homeFragment = new HomeFragment();
                         android.support.v4.app.FragmentTransaction fragmentHomeTransaction = getSupportFragmentManager().beginTransaction();
@@ -114,6 +149,7 @@ public class MainActivity extends AppCompatActivity {
 
                         videoView.setVisibility(View.GONE);
                         collapsingToolbar.setTitleEnabled(false);
+                        isMainFragment = false;
 
                         ProfileFragment profileFragment = new ProfileFragment();
                         android.support.v4.app.FragmentTransaction fragmentProfileTransaction = getSupportFragmentManager().beginTransaction();
@@ -218,20 +254,25 @@ public class MainActivity extends AppCompatActivity {
                         return true;*/
 
                     default:
-/*
                         videoView.setVisibility(View.GONE);
                         collapsingToolbar.setTitleEnabled(false);
+                        isMainFragment = true;
 
-
-                        HomeFragment homeFragment = new HomeFragment();
+                        HomeFragment homeFragmentDefault = new HomeFragment();
                         android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                        fragmentTransaction.replace(R.id.frame, homeFragment);
-                        fragmentTransaction.commit();*/
+                        fragmentTransaction.replace(R.id.frame, homeFragmentDefault);
+                        fragmentTransaction.commit();
                         return true;
 
                 }
             }
         });
+
+
+    }
+
+
+    public void navigationDrawer() {
 
         // Initializing Drawer Layout and ActionBarToggle
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer);
@@ -254,11 +295,37 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         //calling sync state is necessay or else your hamburger icon wont show up
         actionBarDrawerToggle.syncState();
+    }
 
-        HomeFragment homeFragment = new HomeFragment();
-        android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.frame, homeFragment);
-        fragmentTransaction.commit();
+    private void endApplication() {
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        startActivity(intent);
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else if (isMainFragment) {
+            new AlertDialog.Builder(this)
+                    .setTitle("Exit Confirmation")
+                    .setMessage("Are you sure you want to exit?")
+                    .setNegativeButton(android.R.string.no, null)
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+                        public void onClick(DialogInterface arg0, int arg1) {
+                            MainActivity.super.onBackPressed();
+                            endApplication();
+                        }
+                    }).create().show();
+        } else {
+            isMainFragment = true;
+            navigationView.getMenu().getItem(0).setChecked(true);
+            fragmentManager.beginTransaction().replace(R.id.home, new HomeFragment()).commit();
+        }
 
     }
 
