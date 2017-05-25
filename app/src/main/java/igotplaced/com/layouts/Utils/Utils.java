@@ -25,7 +25,7 @@ public class Utils {
    // public static String BaseUri = "http://10.249.166.130:8080/IgotplacedRestWebService/webapi";
       // Baabu IP
     public static String BaseUri = Base+"/IgotplacedRestWebService/webapi";
-    public static String BaseImageUri = Base+"/igotplaced.com(03-11-16)/igotplaced.com/";
+    public static String BaseImageUri = Base+"/igotplaced.com(03-11-16)/igotplaced.com";
 
     public static void setSpinnerError(Spinner spinner, String error, Activity activity) {
         View selectedView = spinner.getSelectedView();
