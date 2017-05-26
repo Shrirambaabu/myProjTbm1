@@ -1,30 +1,57 @@
 package igotplaced.com.layouts;
 
 
+import android.app.FragmentManager;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.support.v4.app.FragmentManager;
 
-import igotplaced.com.layouts.Fragments.EventFragment;
-import igotplaced.com.layouts.Fragments.InterviewFragment;
-import igotplaced.com.layouts.Fragments.PostFragment;
-import igotplaced.com.layouts.Fragments.QuestionsFragment;
-import igotplaced.com.layouts.Utils.Utils;
+import igotplaced.com.layouts.Fragments.HomeEventFragment;
+import igotplaced.com.layouts.Fragments.HomeInterviewFragment;
+import igotplaced.com.layouts.Fragments.HomePostFragment;
+import igotplaced.com.layouts.Fragments.HomeQuestionsFragment;
 
 import static igotplaced.com.layouts.Utils.Utils.pushFragment;
 
 
 public class MainHomeActivity extends AppCompatActivity {
 
+    private Menu menu;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_home);
+
         setupNavigationView();
+
+        intentData();
+
+    }
+
+    private void intentData() {
+        Intent intent = getIntent();
+
+        if (intent.getIntExtra("bottomNavigation", 0) == 1) {
+
+            selectFragment(menu.getItem(0));
+
+        } else if (intent.getIntExtra("bottomNavigation", 0) == 2) {
+
+            selectFragment(menu.getItem(1));
+
+        } else if (intent.getIntExtra("bottomNavigation", 0) == 3) {
+
+            selectFragment(menu.getItem(2));
+
+        } else if (intent.getIntExtra("bottomNavigation", 0) == 4) {
+
+            selectFragment(menu.getItem(3));
+        }
     }
 
     private void setupNavigationView() {
@@ -32,7 +59,7 @@ public class MainHomeActivity extends AppCompatActivity {
         if (bottomNavigationView != null) {
 
             // Select first menu item by default and show Fragment accordingly.
-            Menu menu = bottomNavigationView.getMenu();
+            menu = bottomNavigationView.getMenu();
             selectFragment(menu.getItem(0));
 
             // Set action to perform when any menu-item is selected.
@@ -55,27 +82,26 @@ public class MainHomeActivity extends AppCompatActivity {
     protected void selectFragment(MenuItem item) {
 
         item.setChecked(true);
-        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentManager fragmentManager = getFragmentManager();
         switch (item.getItemId()) {
             case R.id.post_home:
                 // Action to perform when post Menu item is selected.
-                pushFragment(new PostFragment(),fragmentManager);
+                pushFragment(new HomePostFragment(), fragmentManager);
                 break;
             case R.id.interview_experience_home:
                 // Action to perform when interview Menu item is selected.
-                pushFragment(new InterviewFragment(),fragmentManager);
+                pushFragment(new HomeInterviewFragment(), fragmentManager);
                 break;
             case R.id.events:
                 // Action to perform when events Menu item is selected.
-                pushFragment(new EventFragment(),fragmentManager);
+                pushFragment(new HomeEventFragment(), fragmentManager);
                 break;
             case R.id.questions:
                 // Action to perform when questions Menu item is selected.
-                pushFragment(new QuestionsFragment(),fragmentManager);
+                pushFragment(new HomeQuestionsFragment(), fragmentManager);
                 break;
         }
     }
-
 
 
     /**

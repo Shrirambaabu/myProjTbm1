@@ -24,5 +24,4 @@
         app:menu="@menu/activity_main_home_bottom"/>
 
 
-
 </RelativeLayout>

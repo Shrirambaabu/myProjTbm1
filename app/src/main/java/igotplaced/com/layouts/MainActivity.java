@@ -1,6 +1,7 @@
 package igotplaced.com.layouts;
 
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.app.SearchManager;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -8,7 +9,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
@@ -22,10 +22,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.MediaController;
-import android.widget.Toast;
 import android.widget.VideoView;
 
 import igotplaced.com.layouts.Fragments.HomeFragment;
+import igotplaced.com.layouts.Fragments.NotificationFragment;
 import igotplaced.com.layouts.Fragments.ProfileFragment;
 
 import static igotplaced.com.layouts.Utils.Utils.BaseImageUri;
@@ -36,11 +36,11 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
-    String pathOfFile = BaseImageUri+"/video/iGotPlaced.mp4";
+    String pathOfFile = BaseImageUri + "/video/iGotPlaced.mp4";
     private VideoView videoView;
     private MediaController mediaController;
     private Boolean isMainFragment;
-    private android.support.v4.app.FragmentManager fragmentManager;
+    private FragmentManager fragmentManager;
     private CollapsingToolbarLayout collapsingToolbar;
 
     @Override
@@ -69,11 +69,11 @@ public class MainActivity extends AppCompatActivity {
         videoView.setVideoURI(uri);
 
         videoView.start();
-        Toast.makeText(getApplicationContext(),pathOfFile,Toast.LENGTH_LONG).show(); 
 
-/*
 
-        mediaController = new MediaController(MainActivity.this);
+
+
+        /*mediaController = new MediaController(MainActivity.this);
         mediaController.setAnchorView(videoView);
         mediaController.hide();
         Uri uri = Uri.parse(pathOfFile);
@@ -88,10 +88,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 videoView.start();
                 mediaController.show();
-
             }
-        });
-*/
+        });*/
 
         toolBar();
 
@@ -100,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
         navigationDrawer();
 
         HomeFragment homeFragment = new HomeFragment();
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.frame, homeFragment);
         fragmentTransaction.commit();
 
@@ -139,6 +137,7 @@ public class MainActivity extends AppCompatActivity {
                 //Check to see which item was being clicked and perform appropriate action
                 switch (menuItem.getItemId()) {
 
+
                     //Replacing the main content with ContentFragment Which is our Inbox View;
                     case R.id.home:
 
@@ -147,9 +146,9 @@ public class MainActivity extends AppCompatActivity {
                         isMainFragment = true;
 
                         HomeFragment homeFragment = new HomeFragment();
-                        android.support.v4.app.FragmentTransaction fragmentHomeTransaction = getSupportFragmentManager().beginTransaction();
-                        fragmentHomeTransaction.replace(R.id.frame, homeFragment);
-                        fragmentHomeTransaction.commit();
+                        FragmentTransaction homeFragmentTransaction = getFragmentManager().beginTransaction();
+                        homeFragmentTransaction.replace(R.id.frame, homeFragment);
+                        homeFragmentTransaction.commit();
                         return true;
 
                     case R.id.profile:
@@ -159,28 +158,26 @@ public class MainActivity extends AppCompatActivity {
                         isMainFragment = false;
 
                         ProfileFragment profileFragment = new ProfileFragment();
-                        android.support.v4.app.FragmentTransaction fragmentProfileTransaction = getSupportFragmentManager().beginTransaction();
-                        fragmentProfileTransaction.replace(R.id.frame, profileFragment);
-                        fragmentProfileTransaction.commit();
+                        android.support.v4.app.FragmentTransaction profileFragmentTransaction = getSupportFragmentManager().beginTransaction();
+                        profileFragmentTransaction.replace(R.id.frame, profileFragment);
+                        profileFragmentTransaction.commit();
                         return true;
 
- /*                     case R.id.notification:
+                    case R.id.notification:
 
                         videoView.setVisibility(View.GONE);
                         collapsingToolbar.setTitleEnabled(false);
 
-
-                        HomeFragment homeFragment = new HomeFragment();
-                        android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                        fragmentTransaction.replace(R.id.frame, homeFragment);
-                        fragmentTransaction.commit();
+                        NotificationFragment notificationFragment = new NotificationFragment();
+                        FragmentTransaction notificationFragmentTransaction = getFragmentManager().beginTransaction();
+                        notificationFragmentTransaction.replace(R.id.frame, notificationFragment);
+                        notificationFragmentTransaction.commit();
                         return true;
 
-                    case R.id.recent_feeds:
+ /*                     case R.id.recent_feeds:
 
                         videoView.setVisibility(View.GONE);
                         collapsingToolbar.setTitleEnabled(false);
-
 
                         HomeFragment homeFragment = new HomeFragment();
                         android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -266,9 +263,9 @@ public class MainActivity extends AppCompatActivity {
                         isMainFragment = true;
 
                         HomeFragment homeFragmentDefault = new HomeFragment();
-                        android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                        fragmentTransaction.replace(R.id.frame, homeFragmentDefault);
-                        fragmentTransaction.commit();
+                        FragmentTransaction homeFragmentDefaultTransaction = getFragmentManager().beginTransaction();
+                        homeFragmentDefaultTransaction.replace(R.id.frame, homeFragmentDefault);
+                        homeFragmentDefaultTransaction.commit();
                         return true;
 
                 }

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="256dp"
-    android:layout_height="wrap_content"
+    android:layout_height="128dp"
+    android:layout_margin="@dimen/margin_4dp"
     android:background="@drawable/home_button_style"
-    android:orientation="vertical"
-    android:layout_margin="@dimen/margin_4dp">
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -31,41 +31,20 @@
 
     </LinearLayout>
 
-    <LinearLayout
+
+    <TextView
+        android:id="@+id/recently_placed_time"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="@dimen/margin_4dp"
+        android:layout_weight="1"
+        android:gravity="center|start"
+        android:maxLines="2"
+        android:padding="@dimen/margin_4dp"
+        android:text="20/05/2017wdawdwsdsadadsadsadsadawdawdwsdsadadsadsadsadasdsadsadsadsadsadasdsadsadasdasdsasdsadsadsadsadsadasdsadsadasdasdsa wdawdwsdsadadsadsadsadasdsadsadsadsadsadasdsadsadasdasdsa 18:36 "
+        android:textColor="@color/white"
+        android:textSize="18sp" />
 
-        <TextView
-            android:id="@+id/recently_placed_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_4dp"
-            android:layout_weight="1"
-            android:gravity="center|start"
-            android:maxLines="2"
-            android:padding="@dimen/margin_4dp"
-            android:layout_gravity="center"
-            android:text="20/05/2017wdawdwsdsadadsadsadsadawdawdwsdsadadsadsadsadasdsadsadsadsadsadasdsadsadasdasdsasdsadsadsadsadsadasdsadsadasdasdsa wdawdwsdsadadsadsadsadasdsadsadsadsadsadasdsadsadasdasdsa 18:36 "
-            android:textColor="@color/white"
-            android:textSize="18sp" />
-
-        <Button
-            android:id="@+id/recently_placed_more_button"
-            android:layout_width="80dp"
-            android:layout_height="36dp"
-            android:layout_gravity="center|end"
-            android:background="@drawable/button_style"
-            android:gravity="center"
-            android:padding="@dimen/margin_2"
-            android:maxLines="1"
-            android:text="@string/more"
-            android:textAllCaps="true"
-            android:textColor="@color/colorAccent"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-
-    </LinearLayout>
 
 </LinearLayout>

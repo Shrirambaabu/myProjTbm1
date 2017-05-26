@@ -226,7 +226,7 @@
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/recycler_view_mentors"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="256dp"
                         android:layout_gravity="center_vertical"
                         android:orientation="horizontal" />
 
@@ -266,7 +266,7 @@
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/recycler_view_recently_got_placed"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="136dp"
                         android:layout_gravity="center_vertical"
                         android:orientation="horizontal" />
 

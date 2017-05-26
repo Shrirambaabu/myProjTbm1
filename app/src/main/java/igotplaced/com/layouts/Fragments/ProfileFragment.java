@@ -41,7 +41,7 @@ public class ProfileFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
-        context = getContext();
+        context = getActivity().getApplicationContext();
 
         // Get the ViewPager and set it's PagerAdapter so that it can display items
         viewPager = (ViewPager) view.findViewById(R.id.viewpager);
@@ -74,7 +74,7 @@ public class ProfileFragment extends Fragment {
     }
 
     private void setupViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getFragmentManager());
         adapter.addFragment(new ProfilePostFragment());
         adapter.addFragment(new ProfileInterviewExperienceFragment());
         adapter.addFragment(new ProfileEventsFragment());
@@ -108,6 +108,8 @@ public class ProfileFragment extends Fragment {
             //return mFragmentTitleList.get(position);
             return null;
         }
+
+
     }
 
 }

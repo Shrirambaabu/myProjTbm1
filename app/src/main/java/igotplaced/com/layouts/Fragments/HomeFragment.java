@@ -1,9 +1,11 @@
 package igotplaced.com.layouts.Fragments;
 
+import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -27,6 +29,7 @@ import igotplaced.com.layouts.CustomAdapter.RecyclerAdapterMentorsHome;
 import igotplaced.com.layouts.CustomAdapter.RecyclerAdapterRecentFeeds;
 import igotplaced.com.layouts.CustomAdapter.RecyclerAdapterRecentlyGotPlaced;
 import igotplaced.com.layouts.CustomAdapter.RecyclerAdapterTestimonials;
+import igotplaced.com.layouts.MainHomeActivity;
 import igotplaced.com.layouts.Model.MentorsHome;
 import igotplaced.com.layouts.Model.RecentFeeds;
 import igotplaced.com.layouts.Model.RecentlyGotPlaced;
@@ -148,35 +151,16 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
 
         Button postButton = (Button) view.findViewById(R.id.postButtonHome);
-        postButton.setOnClickListener(new View.OnClickListener() {
-
-
-            @Override
-            public void onClick(View v) {
-
-
-
-            }
-        });
+        postButton.setOnClickListener(this);
 
         Button interviewButton = (Button) view.findViewById(R.id.interviewButtonHome);
         interviewButton.setOnClickListener(this);
 
         Button eventButton = (Button) view.findViewById(R.id.eventsButtonHome);
-        eventButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
+        eventButton.setOnClickListener(this);
 
         Button questionsButton = (Button) view.findViewById(R.id.questionsButtonHome);
-        questionsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
+        questionsButton.setOnClickListener(this);
     }
 
 
@@ -346,8 +330,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
     }
 
 
@@ -356,8 +338,34 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
         fragmentManager = getFragmentManager();
         switch (v.getId()) {
+            case R.id.postButtonHome:
+
+                Intent postIntent = new Intent(getActivity(), MainHomeActivity.class);
+                postIntent.putExtra("bottomNavigation",1);
+                startActivity(postIntent);
+                getActivity().overridePendingTransition(0,0);
+
+                break;
             case R.id.interviewButtonHome:
-                pushFragment(new InterviewFragment(),fragmentManager);
+
+                Intent interviewIntent = new Intent(getActivity(), MainHomeActivity.class);
+                interviewIntent.putExtra("bottomNavigation",2);
+                startActivity(interviewIntent);
+                getActivity().overridePendingTransition(0,0);
+                break;
+            case R.id.eventsButtonHome:
+
+                Intent eventIntent = new Intent(getActivity(), MainHomeActivity.class);
+                eventIntent.putExtra("bottomNavigation",3);
+                startActivity(eventIntent);
+                getActivity().overridePendingTransition(0,0);
+                break;
+            case R.id.questionsButtonHome:
+
+                Intent questionIntent = new Intent(getActivity(), MainHomeActivity.class);
+                questionIntent.putExtra("bottomNavigation",4);
+                startActivity(questionIntent);
+                getActivity().overridePendingTransition(0,0);
                 break;
         }
     }
