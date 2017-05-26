@@ -1,12 +1,13 @@
 package igotplaced.com.layouts;
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.app.SearchManager;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.content.ContextCompat;
@@ -14,7 +15,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
@@ -93,15 +93,19 @@ public class MainActivity extends AppCompatActivity {
 
         toolBar();
 
-        navigation();
-
         navigationDrawer();
 
+        navigation();
+
+        displaySelectedScreen(R.id.home);
+
+
+/*
         HomeFragment homeFragment = new HomeFragment();
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.frame, homeFragment);
-        fragmentTransaction.commit();
-
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();*/
     }
 
     private void toolBar() {
@@ -115,7 +119,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void navigation() {
 
-
         //Initializing NavigationView
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
         navigationView.setCheckedItem(R.id.home);
@@ -125,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
 
             // This method will trigger on item Click of navigation men
             @Override
-            public boolean onNavigationItemSelected(MenuItem menuItem) {
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
                 //Checking if the item is in checked state or not, if not make it in checked state
                 if (menuItem.isChecked()) menuItem.setChecked(false);
@@ -134,45 +137,44 @@ public class MainActivity extends AppCompatActivity {
                 //Closing drawer on item click
                 drawerLayout.closeDrawers();
 
-                //Check to see which item was being clicked and perform appropriate action
-                switch (menuItem.getItemId()) {
+                displaySelectedScreen(menuItem.getItemId());
+
+                return true;
+            }
+        });
 
 
-                    //Replacing the main content with ContentFragment Which is our Inbox View;
-                    case R.id.home:
+    }
 
-                        videoView.setVisibility(View.VISIBLE);
-                        collapsingToolbar.setTitleEnabled(true);
-                        isMainFragment = true;
+    private void displaySelectedScreen(int itemId) {
+        Fragment fragment = null;
 
-                        HomeFragment homeFragment = new HomeFragment();
-                        FragmentTransaction homeFragmentTransaction = getFragmentManager().beginTransaction();
-                        homeFragmentTransaction.replace(R.id.frame, homeFragment);
-                        homeFragmentTransaction.commit();
-                        return true;
+        //Check to see which item was being clicked and perform appropriate action
+        switch (itemId) {
 
-                    case R.id.profile:
+            //Replacing the main content with ContentFragment Which is our Inbox View;
+            case R.id.home:
 
-                        videoView.setVisibility(View.GONE);
-                        collapsingToolbar.setTitleEnabled(false);
-                        isMainFragment = false;
+                videoView.setVisibility(View.VISIBLE);
+                collapsingToolbar.setTitleEnabled(true);
 
-                        ProfileFragment profileFragment = new ProfileFragment();
-                        android.support.v4.app.FragmentTransaction profileFragmentTransaction = getSupportFragmentManager().beginTransaction();
-                        profileFragmentTransaction.replace(R.id.frame, profileFragment);
-                        profileFragmentTransaction.commit();
-                        return true;
+                fragment = new HomeFragment();
+                break;
+            case R.id.profile:
 
-                    case R.id.notification:
+                videoView.setVisibility(View.GONE);
+                collapsingToolbar.setTitleEnabled(false);
 
-                        videoView.setVisibility(View.GONE);
-                        collapsingToolbar.setTitleEnabled(false);
+                fragment = new ProfileFragment();
+                break;
 
-                        NotificationFragment notificationFragment = new NotificationFragment();
-                        FragmentTransaction notificationFragmentTransaction = getFragmentManager().beginTransaction();
-                        notificationFragmentTransaction.replace(R.id.frame, notificationFragment);
-                        notificationFragmentTransaction.commit();
-                        return true;
+            case R.id.notification:
+
+                videoView.setVisibility(View.GONE);
+                collapsingToolbar.setTitleEnabled(false);
+
+                fragment = new NotificationFragment();
+                break;
 
  /*                     case R.id.recent_feeds:
 
@@ -257,22 +259,20 @@ public class MainActivity extends AppCompatActivity {
                         fragmentTransaction.commit();
                         return true;*/
 
-                    default:
-                        videoView.setVisibility(View.GONE);
-                        collapsingToolbar.setTitleEnabled(false);
-                        isMainFragment = true;
+            default:
+                videoView.setVisibility(View.GONE);
+                collapsingToolbar.setTitleEnabled(false);
 
-                        HomeFragment homeFragmentDefault = new HomeFragment();
-                        FragmentTransaction homeFragmentDefaultTransaction = getFragmentManager().beginTransaction();
-                        homeFragmentDefaultTransaction.replace(R.id.frame, homeFragmentDefault);
-                        homeFragmentDefaultTransaction.commit();
-                        return true;
+                fragment = new HomeFragment();
+                break;
 
-                }
-            }
-        });
+        }
 
-
+        if (fragment != null) {
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.frame, fragment);
+            ft.commit();
+        }
     }
 
 
@@ -308,30 +308,16 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-
     @Override
     public void onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
-        } else if (isMainFragment) {
-            new AlertDialog.Builder(this)
-                    .setTitle("Exit Confirmation")
-                    .setMessage("Are you sure you want to exit?")
-                    .setNegativeButton(android.R.string.no, null)
-                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-
-                        public void onClick(DialogInterface arg0, int arg1) {
-                            MainActivity.super.onBackPressed();
-                            endApplication();
-                        }
-                    }).create().show();
         } else {
-            isMainFragment = true;
-            navigationView.getMenu().getItem(0).setChecked(true);
-            fragmentManager.beginTransaction().replace(R.id.home, new HomeFragment()).commit();
+            super.onBackPressed();
         }
 
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
