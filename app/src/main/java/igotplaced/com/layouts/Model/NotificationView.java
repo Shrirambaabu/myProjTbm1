@@ -11,7 +11,7 @@ public class NotificationView {
     private String caption;
     private String notificationPost;
     private String fName;
-    private String ImageName;
+    private String imageName;
 
     public NotificationView() {
     }
@@ -22,13 +22,13 @@ public class NotificationView {
         this.caption = caption;
         this.notificationPost = notificationPost;
         this.fName = fName;
-        this.ImageName = imageName;
+        this.imageName = imageName;
     }
 
     public NotificationView(String createdBy, String notificationPost, String imageName) {
         this.createdBy = createdBy;
         this.notificationPost = notificationPost;
-        ImageName = imageName;
+        this.imageName = imageName;
     }
 
     public String getCreatedBy() {
@@ -52,6 +52,6 @@ public class NotificationView {
     }
 
     public String getImageName() {
-        return ImageName;
+        return imageName;
     }
 }

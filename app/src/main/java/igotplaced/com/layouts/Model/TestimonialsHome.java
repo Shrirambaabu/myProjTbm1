@@ -1,31 +1,29 @@
 package igotplaced.com.layouts.Model;
 
-import android.provider.ContactsContract;
-
 /**
  * Created by Admin on 5/23/2017.
  */
 
 public class TestimonialsHome {
-    private String ProfileMessage;
-    private String ProfileName;
-    private String ProfileCollege;
-    private String ImageName;
+    private String profileMessage;
+    private String profileName;
+    private String profileCollege;
+    private String imageName;
 
     public TestimonialsHome(){
 
     }
     public TestimonialsHome(String profileMessage, String profileName, String profileCollege, String imageName){
 
-        ProfileMessage=profileMessage;
-        ProfileName=profileName;
-        ProfileCollege=profileCollege;
-        ImageName=imageName;
+        this.profileMessage =profileMessage;
+        this.profileName =profileName;
+        this.profileCollege =profileCollege;
+        this.imageName =imageName;
 
     }
 
-    public String getProfileMessage(){return ProfileMessage;}
-    public String getProfileName(){return ProfileName;}
-    public String getProfileCollege(){return ProfileCollege;}
-    public String getImageName(){return ImageName;}
+    public String getProfileMessage(){return profileMessage;}
+    public String getProfileName(){return profileName;}
+    public String getProfileCollege(){return profileCollege;}
+    public String getImageName(){return imageName;}
 }

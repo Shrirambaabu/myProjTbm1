@@ -1,49 +1,47 @@
 package igotplaced.com.layouts.Model;
 
-import java.lang.ref.SoftReference;
-
 /**
  * Created by Admin on 5/23/2017.
  */
 
 public class MentorsHome {
-    private String ImageName;
-    private String MentorName;
-    private String MentorProfession;
-    private String MentorCompany;
-    private String MentorLinkedIn;
+    private String imageName;
+    private String mentorName;
+    private String mentorProfession;
+    private String mentorCompany;
+    private String mentorLinkedIn;
 
     public MentorsHome() {
 
     }
 
     public MentorsHome(String imageName, String mentorName, String mentorProfession, String mentorCompany, String mentorLinkedIn) {
-        ImageName = imageName;
-        MentorName = mentorName;
-        MentorProfession = mentorProfession;
-        MentorCompany = mentorCompany;
-        MentorLinkedIn = mentorLinkedIn;
+        this.imageName = imageName;
+        this.mentorName = mentorName;
+        this.mentorProfession = mentorProfession;
+        this.mentorCompany = mentorCompany;
+        this.mentorLinkedIn = mentorLinkedIn;
 
     }
 
     public String getImageName() {
-        return ImageName;
+        return imageName;
     }
 
     public String getMentorName() {
-        return MentorName;
+        return mentorName;
     }
 
     public String getMentorProfession() {
-        return MentorProfession;
+        return mentorProfession;
     }
 
     public String getMentorCompany() {
-        return MentorCompany;
+        return mentorCompany;
     }
 
     public String getMentorLinkedIn() {
-        return MentorLinkedIn;
+        return mentorLinkedIn;
     }
 
 }

@@ -6,29 +6,29 @@ package igotplaced.com.layouts.Model;
 
 public class RecentFeedsHome {
 
-    private String Type;
+    private String type;
     private String Question;
-    private String IndustryName;
-    private String CompanyName;
-    private String ModifiedBy;
-    private String Name;
-    private String ImageName;
+    private String industryName;
+    private String companyName;
+    private String modifiedBy;
+    private String name;
+    private String imageName;
 
     public RecentFeedsHome() {
     }
 
     public RecentFeedsHome(String type, String question, String industryName, String companyName, String modifiedBy, String name, String imageName) {
-        Type = type;
+        this.type = type;
         Question = question;
-        IndustryName = industryName;
-        CompanyName = companyName;
-        ModifiedBy = modifiedBy;
-        Name = name;
-        ImageName = imageName;
+        this.industryName = industryName;
+        this.companyName = companyName;
+        this.modifiedBy = modifiedBy;
+        this.name = name;
+        this.imageName = imageName;
     }
 
     public String getType() {
-        return Type;
+        return type;
     }
 
     public String getQuestion() {
@@ -36,22 +36,22 @@ public class RecentFeedsHome {
     }
 
     public String getIndustryName() {
-        return IndustryName;
+        return industryName;
     }
 
     public String getCompanyName() {
-        return CompanyName;
+        return companyName;
     }
 
     public String getModifiedBy() {
-        return ModifiedBy;
+        return modifiedBy;
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
     public String getImageName() {
-        return ImageName;
+        return imageName;
     }
 }
