@@ -49,8 +49,6 @@ public class RecyclerAdapterMentorsHome  extends RecyclerView.Adapter<RecyclerAd
         holder.mentor_profession.setText(mentorsList.getMentorProfession());
         holder.mentor_company.setText(mentorsList.getMentorCompany());
 
-        Log.d("error",Utils.BaseImageUri+mentorsList.getImageName());
-
         holder.mentor_img.setImageUrl(Utils.BaseImageUri+mentorsList.getImageName(), NetworkController.getInstance(context).getImageLoader());
         holder.linked_in_logo.setImageUrl(mentorsList.getImageName(), NetworkController.getInstance(context).getImageLoader());
 

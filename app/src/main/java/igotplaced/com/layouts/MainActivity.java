@@ -1,8 +1,5 @@
 package igotplaced.com.layouts;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.net.Uri;
@@ -10,6 +7,9 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
@@ -24,6 +24,7 @@ import android.view.View;
 import android.widget.MediaController;
 import android.widget.VideoView;
 
+import igotplaced.com.layouts.Fragments.BlogFragment;
 import igotplaced.com.layouts.Fragments.HomeFragment;
 import igotplaced.com.layouts.Fragments.NotificationFragment;
 import igotplaced.com.layouts.Fragments.ProfileFragment;
@@ -176,54 +177,18 @@ public class MainActivity extends AppCompatActivity {
                 fragment = new NotificationFragment();
                 break;
 
- /*                     case R.id.recent_feeds:
 
-                        videoView.setVisibility(View.GONE);
-                        collapsingToolbar.setTitleEnabled(false);
+            case R.id.blog:
 
-                        HomeFragment homeFragment = new HomeFragment();
-                        android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                        fragmentTransaction.replace(R.id.frame, homeFragment);
-                        fragmentTransaction.commit();
-                        return true;
-
-                    case R.id.recently_got_placed:
-
-                        videoView.setVisibility(View.GONE);
-                        collapsingToolbar.setTitleEnabled(false);
+                videoView.setVisibility(View.GONE);
+                collapsingToolbar.setTitleEnabled(false);
 
 
-                        HomeFragment homeFragment = new HomeFragment();
-                        android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                        fragmentTransaction.replace(R.id.frame, homeFragment);
-                        fragmentTransaction.commit();
-                        return true;
-
-                    case R.id.testimonial:
-
-                        videoView.setVisibility(View.GONE);
-                        collapsingToolbar.setTitleEnabled(false);
+                fragment = new BlogFragment();
+                break;
 
 
-                        HomeFragment homeFragment = new HomeFragment();
-                        android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                        fragmentTransaction.replace(R.id.frame, homeFragment);
-                        fragmentTransaction.commit();
-                        return true;
-
-                    case R.id.blog:
-
-                        videoView.setVisibility(View.GONE);
-                        collapsingToolbar.setTitleEnabled(false);
-
-
-                        HomeFragment homeFragment = new HomeFragment();
-                        android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                        fragmentTransaction.replace(R.id.frame, homeFragment);
-                        fragmentTransaction.commit();
-                        return true;
-
-                    case R.id.settings:
+ /*                      case R.id.settings:
 
                         videoView.setVisibility(View.GONE);
                         collapsingToolbar.setTitleEnabled(false);

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_margin="@dimen/margin_2"
+    android:background="@drawable/home_button_style">
+
+    <com.android.volley.toolbox.NetworkImageView
+        android:id="@+id/blog_img"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:src="@drawable/logo" />
+
+    <TextView
+        android:id="@+id/blog_post"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:maxLines="1"
+        android:padding="@dimen/margin_4dp"
+        android:text="IT INDUSTRY"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/blog_posted_by"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="9"
+            android:gravity="center"
+            android:padding="@dimen/margin_4dp"
+            android:maxLines="1"
+            android:text="THARUNBHARAThasd"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/post_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="7"
+        android:padding="@dimen/margin_4dp"
+        android:gravity="center"
+        android:maxLines="1"
+        android:text="20/05/2017 18:36 "
+        android:textColor="@color/white"
+        android:textSize="16sp" />
+
+</LinearLayout>
