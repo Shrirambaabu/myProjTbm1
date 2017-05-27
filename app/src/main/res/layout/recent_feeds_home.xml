@@ -14,12 +14,6 @@
         android:padding="@dimen/margin_2"
         android:weightSum="5">
 
-        <com.android.volley.toolbox.NetworkImageView
-            android:id="@+id/feed_img"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_weight="1"
-            android:src="@drawable/logo" />
 
         <TextView
             android:id="@+id/feed"
@@ -32,6 +26,12 @@
             android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold" />
+
+        <com.android.volley.toolbox.NetworkImageView
+            android:id="@+id/feed_img"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_weight="1" />
 
 
     </LinearLayout>
@@ -61,8 +61,7 @@
             android:id="@+id/feed_profile_img"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_weight="1"
-            android:src="@drawable/logo" />
+            android:layout_weight="1" />
 
         <TextView
             android:id="@+id/feed_profile_name"

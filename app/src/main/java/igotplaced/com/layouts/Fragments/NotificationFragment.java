@@ -87,7 +87,7 @@ public class NotificationFragment extends Fragment {
                     Log.d("error", response.toString());
                     try {
                         JSONObject obj = response.getJSONObject(i);
-                        NotificationView notificationView = new NotificationView(obj.getString("createdBy"), obj.getString("notificationPost"),obj.getString("imageName"));
+                        NotificationView notificationView = new NotificationView(obj.getString("created_by"), obj.getString("post"),obj.getString("imgname"));
                         // adding movie to testimonialsList array
                         notificationViewList.add(notificationView);
 

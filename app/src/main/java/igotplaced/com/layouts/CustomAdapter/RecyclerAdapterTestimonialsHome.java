@@ -14,6 +14,7 @@ import java.util.List;
 import igotplaced.com.layouts.Model.TestimonialsHome;
 import igotplaced.com.layouts.R;
 import igotplaced.com.layouts.Utils.NetworkController;
+import igotplaced.com.layouts.Utils.Utils;
 
 /**
  * Created by Admin on 5/24/2017.
@@ -46,7 +47,7 @@ public class RecyclerAdapterTestimonialsHome extends RecyclerView.Adapter<Recycl
         holder.profileMessage.setText(testimonials.getProfileMessage());
         holder.profileName.setText(testimonials.getProfileName());
         holder.profileCollege.setText(testimonials.getProfileCollege());
-        holder.testimonial_profile_img.setImageUrl(testimonials.getImageName(), NetworkController.getInstance(context).getImageLoader());
+        holder.testimonial_profile_img.setImageUrl(Utils.BaseImageUri+testimonials.getImageName(), NetworkController.getInstance(context).getImageLoader());
 
     }
 

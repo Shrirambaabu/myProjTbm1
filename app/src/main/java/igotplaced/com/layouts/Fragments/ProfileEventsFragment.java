@@ -21,7 +21,7 @@ public class ProfileEventsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile_events, container, false);
+        return inflater.inflate(R.layout.card_view_event, container, false);
     }
 
 }

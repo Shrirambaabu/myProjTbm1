@@ -80,6 +80,7 @@
     <string name="recently_got_placed_home">----- Recently Got Placed</string>
     <string name="testimonials">----- Testimonials</string>
     <string name="notificationMessage">NotificationMessage</string>
+    <string name="recentNotification">Recent Notifications</string>
 
 
 </resources>

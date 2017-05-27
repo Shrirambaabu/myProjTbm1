@@ -27,7 +27,9 @@
             android:text="THARUNBHARATh "
             android:textColor="@color/white"
             android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:paddingLeft="@dimen/margin_4dp"/>
+
 
     </LinearLayout>
 

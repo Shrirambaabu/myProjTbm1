@@ -14,7 +14,7 @@ import java.util.List;
 import igotplaced.com.layouts.Model.NotificationView;
 import igotplaced.com.layouts.R;
 import igotplaced.com.layouts.Utils.NetworkController;
-
+import igotplaced.com.layouts.Utils.Utils;
 
 
 public class RecyclerAdapterNotification  extends RecyclerView.Adapter<RecyclerAdapterNotification.MyViewHolder> {
@@ -44,7 +44,7 @@ public class RecyclerAdapterNotification  extends RecyclerView.Adapter<RecyclerA
         //Pass the values of feeds object to Views
         holder.createdBy.setText(notifyView.getCreatedBy());
         holder.notificationPost.setText(notifyView.getNotificationPost());
-        holder.notify_img.setImageUrl(notifyView.getImageName(), NetworkController.getInstance(context).getImageLoader());
+        holder.notify_img.setImageUrl(Utils.BaseImageUri+notifyView.getImageName(), NetworkController.getInstance(context).getImageLoader());
 
     }
 

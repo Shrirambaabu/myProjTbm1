@@ -14,6 +14,7 @@ import java.util.List;
 import igotplaced.com.layouts.Model.RecentlyGotPlacedHome;
 import igotplaced.com.layouts.R;
 import igotplaced.com.layouts.Utils.NetworkController;
+import igotplaced.com.layouts.Utils.Utils;
 
 /**
  * Created by Admin on 5/24/2017.
@@ -46,7 +47,7 @@ public class RecyclerAdapterRecentlyGotPlacedHome extends RecyclerView.Adapter<R
         //Pass the values of feeds object to Views
         holder.PersonName.setText(recentlyGotPlaced.getPersonName());
         holder.PlacedDetails.setText(recentlyGotPlaced.getPlacedDetails());
-        holder.prof_img.setImageUrl(recentlyGotPlaced.getImageName(), NetworkController.getInstance(context).getImageLoader());
+        holder.prof_img.setImageUrl(Utils.BaseImageUri+recentlyGotPlaced.getImageName(), NetworkController.getInstance(context).getImageLoader());
 
     }
 

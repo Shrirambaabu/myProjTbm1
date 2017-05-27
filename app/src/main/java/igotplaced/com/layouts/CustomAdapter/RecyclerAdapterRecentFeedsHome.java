@@ -14,6 +14,7 @@ import java.util.List;
 import igotplaced.com.layouts.Model.RecentFeedsHome;
 import igotplaced.com.layouts.R;
 import igotplaced.com.layouts.Utils.NetworkController;
+import igotplaced.com.layouts.Utils.Utils;
 
 /**
  * Created by Ashith VL on 5/22/2017.
@@ -48,7 +49,7 @@ public class RecyclerAdapterRecentFeedsHome extends RecyclerView.Adapter<Recycle
         holder.feed_industry.setText(recentFeedsHome.getIndustryName());
         holder.feed_profile_name.setText(recentFeedsHome.getName());
         holder.feed_time.setText(recentFeedsHome.getModifiedBy());
-        holder.feed_profile_img.setImageUrl(recentFeedsHome.getImageName(), NetworkController.getInstance(context).getImageLoader());
+        holder.feed_profile_img.setImageUrl(Utils.BaseImageUri+recentFeedsHome.getImageName(), NetworkController.getInstance(context).getImageLoader());
 
     }
 
