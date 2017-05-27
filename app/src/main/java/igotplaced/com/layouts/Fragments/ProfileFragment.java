@@ -27,9 +27,9 @@ public class ProfileFragment extends Fragment {
 
     private int[] tabIcons = {
             R.drawable.ic_mail_outline_white_36dp,
-            R.drawable.ic_mail_outline_white_36dp,
-            R.drawable.ic_mail_outline_white_36dp,
-            R.drawable.ic_mail_outline_white_36dp
+            R.drawable.ic_timeline_white_24dp,
+            R.drawable.ic_event_white_24dp,
+            R.drawable.ic_forum_white_24dp
     };
 
     public ProfileFragment() {

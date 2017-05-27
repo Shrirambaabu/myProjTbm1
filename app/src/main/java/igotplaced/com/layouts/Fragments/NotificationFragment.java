@@ -78,7 +78,7 @@ public class NotificationFragment extends Fragment {
 
 
 
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(BaseUri + "/homeService/testimonials", new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(BaseUri + "/notificationService/notification/256", new Response.Listener<JSONArray>() {
 
             @Override
             public void onResponse(JSONArray response) {
