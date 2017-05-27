@@ -51,15 +51,14 @@ public class ProfileFragment extends Fragment {
 
         viewPager = (ViewPager) view.findViewById(R.id.pager);
         setupViewPager(viewPager);
-
         tabLayout = (TabLayout) view.findViewById(R.id.tabLayout);
 
 
         tabLayout.post(new Runnable() {
             @Override
             public void run() {
-                setupTabIcons();
                 tabLayout.setupWithViewPager(viewPager);
+                setupTabIcons();
             }
         });
 

@@ -4,16 +4,16 @@ package igotplaced.com.layouts.Model;
  * Created by Admin on 5/23/2017.
  */
 
-public class RecentlyGotPlaced {
+public class RecentlyGotPlacedHome {
     private String ImageName;
     private String PersonName;
     private String PlacedDetails;
 
-    public RecentlyGotPlaced() {
+    public RecentlyGotPlacedHome() {
 
     }
 
-    public RecentlyGotPlaced(String imageName,String personName,String placedDetails){
+    public RecentlyGotPlacedHome(String imageName, String personName, String placedDetails){
         ImageName=imageName;
         PersonName=personName;
         PlacedDetails=placedDetails;

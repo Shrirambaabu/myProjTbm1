@@ -11,9 +11,7 @@ import com.android.volley.toolbox.NetworkImageView;
 
 import java.util.List;
 
-import igotplaced.com.layouts.Model.MentorsHome;
 import igotplaced.com.layouts.Model.NotificationView;
-import igotplaced.com.layouts.Model.RecentFeeds;
 import igotplaced.com.layouts.R;
 import igotplaced.com.layouts.Utils.NetworkController;
 

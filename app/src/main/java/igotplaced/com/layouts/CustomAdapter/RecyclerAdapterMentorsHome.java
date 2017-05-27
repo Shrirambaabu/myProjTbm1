@@ -1,7 +1,6 @@
 package igotplaced.com.layouts.CustomAdapter;
 
 import android.content.Context;
-import android.provider.SyncStateContract;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +12,6 @@ import com.android.volley.toolbox.NetworkImageView;
 import java.util.List;
 
 import igotplaced.com.layouts.Model.MentorsHome;
-import igotplaced.com.layouts.Model.RecentFeeds;
 import igotplaced.com.layouts.R;
 import igotplaced.com.layouts.Utils.NetworkController;
 import igotplaced.com.layouts.Utils.Utils;

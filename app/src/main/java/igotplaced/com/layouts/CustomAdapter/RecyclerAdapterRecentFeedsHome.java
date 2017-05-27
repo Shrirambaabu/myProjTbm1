@@ -11,8 +11,7 @@ import com.android.volley.toolbox.NetworkImageView;
 
 import java.util.List;
 
-import igotplaced.com.layouts.Model.MentorsHome;
-import igotplaced.com.layouts.Model.RecentFeeds;
+import igotplaced.com.layouts.Model.RecentFeedsHome;
 import igotplaced.com.layouts.R;
 import igotplaced.com.layouts.Utils.NetworkController;
 
@@ -20,13 +19,13 @@ import igotplaced.com.layouts.Utils.NetworkController;
  * Created by Ashith VL on 5/22/2017.
  */
 
-public class RecyclerAdapterRecentFeeds  extends RecyclerView.Adapter<RecyclerAdapterRecentFeeds.MyViewHolder> {
+public class RecyclerAdapterRecentFeedsHome extends RecyclerView.Adapter<RecyclerAdapterRecentFeedsHome.MyViewHolder> {
 
-    private List<RecentFeeds> feedsList;
+    private List<RecentFeedsHome> feedsList;
     private Context context;
     private LayoutInflater inflater;
 
-    public RecyclerAdapterRecentFeeds(Context context, List<RecentFeeds> feedsList) {
+    public RecyclerAdapterRecentFeedsHome(Context context, List<RecentFeedsHome> feedsList) {
 
         this.context = context;
         this.feedsList = feedsList;
@@ -43,13 +42,13 @@ public class RecyclerAdapterRecentFeeds  extends RecyclerView.Adapter<RecyclerAd
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        RecentFeeds recentFeeds = feedsList.get(position);
+        RecentFeedsHome recentFeedsHome = feedsList.get(position);
         //Pass the values of feeds object to Views
-        holder.feed.setText(recentFeeds.getQuestion());
-        holder.feed_industry.setText(recentFeeds.getIndustryName());
-        holder.feed_profile_name.setText(recentFeeds.getName());
-        holder.feed_time.setText(recentFeeds.getModifiedBy());
-        holder.feed_profile_img.setImageUrl(recentFeeds.getImageName(), NetworkController.getInstance(context).getImageLoader());
+        holder.feed.setText(recentFeedsHome.getQuestion());
+        holder.feed_industry.setText(recentFeedsHome.getIndustryName());
+        holder.feed_profile_name.setText(recentFeedsHome.getName());
+        holder.feed_time.setText(recentFeedsHome.getModifiedBy());
+        holder.feed_profile_img.setImageUrl(recentFeedsHome.getImageName(), NetworkController.getInstance(context).getImageLoader());
 
     }
 

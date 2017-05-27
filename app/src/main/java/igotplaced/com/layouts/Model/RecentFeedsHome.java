@@ -4,7 +4,7 @@ package igotplaced.com.layouts.Model;
  * Created by Ashith VL on 5/22/2017.
  */
 
-public class RecentFeeds {
+public class RecentFeedsHome {
 
     private String Type;
     private String Question;
@@ -14,10 +14,10 @@ public class RecentFeeds {
     private String Name;
     private String ImageName;
 
-    public RecentFeeds() {
+    public RecentFeedsHome() {
     }
 
-    public RecentFeeds(String type, String question, String industryName, String companyName, String modifiedBy, String name, String imageName) {
+    public RecentFeedsHome(String type, String question, String industryName, String companyName, String modifiedBy, String name, String imageName) {
         Type = type;
         Question = question;
         IndustryName = industryName;

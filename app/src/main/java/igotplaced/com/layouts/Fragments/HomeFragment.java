@@ -1,6 +1,5 @@
 package igotplaced.com.layouts.Fragments;
 
-import android.app.Activity;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.content.Context;
@@ -26,19 +25,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import igotplaced.com.layouts.CustomAdapter.RecyclerAdapterMentorsHome;
-import igotplaced.com.layouts.CustomAdapter.RecyclerAdapterRecentFeeds;
-import igotplaced.com.layouts.CustomAdapter.RecyclerAdapterRecentlyGotPlaced;
-import igotplaced.com.layouts.CustomAdapter.RecyclerAdapterTestimonials;
+import igotplaced.com.layouts.CustomAdapter.RecyclerAdapterRecentFeedsHome;
+import igotplaced.com.layouts.CustomAdapter.RecyclerAdapterRecentlyGotPlacedHome;
+import igotplaced.com.layouts.CustomAdapter.RecyclerAdapterTestimonialsHome;
 import igotplaced.com.layouts.MainHomeActivity;
 import igotplaced.com.layouts.Model.MentorsHome;
-import igotplaced.com.layouts.Model.RecentFeeds;
-import igotplaced.com.layouts.Model.RecentlyGotPlaced;
-import igotplaced.com.layouts.Model.Testimonials;
+import igotplaced.com.layouts.Model.RecentFeedsHome;
+import igotplaced.com.layouts.Model.RecentlyGotPlacedHome;
+import igotplaced.com.layouts.Model.TestimonialsHome;
 import igotplaced.com.layouts.R;
 import igotplaced.com.layouts.Utils.NetworkController;
 
 import static igotplaced.com.layouts.Utils.Utils.BaseUri;
-import static igotplaced.com.layouts.Utils.Utils.pushFragment;
 
 
 public class HomeFragment extends Fragment implements View.OnClickListener {
@@ -46,19 +44,19 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     private Context context;
     private RequestQueue queue;
-    private List<RecentFeeds> recentFeedsList = new ArrayList<RecentFeeds>();
-    private RecyclerAdapterRecentFeeds recyclerAdapterRecentFeeds;
+    private List<RecentFeedsHome> recentFeedsHomeList = new ArrayList<RecentFeedsHome>();
+    private RecyclerAdapterRecentFeedsHome recyclerAdapterRecentFeedsHome;
 
     private View view;
 
     private List<MentorsHome> mentorsHomeList = new ArrayList<MentorsHome>();
     private RecyclerAdapterMentorsHome recyclerAdapterMentorsHome;
 
-    private List<RecentlyGotPlaced> recentlyGotPlacedList = new ArrayList<RecentlyGotPlaced>();
-    private RecyclerAdapterRecentlyGotPlaced recyclerAdapterRecentlyGotPlaced;
+    private List<RecentlyGotPlacedHome> recentlyGotPlacedList = new ArrayList<RecentlyGotPlacedHome>();
+    private RecyclerAdapterRecentlyGotPlacedHome recyclerAdapterRecentlyGotPlacedHome;
 
-    private List<Testimonials> testimonialsList = new ArrayList<Testimonials>();
-    private RecyclerAdapterTestimonials recyclerAdapterTestimonials;
+    private List<TestimonialsHome> testimonialsList = new ArrayList<TestimonialsHome>();
+    private RecyclerAdapterTestimonialsHome recyclerAdapterTestimonialsHome;
 
     private FragmentManager fragmentManager;
 
@@ -85,14 +83,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         //mapping RecyclerView
         RecyclerView my_recycler_view = (RecyclerView) view.findViewById(R.id.recycler_view_feed);
         //feeding values to RecyclerView using custom RecyclerView adapter
-        recyclerAdapterRecentFeeds = new RecyclerAdapterRecentFeeds(context, recentFeedsList);
+        recyclerAdapterRecentFeedsHome = new RecyclerAdapterRecentFeedsHome(context, recentFeedsHomeList);
 
         //setting fixed size
         my_recycler_view.setHasFixedSize(true);
         //setting horizontal layout
         my_recycler_view.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
         //setting RecyclerView adapter
-        my_recycler_view.setAdapter(recyclerAdapterRecentFeeds);
+        my_recycler_view.setAdapter(recyclerAdapterRecentFeedsHome);
         //Getting Instance of Volley Request Queue
         queue = NetworkController.getInstance(context).getRequestQueue();
         //Volley's inbuilt class to make Json array request
@@ -119,14 +117,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         //mapping RecyclerView
         RecyclerView recently_placed_view = (RecyclerView) view.findViewById(R.id.recycler_view_recently_got_placed);
         //feeding values to RecyclerView using custom RecyclerView adapter
-        recyclerAdapterRecentlyGotPlaced = new RecyclerAdapterRecentlyGotPlaced(context, recentlyGotPlacedList);
+        recyclerAdapterRecentlyGotPlacedHome = new RecyclerAdapterRecentlyGotPlacedHome(context, recentlyGotPlacedList);
 
         //setting fixed size
         recently_placed_view.setHasFixedSize(true);
         //setting horizontal layout
         recently_placed_view.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
         //setting RecyclerView adapter
-        recently_placed_view.setAdapter(recyclerAdapterRecentlyGotPlaced);
+        recently_placed_view.setAdapter(recyclerAdapterRecentlyGotPlacedHome);
         //Getting Instance of Volley Request Queue
         queue = NetworkController.getInstance(context).getRequestQueue();
         //Volley's inbuilt class to make Json array request
@@ -136,14 +134,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         //mapping RecyclerView
         RecyclerView testimonials_view = (RecyclerView) view.findViewById(R.id.recycler_view_testimonials);
         //feeding values to RecyclerView using custom RecyclerView adapter
-        recyclerAdapterTestimonials = new RecyclerAdapterTestimonials(context, testimonialsList);
+        recyclerAdapterTestimonialsHome = new RecyclerAdapterTestimonialsHome(context, testimonialsList);
 
         //setting fixed size
         testimonials_view.setHasFixedSize(true);
         //setting horizontal layout
         testimonials_view.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
         //setting RecyclerView adapter
-        testimonials_view.setAdapter(recyclerAdapterTestimonials);
+        testimonials_view.setAdapter(recyclerAdapterTestimonialsHome);
         //Getting Instance of Volley Request Queue
         queue = NetworkController.getInstance(context).getRequestQueue();
         //Volley's inbuilt class to make Json array request
@@ -176,7 +174,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                     Log.d("error", response.toString());
                     try {
                         JSONObject obj = response.getJSONObject(i);
-                        Testimonials testimonials = new Testimonials(obj.getString("feedback"), obj.getString("user_name"),obj.getString("college"), obj.getString("imgname"));
+                        TestimonialsHome testimonials = new TestimonialsHome(obj.getString("feedback"), obj.getString("user_name"),obj.getString("college"), obj.getString("imgname"));
                         // adding movie to testimonialsList array
                         testimonialsList.add(testimonials);
 
@@ -185,7 +183,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                         System.out.println(e.getMessage());
                     } finally {
                         //Notify adapter about data changes
-                        recyclerAdapterTestimonials.notifyDataSetChanged();
+                        recyclerAdapterTestimonialsHome.notifyDataSetChanged();
                     }
                 }
             }
@@ -220,7 +218,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                     Log.d("error", response.toString());
                     try {
                         JSONObject obj = response.getJSONObject(i);
-                        RecentlyGotPlaced recentlyGotPlaced = new RecentlyGotPlaced(obj.getString("imgname"), obj.getString("username"), obj.getString("feedback"));
+                        RecentlyGotPlacedHome recentlyGotPlaced = new RecentlyGotPlacedHome(obj.getString("imgname"), obj.getString("username"), obj.getString("feedback"));
                         // adding movie to recentlyGotPlacedList array
                         recentlyGotPlacedList.add(recentlyGotPlaced);
 
@@ -229,7 +227,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                         System.out.println(e.getMessage());
                     } finally {
                         //Notify adapter about data changes
-                        recyclerAdapterRecentlyGotPlaced.notifyDataSetChanged();
+                        recyclerAdapterRecentlyGotPlacedHome.notifyDataSetChanged();
                     }
                 }
             }
@@ -301,16 +299,16 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                     Log.d("error", response.toString());
                     try {
                         JSONObject obj = response.getJSONObject(i);
-                        RecentFeeds recentFeeds = new RecentFeeds(obj.getString("type"), obj.getString("question"), obj.getString("industryname"), obj.getString("companyname"), obj.getString("modified_by"), obj.getString("name"), obj.getString("imgname"));
-                        // adding movie to recentFeedsList array
-                        recentFeedsList.add(recentFeeds);
+                        RecentFeedsHome recentFeedsHome = new RecentFeedsHome(obj.getString("type"), obj.getString("question"), obj.getString("industryname"), obj.getString("companyname"), obj.getString("modified_by"), obj.getString("name"), obj.getString("imgname"));
+                        // adding movie to recentFeedsHomeList array
+                        recentFeedsHomeList.add(recentFeedsHome);
 
                     } catch (Exception e) {
                         Log.d("error", e.getMessage());
                         System.out.println(e.getMessage());
                     } finally {
                         //Notify adapter about data changes
-                        recyclerAdapterRecentFeeds.notifyDataSetChanged();
+                        recyclerAdapterRecentFeedsHome.notifyDataSetChanged();
                     }
                 }
             }

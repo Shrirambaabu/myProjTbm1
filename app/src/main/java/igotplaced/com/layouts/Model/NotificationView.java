@@ -25,6 +25,12 @@ public class NotificationView {
         this.ImageName = imageName;
     }
 
+    public NotificationView(String createdBy, String notificationPost, String imageName) {
+        this.createdBy = createdBy;
+        this.notificationPost = notificationPost;
+        ImageName = imageName;
+    }
+
     public String getCreatedBy() {
         return createdBy;
     }

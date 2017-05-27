@@ -11,8 +11,7 @@ import com.android.volley.toolbox.NetworkImageView;
 
 import java.util.List;
 
-import igotplaced.com.layouts.Model.MentorsHome;
-import igotplaced.com.layouts.Model.RecentlyGotPlaced;
+import igotplaced.com.layouts.Model.RecentlyGotPlacedHome;
 import igotplaced.com.layouts.R;
 import igotplaced.com.layouts.Utils.NetworkController;
 
@@ -20,13 +19,13 @@ import igotplaced.com.layouts.Utils.NetworkController;
  * Created by Admin on 5/24/2017.
  */
 
-public class RecyclerAdapterRecentlyGotPlaced  extends RecyclerView.Adapter<RecyclerAdapterRecentlyGotPlaced.MyViewHolder> {
+public class RecyclerAdapterRecentlyGotPlacedHome extends RecyclerView.Adapter<RecyclerAdapterRecentlyGotPlacedHome.MyViewHolder> {
 
-    private List<RecentlyGotPlaced> recentlyGotPlacedList;
+    private List<RecentlyGotPlacedHome> recentlyGotPlacedList;
     private Context context;
     private LayoutInflater inflater;
 
-    public RecyclerAdapterRecentlyGotPlaced(Context context, List<RecentlyGotPlaced> recentlyGotPlacedList) {
+    public RecyclerAdapterRecentlyGotPlacedHome(Context context, List<RecentlyGotPlacedHome> recentlyGotPlacedList) {
 
         this.context = context;
         this.recentlyGotPlacedList = recentlyGotPlacedList;
@@ -43,7 +42,7 @@ public class RecyclerAdapterRecentlyGotPlaced  extends RecyclerView.Adapter<Recy
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        RecentlyGotPlaced recentlyGotPlaced = recentlyGotPlacedList.get(position);
+        RecentlyGotPlacedHome recentlyGotPlaced = recentlyGotPlacedList.get(position);
         //Pass the values of feeds object to Views
         holder.PersonName.setText(recentlyGotPlaced.getPersonName());
         holder.PlacedDetails.setText(recentlyGotPlaced.getPlacedDetails());

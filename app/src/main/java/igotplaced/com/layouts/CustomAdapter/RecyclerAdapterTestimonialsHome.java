@@ -11,7 +11,7 @@ import com.android.volley.toolbox.NetworkImageView;
 
 import java.util.List;
 
-import igotplaced.com.layouts.Model.Testimonials;
+import igotplaced.com.layouts.Model.TestimonialsHome;
 import igotplaced.com.layouts.R;
 import igotplaced.com.layouts.Utils.NetworkController;
 
@@ -19,13 +19,13 @@ import igotplaced.com.layouts.Utils.NetworkController;
  * Created by Admin on 5/24/2017.
  */
 
-public class RecyclerAdapterTestimonials extends RecyclerView.Adapter<RecyclerAdapterTestimonials.MyViewHolder> {
+public class RecyclerAdapterTestimonialsHome extends RecyclerView.Adapter<RecyclerAdapterTestimonialsHome.MyViewHolder> {
 
-    private List<Testimonials> testimonialsList;
+    private List<TestimonialsHome> testimonialsList;
     private Context context;
     private LayoutInflater inflater;
 
-    public RecyclerAdapterTestimonials(Context context, List<Testimonials> testimonialsList) {
+    public RecyclerAdapterTestimonialsHome(Context context, List<TestimonialsHome> testimonialsList) {
 
         this.context = context;
         this.testimonialsList = testimonialsList;
@@ -41,7 +41,7 @@ public class RecyclerAdapterTestimonials extends RecyclerView.Adapter<RecyclerAd
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        Testimonials testimonials = testimonialsList.get(position);
+        TestimonialsHome testimonials = testimonialsList.get(position);
         //Pass the values of feeds object to Views
         holder.profileMessage.setText(testimonials.getProfileMessage());
         holder.profileName.setText(testimonials.getProfileName());
