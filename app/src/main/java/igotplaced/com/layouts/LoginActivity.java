@@ -112,7 +112,7 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
         if (Utils.checkConnection(loginBtn, LoginActivity.this)) {
             Intent forgetPasswordIntent = new Intent(LoginActivity.this, ForgetPasswordActivity.class);
             startActivity(forgetPasswordIntent);
-        }else{
+        } else {
             Utils.showDialogue(LoginActivity.this, "Sorry! Not connected to internet");
         }
     }
@@ -121,10 +121,10 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
     private void submitLoginDetails() {
 
 
-        Intent loginIntent = new Intent(LoginActivity.this, MainActivity.class);
+      /*  Intent loginIntent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(loginIntent);
 
-
+*/
 
 
         if (!Validation.validateEmail(emailEditText, inputLayoutEmail, LoginActivity.this)) {
@@ -134,7 +134,7 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
         if (Utils.checkConnection(loginBtn, LoginActivity.this)) {
             //Performs action when Login button is clicked
             login();
-        }else{
+        } else {
             Utils.showDialogue(LoginActivity.this, "Sorry! Not connected to internet");
         }
     }
@@ -201,7 +201,7 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
         if (Utils.checkConnection(loginBtn, LoginActivity.this)) {
             Intent registrationIntent = new Intent(LoginActivity.this, RegisterActivity.class);
             startActivity(registrationIntent);
-        }else{
+        } else {
             Utils.showDialogue(LoginActivity.this, "Sorry! Not connected to internet");
         }
     }
