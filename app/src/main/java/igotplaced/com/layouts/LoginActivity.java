@@ -4,12 +4,14 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatEditText;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -88,6 +90,8 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
         passwordEditText = (AppCompatEditText) findViewById(R.id.editTextPassword);
         inputLayoutEmail = (TextInputLayout) findViewById(R.id.viewEmail);
         loginBtn = (Button) findViewById(R.id.signInButton);
+
+
     }
 
     private void addingListener() {
@@ -120,9 +124,11 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
 
     private void submitLoginDetails() {
 
+/*
 
         Intent loginIntent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(loginIntent);
+*/
 
 
 
@@ -141,12 +147,13 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
     private void login() {
 
         // Showing progress dialog
-        pDialog = new ProgressDialog(LoginActivity.this);
-        pDialog.setMessage("Loading...");
-        pDialog.setIcon(R.drawable.logo);
+
+        pDialog = new ProgressDialog(LoginActivity.this,R.style.MyThemeProgress);
+        pDialog.setProgressStyle(android.R.style.Widget_ProgressBar_Large);
         pDialog.onBackPressed();
         pDialog.show();
-//Requests the data from webservice using volley
+
+        //Requests the data from webservice using volley
         StringRequest request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {

@@ -7,5 +7,6 @@
     <color name="colorBackground">#56090F</color>
     <color name="white">#FFF</color>
     <color name="whiteBackground">#ebe7df</color>
-   <color name="black">#000000</color>
+    <color name="black">#000000</color>
+    <color name="transparent">#00000000</color>
 </resources>
