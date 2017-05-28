@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -25,11 +26,16 @@ import android.widget.MediaController;
 import android.widget.VideoView;
 
 import igotplaced.com.layouts.Fragments.BlogFragment;
+import igotplaced.com.layouts.Fragments.HomeEventFragment;
 import igotplaced.com.layouts.Fragments.HomeFragment;
+import igotplaced.com.layouts.Fragments.HomeInterviewFragment;
+import igotplaced.com.layouts.Fragments.HomePostFragment;
+import igotplaced.com.layouts.Fragments.HomeQuestionsFragment;
 import igotplaced.com.layouts.Fragments.NotificationFragment;
 import igotplaced.com.layouts.Fragments.ProfileFragment;
 
 import static igotplaced.com.layouts.Utils.Utils.BaseImageUri;
+import static igotplaced.com.layouts.Utils.Utils.pushFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -42,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
     private MediaController mediaController;
     private Boolean isMainFragment;
     private FragmentManager fragmentManager;
+    private Menu menu;
     private CollapsingToolbarLayout collapsingToolbar;
 
     @Override
@@ -60,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        videoView = (VideoView) findViewById(R.id.video_header);
+        /*videoView = (VideoView) findViewById(R.id.video_header);
 
         mediaController = new MediaController(MainActivity.this);
         mediaController.setAnchorView(videoView);
@@ -69,10 +76,7 @@ public class MainActivity extends AppCompatActivity {
         videoView.setMediaController(mediaController);
         videoView.setVideoURI(uri);
 
-        videoView.start();
-
-
-
+        videoView.start();*/
 
         /*mediaController = new MediaController(MainActivity.this);
         mediaController.setAnchorView(videoView);
@@ -92,9 +96,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });*/
 
-        toolBar();
+       // toolBar();
 
         navigationDrawer();
+
+        setupNavigationView();
 
         navigation();
 
@@ -146,6 +152,57 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+    private void setupNavigationView() {
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        if (bottomNavigationView != null) {
+
+            // Select first menu item by default and show Fragment accordingly.
+            menu = bottomNavigationView.getMenu();
+            selectFragment(menu.getItem(0));
+
+            // Set action to perform when any menu-item is selected.
+            bottomNavigationView.setOnNavigationItemSelectedListener(
+                    new BottomNavigationView.OnNavigationItemSelectedListener() {
+                        @Override
+                        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                            selectFragment(item);
+                            return false;
+                        }
+                    });
+        }
+    }
+
+    /**
+     * Perform action when any item is selected.
+     *
+     * @param item Item that is selected.
+     */
+    protected void selectFragment(MenuItem item) {
+
+        item.setChecked(true);
+        android.app.FragmentManager fragmentManager = getFragmentManager();
+        switch (item.getItemId()) {
+            case R.id.post_home:
+                // Action to perform when post Menu item is selected.
+                pushFragment(new HomePostFragment(), fragmentManager);
+                break;
+            case R.id.interview_experience_home:
+                // Action to perform when interview Menu item is selected.
+                pushFragment(new HomeInterviewFragment(), fragmentManager);
+                break;
+            case R.id.events:
+                // Action to perform when events Menu item is selected.
+                pushFragment(new HomeEventFragment(), fragmentManager);
+                break;
+            case R.id.questions:
+                // Action to perform when questions Menu item is selected.
+                pushFragment(new HomeQuestionsFragment(), fragmentManager);
+                break;
+        }
+    }
+
+
 
     private void displaySelectedScreen(int itemId) {
         Fragment fragment = null;
