@@ -43,8 +43,7 @@
             android:id="@+id/interview_img"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_weight="1"
-            android:src="@drawable/logo" />
+            android:layout_weight="1" />
 
         <TextView
             android:id="@+id/interview_profile_name"

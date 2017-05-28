@@ -201,14 +201,21 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
             public void onResponse(JSONArray response) {
 
                 companyArrayAdapter1.add("");
-                companyArrayAdapter1.clear();
-                companyArrayAdapter1.add(" --Select-- ");
-                for (int i = 0; i < response.length(); i++) {
-                    try {
-                        companyArrayAdapter1.add(String.valueOf(response.get(i)));
-                        companyArrayAdapter1.notifyDataSetChanged();
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                if(response.length()<=0){
+                    companyArrayAdapter1.clear();
+                    companyArrayAdapter1.add(" --Select-- ");
+                    companyArrayAdapter1.add("No company to select");
+                    companyArrayAdapter1.notifyDataSetChanged();
+                }else {
+                    companyArrayAdapter1.clear();
+                    companyArrayAdapter1.add(" --Select-- ");
+                    for (int i = 0; i < response.length(); i++) {
+                        try {
+                            companyArrayAdapter1.add(String.valueOf(response.get(i)));
+                            companyArrayAdapter1.notifyDataSetChanged();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
 
@@ -245,17 +252,26 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
             @Override
             public void onResponse(JSONArray response) {
 
-
                 companyArrayAdapter2.add("");
-                companyArrayAdapter2.clear();
-                companyArrayAdapter2.add(" --Select-- ");
-                for (int i = 0; i < response.length(); i++) {
-                    try {
-                        companyArrayAdapter2.add(String.valueOf(response.get(i)));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                if(response.length()<=0){
+                    companyArrayAdapter2.clear();
+                    companyArrayAdapter2.add(" --Select-- ");
+                    companyArrayAdapter2.add("No company to select");
+                    companyArrayAdapter2.notifyDataSetChanged();
+                }else {
+                    companyArrayAdapter2.clear();
+                    companyArrayAdapter2.add(" --Select-- ");
+                    for (int i = 0; i < response.length(); i++) {
+                        try {
+                            companyArrayAdapter2.add(String.valueOf(response.get(i)));
+                            companyArrayAdapter2.notifyDataSetChanged();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
+
+
 
             }
         }, new Response.ErrorListener() {
@@ -290,15 +306,24 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
             public void onResponse(JSONArray response) {
 
                 companyArrayAdapter3.add("");
-                companyArrayAdapter3.clear();
-                companyArrayAdapter3.add(" --Select-- ");
-                for (int i = 0; i < response.length(); i++) {
-                    try {
-                        companyArrayAdapter3.add(String.valueOf(response.get(i)));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                if(response.length()<=0){
+                    companyArrayAdapter3.clear();
+                    companyArrayAdapter3.add(" --Select-- ");
+                    companyArrayAdapter3.add("No company to select");
+                    companyArrayAdapter3.notifyDataSetChanged();
+                }else {
+                    companyArrayAdapter3.clear();
+                    companyArrayAdapter3.add(" --Select-- ");
+                    for (int i = 0; i < response.length(); i++) {
+                        try {
+                            companyArrayAdapter3.add(String.valueOf(response.get(i)));
+                            companyArrayAdapter3.notifyDataSetChanged();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
+
 
             }
         }, new Response.ErrorListener() {

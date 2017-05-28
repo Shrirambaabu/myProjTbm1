@@ -1,6 +1,7 @@
 package igotplaced.com.layouts.CustomAdapter;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +46,9 @@ public class RecyclerAdapterBlogHome  extends RecyclerView.Adapter<RecyclerAdapt
         holder.blogPost.setText(blogView.getBlogPost());
         holder.blogPostedBy.setText(blogView.getBlogPostedBy());
         holder.blogTime.setText(blogView.getBlogTime());
+
+        Log.d("error",Utils.BaseImageUri+blogView.getImageName());
+
         holder.blog_img.setImageUrl(Utils.BaseImageUri+blogView.getImageName(), NetworkController.getInstance(context).getImageLoader());
 
     }

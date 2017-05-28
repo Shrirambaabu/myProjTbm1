@@ -1,7 +1,6 @@
 package igotplaced.com.layouts.Fragments;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,9 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import igotplaced.com.layouts.CustomAdapter.RecyclerAdapterBlogHome;
-import igotplaced.com.layouts.CustomAdapter.RecyclerAdapterNotification;
 import igotplaced.com.layouts.Model.BlogHome;
-import igotplaced.com.layouts.Model.NotificationView;
 import igotplaced.com.layouts.R;
 import igotplaced.com.layouts.Utils.NetworkController;
 
@@ -49,7 +46,7 @@ public class BlogFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.card_blog, container, false);
+        View view = inflater.inflate(R.layout.fragment_blog, container, false);
         context = getActivity().getApplicationContext();
 
         blogRecyclerView(view);
@@ -72,11 +69,11 @@ public class BlogFragment extends Fragment {
         //Getting Instance of Volley Request Queue
         queue = NetworkController.getInstance(context).getRequestQueue();
         //Volley's inbuilt class to make Json array request
-        makeJsonArrayRequestNotification();
+        makeJsonArrayRequestBlog();
 
     }
 
-    private void makeJsonArrayRequestNotification() {
+    private void makeJsonArrayRequestBlog() {
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(BaseUri + "/blogService/blog", new Response.Listener<JSONArray>() {
 

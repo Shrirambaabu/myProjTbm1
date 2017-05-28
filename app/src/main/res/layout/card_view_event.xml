@@ -123,8 +123,7 @@
             android:id="@+id/post_img"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_weight="1"
-            android:src="@drawable/logo" />
+            android:layout_weight="1" />
 
         <TextView
             android:id="@+id/event_profile_name"
@@ -165,8 +164,7 @@
             android:id="@+id/comment_profile_img"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_weight="1"
-            android:src="@drawable/logo" />
+            android:layout_weight="1"/>
 
         <EditText
             android:id="@+id/user_comment"
