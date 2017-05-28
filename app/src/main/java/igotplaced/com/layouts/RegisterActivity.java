@@ -67,6 +67,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
 
     private String department,college;
 
+    private ProgressDialog pDialog;
     private String URL = BaseUri + "/registrationService/register";
 
 
@@ -407,9 +408,16 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
 
     private void register() {
 
+        pDialog = new ProgressDialog(RegisterActivity.this,R.style.MyThemeProgress);
+        pDialog.setProgressStyle(android.R.style.Widget_ProgressBar_Large);
+        pDialog.onBackPressed();
+        pDialog.show();
+
         StringRequest request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
+
+                pDialog.dismiss();
 
                 if (Integer.parseInt(s) != 0) {
                     Toast.makeText(RegisterActivity.this, "Registration Successful"+s, Toast.LENGTH_LONG).show();
@@ -421,8 +429,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
                     Utils.showDialogue(RegisterActivity.this, "Sorry!!! Already Registered with this email id");                }
             }
         }, new Response.ErrorListener() {
+
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+
+                pDialog.dismiss();
                 /**
                  *  Returns error message when,
                  *  server is down,

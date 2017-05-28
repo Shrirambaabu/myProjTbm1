@@ -1,5 +1,6 @@
 package igotplaced.com.layouts;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
@@ -65,6 +66,7 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
     private ArrayAdapter<String> spinnerArrayAdapter, companyArrayAdapter1, companyArrayAdapter2, companyArrayAdapter3;
     private List<String> industrySpinnerArrayList;
 
+    private ProgressDialog pDialog;
 
     private String URL = BaseUri + "/registrationService/registerPassword";
 
@@ -482,10 +484,19 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
     }
 
     private void register() {
+        // Showing progress dialog
+
+        pDialog = new ProgressDialog(RegisterPasswordActivity.this,R.style.MyThemeProgress);
+        pDialog.setProgressStyle(android.R.style.Widget_ProgressBar_Large);
+        pDialog.onBackPressed();
+        pDialog.show();
+
 
         StringRequest request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
+
+                pDialog.dismiss();
 
                 if (Integer.parseInt(s) != 0) {
                     Toast.makeText(RegisterPasswordActivity.this, "Registration Successful", Toast.LENGTH_LONG).show();
@@ -501,6 +512,8 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+
+                pDialog.dismiss();
                 /**
                  *  Returns error message when,
                  *  server is down,

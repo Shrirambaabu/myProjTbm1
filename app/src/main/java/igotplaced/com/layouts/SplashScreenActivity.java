@@ -39,10 +39,8 @@ public class SplashScreenActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-
                 //This method will be executed once the timer is over
                 //Start your app main activity
-
                 SharedPreferences sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
                 String userName = sharedpreferences.getString(Name, null);
                 String userId = sharedpreferences.getString(Id, null);
