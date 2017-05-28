@@ -20,7 +20,8 @@ import igotplaced.com.layouts.Utils.Utils;
  * Created by Admin on 5/24/2017.
  */
 
-public class RecyclerAdapterTestimonialsHome extends RecyclerView.Adapter<RecyclerAdapterTestimonialsHome.MyViewHolder> {
+public class RecyclerAdapterTestimonialsHome /*extends RecyclerView.Adapter<RecyclerAdapterTestimonialsHome.MyViewHolder> */{
+/*
 
     private List<TestimonialsHome> testimonialsList;
     private Context context;
@@ -73,5 +74,6 @@ public class RecyclerAdapterTestimonialsHome extends RecyclerView.Adapter<Recycl
 
         }
     }
+*/
 
 }

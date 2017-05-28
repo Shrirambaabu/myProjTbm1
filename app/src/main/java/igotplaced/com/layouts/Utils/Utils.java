@@ -2,12 +2,12 @@ package igotplaced.com.layouts.Utils;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -23,7 +23,7 @@ import igotplaced.com.layouts.R;
  */
 
 public class Utils {
-   public static String Base = "http://192.168.43.225:8080";
+   public static String Base = "http://10.237.129.39:8080";
 
     public static String BaseUri = Base+"/IgotplacedRestWebService/webapi";
     public static String BaseImageUri = "http://igotplaced.com";

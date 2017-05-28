@@ -2,16 +2,13 @@ package igotplaced.com.layouts;
 
 import android.app.SearchManager;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -26,108 +23,40 @@ import android.widget.MediaController;
 import android.widget.VideoView;
 
 import igotplaced.com.layouts.Fragments.BlogFragment;
-import igotplaced.com.layouts.Fragments.HomeEventFragment;
 import igotplaced.com.layouts.Fragments.HomeFragment;
-import igotplaced.com.layouts.Fragments.HomeInterviewFragment;
-import igotplaced.com.layouts.Fragments.HomePostFragment;
-import igotplaced.com.layouts.Fragments.HomeQuestionsFragment;
 import igotplaced.com.layouts.Fragments.NotificationFragment;
 import igotplaced.com.layouts.Fragments.ProfileFragment;
 
 import static igotplaced.com.layouts.Utils.Utils.BaseImageUri;
-import static igotplaced.com.layouts.Utils.Utils.pushFragment;
 
 public class MainActivity extends AppCompatActivity {
 
     //Defining Variables
     private Toolbar toolbar;
-    private NavigationView navigationView;
     private DrawerLayout drawerLayout;
-    String pathOfFile = BaseImageUri + "/video/iGotPlaced.mp4";
-    private VideoView videoView;
-    private MediaController mediaController;
-    private Boolean isMainFragment;
-    private FragmentManager fragmentManager;
-    private Menu menu;
-    private CollapsingToolbarLayout collapsingToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        /*fragmentManager = getSupportFragmentManager();
-
-        if (savedInstanceState == null) {
-            isMainFragment = true;
-            fragmentManager.beginTransaction().replace(R.id.home, new HomeFragment()).commit();
-        }
-*/
         // Initializing Toolbar and setting it as the actionbar
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        /*videoView = (VideoView) findViewById(R.id.video_header);
-
-        mediaController = new MediaController(MainActivity.this);
-        mediaController.setAnchorView(videoView);
-        mediaController.hide();
-        Uri uri = Uri.parse(pathOfFile);
-        videoView.setMediaController(mediaController);
-        videoView.setVideoURI(uri);
-
-        videoView.start();*/
-
-        /*mediaController = new MediaController(MainActivity.this);
-        mediaController.setAnchorView(videoView);
-        mediaController.hide();
-        Uri uri = Uri.parse(pathOfFile);
-        videoView.setMediaController(mediaController);
-        videoView.setVideoURI(uri);
-        videoView.requestFocus();
-        videoView.seekTo(9000);
-        videoView.start();
-
-        videoView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                videoView.start();
-                mediaController.show();
-            }
-        });*/
-
-       // toolBar();
+        toolbar.setTitle("iGotPlaced");
 
         navigationDrawer();
-
-        setupNavigationView();
 
         navigation();
 
         displaySelectedScreen(R.id.home);
-
-
-/*
-        HomeFragment homeFragment = new HomeFragment();
-        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.frame, homeFragment);
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();*/
-    }
-
-    private void toolBar() {
-
-        collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapse_toolbar);
-        collapsingToolbar.setTitle("iGotPlaced");
-        collapsingToolbar.setCollapsedTitleTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
-        collapsingToolbar.setExpandedTitleColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
 
     }
 
     private void navigation() {
 
         //Initializing NavigationView
-        navigationView = (NavigationView) findViewById(R.id.navigation_view);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
         navigationView.setCheckedItem(R.id.home);
 
         //Setting Navigation View Item Selected Listener to handle the item click of the navigation menu
@@ -153,105 +82,35 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void setupNavigationView() {
-        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
-        if (bottomNavigationView != null) {
-
-            // Select first menu item by default and show Fragment accordingly.
-            menu = bottomNavigationView.getMenu();
-            selectFragment(menu.getItem(0));
-
-            // Set action to perform when any menu-item is selected.
-            bottomNavigationView.setOnNavigationItemSelectedListener(
-                    new BottomNavigationView.OnNavigationItemSelectedListener() {
-                        @Override
-                        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                            selectFragment(item);
-                            return false;
-                        }
-                    });
-        }
-    }
-
-    /**
-     * Perform action when any item is selected.
-     *
-     * @param item Item that is selected.
-     */
-    protected void selectFragment(MenuItem item) {
-
-        item.setChecked(true);
-        android.app.FragmentManager fragmentManager = getFragmentManager();
-        switch (item.getItemId()) {
-            case R.id.post_home:
-                // Action to perform when post Menu item is selected.
-                pushFragment(new HomePostFragment(), fragmentManager);
-                break;
-            case R.id.interview_experience_home:
-                // Action to perform when interview Menu item is selected.
-                pushFragment(new HomeInterviewFragment(), fragmentManager);
-                break;
-            case R.id.events:
-                // Action to perform when events Menu item is selected.
-                pushFragment(new HomeEventFragment(), fragmentManager);
-                break;
-            case R.id.questions:
-                // Action to perform when questions Menu item is selected.
-                pushFragment(new HomeQuestionsFragment(), fragmentManager);
-                break;
-        }
-    }
-
-
 
     private void displaySelectedScreen(int itemId) {
-        Fragment fragment = null;
-
         //Check to see which item was being clicked and perform appropriate action
+        Fragment fragment = null;
         switch (itemId) {
 
             //Replacing the main content with ContentFragment Which is our Inbox View;
             case R.id.home:
 
-           /*     videoView.setVisibility(View.VISIBLE);
-                collapsingToolbar.setTitleEnabled(true);
-*/
                 fragment = new HomeFragment();
                 break;
             case R.id.profile:
-/*
-                videoView.setVisibility(View.GONE);
-                collapsingToolbar.setTitleEnabled(false);*/
 
                 fragment = new ProfileFragment();
                 break;
 
             case R.id.notification:
-/*
-
-                videoView.setVisibility(View.GONE);
-                collapsingToolbar.setTitleEnabled(false);
-*/
 
                 fragment = new NotificationFragment();
                 break;
 
 
             case R.id.blog:
-/*
-                videoView.setVisibility(View.GONE);
-                collapsingToolbar.setTitleEnabled(false);*/
-
 
                 fragment = new BlogFragment();
                 break;
 
 
  /*                      case R.id.settings:
-
-                        videoView.setVisibility(View.GONE);
-                        collapsingToolbar.setTitleEnabled(false);
-
 
                         HomeFragment homeFragment = new HomeFragment();
                         android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -260,9 +119,6 @@ public class MainActivity extends AppCompatActivity {
                         return true;
 
                     case R.id.privacy_policy:
-
-                        videoView.setVisibility(View.GONE);
-                        collapsingToolbar.setTitleEnabled(false);
 
 
                         HomeFragment homeFragment = new HomeFragment();
@@ -273,10 +129,6 @@ public class MainActivity extends AppCompatActivity {
 
                     case R.id.terms_and_conditions:
 
-                        videoView.setVisibility(View.GONE);
-                        collapsingToolbar.setTitleEnabled(false);
-
-
                         HomeFragment homeFragment = new HomeFragment();
                         android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                         fragmentTransaction.replace(R.id.frame, homeFragment);
@@ -284,8 +136,6 @@ public class MainActivity extends AppCompatActivity {
                         return true;*/
 
             default:
-                /*videoView.setVisibility(View.GONE);
-                collapsingToolbar.setTitleEnabled(false);*/
 
                 fragment = new HomeFragment();
                 break;
@@ -337,6 +187,7 @@ public class MainActivity extends AppCompatActivity {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
         } else {
+            endApplication();
             super.onBackPressed();
         }
 

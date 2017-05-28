@@ -2,8 +2,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:background="@color/whiteBackground"
     tools:context="igotplaced.com.layouts.Fragments.BlogFragment">
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view_blog"
@@ -11,5 +16,8 @@
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
             android:orientation="horizontal" />
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
 
 </FrameLayout>

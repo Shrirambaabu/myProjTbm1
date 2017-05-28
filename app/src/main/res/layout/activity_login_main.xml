@@ -111,7 +111,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_20"
-            android:layout_marginTop="@dimen/margin_4dp"
+            android:layout_marginTop="@dimen/margin_4"
             android:onClick="forgetPassword"
             android:text="@string/forgot_password"
             android:textColor="@color/colorAccent"

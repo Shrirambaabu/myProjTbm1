@@ -1,8 +1,9 @@
 package igotplaced.com.layouts.Fragments;
 
-import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -28,15 +29,15 @@ import igotplaced.com.layouts.Utils.NetworkController;
 
 import static igotplaced.com.layouts.Utils.Utils.BaseUri;
 
-public class NotificationFragment extends Fragment {
+public class NotificationFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private Context context;
     private RequestQueue queue;
 
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     private List<NotificationView> notificationViewList = new ArrayList<NotificationView>();
     private RecyclerAdapterNotification recyclerAdapterNotification;
-
 
 
     public NotificationFragment() {
@@ -50,9 +51,19 @@ public class NotificationFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_notification, container, false);
         context = getActivity().getApplicationContext();
 
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_layout);
+        swipeRefreshLayout.setOnRefreshListener(this);
+
         notificationRecyclerView(view);
 
         return view;
+    }
+
+    @Override
+    public void onRefresh() {
+        //Volley's inbuilt class to make Json array request
+        makeJsonArrayRequestNotification();
+
     }
 
     private void notificationRecyclerView(View view) {
@@ -69,25 +80,35 @@ public class NotificationFragment extends Fragment {
         notification_view.setAdapter(recyclerAdapterNotification);
         //Getting Instance of Volley Request Queue
         queue = NetworkController.getInstance(context).getRequestQueue();
-        //Volley's inbuilt class to make Json array request
-        makeJsonArrayRequestNotification();
 
+
+        // show loader and fetch messages
+        swipeRefreshLayout.post(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        //Volley's inbuilt class to make Json array request
+                        makeJsonArrayRequestNotification();
+                    }
+                }
+        );
     }
 
     private void makeJsonArrayRequestNotification() {
-
-
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(BaseUri + "/notificationService/notification/256", new Response.Listener<JSONArray>() {
 
             @Override
             public void onResponse(JSONArray response) {
 
+                //clearing notificationList
+                notificationViewList.clear();
+
                 for (int i = 0; i < response.length(); i++) {
                     Log.d("error", response.toString());
                     try {
                         JSONObject obj = response.getJSONObject(i);
-                        NotificationView notificationView = new NotificationView(obj.getString("created_by"), obj.getString("post"),obj.getString("imgname"));
+                        NotificationView notificationView = new NotificationView(obj.getString("created_by"), obj.getString("post"), obj.getString("imgname"));
                         // adding movie to testimonialsList array
                         notificationViewList.add(notificationView);
 
@@ -97,6 +118,7 @@ public class NotificationFragment extends Fragment {
                     } finally {
                         //Notify adapter about data changes
                         recyclerAdapterNotification.notifyDataSetChanged();
+                        swipeRefreshLayout.setRefreshing(false);
                     }
                 }
             }
@@ -106,7 +128,7 @@ public class NotificationFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("error", "Error: " + error.getMessage());
-
+                swipeRefreshLayout.setRefreshing(false);
             }
         });
 

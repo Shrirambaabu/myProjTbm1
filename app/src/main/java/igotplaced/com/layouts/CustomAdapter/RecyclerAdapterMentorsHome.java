@@ -21,8 +21,8 @@ import igotplaced.com.layouts.Utils.Utils;
  * Created by Admin on 5/23/2017.
  */
 
-public class RecyclerAdapterMentorsHome  extends RecyclerView.Adapter<RecyclerAdapterMentorsHome.MyViewHolder> {
-
+public class RecyclerAdapterMentorsHome /* extends RecyclerView.Adapter<RecyclerAdapterMentorsHome.MyViewHolder> */{
+/*
     private List<MentorsHome> mentorsHomeList;
     private Context context;
     private LayoutInflater inflater;
@@ -76,6 +76,6 @@ public class RecyclerAdapterMentorsHome  extends RecyclerView.Adapter<RecyclerAd
 
 
         }
-    }
+    }*/
 
 }

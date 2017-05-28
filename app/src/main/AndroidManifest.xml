@@ -52,7 +52,6 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".MainHomeActivity" />
     </application>
 
 </manifest>

@@ -20,8 +20,8 @@ import igotplaced.com.layouts.Utils.Utils;
  * Created by Ashith VL on 5/22/2017.
  */
 
-public class RecyclerAdapterRecentFeedsHome extends RecyclerView.Adapter<RecyclerAdapterRecentFeedsHome.MyViewHolder> {
-
+public class RecyclerAdapterRecentFeedsHome /*extends RecyclerView.Adapter<RecyclerAdapterRecentFeedsHome.MyViewHolder> */{
+/*
     private List<RecentFeedsHome> feedsList;
     private Context context;
     private LayoutInflater inflater;
@@ -75,6 +75,6 @@ public class RecyclerAdapterRecentFeedsHome extends RecyclerView.Adapter<Recycle
 
 
         }
-    }
+    }*/
 
 }

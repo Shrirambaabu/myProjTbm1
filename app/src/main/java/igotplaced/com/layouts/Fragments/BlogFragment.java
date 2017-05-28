@@ -3,6 +3,7 @@ package igotplaced.com.layouts.Fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -28,10 +29,11 @@ import igotplaced.com.layouts.Utils.NetworkController;
 
 import static igotplaced.com.layouts.Utils.Utils.BaseUri;
 
-public class BlogFragment extends Fragment {
+public class BlogFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     private Context context;
     private RequestQueue queue;
 
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     private List<BlogHome> blogHomeList = new ArrayList<BlogHome>();
     private RecyclerAdapterBlogHome recyclerAdapterBlogHome;
@@ -49,9 +51,19 @@ public class BlogFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_blog, container, false);
         context = getActivity().getApplicationContext();
 
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_layout);
+        swipeRefreshLayout.setOnRefreshListener(this);
+
         blogRecyclerView(view);
 
         return view;
+    }
+
+    @Override
+    public void onRefresh() {
+        //Volley's inbuilt class to make Json array request
+        makeJsonArrayRequestBlog();
+
     }
 
     private void blogRecyclerView(View view) {
@@ -68,8 +80,17 @@ public class BlogFragment extends Fragment {
         blog_view.setAdapter(recyclerAdapterBlogHome);
         //Getting Instance of Volley Request Queue
         queue = NetworkController.getInstance(context).getRequestQueue();
-        //Volley's inbuilt class to make Json array request
-        makeJsonArrayRequestBlog();
+
+        // show loader and fetch messages
+        swipeRefreshLayout.post(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        //Volley's inbuilt class to make Json array request
+                        makeJsonArrayRequestBlog();
+                    }
+                }
+        );
 
     }
 
@@ -79,6 +100,9 @@ public class BlogFragment extends Fragment {
 
             @Override
             public void onResponse(JSONArray response) {
+
+                //clearing blogList
+                blogHomeList.clear();
 
                 for (int i = 0; i < response.length(); i++) {
                     Log.d("error", response.toString());
@@ -110,4 +134,5 @@ public class BlogFragment extends Fragment {
         queue.add(jsonArrayRequest);
 
     }
+
 }

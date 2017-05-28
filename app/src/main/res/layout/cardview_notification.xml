@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginTop="@dimen/margin_2"
+    android:background="@color/white"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/top_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_4"
+        android:orientation="horizontal">
+
+        <com.android.volley.toolbox.NetworkImageView
+            android:id="@+id/notify_img"
+            android:layout_width="64dp"
+            android:layout_gravity="center"
+            app:paddingEnd="@dimen/margin_16"
+            app:paddingStart="@dimen/margin_4"
+            android:layout_height="match_parent"
+            android:padding="@dimen/margin_8" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/notifyMsg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start|center"
+                android:layout_marginStart="@dimen/margin_2"
+                android:maxLines="3"
+                android:layout_marginTop="@dimen/margin_4"
+                app:paddingStart="@dimen/margin_16"
+                app:paddingEnd="@dimen/margin_8"
+                android:text="@string/notificationMessage"
+                android:textColor="@color/colorBackground"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/notify_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:paddingTop="@dimen/margin_2"
+                android:paddingBottom="@dimen/margin_2"
+                app:paddingEnd="@dimen/margin_8"
+                android:text="20/05/2017 18:36 "
+                android:textColor="@color/colorPrimary"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

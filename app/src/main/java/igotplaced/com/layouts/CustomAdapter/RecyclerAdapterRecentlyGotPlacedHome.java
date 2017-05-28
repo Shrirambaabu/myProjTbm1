@@ -20,7 +20,8 @@ import igotplaced.com.layouts.Utils.Utils;
  * Created by Admin on 5/24/2017.
  */
 
-public class RecyclerAdapterRecentlyGotPlacedHome extends RecyclerView.Adapter<RecyclerAdapterRecentlyGotPlacedHome.MyViewHolder> {
+public class RecyclerAdapterRecentlyGotPlacedHome/* extends RecyclerView.Adapter<RecyclerAdapterRecentlyGotPlacedHome.MyViewHolder> */{
+/*
 
     private List<RecentlyGotPlacedHome> recentlyGotPlacedList;
     private Context context;
@@ -75,4 +76,5 @@ public class RecyclerAdapterRecentlyGotPlacedHome extends RecyclerView.Adapter<R
         }
     }
 
+*/
 }
