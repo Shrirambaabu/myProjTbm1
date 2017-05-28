@@ -213,32 +213,34 @@ public class MainActivity extends AppCompatActivity {
             //Replacing the main content with ContentFragment Which is our Inbox View;
             case R.id.home:
 
-                videoView.setVisibility(View.VISIBLE);
+           /*     videoView.setVisibility(View.VISIBLE);
                 collapsingToolbar.setTitleEnabled(true);
-
+*/
                 fragment = new HomeFragment();
                 break;
             case R.id.profile:
-
+/*
                 videoView.setVisibility(View.GONE);
-                collapsingToolbar.setTitleEnabled(false);
+                collapsingToolbar.setTitleEnabled(false);*/
 
                 fragment = new ProfileFragment();
                 break;
 
             case R.id.notification:
+/*
 
                 videoView.setVisibility(View.GONE);
                 collapsingToolbar.setTitleEnabled(false);
+*/
 
                 fragment = new NotificationFragment();
                 break;
 
 
             case R.id.blog:
-
+/*
                 videoView.setVisibility(View.GONE);
-                collapsingToolbar.setTitleEnabled(false);
+                collapsingToolbar.setTitleEnabled(false);*/
 
 
                 fragment = new BlogFragment();
@@ -282,8 +284,8 @@ public class MainActivity extends AppCompatActivity {
                         return true;*/
 
             default:
-                videoView.setVisibility(View.GONE);
-                collapsingToolbar.setTitleEnabled(false);
+                /*videoView.setVisibility(View.GONE);
+                collapsingToolbar.setTitleEnabled(false);*/
 
                 fragment = new HomeFragment();
                 break;
