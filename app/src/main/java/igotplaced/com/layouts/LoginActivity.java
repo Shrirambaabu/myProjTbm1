@@ -180,8 +180,6 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
                     editor.putString(Email, emailEditText.getText().toString().trim());
                     editor.apply();
 
-                    Utils.showDialogue(LoginActivity.this, editor.toString());
-
                     Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
                     Intent loginIntent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(loginIntent);

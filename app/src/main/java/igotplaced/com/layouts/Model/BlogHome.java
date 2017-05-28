@@ -12,15 +12,28 @@ public class BlogHome {
     private String blogPostedBy;
     private String blogTime;
 
+    private String contents;
+
+    private String id;
+
+
     public BlogHome() {
 
     }
 
-    public BlogHome(String imageName, String blogPost, String blogPostedBy, String blogTime) {
+    public BlogHome(String imageName, String blogPost, String blogPostedBy, String blogTime, String id) {
         this.imageName = imageName;
         this.blogPost = blogPost;
         this.blogPostedBy = blogPostedBy;
         this.blogTime = blogTime;
+        this.id = id;
+    }
+
+    public BlogHome(String imageName, String blogPost, String blogPostedBy, String contents) {
+        this.imageName = imageName;
+        this.blogPost = blogPost;
+        this.blogPostedBy = blogPostedBy;
+        this.contents = contents;
     }
 
     public String getImageName() {
@@ -38,4 +51,13 @@ public class BlogHome {
     public String getBlogTime() {
         return blogTime;
     }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getContents() {
+        return contents;
+    }
+
 }

@@ -23,7 +23,7 @@ import igotplaced.com.layouts.R;
  */
 
 public class Utils {
-   public static String Base = "http://10.237.129.39:8080";
+   public static String Base = "http://10.250.74.190:8080";
 
     public static String BaseUri = Base+"/IgotplacedRestWebService/webapi";
     public static String BaseImageUri = "http://igotplaced.com";

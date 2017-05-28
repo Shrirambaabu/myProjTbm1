@@ -1,6 +1,7 @@
 package igotplaced.com.layouts.Fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -25,11 +26,14 @@ import java.util.List;
 import igotplaced.com.layouts.CustomAdapter.RecyclerAdapterBlogHome;
 import igotplaced.com.layouts.Model.BlogHome;
 import igotplaced.com.layouts.R;
+import igotplaced.com.layouts.Utils.BlogDetailsActivity;
+import igotplaced.com.layouts.Utils.ClickListener;
 import igotplaced.com.layouts.Utils.NetworkController;
 
 import static igotplaced.com.layouts.Utils.Utils.BaseUri;
 
-public class BlogFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class BlogFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, ClickListener {
+
     private Context context;
     private RequestQueue queue;
 
@@ -92,6 +96,8 @@ public class BlogFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 }
         );
 
+        recyclerAdapterBlogHome.setClickListener(this);
+
     }
 
     private void makeJsonArrayRequestBlog() {
@@ -108,7 +114,7 @@ public class BlogFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                     Log.d("error", response.toString());
                     try {
                         JSONObject obj = response.getJSONObject(i);
-                        BlogHome blogView = new BlogHome(obj.getString("image"), obj.getString("header"), obj.getString("author"), obj.getString("modified_by"));
+                        BlogHome blogView = new BlogHome(obj.getString("image"), obj.getString("header"), obj.getString("author"), obj.getString("modified_by"), obj.getString("id"));
                         // adding movie to blogHomeList array
                         blogHomeList.add(blogView);
 
@@ -135,4 +141,11 @@ public class BlogFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
     }
 
+    @Override
+    public void onClick(View view, int position) {
+        BlogHome blog = blogHomeList.get(position);
+        Intent i = new Intent(getContext(), BlogDetailsActivity.class);
+        i.putExtra("postId", blog.getId());
+        startActivity(i);
+    }
 }

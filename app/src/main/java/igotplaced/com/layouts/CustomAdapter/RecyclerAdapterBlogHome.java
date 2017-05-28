@@ -1,4 +1,5 @@
 package igotplaced.com.layouts.CustomAdapter;
+
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -13,15 +14,17 @@ import java.util.List;
 
 import igotplaced.com.layouts.Model.BlogHome;
 import igotplaced.com.layouts.R;
+import igotplaced.com.layouts.Utils.ClickListener;
 import igotplaced.com.layouts.Utils.NetworkController;
 import igotplaced.com.layouts.Utils.Utils;
 
 
-public class RecyclerAdapterBlogHome  extends RecyclerView.Adapter<RecyclerAdapterBlogHome.MyViewHolder> {
+public class RecyclerAdapterBlogHome extends RecyclerView.Adapter<RecyclerAdapterBlogHome.MyViewHolder> {
 
     private List<BlogHome> blogHomeList;
     private Context context;
     private LayoutInflater inflater;
+    private ClickListener clickListener;
 
     public RecyclerAdapterBlogHome(Context context, List<BlogHome> blogList) {
 
@@ -34,7 +37,7 @@ public class RecyclerAdapterBlogHome  extends RecyclerView.Adapter<RecyclerAdapt
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View rootView = inflater.inflate(R.layout.card_blog, parent, false);
+        View rootView = inflater.inflate(R.layout.card_view_blog, parent, false);
         return new MyViewHolder(rootView);
     }
 
@@ -43,12 +46,12 @@ public class RecyclerAdapterBlogHome  extends RecyclerView.Adapter<RecyclerAdapt
         BlogHome blogView = blogHomeList.get(position);
         //Pass the values of feeds object to Views
         holder.blogPost.setText(blogView.getBlogPost());
-        holder.blogPostedBy.setText(blogView.getBlogPostedBy());
+        holder.blogPostedBy.setText("Posted by: "+blogView.getBlogPostedBy());
         holder.blogTime.setText(blogView.getBlogTime());
 
-        Log.d("error",Utils.BaseImageUri+blogView.getImageName());
+        Log.d("error", Utils.BaseImageUri + blogView.getImageName());
 
-        holder.blog_img.setImageUrl(Utils.BaseImageUri+blogView.getImageName(), NetworkController.getInstance(context).getImageLoader());
+        holder.blog_img.setImageUrl(Utils.BaseImageUri + blogView.getImageName(), NetworkController.getInstance(context).getImageLoader());
 
     }
 
@@ -57,9 +60,13 @@ public class RecyclerAdapterBlogHome  extends RecyclerView.Adapter<RecyclerAdapt
         return blogHomeList.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public void setClickListener(ClickListener itemClickListener) {
+        this.clickListener = itemClickListener;
+    }
 
-        private TextView blogPost, blogPostedBy,blogTime;
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+        private TextView blogPost, blogPostedBy, blogTime;
         private NetworkImageView blog_img;
 
         public MyViewHolder(View itemView) {
@@ -70,7 +77,12 @@ public class RecyclerAdapterBlogHome  extends RecyclerView.Adapter<RecyclerAdapt
             // Volley's NetworkImageView which will load Image from URL
             blog_img = (NetworkImageView) itemView.findViewById(R.id.blog_img);
 
+            itemView.setOnClickListener(this);
+        }
 
+        @Override
+        public void onClick(View v) {
+            if (clickListener != null) clickListener.onClick(v, getAdapterPosition());
         }
     }
 

@@ -52,6 +52,7 @@
             </intent-filter>
         </receiver>
 
+        <activity android:name=".Utils.BlogDetailsActivity"></activity>
     </application>
 
 </manifest>
