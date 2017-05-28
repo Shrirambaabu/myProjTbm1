@@ -28,6 +28,11 @@ public class Utils {
     public static String BaseUri = Base+"/IgotplacedRestWebService/webapi";
     public static String BaseImageUri = "http://igotplaced.com";
 
+    public static final String MyPREFERENCES = "igp" ;
+    public static final String Name = "nameKey";
+    public static final String Id = "idKey";
+    public static final String Email = "emailKey";
+
     public static void setSpinnerError(Spinner spinner, String error, Activity activity) {
         View selectedView = spinner.getSelectedView();
         if (selectedView != null && selectedView instanceof TextView) {

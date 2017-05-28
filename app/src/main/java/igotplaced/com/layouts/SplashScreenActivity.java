@@ -1,9 +1,16 @@
 package igotplaced.com.layouts;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+
+import static igotplaced.com.layouts.Utils.Utils.Email;
+import static igotplaced.com.layouts.Utils.Utils.Id;
+import static igotplaced.com.layouts.Utils.Utils.MyPREFERENCES;
+import static igotplaced.com.layouts.Utils.Utils.Name;
 
 /**
  * Created by Admin on 5/2/2017.
@@ -35,9 +42,19 @@ public class SplashScreenActivity extends AppCompatActivity {
 
                 //This method will be executed once the timer is over
                 //Start your app main activity
-                Intent i = new Intent(SplashScreenActivity.this, LoginActivity.class);
-                startActivity(i);
 
+                SharedPreferences sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+                String userName = sharedpreferences.getString(Name, null);
+                String userId = sharedpreferences.getString(Id, null);
+                String userEmail = sharedpreferences.getString(Email, null);
+
+                if (userName == null || userId == null || userEmail == null) {
+                    Intent loginIntent = new Intent(SplashScreenActivity.this, LoginActivity.class);
+                    startActivity(loginIntent);
+                } else {
+                    Intent i = new Intent(SplashScreenActivity.this, MainActivity.class);
+                    startActivity(i);
+                }
                 // close this activity
                 finish();
             }

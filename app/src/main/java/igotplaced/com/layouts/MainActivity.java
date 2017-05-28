@@ -1,7 +1,9 @@
 package igotplaced.com.layouts;
 
 import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -28,6 +30,10 @@ import igotplaced.com.layouts.Fragments.NotificationFragment;
 import igotplaced.com.layouts.Fragments.ProfileFragment;
 
 import static igotplaced.com.layouts.Utils.Utils.BaseImageUri;
+import static igotplaced.com.layouts.Utils.Utils.Email;
+import static igotplaced.com.layouts.Utils.Utils.Id;
+import static igotplaced.com.layouts.Utils.Utils.MyPREFERENCES;
+import static igotplaced.com.layouts.Utils.Utils.Name;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -44,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle("iGotPlaced");
+
 
         navigationDrawer();
 

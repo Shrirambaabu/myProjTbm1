@@ -1,7 +1,9 @@
 package igotplaced.com.layouts;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.ContextCompat;
@@ -32,6 +34,10 @@ import igotplaced.com.layouts.Utils.Utils;
 import igotplaced.com.layouts.Utils.Validation;
 
 import static igotplaced.com.layouts.Utils.Utils.BaseUri;
+import static igotplaced.com.layouts.Utils.Utils.Email;
+import static igotplaced.com.layouts.Utils.Utils.Id;
+import static igotplaced.com.layouts.Utils.Utils.MyPREFERENCES;
+import static igotplaced.com.layouts.Utils.Utils.Name;
 
 /**
  * Created by Admin on 5/2/2017.
@@ -44,6 +50,9 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
     private Button loginBtn;
     private TextInputLayout inputLayoutEmail;
     private String URL = BaseUri + "/loginService/login"; // Login URL
+
+
+    SharedPreferences sharedpreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +100,7 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
         inputLayoutEmail = (TextInputLayout) findViewById(R.id.viewEmail);
         loginBtn = (Button) findViewById(R.id.signInButton);
 
+        sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
 
     }
 
@@ -159,7 +169,19 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
             public void onResponse(String s) {
                 pDialog.dismiss();
                 // Verify the data and return the Toast message
-                if (s.equals("true")) {
+                if (!s.equals("false")) {
+
+                    SharedPreferences.Editor editor = sharedpreferences.edit();
+
+                    String[] tokens = s.split(",", -1);
+
+                    editor.putString(Id, tokens[0]);
+                    editor.putString(Name, tokens[1]);
+                    editor.putString(Email, emailEditText.getText().toString().trim());
+                    editor.apply();
+
+                    Utils.showDialogue(LoginActivity.this, editor.toString());
+
                     Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
                     Intent loginIntent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(loginIntent);
