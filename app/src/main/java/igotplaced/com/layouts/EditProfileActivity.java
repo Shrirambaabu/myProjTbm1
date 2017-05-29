@@ -31,6 +31,7 @@ import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import igotplaced.com.layouts.Utils.CustomAutoCompleteView;
 import igotplaced.com.layouts.Utils.MyApplication;
@@ -39,7 +40,7 @@ import igotplaced.com.layouts.Utils.Validation;
 
 import static igotplaced.com.layouts.Utils.Utils.BaseUri;
 
-public class EditProfileActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class EditProfileActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
     private String yearPassOutSpinnerValue = null;
     private ScrollView scrollView;
     private AppCompatEditText editProfileName, editProfileEmail;
@@ -122,8 +123,6 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
     }
 
     private List<String> networkIndustrySpinnerArrayRequest() {
-
-
 
         industrySpinnerArrayList = new ArrayList<String>();
 
@@ -410,7 +409,7 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
 
 
         scrollView.setOnTouchListener((View.OnTouchListener) EditProfileActivity.this);
-        checkBoxIntrested.setOnClickListener((View.OnClickListener) this);
+        checkBoxIntrested.setOnClickListener(this);
 
         submitbtn.setOnClickListener((View.OnClickListener) this);
     }
@@ -455,6 +454,7 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
         if (position != 0) {
             yearPassOutSpinnerValue = passOutYearSpinner.getSelectedItem().toString();
         } else {
@@ -464,6 +464,109 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.profile_submit:
+                updateDetails();
+                break;
+        }
+    }
+
+    private void updateDetails() {
+        if (!Validation.validateName(editProfileName, profileName, EditProfileActivity.this)) {
+            return;
+        }
+
+        if (!Validation.validateEmail(editProfileEmail, profileEmailAddress, EditProfileActivity.this)) {
+            return;
+        }
+
+        if (yearPassOutSpinnerValue == null) {
+            passOutYearSpinner.setFocusable(true);
+            passOutYearSpinner.setFocusableInTouchMode(true);
+            passOutYearSpinner.requestFocus();
+            Utils.setSpinnerError(passOutYearSpinner, "Field can't be empty", EditProfileActivity.this);
+            return;
+        }
+
+        if (!Validation.validateCollegeCheck(editProfileCollegeName, college,profileViewCollege, EditProfileActivity.this)) {
+            return;
+        }
+
+        if (!Validation.validateDepartmentCheck(editProfileDepartment, department,profileViewDepartment, EditProfileActivity.this)) {
+            return;
+        }
+        if (Objects.equals(industrySpinnerOneValue, "") || Objects.equals(companySpinnerOneValue, "")) {
+            if (Objects.equals(industrySpinnerOneValue, "")) {
+                industrySpinnerOne.setFocusable(true);
+                industrySpinnerOne.setFocusableInTouchMode(true);
+                industrySpinnerOne.requestFocus();
+                Utils.setSpinnerError(industrySpinnerOne, "Field can't be empty", EditProfileActivity.this);
+                return;
+            } else {
+                companySpinnerOne.setFocusable(true);
+                companySpinnerOne.setFocusableInTouchMode(true);
+                companySpinnerOne.requestFocus();
+                Utils.setSpinnerError(companySpinnerOne, "Field can't be empty", EditProfileActivity.this);
+                return;
+            }
+        }
+        if (Objects.equals(industrySpinnerTwoValue, "") || Objects.equals(companySpinnerTwoValue, "")) {
+            if (Objects.equals(industrySpinnerTwoValue, "") && !Objects.equals(companySpinnerTwoValue, "")) {
+                industrySpinnerTwo.setFocusable(true);
+                industrySpinnerTwo.setFocusableInTouchMode(true);
+                industrySpinnerTwo.requestFocus();
+                Utils.setSpinnerError(industrySpinnerTwo, "Field can't be empty", EditProfileActivity.this);
+                return;
+            } else if (!Objects.equals(industrySpinnerTwoValue, "") && Objects.equals(companySpinnerTwoValue, "")) {
+                companySpinnerTwo.setFocusable(true);
+                companySpinnerTwo.setFocusableInTouchMode(true);
+                companySpinnerTwo.requestFocus();
+                Utils.setSpinnerError(companySpinnerTwo, "Field can't be empty", EditProfileActivity.this);
+                return;
+            }
+        }
+
+        if (Objects.equals(industrySpinnerThreeValue, "") || Objects.equals(companySpinnerThreeValue, "")) {
+            if (Objects.equals(industrySpinnerThreeValue, "") && !Objects.equals(companySpinnerThreeValue, "")) {
+                industrySpinnerThree.setFocusable(true);
+                industrySpinnerThree.setFocusableInTouchMode(true);
+                industrySpinnerThree.requestFocus();
+                Utils.setSpinnerError(industrySpinnerThree, "Field can't be empty", EditProfileActivity.this);
+                return;
+            } else if (!Objects.equals(industrySpinnerThreeValue, "") && Objects.equals(companySpinnerThreeValue, "")) {
+                companySpinnerThree.setFocusable(true);
+                companySpinnerThree.setFocusableInTouchMode(true);
+                companySpinnerThree.requestFocus();
+                Utils.setSpinnerError(companySpinnerThree, "Field can't be empty", EditProfileActivity.this);
+                return;
+            }
+        }
+
+        if (checkBoxPassword.isChecked()) {
+
+            if (!Validation.validateMobileNumber(mobileNumberEditText, inputLayoutMobileNumber, EditProfileActivity.this)) {
+                return;
+            }
+            if (!Validation.validateLocation(locationEditText, inputLayoutLocation, EditProfileActivity.this)) {
+                return;
+            }
+        }
+        if (Utils.checkConnection(submitbtn, EditProfileActivity.this)) {
+            submitDetails();
+        }else{
+            Utils.showDialogue(EditProfileActivity.this, "Sorry! Not connected to internet");
+        }
+
+
+
+    }
+
+    private void submitDetails() {
 
     }
 
