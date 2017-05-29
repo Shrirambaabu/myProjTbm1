@@ -28,7 +28,6 @@ import java.util.List;
 import igotplaced.com.layouts.CustomAdapter.RecyclerAdapterPostHome;
 import igotplaced.com.layouts.Model.Post;
 import igotplaced.com.layouts.R;
-import igotplaced.com.layouts.Utils.EndlessRecyclerOnScrollListener;
 import igotplaced.com.layouts.Utils.NetworkController;
 
 import static igotplaced.com.layouts.Utils.Utils.BaseUri;
@@ -36,20 +35,18 @@ import static igotplaced.com.layouts.Utils.Utils.Id;
 import static igotplaced.com.layouts.Utils.Utils.MyPREFERENCES;
 import static igotplaced.com.layouts.Utils.Utils.Name;
 
-public class HomePostFragment extends Fragment {
+public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private Context context;
     private RequestQueue queue;
 
     private SwipeRefreshLayout swipeRefreshLayout;
 
-    private String userName, userId;
+    private String userId;
     private List<Post> postList = new ArrayList<Post>();
     private RecyclerAdapterPostHome recyclerAdapterPostHome;
 
-    private static int current_page = 1;
-    private int ival = 1;
-    private int loadLimit = 10;
+    int pastVisiblesItems, visibleItemCount, totalItemCount;
 
     private LinearLayoutManager mLayoutManager;
 
@@ -68,12 +65,23 @@ public class HomePostFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(context);
 
         SharedPreferences sharedpreferences = context.getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
-        userName = sharedpreferences.getString(Name, null);
+        String userName = sharedpreferences.getString(Name, null);
         userId = sharedpreferences.getString(Id, null);
+
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_layout);
+        swipeRefreshLayout.setOnRefreshListener(this);
 
         postRecyclerView(view);
 
         return view;
+
+    }
+
+
+    @Override
+    public void onRefresh() {
+
+        loadData();
 
     }
 
@@ -92,18 +100,20 @@ public class HomePostFragment extends Fragment {
         //Getting Instance of Volley Request Queue
         queue = NetworkController.getInstance(context).getRequestQueue();
 
+        loadData();
 
-        loadData(current_page);
-
-        post_view.addOnScrollListener(new EndlessRecyclerOnScrollListener(mLayoutManager) {
+        post_view.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
-            public void onLoadMore(int current_page) {
-                // do somthing...
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0) {
 
-                loadMoreData();
+                    visibleItemCount = mLayoutManager.getChildCount();
+                    totalItemCount = mLayoutManager.getItemCount();
+                    pastVisiblesItems = mLayoutManager.findFirstVisibleItemPosition();
 
+                    loadMoreData(totalItemCount);
+                }
             }
-
         });
 
 /*
@@ -134,7 +144,7 @@ public class HomePostFragment extends Fragment {
                         try {
 
                             JSONObject obj = jsonObjectJSON.getJSONObject(i);
-                            Post post = new Post(obj.getString("post"), obj.getString("Industry"), obj.getString("postuserimgname"), userName, obj.getString("created_by"));
+                            Post post = new Post(obj.getString("post"), obj.getString("Industry"), obj.getString("postuserimgname"), obj.getString("created_uname"), obj.getString("created_by"));
                             // adding movie to blogHomeList array
                             postList.add(post);
 
@@ -166,24 +176,20 @@ public class HomePostFragment extends Fragment {
     }
 
     // By default, we add 10 objects for first time.
-    private void loadData(int current_page) {
-
+    private void loadData() {
         // I have not used current page for showing demo, if u use a webservice
         // then it is useful for every call request
-        makeJsonObjectRequestPostHome(current_page, loadLimit);
-
+        int loadLimit = 10;
+        makeJsonObjectRequestPostHome(1, loadLimit);
 
     }
 
     // adding 10 object creating dymically to arraylist and updating recyclerview when ever we reached last item
-    private void loadMoreData() {
+    private void loadMoreData(int totalItemCount) {
 
         // I have not used current page for showing demo, if u use a webservice
         // then it is useful for every call request
-
-        loadLimit = ival + 10;
-
-        makeJsonObjectRequestPostHome(ival, loadLimit);
+        makeJsonObjectRequestPostHome(totalItemCount, totalItemCount+56);
 
         recyclerAdapterPostHome.notifyDataSetChanged();
 

@@ -41,12 +41,12 @@ public class RecyclerAdapterPostHome extends RecyclerView.Adapter<RecyclerAdapte
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View rootView = inflater.inflate(R.layout.card_view_blog, parent, false);
+        View rootView = inflater.inflate(R.layout.card_view_post, parent, false);
         return new RecyclerAdapterPostHome.MyViewHolder(rootView);
     }
 
     @Override
-    public void onBindViewHolder(RecyclerAdapterPostHome.MyViewHolder holder, int position) {
+    public void onBindViewHolder(MyViewHolder holder, int position) {
         Post post = postList.get(position);
         //Pass the values of feeds object to Views
         holder.post.setText(post.getPost());
