@@ -1,15 +1,11 @@
 package igotplaced.com.layouts;
 
 import android.app.SearchManager;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
@@ -21,8 +17,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.MediaController;
-import android.widget.VideoView;
 
 import igotplaced.com.layouts.Fragments.AboutUsFragment;
 import igotplaced.com.layouts.Fragments.BlogFragment;
@@ -30,17 +24,12 @@ import igotplaced.com.layouts.Fragments.HomeFragment;
 import igotplaced.com.layouts.Fragments.NotificationFragment;
 import igotplaced.com.layouts.Fragments.ProfileFragment;
 
-import static igotplaced.com.layouts.Utils.Utils.BaseImageUri;
-import static igotplaced.com.layouts.Utils.Utils.Email;
-import static igotplaced.com.layouts.Utils.Utils.Id;
-import static igotplaced.com.layouts.Utils.Utils.MyPREFERENCES;
-import static igotplaced.com.layouts.Utils.Utils.Name;
-
 public class MainActivity extends AppCompatActivity {
 
     //Defining Variables
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
+    private boolean isMain = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,22 +87,22 @@ public class MainActivity extends AppCompatActivity {
 
             //Replacing the main content with ContentFragment Which is our Inbox View;
             case R.id.home:
-
+                isMain = true;
                 fragment = new HomeFragment();
                 break;
             case R.id.profile:
-
+                isMain = false;
                 fragment = new ProfileFragment();
                 break;
 
             case R.id.notification:
-
+                isMain = false;
                 fragment = new NotificationFragment();
                 break;
 
 
             case R.id.blog:
-
+                isMain = false;
                 fragment = new BlogFragment();
                 break;
 
@@ -149,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
                         return true;*/
 
             default:
-
+                isMain = true;
                 fragment = new HomeFragment();
                 break;
 
@@ -200,7 +189,9 @@ public class MainActivity extends AppCompatActivity {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
         } else {
-            endApplication();
+            if (isMain) {
+                endApplication();
+            }
             super.onBackPressed();
         }
 

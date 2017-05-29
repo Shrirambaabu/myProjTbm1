@@ -1,6 +1,7 @@
 package igotplaced.com.layouts.Fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -26,8 +27,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import igotplaced.com.layouts.CustomAdapter.RecyclerAdapterPostHome;
+import igotplaced.com.layouts.Model.BlogHome;
 import igotplaced.com.layouts.Model.Post;
 import igotplaced.com.layouts.R;
+import igotplaced.com.layouts.Utils.BlogDetailsActivity;
+import igotplaced.com.layouts.Utils.ClickListener;
 import igotplaced.com.layouts.Utils.NetworkController;
 
 import static igotplaced.com.layouts.Utils.Utils.BaseUri;
@@ -35,7 +39,7 @@ import static igotplaced.com.layouts.Utils.Utils.Id;
 import static igotplaced.com.layouts.Utils.Utils.MyPREFERENCES;
 import static igotplaced.com.layouts.Utils.Utils.Name;
 
-public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, ClickListener {
 
     private Context context;
     private RequestQueue queue;
@@ -62,6 +66,10 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
         View view = inflater.inflate(R.layout.fragment_post, container, false);
         context = getActivity().getApplicationContext();
 
+
+        //mapping web view
+        mapping(view);
+
         mLayoutManager = new LinearLayoutManager(context);
 
         SharedPreferences sharedpreferences = context.getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
@@ -74,6 +82,13 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
         postRecyclerView(view);
 
         return view;
+
+    }
+
+    private void mapping(View view) {
+
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_layout);
+        swipeRefreshLayout.setOnRefreshListener(this);
 
     }
 
@@ -116,10 +131,7 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
             }
         });
 
-/*
-
         recyclerAdapterPostHome.setClickListener(this);
-*/
 
     }
 
@@ -196,4 +208,11 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
     }
 
 
+    @Override
+    public void onClick(View view, int position) {
+        /*BlogHome blog = blogHomeList.get(position);
+        Intent i = new Intent(getContext(), BlogDetailsActivity.class);
+        i.putExtra("postId", blog.getId());
+        startActivity(i);*/
+    }
 }
