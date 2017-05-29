@@ -26,6 +26,7 @@ import java.util.List;
 import igotplaced.com.layouts.CustomAdapter.RecyclerAdapterPostHome;
 import igotplaced.com.layouts.Model.Post;
 import igotplaced.com.layouts.R;
+import igotplaced.com.layouts.Utils.EndlessRecyclerOnScrollListener;
 import igotplaced.com.layouts.Utils.NetworkController;
 
 import static igotplaced.com.layouts.Utils.Utils.BaseUri;
@@ -48,6 +49,8 @@ public class HomePostFragment extends Fragment {
     private int ival = 1;
     private int loadLimit = 10;
 
+    private LinearLayoutManager mLayoutManager;
+
     public HomePostFragment() {
         // Required empty public constructor
     }
@@ -59,6 +62,8 @@ public class HomePostFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_post, container, false);
         context = getActivity().getApplicationContext();
+
+        mLayoutManager = new LinearLayoutManager(context);
 
         SharedPreferences sharedpreferences = context.getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         userName = sharedpreferences.getString(Name, null);
@@ -87,7 +92,17 @@ public class HomePostFragment extends Fragment {
 
 
         loadData(current_page);
-        //Volley's inbuilt class to make Json array request
+
+        post_view.addOnScrollListener(new EndlessRecyclerOnScrollListener(mLayoutManager) {
+            @Override
+            public void onLoadMore(int current_page) {
+                // do somthing...
+
+                loadMoreData();
+
+            }
+
+        });
 
 /*
 
@@ -143,12 +158,12 @@ public class HomePostFragment extends Fragment {
 
         // I have not used current page for showing demo, if u use a webservice
         // then it is useful for every call request
-        makeJsonArrayRequestPostHome(ival,loadLimit);
+        makeJsonArrayRequestPostHome(current_page,loadLimit);
 
 
     }
     // adding 10 object creating dymically to arraylist and updating recyclerview when ever we reached last item
-    private void loadMoreData(int current_page) {
+    private void loadMoreData() {
 
         // I have not used current page for showing demo, if u use a webservice
         // then it is useful for every call request
