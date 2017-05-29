@@ -12,12 +12,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -112,31 +114,41 @@ public class HomePostFragment extends Fragment {
     }
 
 
-    private void makeJsonArrayRequestPostHome(int start,int size) {
+    private void makeJsonObjectRequestPostHome(int start, int size) {
 
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(BaseUri + "/home/topPost/" + userId + "?start=" + start + "&size=" + size, new Response.Listener<JSONArray>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, BaseUri + "/home/topPost/" + userId + "?start=" + start + "&size=" + size, null, new Response.Listener<JSONObject>() {
+            JSONArray jsonObjectJSON = null;
 
             @Override
-            public void onResponse(JSONArray response) {
+            public void onResponse(JSONObject jsonObject) {
 
-                //clearing blogList
-                postList.clear();
+                Log.d("error", jsonObject.toString());
+                try {
+                    jsonObjectJSON = jsonObject.getJSONArray("");
 
-                for (int i = 0; i < response.length(); i++) {
-                    Log.d("error", response.toString());
-                    try {
-                        JSONObject obj = response.getJSONObject(i);
-                        Post post = new Post(obj.getString("post"), obj.getString("Industry"), obj.getString("imgname"), userName, obj.getString("created_by"));
-                        // adding movie to blogHomeList array
-                        postList.add(post);
+                    //clearing blogList
+                    postList.clear();
 
-                    } catch (Exception e) {
-                        Log.d("error", e.getMessage());
-                        System.out.println(e.getMessage());
-                    } finally {
-                        //Notify adapter about data changes
-                        recyclerAdapterPostHome.notifyDataSetChanged();
+                    for (int i = 0; i < jsonObjectJSON.length(); i++) {
+                        Log.d("error", jsonObjectJSON.toString());
+                        try {
+
+                            JSONObject obj = jsonObjectJSON.getJSONObject(i);
+                            Post post = new Post(obj.getString("post"), obj.getString("Industry"), obj.getString("imgname"), userName, obj.getString("created_by"));
+                            // adding movie to blogHomeList array
+                            postList.add(post);
+
+                        } catch (Exception e) {
+                            Log.d("error", e.getMessage());
+                            System.out.println(e.getMessage());
+                        } finally {
+                            //Notify adapter about data changes
+                            recyclerAdapterPostHome.notifyDataSetChanged();
+                        }
                     }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
             }
 
@@ -149,7 +161,7 @@ public class HomePostFragment extends Fragment {
             }
         });
 
-        queue.add(jsonArrayRequest);
+        queue.add(jsonObjectRequest);
 
     }
 
@@ -158,10 +170,11 @@ public class HomePostFragment extends Fragment {
 
         // I have not used current page for showing demo, if u use a webservice
         // then it is useful for every call request
-        makeJsonArrayRequestPostHome(current_page,loadLimit);
+        makeJsonObjectRequestPostHome(current_page, loadLimit);
 
 
     }
+
     // adding 10 object creating dymically to arraylist and updating recyclerview when ever we reached last item
     private void loadMoreData() {
 
@@ -170,7 +183,7 @@ public class HomePostFragment extends Fragment {
 
         loadLimit = ival + 10;
 
-        makeJsonArrayRequestPostHome(ival,loadLimit);
+        makeJsonObjectRequestPostHome(ival, loadLimit);
 
         recyclerAdapterPostHome.notifyDataSetChanged();
 
