@@ -134,7 +134,7 @@ public class HomePostFragment extends Fragment {
                         try {
 
                             JSONObject obj = jsonObjectJSON.getJSONObject(i);
-                            Post post = new Post(obj.getString("post"), obj.getString("Industry"), obj.getString("imgname"), userName, obj.getString("created_by"));
+                            Post post = new Post(obj.getString("post"), obj.getString("Industry"), obj.getString("postuserimgname"), userName, obj.getString("created_by"));
                             // adding movie to blogHomeList array
                             postList.add(post);
 

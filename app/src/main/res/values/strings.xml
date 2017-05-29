@@ -81,6 +81,9 @@
     <string name="testimonials">----- Testimonials</string>
     <string name="notificationMessage">NotificationMessage</string>
     <string name="recentNotification">Recent Notifications</string>
+    <string name="editProfile">Edit Profile</string>
+    <string name="areaOfInterest">AREA OF INTEREST</string>
+    <string name="upload">Upload</string>
 
 
 </resources>

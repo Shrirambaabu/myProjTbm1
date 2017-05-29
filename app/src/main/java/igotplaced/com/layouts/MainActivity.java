@@ -24,6 +24,7 @@ import android.view.View;
 import android.widget.MediaController;
 import android.widget.VideoView;
 
+import igotplaced.com.layouts.Fragments.AboutUsFragment;
 import igotplaced.com.layouts.Fragments.BlogFragment;
 import igotplaced.com.layouts.Fragments.HomeFragment;
 import igotplaced.com.layouts.Fragments.NotificationFragment;
@@ -114,6 +115,11 @@ public class MainActivity extends AppCompatActivity {
             case R.id.blog:
 
                 fragment = new BlogFragment();
+                break;
+
+            case R.id.about_us:
+
+                fragment = new AboutUsFragment();
                 break;
 
 

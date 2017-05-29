@@ -31,7 +31,7 @@
             android:paddingTop="@dimen/margin_16"
             android:textSize="16sp"
             android:textColor="@color/white"
-            android:text="NAme"
+            android:text="Name"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
         <TextView

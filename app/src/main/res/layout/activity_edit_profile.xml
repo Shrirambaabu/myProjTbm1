@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/scroll_view_activity_register"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorBackground">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="@dimen/margin_16"
+            android:background="@drawable/button_style"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/textViewEditProfile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/margin_16"
+                android:layout_marginBottom="@dimen/margin_10"
+                android:text="@string/editProfile"
+                android:textColor="@color/white"
+                android:textSize="28sp"
+                android:textStyle="bold" />
+
+
+            <com.android.volley.toolbox.NetworkImageView
+                android:id="@+id/editProfileImage"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_gravity="center"
+                android:padding="@dimen/margin_8"
+                app:paddingStart="@dimen/margin_16" />
+
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/profileName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_16"
+                android:layout_marginStart="@dimen/margin_16"
+                android:layout_marginTop="@dimen/margin_16"
+                android:textColorHint="@color/white"
+                app:errorTextAppearance="@style/error_appearance">
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/editProfileName"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:hint="Full Name"
+                    android:inputType="text"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
+                    app:backgroundTint="@color/white" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/profileEmailAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_16"
+                android:layout_marginStart="@dimen/margin_16"
+                android:layout_marginTop="@dimen/margin_16"
+                android:textColorHint="@color/white"
+                app:errorTextAppearance="@style/error_appearance">
+
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/editProfileEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:hint="@string/e_mail_address"
+                    android:inputType="textEmailAddress"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
+                    app:backgroundTint="@color/white" />
+            </android.support.design.widget.TextInputLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_18"
+                android:layout_marginTop="@dimen/margin_16"
+                android:maxLines="1"
+                android:text="@string/select_the_year_of_pass_out"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/profile_passed_out_year_spinner"
+                style="@android:style/Widget.Holo.Light.Spinner"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginEnd="@dimen/margin_16"
+                android:layout_marginStart="@dimen/margin_16"
+                android:layout_marginTop="4dp"
+                app:backgroundTint="@color/white" />
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/profileViewCollege"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_16"
+                android:layout_marginStart="@dimen/margin_16"
+                android:layout_marginTop="@dimen/margin_16"
+                android:textColorHint="@color/white"
+                app:errorTextAppearance="@style/error_appearance">
+
+                <igotplaced.com.layouts.Utils.CustomAutoCompleteView
+                    android:id="@+id/editProfileCollegeName"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:hint="@string/college_name"
+                    android:inputType="text"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
+                    app:backgroundTint="@color/white" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/profileViewDepartment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_16"
+                android:layout_marginStart="@dimen/margin_16"
+                android:layout_marginTop="@dimen/margin_16"
+                android:textColorHint="@color/white"
+                app:errorTextAppearance="@style/error_appearance">
+
+                <igotplaced.com.layouts.Utils.CustomAutoCompleteView
+                    android:id="@+id/editProfileDepartment"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:hint="@string/department"
+                    android:inputType="text"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
+                    app:backgroundTint="@color/white" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/checkBoxProfile"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/margin_16"
+                android:layout_marginTop="@dimen/margin_16"
+                android:text="@string/check_box_message"
+                android:textColor="@color/colorAccent"
+                android:textSize="16sp"
+                app:buttonTint="@color/white" />
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/profileViewMobileNumberTextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_16"
+                android:layout_marginStart="@dimen/margin_16"
+                android:layout_marginTop="@dimen/margin_16"
+                android:textColorHint="@color/white"
+                app:errorTextAppearance="@style/error_appearance">
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/editProfileMobileNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin_48"
+                    android:hint="@string/phone_number"
+                    android:inputType="phone"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
+                    app:backgroundTint="@color/white" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/profileViewLocationTextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_16"
+                android:layout_marginEnd="@dimen/margin_16"
+                android:layout_marginStart="@dimen/margin_16"
+                android:layout_marginTop="@dimen/margin_16"
+                android:textColorHint="@color/white"
+                app:errorTextAppearance="@style/error_appearance">
+
+                <android.support.v7.widget.AppCompatAutoCompleteTextView
+                    android:id="@+id/editProfileLocation"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:hint="@string/current_location"
+                    android:inputType="text"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
+                    app:backgroundTint="@color/white" />
+            </android.support.design.widget.TextInputLayout>
+
+            <TextView
+                android:id="@+id/profileAreaInterest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/margin_16"
+                android:text="@string/areaOfInterest"
+                android:textColor="@color/colorAccent"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <TextView
+                    android:id="@+id/profileViewIndustry"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_16"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="@dimen/margin_4"
+                    android:text="@string/industry"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/profileViewCompany"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_16"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="@dimen/margin_4"
+                    android:text="Company"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/margin_4"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <android.support.v7.widget.AppCompatSpinner
+                    android:id="@+id/profile_industry_spinner1"
+                    style="@android:style/Widget.Holo.Light.Spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginEnd="@dimen/margin_16"
+                    android:layout_marginStart="@dimen/margin_16"
+                    android:layout_weight="1"
+                    app:backgroundTint="@color/white" />
+
+                <android.support.v7.widget.AppCompatSpinner
+                    android:id="@+id/profile_company_spinner1"
+                    style="@android:style/Widget.Holo.Light.Spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginEnd="@dimen/margin_16"
+                    android:layout_marginStart="@dimen/margin_16"
+                    android:layout_weight="1"
+                    app:backgroundTint="@color/white" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/margin_4"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <android.support.v7.widget.AppCompatSpinner
+                    android:id="@+id/profile_industry_spinner2"
+                    style="@android:style/Widget.Holo.Light.Spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginEnd="@dimen/margin_16"
+                    android:layout_marginStart="@dimen/margin_16"
+                    android:layout_weight="1"
+                    app:backgroundTint="@color/white" />
+
+                <android.support.v7.widget.AppCompatSpinner
+                    android:id="@+id/profile_company_spinner2"
+                    style="@android:style/Widget.Holo.Light.Spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginEnd="@dimen/margin_16"
+                    android:layout_marginStart="@dimen/margin_16"
+                    android:layout_weight="1"
+                    app:backgroundTint="@color/white" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/margin_4"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <android.support.v7.widget.AppCompatSpinner
+                    android:id="@+id/profile_industry_spinner3"
+                    style="@android:style/Widget.Holo.Light.Spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginEnd="@dimen/margin_16"
+                    android:layout_marginStart="@dimen/margin_16"
+                    android:layout_weight="1"
+                    app:backgroundTint="@color/white" />
+
+                <android.support.v7.widget.AppCompatSpinner
+                    android:id="@+id/profile_company_spinner3"
+                    style="@android:style/Widget.Holo.Light.Spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginEnd="@dimen/margin_16"
+                    android:layout_marginStart="@dimen/margin_16"
+                    android:layout_weight="1"
+                    app:backgroundTint="@color/white" />
+
+            </LinearLayout>
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/profile_submit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/button_style"
+                android:paddingEnd="24dp"
+                android:paddingStart="24dp"
+                android:text="@string/submit_btn"
+                android:textAllCaps="false"
+                android:textColor="@color/colorAccent"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+    </RelativeLayout>
+</ScrollView>
