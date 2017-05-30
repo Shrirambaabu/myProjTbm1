@@ -50,7 +50,7 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
     int lastVisiblesItems, visibleItemCount, totalItemCount;
 
     private LinearLayoutManager mLayoutManager;
-    private boolean loading;
+    private boolean loading, swipe = false;
 
     public HomePostFragment() {
         // Required empty public constructor
@@ -94,9 +94,8 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
 
     @Override
     public void onRefresh() {
-
+        postList.clear();
         loadData();
-
     }
 
     private void postRecyclerView(View view) {
@@ -115,12 +114,13 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
         //Getting Instance of Volley Request Queue
         queue = NetworkController.getInstance(context).getRequestQueue();
 
-        loadData();
+        //  loadData();
 
         swipeRefreshLayout.post(new Runnable() {
             @Override
             public void run() {
                 loadData();
+
             }
         });
 
@@ -132,14 +132,13 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
                     visibleItemCount = mLayoutManager.getChildCount();
                     totalItemCount = mLayoutManager.getItemCount();
                     lastVisiblesItems = mLayoutManager.findFirstVisibleItemPosition();
-
-
+/*
 
                     Log.d("error", ""+visibleItemCount+totalItemCount+lastVisiblesItems);
+*/
 
-
-                    if (!loading && totalItemCount <= lastVisiblesItems + 3) {
-                        loadMoreData(totalItemCount);
+                    if (!loading) {
+                        loadMoreData(totalItemCount + 1);
                         loading = true;
                     }
 
@@ -154,21 +153,28 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
 
     private void makeJsonObjectRequestPostHome(int start, int size) {
 
+        if (swipeRefreshLayout.isRefreshing()) {
+            swipeRefreshLayout.setRefreshing(false);
+        }
+
+
+        Log.d("error", "loaded" + BaseUri + "/home/topPost/" + userId + "?start=" + start + "&size=" + size);
+
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, BaseUri + "/home/topPost/" + userId + "?start=" + start + "&size=" + size, null, new Response.Listener<JSONObject>() {
             JSONArray jsonObjectJSON = null;
 
             @Override
             public void onResponse(JSONObject jsonObject) {
-
-                Log.d("error", jsonObject.toString());
+/*
+                Log.d("error", jsonObject.toString());*/
                 try {
                     jsonObjectJSON = jsonObject.getJSONArray("");
 
                     //clearing blogList
-                    postList.clear();
+                    // postList.clear();
 
                     for (int i = 0; i < jsonObjectJSON.length(); i++) {
-                        Log.d("error", jsonObjectJSON.toString());
+                     /*   Log.d("error", jsonObjectJSON.toString());*/
                         try {
 
                             JSONObject obj = jsonObjectJSON.getJSONObject(i);

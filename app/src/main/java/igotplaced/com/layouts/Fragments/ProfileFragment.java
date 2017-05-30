@@ -110,7 +110,6 @@ public class ProfileFragment extends Fragment {
 
     private void makeJsonArrayRequestProfile() {
 
-
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(BaseUri + "/profileService/profile/256", new Response.Listener<JSONArray>() {
 
             @Override
