@@ -81,7 +81,7 @@ public class RecyclerAdapterPostHome extends RecyclerView.Adapter<RecyclerAdapte
             postTime = (TextView) itemView.findViewById(R.id.post_time);
             // Volley's NetworkImageView which will load Image from URL
             postImage = (NetworkImageView) itemView.findViewById(R.id.post_img);
-            postImage = (NetworkImageView) itemView.findViewById(R.id.comment_profile_img);
+            userImage = (NetworkImageView) itemView.findViewById(R.id.comment_profile_img);
 
             itemView.setOnClickListener(this);
         }

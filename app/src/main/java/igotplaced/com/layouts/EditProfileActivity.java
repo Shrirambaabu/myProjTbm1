@@ -41,6 +41,7 @@ import igotplaced.com.layouts.Utils.Validation;
 import static igotplaced.com.layouts.Utils.Utils.BaseUri;
 
 public class EditProfileActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
+
     private String yearPassOutSpinnerValue = null;
     private ScrollView scrollView;
     private AppCompatEditText editProfileName, editProfileEmail;

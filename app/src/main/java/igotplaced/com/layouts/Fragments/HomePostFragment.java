@@ -1,7 +1,6 @@
 package igotplaced.com.layouts.Fragments;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -27,10 +26,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import igotplaced.com.layouts.CustomAdapter.RecyclerAdapterPostHome;
-import igotplaced.com.layouts.Model.BlogHome;
 import igotplaced.com.layouts.Model.Post;
 import igotplaced.com.layouts.R;
-import igotplaced.com.layouts.Utils.BlogDetailsActivity;
 import igotplaced.com.layouts.Utils.ClickListener;
 import igotplaced.com.layouts.Utils.NetworkController;
 
@@ -50,9 +47,10 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
     private List<Post> postList = new ArrayList<Post>();
     private RecyclerAdapterPostHome recyclerAdapterPostHome;
 
-    int pastVisiblesItems, visibleItemCount, totalItemCount;
+    int lastVisiblesItems, visibleItemCount, totalItemCount;
 
     private LinearLayoutManager mLayoutManager;
+    private boolean loading;
 
     public HomePostFragment() {
         // Required empty public constructor
@@ -124,9 +122,13 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
 
                     visibleItemCount = mLayoutManager.getChildCount();
                     totalItemCount = mLayoutManager.getItemCount();
-                    pastVisiblesItems = mLayoutManager.findFirstVisibleItemPosition();
+                    lastVisiblesItems = mLayoutManager.findFirstVisibleItemPosition();
 
-                    loadMoreData(totalItemCount);
+                    if (!loading && totalItemCount <= lastVisiblesItems + 3) {
+                        loadMoreData(totalItemCount);
+                        loading = true;
+                    }
+
                 }
             }
         });
@@ -156,7 +158,7 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
                         try {
 
                             JSONObject obj = jsonObjectJSON.getJSONObject(i);
-                            Post post = new Post(obj.getString("post"), obj.getString("Industry"), obj.getString("postuserimgname"), obj.getString("created_uname"), obj.getString("created_by"), obj.getString("fname"), obj.getString("imgname"));
+                            Post post = new Post(obj.getString("post"), obj.getString("Industry"), obj.getString("postuserimgname"), obj.getString("created_uname"), obj.getString("created_by"), obj.getString("imgname"), obj.getString("fname"));
                             // adding movie to blogHomeList array
                             postList.add(post);
 
@@ -166,6 +168,7 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
                         } finally {
                             //Notify adapter about data changes
                             recyclerAdapterPostHome.notifyDataSetChanged();
+                            loading = false;
                         }
                     }
 
@@ -201,7 +204,7 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
 
         // I have not used current page for showing demo, if u use a webservice
         // then it is useful for every call request
-        makeJsonObjectRequestPostHome(totalItemCount, totalItemCount+56);
+        makeJsonObjectRequestPostHome(totalItemCount, totalItemCount + 10);
 
         recyclerAdapterPostHome.notifyDataSetChanged();
 

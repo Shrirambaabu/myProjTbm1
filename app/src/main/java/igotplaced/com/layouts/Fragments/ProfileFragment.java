@@ -83,6 +83,9 @@ public class ProfileFragment extends Fragment {
         tabLayout = (TabLayout) view.findViewById(R.id.tabLayout);
         ImageView profView = (ImageView) view.findViewById(R.id.edit_profile);
 
+        //Volley's inbuilt class to make Json array request
+        makeJsonArrayRequestProfile();
+
         profView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,8 +99,7 @@ public class ProfileFragment extends Fragment {
             public void run() {
                 tabLayout.setupWithViewPager(viewPager);
                 setupTabIcons();
-                //Volley's inbuilt class to make Json array request
-                //  makeJsonArrayRequestProfile();
+
             }
 
         });
