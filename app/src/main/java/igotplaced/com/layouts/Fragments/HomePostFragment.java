@@ -156,7 +156,7 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
                         try {
 
                             JSONObject obj = jsonObjectJSON.getJSONObject(i);
-                            Post post = new Post(obj.getString("post"), obj.getString("Industry"), obj.getString("postuserimgname"), obj.getString("created_uname"), obj.getString("created_by"));
+                            Post post = new Post(obj.getString("post"), obj.getString("Industry"), obj.getString("postuserimgname"), obj.getString("created_uname"), obj.getString("created_by"), obj.getString("fname"), obj.getString("imgname"));
                             // adding movie to blogHomeList array
                             postList.add(post);
 

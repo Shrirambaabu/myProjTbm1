@@ -53,9 +53,7 @@ public class RecyclerAdapterPostHome extends RecyclerView.Adapter<RecyclerAdapte
         holder.postIndustry.setText(post.getPostIndustry());
         holder.postProfileName.setText(post.getPostProfileName());
         holder.postTime.setText(post.getPostTime());
-
-        Log.d("error", Utils.BaseImageUri + post.getPostImage());
-
+        holder.userImage.setImageUrl(Utils.BaseImageUri + post.getUserImage(), NetworkController.getInstance(context).getImageLoader());
         holder.postImage.setImageUrl(Utils.BaseImageUri + post.getPostImage(), NetworkController.getInstance(context).getImageLoader());
 
     }
@@ -72,7 +70,7 @@ public class RecyclerAdapterPostHome extends RecyclerView.Adapter<RecyclerAdapte
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private TextView post, postIndustry, postProfileName, postTime;
-        private NetworkImageView postImage;
+        private NetworkImageView postImage,userImage;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -80,8 +78,10 @@ public class RecyclerAdapterPostHome extends RecyclerView.Adapter<RecyclerAdapte
             postIndustry = (TextView) itemView.findViewById(R.id.post_industry);
             postProfileName = (TextView) itemView.findViewById(R.id.post_profile_name);
             postTime = (TextView) itemView.findViewById(R.id.post_time);
+            postTime = (TextView) itemView.findViewById(R.id.post_time);
             // Volley's NetworkImageView which will load Image from URL
             postImage = (NetworkImageView) itemView.findViewById(R.id.post_img);
+            postImage = (NetworkImageView) itemView.findViewById(R.id.comment_profile_img);
 
             itemView.setOnClickListener(this);
         }
