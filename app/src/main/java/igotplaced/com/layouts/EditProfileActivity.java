@@ -411,7 +411,7 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
         scrollView.setOnTouchListener((View.OnTouchListener) EditProfileActivity.this);
         checkBoxIntrested.setOnClickListener(this);
 
-        submitbtn.setOnClickListener((View.OnClickListener) this);
+        submitbtn.setOnClickListener(this);
     }
 
     private void addressingView() {
@@ -776,6 +776,8 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
     }
 
     private void submitDetails() {
+
+        Toast.makeText(EditProfileActivity.this, "Updation Successful", Toast.LENGTH_LONG).show();
 
     }
 

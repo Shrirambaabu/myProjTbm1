@@ -4,7 +4,7 @@ package igotplaced.com.layouts.Model;
  * Created by Ashith VL on 5/29/2017.
  */
 
-public class Post {
+public class    Post {
     private String post;
     private String postIndustry;
     private String postImage;

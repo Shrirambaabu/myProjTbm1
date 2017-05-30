@@ -120,7 +120,7 @@
         android:weightSum="10">
 
         <com.android.volley.toolbox.NetworkImageView
-            android:id="@+id/post_img"
+            android:id="@+id/event_img"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_weight="1" />

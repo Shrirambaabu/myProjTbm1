@@ -115,7 +115,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onResponse(JSONArray response) {
 
-                //clearing notificationList
+                //clearing profileList
                 profileViewList.clear();
 
                 for (int i = 0; i < response.length(); i++) {
@@ -132,7 +132,6 @@ public class ProfileFragment extends Fragment {
                     } finally {
                         //Notify adapter about data changes
                         adapterProfileHome.notifyDataSetChanged();
-                        swipeRefreshLayout.setRefreshing(false);
                     }
                 }
             }
@@ -142,7 +141,6 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("error", "Error: " + error.getMessage());
-                swipeRefreshLayout.setRefreshing(false);
             }
         });
 
