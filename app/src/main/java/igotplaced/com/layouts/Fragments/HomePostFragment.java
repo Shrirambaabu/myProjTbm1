@@ -77,6 +77,7 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_layout);
         swipeRefreshLayout.setOnRefreshListener(this);
 
+
         postRecyclerView(view);
 
         return view;
@@ -108,12 +109,20 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
         post_view.setHasFixedSize(true);
         //setting horizontal layout
         post_view.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
+        mLayoutManager = (LinearLayoutManager) post_view.getLayoutManager();
         //setting RecyclerView adapter
         post_view.setAdapter(recyclerAdapterPostHome);
         //Getting Instance of Volley Request Queue
         queue = NetworkController.getInstance(context).getRequestQueue();
 
         loadData();
+
+        swipeRefreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                loadData();
+            }
+        });
 
         post_view.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -123,6 +132,11 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
                     visibleItemCount = mLayoutManager.getChildCount();
                     totalItemCount = mLayoutManager.getItemCount();
                     lastVisiblesItems = mLayoutManager.findFirstVisibleItemPosition();
+
+
+
+                    Log.d("error", ""+visibleItemCount+totalItemCount+lastVisiblesItems);
+
 
                     if (!loading && totalItemCount <= lastVisiblesItems + 3) {
                         loadMoreData(totalItemCount);
