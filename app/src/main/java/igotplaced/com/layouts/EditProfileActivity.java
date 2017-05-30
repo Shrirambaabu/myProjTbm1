@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
@@ -24,6 +25,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
@@ -44,6 +46,7 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
 
     private String yearPassOutSpinnerValue = null;
     private ScrollView scrollView;
+    private NetworkImageView profileImage;
     private AppCompatEditText editProfileName, editProfileEmail;
     private CustomAutoCompleteView editProfileCollegeName, editProfileDepartment;
     private AppCompatSpinner passOutYearSpinner;
@@ -53,16 +56,15 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
     private boolean checkBoxIntrestedBoolean = false;
     private ArrayAdapter<String> departmentAutoCompleteAdapter, collegeAutoCompleteAdapter;
 
-    private String department,college;
+    private String department, college;
 
 
     private String industrySpinnerOneValue = "", industrySpinnerTwoValue = "", industrySpinnerThreeValue = "";
     private String companySpinnerOneValue = "", companySpinnerTwoValue = "", companySpinnerThreeValue = "";
 
-    private AppCompatButton regBtn;
-    private AppCompatEditText  mobileNumberEditText;
+    private AppCompatEditText mobileNumberEditText;
     private AppCompatAutoCompleteTextView locationEditText;
-    private TextInputLayout  inputLayoutMobileNumber, inputLayoutLocation;
+    private TextInputLayout inputLayoutMobileNumber, inputLayoutLocation;
     private AppCompatSpinner industrySpinnerOne = null, industrySpinnerTwo = null, industrySpinnerThree = null, companySpinnerOne = null, companySpinnerTwo = null, companySpinnerThree = null;
     private AppCompatCheckBox checkBoxPassword;
 
@@ -160,7 +162,6 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
     private void networkSettingSpinnerAndAutoComplete() {
 
 
-
         List<String> yearList = networkYearSpinnerArrayRequest();
 
         spinnerArrayAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item_custom, yearList);
@@ -203,7 +204,7 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
             @Override
             public void afterTextChanged(Editable s) {
                 if (shouldAutoComplete) {
-                    if(s.toString().length()>2){
+                    if (s.toString().length() > 2) {
                         networkCollegeAutoCompleteRequest(s.toString());
                         editProfileCollegeName.showDropDown();
                     }
@@ -247,7 +248,7 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
             @Override
             public void afterTextChanged(Editable s) {
                 if (shouldAutoComplete) {
-                    if(s.toString().length()>2){
+                    if (s.toString().length() > 2) {
                         networkDepartmentAutoCompleteRequest(s.toString());
                         editProfileDepartment.showDropDown();
                     }
@@ -261,7 +262,7 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
 
     private void networkDepartmentAutoCompleteRequest(String keyword) {
 
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(BaseUri + "/autocompleteService/searchDepartment/"+keyword, new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(BaseUri + "/autocompleteService/searchDepartment/" + keyword, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
 
@@ -302,7 +303,7 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
     private void networkCollegeAutoCompleteRequest(String keyword) {
 
 
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(BaseUri + "/autocompleteService/searchCollege/"+keyword, new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(BaseUri + "/autocompleteService/searchCollege/" + keyword, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
 
@@ -395,7 +396,6 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
         passOutYearSpinner.setOnItemSelectedListener(this);
 
 
-
         mobileNumberEditText.addTextChangedListener(new CustomWatcher(mobileNumberEditText));
         locationEditText.addTextChangedListener(new CustomWatcher(locationEditText));
 
@@ -408,7 +408,6 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
         companySpinnerThree.setOnItemSelectedListener(this);
 
 
-
         scrollView.setOnTouchListener((View.OnTouchListener) EditProfileActivity.this);
         checkBoxIntrested.setOnClickListener(this);
 
@@ -417,10 +416,16 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
 
     private void addressingView() {
 
-        profileName =(TextInputLayout) findViewById(R.id.profileName);
-        profileEmailAddress=(TextInputLayout) findViewById(R.id.profileEmailAddress);
+        profileName = (TextInputLayout) findViewById(R.id.profileName);
+        profileEmailAddress = (TextInputLayout) findViewById(R.id.profileEmailAddress);
         profileViewCollege = (TextInputLayout) findViewById(R.id.profileViewCollege);
         profileViewDepartment = (TextInputLayout) findViewById(R.id.profileViewDepartment);
+
+
+        editProfileName = (AppCompatEditText) findViewById(R.id.editProfileName);
+        editProfileEmail = (AppCompatEditText) findViewById(R.id.editProfileEmail);
+        editProfileCollegeName=(CustomAutoCompleteView) findViewById(R.id.editProfileCollegeName);
+        editProfileDepartment=(CustomAutoCompleteView) findViewById(R.id.editProfileDepartment) ;
 
         checkBoxIntrested = (AppCompatCheckBox) findViewById(R.id.checkBox);
 
@@ -442,11 +447,10 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
         companySpinnerThree = (AppCompatSpinner) findViewById(R.id.profile_company_spinner3);
 
 
-
         inputLayoutMobileNumber = (TextInputLayout) findViewById(R.id.profileViewMobileNumberTextInputLayout);
         inputLayoutLocation = (TextInputLayout) findViewById(R.id.profileViewLocationTextInputLayout);
 
-        submitbtn=(AppCompatButton) findViewById(R.id.profile_submit) ;
+        submitbtn = (AppCompatButton) findViewById(R.id.profile_submit);
 
 
         passOutYearSpinner = (AppCompatSpinner) findViewById(R.id.profile_passed_out_year_spinner);
@@ -455,13 +459,218 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        switch (parent.getId()) {
+            case R.id.industry_spinner1:
+                if (position != 0) {
+                    industrySpinnerOneValue = industrySpinnerOne.getSelectedItem().toString();
+                    networkCompanySpinnerArrayRequest1(industrySpinnerOneValue);
+                } else {
+                    industrySpinnerOneValue = "";
+                }
+                break;
+            case R.id.company_spinner1:
+                if (position != 0) {
+                    companySpinnerOneValue = companySpinnerOne.getSelectedItem().toString();
+                } else {
+                    companySpinnerOneValue = "";
+                }
+                break;
+            case R.id.industry_spinner2:
+                if (position != 0) {
+                    industrySpinnerTwoValue = industrySpinnerTwo.getSelectedItem().toString();
+                    networkCompanySpinnerArrayRequest2(industrySpinnerTwoValue);
+                } else {
+                    industrySpinnerTwoValue = "";
+                }
+                break;
+            case R.id.company_spinner2:
+                if (position != 0) {
+                    companySpinnerTwoValue = companySpinnerTwo.getSelectedItem().toString();
+                } else {
+                    companySpinnerTwoValue = "";
+                }
+                break;
+            case R.id.industry_spinner3:
+                if (position != 0) {
+                    industrySpinnerThreeValue = industrySpinnerThree.getSelectedItem().toString();
+                    networkCompanySpinnerArrayRequest3(industrySpinnerThreeValue);
+                } else {
+                    industrySpinnerThreeValue = "";
+                }
+                break;
+            case R.id.company_spinner3:
+                if (position != 0) {
+                    companySpinnerThreeValue = companySpinnerThree.getSelectedItem().toString();
+                } else {
+                    companySpinnerThreeValue = "";
+                }
+                break;
 
-        if (position != 0) {
-            yearPassOutSpinnerValue = passOutYearSpinner.getSelectedItem().toString();
-        } else {
-            yearPassOutSpinnerValue = null;
+            case R.id.profile_passed_out_year_spinner:
+                if (position != 0) {
+                    yearPassOutSpinnerValue = passOutYearSpinner.getSelectedItem().toString();
+                } else {
+                    yearPassOutSpinnerValue = null;
+                }
         }
     }
+
+    private void networkCompanySpinnerArrayRequest2(String keyword) {
+
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(BaseUri + "/spinner/company/" + keyword, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+
+                companyArrayAdapter2.add("");
+                if(response.length()<=0){
+                    companyArrayAdapter2.clear();
+                    companyArrayAdapter2.add(" --Select-- ");
+                    companyArrayAdapter2.add("No company to select");
+                    companyArrayAdapter2.notifyDataSetChanged();
+                }else {
+                    companyArrayAdapter2.clear();
+                    companyArrayAdapter2.add(" --Select-- ");
+                    for (int i = 0; i < response.length(); i++) {
+                        try {
+                            companyArrayAdapter2.add(String.valueOf(response.get(i)));
+                            companyArrayAdapter2.notifyDataSetChanged();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                /**
+                 *  Returns error message when,
+                 *  server is down,
+                 *  incorrect IP
+                 *  Server not deployed
+                 */
+                Utils.showDialogue(EditProfileActivity.this, "Sorry! Server Error");
+            }
+        });
+
+
+        int MY_SOCKET_TIMEOUT_MS = 5000;//3 seconds - change to what you want
+        jsonArrayRequest.setRetryPolicy(new DefaultRetryPolicy(
+                MY_SOCKET_TIMEOUT_MS,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        RequestQueue rQueue = Volley.newRequestQueue(EditProfileActivity.this);
+        rQueue.add(jsonArrayRequest);
+
+    }
+
+    private void networkCompanySpinnerArrayRequest3(String keyword) {
+
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(BaseUri + "/spinner/company/" + keyword, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+
+                companyArrayAdapter3.add("");
+                if(response.length()<=0){
+                    companyArrayAdapter3.clear();
+                    companyArrayAdapter3.add(" --Select-- ");
+                    companyArrayAdapter3.add("No company to select");
+                    companyArrayAdapter3.notifyDataSetChanged();
+                }else {
+                    companyArrayAdapter3.clear();
+                    companyArrayAdapter3.add(" --Select-- ");
+                    for (int i = 0; i < response.length(); i++) {
+                        try {
+                            companyArrayAdapter3.add(String.valueOf(response.get(i)));
+                            companyArrayAdapter3.notifyDataSetChanged();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                /**
+                 *  Returns error message when,
+                 *  server is down,
+                 *  incorrect IP
+                 *  Server not deployed
+                 */
+                Utils.showDialogue(EditProfileActivity.this, "Sorry! Server Error");
+            }
+        });
+
+
+        int MY_SOCKET_TIMEOUT_MS = 5000;//3 seconds - change to what you want
+        jsonArrayRequest.setRetryPolicy(new DefaultRetryPolicy(
+                MY_SOCKET_TIMEOUT_MS,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        RequestQueue rQueue = Volley.newRequestQueue(EditProfileActivity.this);
+        rQueue.add(jsonArrayRequest);
+
+    }
+
+    private void networkCompanySpinnerArrayRequest1(String keyword) {
+
+            JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(BaseUri + "/spinner/company/" + keyword, new Response.Listener<JSONArray>() {
+                @Override
+                public void onResponse(JSONArray response) {
+
+                    companyArrayAdapter1.add("");
+                    if(response.length()<=0){
+                        companyArrayAdapter1.clear();
+                        companyArrayAdapter1.add(" --Select-- ");
+                        companyArrayAdapter1.add("No company to select");
+                        companyArrayAdapter1.notifyDataSetChanged();
+                    }else {
+                        companyArrayAdapter1.clear();
+                        companyArrayAdapter1.add(" --Select-- ");
+                        for (int i = 0; i < response.length(); i++) {
+                            try {
+                                companyArrayAdapter1.add(String.valueOf(response.get(i)));
+                                companyArrayAdapter1.notifyDataSetChanged();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    /**
+                     *  Returns error message when,
+                     *  server is down,
+                     *  incorrect IP
+                     *  Server not deployed
+                     */
+                    Utils.showDialogue(EditProfileActivity.this, "Sorry! Server Error");
+                }
+            });
+
+
+            int MY_SOCKET_TIMEOUT_MS = 5000;//3 seconds - change to what you want
+            jsonArrayRequest.setRetryPolicy(new DefaultRetryPolicy(
+                    MY_SOCKET_TIMEOUT_MS,
+                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+            RequestQueue rQueue = Volley.newRequestQueue(EditProfileActivity.this);
+            rQueue.add(jsonArrayRequest);
+
+
+        }
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
@@ -494,11 +703,11 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
             return;
         }
 
-        if (!Validation.validateCollegeCheck(editProfileCollegeName, college,profileViewCollege, EditProfileActivity.this)) {
+        if (!Validation.validateCollegeCheck(editProfileCollegeName, college, profileViewCollege, EditProfileActivity.this)) {
             return;
         }
 
-        if (!Validation.validateDepartmentCheck(editProfileDepartment, department,profileViewDepartment, EditProfileActivity.this)) {
+        if (!Validation.validateDepartmentCheck(editProfileDepartment, department, profileViewDepartment, EditProfileActivity.this)) {
             return;
         }
         if (Objects.equals(industrySpinnerOneValue, "") || Objects.equals(companySpinnerOneValue, "")) {
@@ -559,10 +768,9 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
         }
         if (Utils.checkConnection(submitbtn, EditProfileActivity.this)) {
             submitDetails();
-        }else{
+        } else {
             Utils.showDialogue(EditProfileActivity.this, "Sorry! Not connected to internet");
         }
-
 
 
     }
@@ -572,13 +780,14 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
     }
 
 
-    private class CustomWatcher implements TextWatcher{
+    private class CustomWatcher implements TextWatcher {
 
         private View view;
 
         CustomWatcher(View view) {
             this.view = view;
         }
+
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
