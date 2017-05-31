@@ -3,7 +3,6 @@ package igotplaced.com.layouts.CustomAdapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,25 +12,24 @@ import com.android.volley.toolbox.NetworkImageView;
 
 import java.util.List;
 
-import igotplaced.com.layouts.Model.BlogHome;
-import igotplaced.com.layouts.Model.Post;
 import igotplaced.com.layouts.Model.Questions;
 import igotplaced.com.layouts.R;
 import igotplaced.com.layouts.Utils.ClickListener;
 import igotplaced.com.layouts.Utils.NetworkController;
 import igotplaced.com.layouts.Utils.Utils;
+
 /**
  * Created by Admin on 5/31/2017.
  */
 
-public class RecyclerAdapterQuestionsHome extends RecyclerView.Adapter<RecyclerAdapterQuestionsHome.MyViewHolder> {
+    public class RecyclerAdapterQustionsHome extends RecyclerView.Adapter<RecyclerAdapterQustionsHome.MyViewHolder> {
 
     private List<Questions> questionsList;
     private Context context;
     private LayoutInflater inflater;
     private ClickListener clickListener;
 
-    public RecyclerAdapterQuestionsHome(Context context, List<Questions> questionsList) {
+    public RecyclerAdapterQustionsHome(Context context, List<Questions> questionsList) {
 
         this.context = context;
         this.questionsList = questionsList;
@@ -43,7 +41,7 @@ public class RecyclerAdapterQuestionsHome extends RecyclerView.Adapter<RecyclerA
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View rootView = inflater.inflate(R.layout.card_view_questions, parent, false);
-        return new RecyclerAdapterQuestionsHome.MyViewHolder(rootView);
+        return new RecyclerAdapterQustionsHome.MyViewHolder(rootView);
     }
 
     @Override
@@ -71,7 +69,7 @@ public class RecyclerAdapterQuestionsHome extends RecyclerView.Adapter<RecyclerA
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private TextView questions, questionsIndustry, questionsProfileName, questionsTime;
-        private NetworkImageView questionsImage,comment_profile_img;
+        private NetworkImageView questionsImage, comment_profile_img;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -91,7 +89,6 @@ public class RecyclerAdapterQuestionsHome extends RecyclerView.Adapter<RecyclerA
             if (clickListener != null) clickListener.onClick(v, getAdapterPosition());
         }
     }
-
 
 
 }
