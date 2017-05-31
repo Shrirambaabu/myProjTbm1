@@ -72,7 +72,9 @@ public class RecyclerAdapterEventHome extends RecyclerView.Adapter<RecyclerAdapt
     public int getItemCount() {
         return eventsList.size();
     }
-
+    public void setClickListener(ClickListener itemClickListener) {
+        this.clickListener = itemClickListener;
+    }
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private TextView eventCaption, eventDesignation, eventVenue, eventDate,eventRegistered,eventStatus,event,event_industry,event_profile_name,event_time;

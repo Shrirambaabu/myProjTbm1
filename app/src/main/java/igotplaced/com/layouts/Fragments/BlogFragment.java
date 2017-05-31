@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -65,8 +66,18 @@ public class BlogFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
     @Override
     public void onRefresh() {
+
+
+        blogHomeList.clear();
+        loadData();
+
+    }
+
+    private void loadData() {
+        int loadLimit = 4;
+
         //Volley's inbuilt class to make Json array request
-        makeJsonArrayRequestBlog();
+        makeJsonArrayRequestBlog(1,loadLimit);
 
     }
 
@@ -91,7 +102,7 @@ public class BlogFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                     @Override
                     public void run() {
                         //Volley's inbuilt class to make Json array request
-                        makeJsonArrayRequestBlog();
+                        loadData();
                     }
                 }
         );
@@ -100,9 +111,12 @@ public class BlogFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
     }
 
-    private void makeJsonArrayRequestBlog() {
+    private void makeJsonArrayRequestBlog(int start, int size) {
 
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(BaseUri + "/blogService/blog", new Response.Listener<JSONArray>() {
+        if (swipeRefreshLayout.isRefreshing()) {
+            swipeRefreshLayout.setRefreshing(false);
+        }
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET , BaseUri + "/blogService/blog"+ "?start=" + start + "&size=" + size, null, new Response.Listener<JSONArray>() {
 
             @Override
             public void onResponse(JSONArray response) {

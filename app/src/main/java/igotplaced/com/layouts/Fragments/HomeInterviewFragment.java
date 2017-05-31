@@ -162,7 +162,7 @@ public class HomeInterviewFragment extends Fragment implements SwipeRefreshLayou
         }
 
 
-        Log.d("error", "loaded" + BaseUri + "/home/topPost/" + userId + "?start=" + start + "&size=" + size);
+        Log.d("error", "loaded" + BaseUri + "/home/topInterviewExperience/" + userId + "?start=" + start + "&size=" + size);
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, BaseUri + "/home/topInterviewExperience/" + userId + "?start=" + start + "&size=" + size, null, new Response.Listener<JSONObject>() {
             JSONArray jsonObjectJSON = null;

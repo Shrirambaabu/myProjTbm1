@@ -214,8 +214,8 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
     private void loadData() {
         // I have not used current page for showing demo, if u use a webservice
         // then it is useful for every call request
-        int loadLimit = 10;
-        makeJsonObjectRequestPostHome(1, loadLimit);
+        int loadLimit = 5;
+        makeJsonObjectRequestPostHome(0, loadLimit);
 
     }
 
