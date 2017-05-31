@@ -35,6 +35,7 @@ import igotplaced.com.layouts.EditProfileActivity;
 import igotplaced.com.layouts.Model.NotificationView;
 import igotplaced.com.layouts.Model.ProfileHome;
 import igotplaced.com.layouts.R;
+import igotplaced.com.layouts.Utils.NetworkController;
 
 import static igotplaced.com.layouts.Utils.Utils.BaseUri;
 
@@ -80,6 +81,7 @@ public class ProfileFragment extends Fragment {
 
         viewPager = (ViewPager) view.findViewById(R.id.pager);
         setupViewPager(viewPager);
+        queue = NetworkController.getInstance(context).getRequestQueue();
         tabLayout = (TabLayout) view.findViewById(R.id.tabLayout);
         ImageView profView = (ImageView) view.findViewById(R.id.edit_profile);
 

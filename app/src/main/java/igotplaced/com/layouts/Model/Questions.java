@@ -11,17 +11,19 @@ public class Questions {
     private String questionsProfileName;
     private String questionsTime;
     private String commentProfileImage;
+    private String userQuestionComments;
 
     public Questions() {
     }
 
-    public Questions(String questions, String questionsIndustry, String questionsImage, String questionsProfileName, String questionsTime, String commentProfileImage) {
+    public Questions(String questions, String questionsIndustry, String questionsImage, String questionsProfileName, String questionsTime, String commentProfileImage, String userQuestionComments) {
         this.questions = questions;
         this.questionsIndustry = questionsIndustry;
         this.questionsImage = questionsImage;
         this.questionsProfileName = questionsProfileName;
         this.questionsTime = questionsTime;
         this.commentProfileImage = commentProfileImage;
+        this.userQuestionComments=userQuestionComments;
     }
 
     public String getQuestions() {
@@ -47,4 +49,8 @@ public class Questions {
     public String getCommentProfileImage() {
         return commentProfileImage;
     }
+    public String getUserQuestionComments(){
+        return userQuestionComments;
+    }
 }
+

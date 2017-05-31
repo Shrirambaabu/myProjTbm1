@@ -52,6 +52,7 @@ import igotplaced.com.layouts.Utils.Utils;
         holder.questionsIndustry.setText(questions.getQuestionsIndustry());
         holder.questionsProfileName.setText(questions.getCommentProfileImage());
         holder.questionsTime.setText(questions.getQuestionsTime());
+        holder.userQustionComments.setText(questions.getQuestionsTime());
         holder.comment_profile_img.setImageUrl(Utils.BaseImageUri + questions.getCommentProfileImage(), NetworkController.getInstance(context).getImageLoader());
         holder.questionsImage.setImageUrl(Utils.BaseImageUri + questions.getQuestionsImage(), NetworkController.getInstance(context).getImageLoader());
 
@@ -68,7 +69,7 @@ import igotplaced.com.layouts.Utils.Utils;
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private TextView questions, questionsIndustry, questionsProfileName, questionsTime;
+        private TextView questions, questionsIndustry, questionsProfileName, questionsTime,userQustionComments;
         private NetworkImageView questionsImage, comment_profile_img;
 
         public MyViewHolder(View itemView) {
@@ -76,7 +77,9 @@ import igotplaced.com.layouts.Utils.Utils;
             questions = (TextView) itemView.findViewById(R.id.questions);
             questionsIndustry = (TextView) itemView.findViewById(R.id.post_industry);
             questionsProfileName = (TextView) itemView.findViewById(R.id.questions_profile_name);
-            questionsTime = (TextView) itemView.findViewById(R.id.post_time);
+            questionsTime = (TextView) itemView.findViewById(R.id.questions_time);
+            userQustionComments = (TextView) itemView.findViewById(R.id.user_comment);
+
             // Volley's NetworkImageView which will load Image from URL
             questionsImage = (NetworkImageView) itemView.findViewById(R.id.questions_img);
             comment_profile_img = (NetworkImageView) itemView.findViewById(R.id.comment_profile_img);
