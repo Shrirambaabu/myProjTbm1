@@ -2,26 +2,27 @@ package igotplaced.com.layouts.Fragments;
 
 import android.content.Context;
 import android.content.Intent;
-import android.provider.ContactsContract;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.NetworkImageView;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -29,13 +30,11 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import igotplaced.com.layouts.CustomAdapter.AdapterProfileHome;
-import igotplaced.com.layouts.CustomAdapter.RecyclerAdapterNotification;
 import igotplaced.com.layouts.EditProfileActivity;
-import igotplaced.com.layouts.Model.NotificationView;
 import igotplaced.com.layouts.Model.ProfileHome;
 import igotplaced.com.layouts.R;
 import igotplaced.com.layouts.Utils.NetworkController;
+import igotplaced.com.layouts.Utils.Utils;
 
 import static igotplaced.com.layouts.Utils.Utils.BaseUri;
 
@@ -44,11 +43,11 @@ public class ProfileFragment extends Fragment {
 
     private Context context;
     private RequestQueue queue;
-    private List<ProfileHome> profileViewList = new ArrayList<ProfileHome>();
-    private AdapterProfileHome adapterProfileHome;
 
 
-    private SwipeRefreshLayout swipeRefreshLayout;
+    private ImageView profViewEditButton;
+    private NetworkImageView profile_img;
+    private TextView userProfileName,userProfileDepartment,userProfileCollege;
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -73,6 +72,9 @@ public class ProfileFragment extends Fragment {
        /* if (container != null) {
             container.removeAllViews();
         }*/
+
+        context =  getActivity().getApplicationContext();
+
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
@@ -81,17 +83,26 @@ public class ProfileFragment extends Fragment {
 
         viewPager = (ViewPager) view.findViewById(R.id.pager);
         setupViewPager(viewPager);
+
+
         queue = NetworkController.getInstance(context).getRequestQueue();
+
+
         tabLayout = (TabLayout) view.findViewById(R.id.tabLayout);
-        ImageView profView = (ImageView) view.findViewById(R.id.edit_profile);
+
+        profViewEditButton = (ImageView) view.findViewById(R.id.edit_profile);
+        userProfileName = (TextView) view.findViewById(R.id.user_profile_name);
+        userProfileDepartment = (TextView) view.findViewById(R.id.user_profile_department);
+        userProfileCollege = (TextView) view.findViewById(R.id.user_profile_college);
+        profile_img = (NetworkImageView) view.findViewById(R.id.user_profile_photo);
 
         //Volley's inbuilt class to make Json array request
         makeJsonArrayRequestProfile();
 
-        profView.setOnClickListener(new View.OnClickListener() {
+        profViewEditButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent prof = new Intent(getActivity(),EditProfileActivity.class);
+                Intent prof = new Intent(getActivity(), EditProfileActivity.class);
                 startActivity(prof);
             }
         });
@@ -117,23 +128,23 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onResponse(JSONArray response) {
 
-                //clearing profileList
-                profileViewList.clear();
 
                 for (int i = 0; i < response.length(); i++) {
                     Log.d("error", response.toString());
                     try {
                         JSONObject obj = response.getJSONObject(i);
-                        ProfileHome profView = new ProfileHome(obj.getString("imgname"), obj.getString("fname"), obj.getString("department"), obj.getString("college"));
-                        // adding movie to profileList array
-                        profileViewList.add(profView);
+                        ProfileHome profileHome = new ProfileHome(obj.getString("imgname"), obj.getString("fname"), obj.getString("department"), obj.getString("college"));
+
+                        userProfileName.setText(profileHome.getProfileName());
+                        userProfileDepartment.setText(profileHome.getDepartmentName());
+                        userProfileCollege.setText(profileHome.getCollegeName());
+
+                        Log.d("error", "Error: " + Utils.BaseImageUri + profileHome.getImageName());
+                        profile_img.setImageUrl(Utils.BaseImageUri + profileHome.getImageName(), NetworkController.getInstance(context).getImageLoader());
+
 
                     } catch (Exception e) {
                         Log.d("error", e.getMessage());
-                        System.out.println(e.getMessage());
-                    } finally {
-                        //Notify adapter about data changes
-                        adapterProfileHome.notifyDataSetChanged();
                     }
                 }
             }
