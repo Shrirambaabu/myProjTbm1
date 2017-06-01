@@ -408,7 +408,7 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
         companySpinnerThree.setOnItemSelectedListener(this);
 
 
-        scrollView.setOnTouchListener((View.OnTouchListener) EditProfileActivity.this);
+        scrollView.setOnClickListener(this);
         checkBoxIntrested.setOnClickListener(this);
 
         submitbtn.setOnClickListener(this);
@@ -682,6 +682,8 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
         switch (v.getId()) {
             case R.id.profile_submit:
                 updateDetails();
+                break;
+            case R.id.checkBox:
                 break;
         }
     }
