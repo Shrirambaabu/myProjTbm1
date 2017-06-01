@@ -89,17 +89,17 @@ public class HomeEventFragment extends Fragment implements SwipeRefreshLayout.On
 
     private void eventRecyclerView(View view) {
         //mapping RecyclerView
-        RecyclerView post_view = (RecyclerView) view.findViewById(R.id.recycler_view_post);
+        RecyclerView event_view = (RecyclerView) view.findViewById(R.id.recycler_view_event);
         //feeding values to RecyclerView using custom RecyclerView adapter
         recyclerAdapterEventHome = new RecyclerAdapterEventHome(context, eventList);
 
         //setting fixed size
-        post_view.setHasFixedSize(true);
+        event_view.setHasFixedSize(true);
         //setting horizontal layout
-        post_view.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
-        mLayoutManager = (LinearLayoutManager) post_view.getLayoutManager();
+        event_view.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
+        mLayoutManager = (LinearLayoutManager) event_view.getLayoutManager();
         //setting RecyclerView adapter
-        post_view.setAdapter(recyclerAdapterEventHome);
+        event_view.setAdapter(recyclerAdapterEventHome);
         //Getting Instance of Volley Request Queue
         queue = NetworkController.getInstance(context).getRequestQueue();
 
@@ -113,7 +113,7 @@ public class HomeEventFragment extends Fragment implements SwipeRefreshLayout.On
             }
         });
 
-        post_view.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        event_view.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 if (dy > 0) {
@@ -205,7 +205,7 @@ public class HomeEventFragment extends Fragment implements SwipeRefreshLayout.On
                         try {
 
                             JSONObject obj = jsonObjectJSON.getJSONObject(i);
-                            Events event = new Events(obj.getString("eventname"), obj.getString("eventtype"), obj.getString("location"), obj.getString("datetime"), obj.getString("count"), obj.getString("event"), obj.getString("feedback"), obj.getString("Industry"), obj.getString("eventName"), obj.getString("created_user"), obj.getString("created_by"), obj.getString("imgname"), obj.getString("fname"));
+                            Events event = new Events(obj.getString("eventname"), obj.getString("eventtype"), obj.getString("location"), obj.getString("datetime"), obj.getString("count"), obj.getString("event"), obj.getString("notes"), obj.getString("Industry"), obj.getString("eventImgName"), obj.getString("created_uname"), obj.getString("created_by"), obj.getString("imgname"), obj.getString("fname"));
                             // adding movie to blogHomeList array
                             eventList.add(event);
 

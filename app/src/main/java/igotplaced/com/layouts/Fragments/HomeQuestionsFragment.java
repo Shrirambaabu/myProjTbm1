@@ -3,7 +3,6 @@ package igotplaced.com.layouts.Fragments;
 import android.content.SharedPreferences;
 import android.support.v4.app.Fragment;
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -26,9 +25,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import igotplaced.com.layouts.CustomAdapter.RecyclerAdapterPostHome;
-import igotplaced.com.layouts.CustomAdapter.RecyclerAdapterQustionsHome;
-import igotplaced.com.layouts.Model.Post;
+import igotplaced.com.layouts.CustomAdapter.RecyclerAdapterQuestionsHome;
 import igotplaced.com.layouts.Model.Questions;
 import igotplaced.com.layouts.R;
 import igotplaced.com.layouts.Utils.ClickListener;
@@ -49,7 +46,7 @@ public class HomeQuestionsFragment extends Fragment implements SwipeRefreshLayou
 
     private String userId;
     private List<Questions> questionsList = new ArrayList<Questions>();
-    private RecyclerAdapterQustionsHome recyclerAdapterPostQuestionsHome;
+    private RecyclerAdapterQuestionsHome recyclerAdapterQuestionsHome;
 
     int lastVisiblesItems, visibleItemCount, totalItemCount;
 
@@ -82,7 +79,7 @@ public class HomeQuestionsFragment extends Fragment implements SwipeRefreshLayou
         swipeRefreshLayout.setOnRefreshListener(this);
 
 
-        postRecyclerView(view);
+        questionRecyclerView(view);
 
         return view;
 
@@ -102,19 +99,19 @@ public class HomeQuestionsFragment extends Fragment implements SwipeRefreshLayou
         loadData();
     }
 
-    private void postRecyclerView(View view) {
+    private void questionRecyclerView(View view) {
         //mapping RecyclerView
-        RecyclerView post_view = (RecyclerView) view.findViewById(R.id.recycler_view_post);
+        RecyclerView questions_view = (RecyclerView) view.findViewById(R.id.recycler_view_questions);
         //feeding values to RecyclerView using custom RecyclerView adapter
-        recyclerAdapterPostQuestionsHome = new RecyclerAdapterQustionsHome(context, questionsList);
+        recyclerAdapterQuestionsHome = new RecyclerAdapterQuestionsHome(context, questionsList);
 
         //setting fixed size
-        post_view.setHasFixedSize(true);
+        questions_view.setHasFixedSize(true);
         //setting horizontal layout
-        post_view.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
-        mLayoutManager = (LinearLayoutManager) post_view.getLayoutManager();
+        questions_view.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
+        mLayoutManager = (LinearLayoutManager) questions_view.getLayoutManager();
         //setting RecyclerView adapter
-        post_view.setAdapter(recyclerAdapterPostQuestionsHome);
+        questions_view.setAdapter(recyclerAdapterQuestionsHome);
         //Getting Instance of Volley Request Queue
         queue = NetworkController.getInstance(context).getRequestQueue();
 
@@ -128,7 +125,7 @@ public class HomeQuestionsFragment extends Fragment implements SwipeRefreshLayou
             }
         });
 
-        post_view.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        questions_view.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 if (dy > 0) {
@@ -150,21 +147,21 @@ public class HomeQuestionsFragment extends Fragment implements SwipeRefreshLayou
             }
         });
 
-        recyclerAdapterPostQuestionsHome.setClickListener(this);
+        recyclerAdapterQuestionsHome.setClickListener(this);
 
     }
 
 
-    private void makeJsonObjectRequestPostHome(int start, int size) {
+    private void makeJsonObjectRequestQuestionsHome(int start, int size) {
 
         if (swipeRefreshLayout.isRefreshing()) {
             swipeRefreshLayout.setRefreshing(false);
         }
 
 
-        Log.d("error", "loaded" + BaseUri + "/home/topPost/" + userId + "?start=" + start + "&size=" + size);
+        Log.d("error", "loaded" + BaseUri + "/home/topQuestion/" + userId + "?start=" + start + "&size=" + size);
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, BaseUri + "/home/topPost/" + userId + "?start=" + start + "&size=" + size, null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, BaseUri + "/home/topQuestion/" + userId + "?start=" + start + "&size=" + size, null, new Response.Listener<JSONObject>() {
             JSONArray jsonObjectJSON = null;
 
             @Override
@@ -182,7 +179,7 @@ public class HomeQuestionsFragment extends Fragment implements SwipeRefreshLayou
                         try {
 
                             JSONObject obj = jsonObjectJSON.getJSONObject(i);
-                            Questions questions = new Questions(obj.getString("question"), obj.getString("Industry"), obj.getString("questionUserImgName"), obj.getString("created_user"), obj.getString("created_by"), obj.getString("imgname"), obj.getString("fname"));
+                            Questions questions = new Questions(obj.getString("question"), obj.getString("industryname"), obj.getString("questionUserImgName"), obj.getString("created_uname"), obj.getString("created_by"), obj.getString("imgname"), obj.getString("fname"));
                             // adding movie to blogHomeList array
                             questionsList.add(questions);
 
@@ -191,7 +188,7 @@ public class HomeQuestionsFragment extends Fragment implements SwipeRefreshLayou
                             System.out.println(e.getMessage());
                         } finally {
                             //Notify adapter about data changes
-                            recyclerAdapterPostQuestionsHome.notifyDataSetChanged();
+                            recyclerAdapterQuestionsHome.notifyDataSetChanged();
                             loading = false;
                         }
                     }
@@ -219,7 +216,7 @@ public class HomeQuestionsFragment extends Fragment implements SwipeRefreshLayou
         // I have not used current page for showing demo, if u use a webservice
         // then it is useful for every call request
         int loadLimit = 5;
-        makeJsonObjectRequestPostHome(0, loadLimit);
+        makeJsonObjectRequestQuestionsHome(0, loadLimit);
 
     }
 
@@ -228,9 +225,9 @@ public class HomeQuestionsFragment extends Fragment implements SwipeRefreshLayou
 
         // I have not used current page for showing demo, if u use a webservice
         // then it is useful for every call request
-        makeJsonObjectRequestPostHome(totalItemCount, totalItemCount + 10);
+        makeJsonObjectRequestQuestionsHome(totalItemCount, totalItemCount + 10);
 
-        recyclerAdapterPostQuestionsHome.notifyDataSetChanged();
+        recyclerAdapterQuestionsHome.notifyDataSetChanged();
 
     }
 

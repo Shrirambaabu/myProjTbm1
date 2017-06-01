@@ -22,14 +22,14 @@ import igotplaced.com.layouts.Utils.Utils;
  * Created by Admin on 5/31/2017.
  */
 
-    public class RecyclerAdapterQustionsHome extends RecyclerView.Adapter<RecyclerAdapterQustionsHome.MyViewHolder> {
+    public class RecyclerAdapterQuestionsHome extends RecyclerView.Adapter<RecyclerAdapterQuestionsHome.MyViewHolder> {
 
     private List<Questions> questionsList;
     private Context context;
     private LayoutInflater inflater;
     private ClickListener clickListener;
 
-    public RecyclerAdapterQustionsHome(Context context, List<Questions> questionsList) {
+    public RecyclerAdapterQuestionsHome(Context context, List<Questions> questionsList) {
 
         this.context = context;
         this.questionsList = questionsList;
@@ -41,7 +41,7 @@ import igotplaced.com.layouts.Utils.Utils;
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View rootView = inflater.inflate(R.layout.card_view_questions, parent, false);
-        return new RecyclerAdapterQustionsHome.MyViewHolder(rootView);
+        return new RecyclerAdapterQuestionsHome.MyViewHolder(rootView);
     }
 
     @Override
@@ -50,9 +50,8 @@ import igotplaced.com.layouts.Utils.Utils;
         //Pass the values of feeds object to Views
         holder.questions.setText(questions.getQuestions());
         holder.questionsIndustry.setText(questions.getQuestionsIndustry());
-        holder.questionsProfileName.setText(questions.getCommentProfileImage());
+        holder.questionsProfileName.setText(questions.getQuestionsProfileName());
         holder.questionsTime.setText(questions.getQuestionsTime());
-        holder.userQustionComments.setText(questions.getQuestionsTime());
         holder.comment_profile_img.setImageUrl(Utils.BaseImageUri + questions.getCommentProfileImage(), NetworkController.getInstance(context).getImageLoader());
         holder.questionsImage.setImageUrl(Utils.BaseImageUri + questions.getQuestionsImage(), NetworkController.getInstance(context).getImageLoader());
 
@@ -69,16 +68,15 @@ import igotplaced.com.layouts.Utils.Utils;
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private TextView questions, questionsIndustry, questionsProfileName, questionsTime,userQustionComments;
+        private TextView questions, questionsIndustry, questionsProfileName, questionsTime;
         private NetworkImageView questionsImage, comment_profile_img;
 
         public MyViewHolder(View itemView) {
             super(itemView);
             questions = (TextView) itemView.findViewById(R.id.questions);
-            questionsIndustry = (TextView) itemView.findViewById(R.id.post_industry);
+            questionsIndustry = (TextView) itemView.findViewById(R.id.questions_industry);
             questionsProfileName = (TextView) itemView.findViewById(R.id.questions_profile_name);
             questionsTime = (TextView) itemView.findViewById(R.id.questions_time);
-            userQustionComments = (TextView) itemView.findViewById(R.id.user_comment);
 
             // Volley's NetworkImageView which will load Image from URL
             questionsImage = (NetworkImageView) itemView.findViewById(R.id.questions_img);
