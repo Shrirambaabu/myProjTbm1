@@ -138,7 +138,7 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
 */
 
                     if (!loading) {
-                        loadMoreData(totalItemCount + 1);
+                        loadMoreData(totalItemCount);
                         loading = true;
                     }
 

@@ -11,8 +11,10 @@ import com.android.volley.toolbox.NetworkImageView;
 
 import java.util.List;
 
+import igotplaced.com.layouts.Fragments.NotificationFragment;
 import igotplaced.com.layouts.Model.NotificationView;
 import igotplaced.com.layouts.R;
+import igotplaced.com.layouts.Utils.ClickListener;
 import igotplaced.com.layouts.Utils.NetworkController;
 import igotplaced.com.layouts.Utils.Utils;
 
@@ -22,6 +24,8 @@ public class RecyclerAdapterNotification  extends RecyclerView.Adapter<RecyclerA
     private List<NotificationView> notificationViewList;
     private Context context;
     private LayoutInflater inflater;
+
+    private ClickListener clickListener;
 
     public RecyclerAdapterNotification(Context context, List<NotificationView> notificationList) {
 
@@ -52,6 +56,11 @@ public class RecyclerAdapterNotification  extends RecyclerView.Adapter<RecyclerA
     public int getItemCount() {
         return notificationViewList.size();
     }
+
+    public void setClickListener(ClickListener itemClickListener) {
+        this.clickListener = itemClickListener;
+    }
+
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
