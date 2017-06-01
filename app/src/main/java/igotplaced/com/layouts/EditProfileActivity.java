@@ -427,13 +427,12 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
         editProfileCollegeName=(CustomAutoCompleteView) findViewById(R.id.editProfileCollegeName);
         editProfileDepartment=(CustomAutoCompleteView) findViewById(R.id.editProfileDepartment) ;
 
-        checkBoxIntrested = (AppCompatCheckBox) findViewById(R.id.checkBox);
-
         scrollView = (ScrollView) findViewById(R.id.scroll_view_activity_register);
         scrollView.setDescendantFocusability(ViewGroup.FOCUS_BEFORE_DESCENDANTS);
         scrollView.setFocusable(true);
         scrollView.setFocusableInTouchMode(true);
 
+        checkBoxIntrested = (AppCompatCheckBox) findViewById(R.id.checkBoxProfile);
 
         mobileNumberEditText = (AppCompatEditText) findViewById(R.id.editProfileMobileNumber);
         locationEditText = (AppCompatAutoCompleteTextView) findViewById(R.id.editProfileLocation);
@@ -684,6 +683,9 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
                 updateDetails();
                 break;
             case R.id.checkBox:
+                if (checkBoxIntrested.isChecked()) {
+                    checkBoxIntrestedBoolean = checkBoxIntrested.isChecked();
+                }
                 break;
         }
     }
