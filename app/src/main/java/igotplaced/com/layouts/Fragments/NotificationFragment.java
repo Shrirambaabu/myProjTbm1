@@ -230,7 +230,6 @@ public class NotificationFragment extends Fragment implements SwipeRefreshLayout
 
         queue.add(jsonObjectRequest);
 
-
     }
 
 
