@@ -20,6 +20,7 @@ public class Events {
     private String commentProfileImage;
     private String userComment;
 
+
     public Events(String eventCaption, String eventDesignation, String eventVenue, String eventDate, String eventRegistered, String eventStatus, String event, String eventIndustry, String eventImage, String eventProfileName, String eventTime, String commentProfileImage, String userComment) {
         this.eventCaption = eventCaption;
         this.eventDesignation = eventDesignation;
@@ -28,6 +29,20 @@ public class Events {
         this.eventRegistered = eventRegistered;
         this.eventStatus = eventStatus;
         this.event = event;
+        this.eventIndustry = eventIndustry;
+        this.eventImage = eventImage;
+        this.eventProfileName = eventProfileName;
+        this.eventTime = eventTime;
+        this.commentProfileImage = commentProfileImage;
+        this.userComment = userComment;
+    }
+
+    public Events(String eventCaption, String eventDesignation, String eventVenue, String eventDate, String eventRegistered, String eventIndustry, String eventImage, String eventProfileName, String eventTime, String commentProfileImage, String userComment) {
+        this.eventCaption = eventCaption;
+        this.eventDesignation = eventDesignation;
+        this.eventVenue = eventVenue;
+        this.eventDate = eventDate;
+        this.eventRegistered = eventRegistered;
         this.eventIndustry = eventIndustry;
         this.eventImage = eventImage;
         this.eventProfileName = eventProfileName;

@@ -1,3 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/scroll_view_activity_profile"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -25,7 +34,7 @@
             android:elevation="5dp"
             android:padding="20dp"
             android:src="@drawable/logo"
-            app:cardCornerRadius="120dp"
+            app:cardCornerRadius="10dp"
             tools:targetApi="lollipop">
 
             <com.android.volley.toolbox.NetworkImageView
@@ -106,3 +115,4 @@
 
 
 </LinearLayout>
+</ScrollView>

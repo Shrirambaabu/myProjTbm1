@@ -16,6 +16,15 @@ public class Interview {
     public Interview() {
     }
 
+    public Interview(String interview, String interviewIndustry, String interviewImage, String interviewProfileName, String interviewTime, String userComment) {
+        this.interview = interview;
+        this.interviewIndustry = interviewIndustry;
+        this.interviewImage = interviewImage;
+        this.interviewProfileName = interviewProfileName;
+        this.interviewTime = interviewTime;
+        this.userComment = userComment;
+    }
+
     public Interview(String interview, String interviewIndustry, String interviewImage, String interviewProfileName, String interviewTime, String userImage, String userComment) {
         this.interview = interview;
         this.interviewIndustry = interviewIndustry;
