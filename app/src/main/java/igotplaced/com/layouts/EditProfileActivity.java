@@ -120,6 +120,7 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
         settingCompanySpinner();
 
         settingCheckBoxValue();
+        makeJsonArrayRequestProfile();
 
     }
 
