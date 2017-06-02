@@ -31,6 +31,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.thomashaertel.widget.MultiSpinner;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -59,7 +60,8 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
     private AppCompatEditText passwordEditText, confirmPasswordEditText, mobileNumberEditText;
     private AppCompatAutoCompleteTextView locationEditText;
     private TextInputLayout inputLayoutPassword, inputLayoutConfirmPassword, inputLayoutMobileNumber, inputLayoutLocation;
-    private AppCompatSpinner industrySpinnerOne = null, industrySpinnerTwo = null, industrySpinnerThree = null, companySpinnerOne = null, companySpinnerTwo = null, companySpinnerThree = null;
+    private AppCompatSpinner industrySpinnerOne = null, industrySpinnerTwo = null, industrySpinnerThree = null;
+    private MultiSpinner companySpinnerOne = null, companySpinnerTwo = null, companySpinnerThree = null;
     private AppCompatCheckBox checkBoxPassword;
     private boolean checkBoxPasswordBoolean = false;
 
@@ -156,9 +158,9 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
 
         companyArrayAdapter3 = new ArrayAdapter<String>(this, R.layout.spinner_item_custom);
 
-        companySpinnerOne.setAdapter(companyArrayAdapter1);
-        companySpinnerTwo.setAdapter(companyArrayAdapter2);
-        companySpinnerThree.setAdapter(companyArrayAdapter3);
+        companySpinnerOne.setAdapter(companyArrayAdapter1, false, onSelectedListener1);
+        companySpinnerTwo.setAdapter(companyArrayAdapter2, false, onSelectedListener2);
+        companySpinnerThree.setAdapter(companyArrayAdapter3, false, onSelectedListener3);
 
 
     }
@@ -365,9 +367,9 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
         industrySpinnerTwo = (AppCompatSpinner) findViewById(R.id.industry_spinner2);
         industrySpinnerThree = (AppCompatSpinner) findViewById(R.id.industry_spinner3);
 
-        companySpinnerOne = (AppCompatSpinner) findViewById(R.id.company_spinner1);
-        companySpinnerTwo = (AppCompatSpinner) findViewById(R.id.company_spinner2);
-        companySpinnerThree = (AppCompatSpinner) findViewById(R.id.company_spinner3);
+        companySpinnerOne = (MultiSpinner) findViewById(R.id.company_spinner1);
+        companySpinnerTwo = (MultiSpinner) findViewById(R.id.company_spinner2);
+        companySpinnerThree = (MultiSpinner) findViewById(R.id.company_spinner3);
 
         checkBoxPassword = (AppCompatCheckBox) findViewById(R.id.checkBoxPassword);
         regBtn = (AppCompatButton) findViewById(R.id.register_submit);
@@ -399,9 +401,9 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
         industrySpinnerOne.setOnItemSelectedListener(this);
         industrySpinnerTwo.setOnItemSelectedListener(this);
         industrySpinnerThree.setOnItemSelectedListener(this);
-        companySpinnerOne.setOnItemSelectedListener(this);
+      /*  companySpinnerOne.setOnItemSelectedListener(this);
         companySpinnerTwo.setOnItemSelectedListener(this);
-        companySpinnerThree.setOnItemSelectedListener(this);
+        companySpinnerThree.setOnItemSelectedListener(this);*/
 
     }
 
@@ -416,22 +418,16 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
         if (!Validation.validatePasswordConfirmPassword(passwordEditText, confirmPasswordEditText, inputLayoutConfirmPassword, RegisterPasswordActivity.this)) {
             return;
         }
-        if (Objects.equals(industrySpinnerOneValue, "") || Objects.equals(companySpinnerOneValue, "")) {
+        if (Objects.equals(industrySpinnerOneValue, "")) {
             if (Objects.equals(industrySpinnerOneValue, "")) {
                 industrySpinnerOne.setFocusable(true);
                 industrySpinnerOne.setFocusableInTouchMode(true);
                 industrySpinnerOne.requestFocus();
                 Utils.setSpinnerError(industrySpinnerOne, "Field can't be empty", RegisterPasswordActivity.this);
                 return;
-            } else {
-                companySpinnerOne.setFocusable(true);
-                companySpinnerOne.setFocusableInTouchMode(true);
-                companySpinnerOne.requestFocus();
-                Utils.setSpinnerError(companySpinnerOne, "Field can't be empty", RegisterPasswordActivity.this);
-                return;
             }
         }
-        if (Objects.equals(industrySpinnerTwoValue, "") || Objects.equals(companySpinnerTwoValue, "")) {
+     /*   if (Objects.equals(industrySpinnerTwoValue, "") || Objects.equals(companySpinnerTwoValue, "")) {
             if (Objects.equals(industrySpinnerTwoValue, "") && !Objects.equals(companySpinnerTwoValue, "")) {
                 industrySpinnerTwo.setFocusable(true);
                 industrySpinnerTwo.setFocusableInTouchMode(true);
@@ -461,7 +457,7 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
                 Utils.setSpinnerError(companySpinnerThree, "Field can't be empty", RegisterPasswordActivity.this);
                 return;
             }
-        }
+        }*/
 
         if (checkBoxPassword.isChecked()) {
 
@@ -574,13 +570,13 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
                     industrySpinnerOneValue = "";
                 }
                 break;
-            case R.id.company_spinner1:
+            /*case R.id.company_spinner1:
                 if (position != 0) {
                     companySpinnerOneValue = companySpinnerOne.getSelectedItem().toString();
                 } else {
                     companySpinnerOneValue = "";
                 }
-                break;
+                break;*/
             case R.id.industry_spinner2:
                 if (position != 0) {
                     industrySpinnerTwoValue = industrySpinnerTwo.getSelectedItem().toString();
@@ -589,13 +585,13 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
                     industrySpinnerTwoValue = "";
                 }
                 break;
-            case R.id.company_spinner2:
+            /*case R.id.company_spinner2:
                 if (position != 0) {
                     companySpinnerTwoValue = companySpinnerTwo.getSelectedItem().toString();
                 } else {
                     companySpinnerTwoValue = "";
                 }
-                break;
+                break;*/
             case R.id.industry_spinner3:
                 if (position != 0) {
                     industrySpinnerThreeValue = industrySpinnerThree.getSelectedItem().toString();
@@ -604,13 +600,13 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
                     industrySpinnerThreeValue = "";
                 }
                 break;
-            case R.id.company_spinner3:
-                if (position != 0) {
+             /*case R.id.company_spinner3:
+               if (position != 0) {
                     companySpinnerThreeValue = companySpinnerThree.getSelectedItem().toString();
                 } else {
                     companySpinnerThreeValue = "";
                 }
-                break;
+                break;*/
         }
     }
 
@@ -679,4 +675,66 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
             }
         }
     }
+
+
+
+    private MultiSpinner.MultiSpinnerListener onSelectedListener1 = new MultiSpinner.MultiSpinnerListener() {
+        public void onItemsSelected(boolean[] selected) {
+            // Do something here with the selected items
+            StringBuilder builder = new StringBuilder();
+
+            for (int i = 0; i < selected.length; i++) {
+                if (selected[i]) {
+                    builder.append(companyArrayAdapter1.getItem(i)).append(",");
+                }
+            }
+            if (!builder.toString().equals("")) {
+                companySpinnerOneValue = builder.toString();
+            } else {
+                companySpinnerOneValue = "";
+            }
+        }
+    };
+
+
+    private MultiSpinner.MultiSpinnerListener onSelectedListener2 = new MultiSpinner.MultiSpinnerListener() {
+        public void onItemsSelected(boolean[] selected) {
+            // Do something here with the selected items
+            StringBuilder builder = new StringBuilder();
+
+            for (int i = 0; i < selected.length; i++) {
+                if (selected[i]) {
+                    builder.append(companyArrayAdapter2.getItem(i)).append(",");
+                }
+            }
+            if (!builder.toString().equals("")) {
+                companySpinnerTwoValue = builder.toString();
+            } else {
+                companySpinnerTwoValue = "";
+            }
+        }
+    };
+
+
+    private MultiSpinner.MultiSpinnerListener onSelectedListener3 = new MultiSpinner.MultiSpinnerListener() {
+        public void onItemsSelected(boolean[] selected) {
+            // Do something here with the selected items
+            StringBuilder builder = new StringBuilder();
+
+            for (int i = 0; i < selected.length; i++) {
+                if (selected[i]) {
+                    builder.append(companyArrayAdapter3.getItem(i)).append(",");
+                }
+            }
+
+            if (!builder.toString().equals("")) {
+                companySpinnerThreeValue = builder.toString();
+            } else {
+                companySpinnerThreeValue = "";
+            }
+        }
+    };
+
+
+
 }

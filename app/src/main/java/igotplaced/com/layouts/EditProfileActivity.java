@@ -60,7 +60,6 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
 
     private String department, college;
 
-
     private String industrySpinnerOneValue = "", industrySpinnerTwoValue = "", industrySpinnerThreeValue = "";
     private String companySpinnerOneValue = "", companySpinnerTwoValue = "", companySpinnerThreeValue = "";
 
