@@ -18,12 +18,12 @@
         <android.support.v7.widget.CardView
             android:layout_width="120dp"
             android:layout_height="120dp"
+            android:id="@+id/profile_image_card"
             android:layout_alignTop="@+id/edit_profile"
             android:layout_centerHorizontal="true"
             android:background="@drawable/profile_circular_border_imageview"
             android:elevation="5dp"
             android:padding="20dp"
-            android:scaleType="centerCrop"
             android:src="@drawable/logo"
             app:cardCornerRadius="@dimen/margin_96"
             tools:targetApi="lollipop">
@@ -32,7 +32,9 @@
                 android:id="@+id/user_profile_photo"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
+                android:scaleType="centerCrop"
                 android:layout_alignTop="@+id/edit_profile" />
+
         </android.support.v7.widget.CardView>
 
         <ImageView
@@ -48,7 +50,7 @@
             android:id="@+id/user_profile_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/user_profile_photo"
+            android:layout_below="@+id/profile_image_card"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/margin_16"
             android:textColor="#fff"
