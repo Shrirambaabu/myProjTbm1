@@ -45,7 +45,7 @@
 
             <TextView
                 android:id="@+id/notify_time"
-                android:layout_width="match_parent"
+                android:layout_width="295dp"
                 android:layout_height="wrap_content"
                 android:gravity="end"
                 android:paddingTop="@dimen/margin_2"

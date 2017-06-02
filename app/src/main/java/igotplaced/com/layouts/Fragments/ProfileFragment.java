@@ -133,6 +133,8 @@ public class ProfileFragment extends Fragment {
                     Log.d("error", response.toString());
                     try {
                         JSONObject obj = response.getJSONObject(i);
+
+
                         ProfileHome profileHome = new ProfileHome(obj.getString("imgname"), obj.getString("fname"), obj.getString("department"), obj.getString("college"));
 
                         userProfileName.setText(profileHome.getProfileName());

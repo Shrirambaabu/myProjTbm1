@@ -2,6 +2,7 @@ package igotplaced.com.layouts.Fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -11,14 +12,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -26,12 +30,16 @@ import java.util.List;
 
 import igotplaced.com.layouts.CustomAdapter.RecyclerAdapterBlogHome;
 import igotplaced.com.layouts.Model.BlogHome;
+import igotplaced.com.layouts.Model.Post;
 import igotplaced.com.layouts.R;
 import igotplaced.com.layouts.Utils.BlogDetailsActivity;
 import igotplaced.com.layouts.Utils.ClickListener;
 import igotplaced.com.layouts.Utils.NetworkController;
 
 import static igotplaced.com.layouts.Utils.Utils.BaseUri;
+import static igotplaced.com.layouts.Utils.Utils.Id;
+import static igotplaced.com.layouts.Utils.Utils.MyPREFERENCES;
+import static igotplaced.com.layouts.Utils.Utils.Name;
 
 public class BlogFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, ClickListener {
 
@@ -39,7 +47,10 @@ public class BlogFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     private RequestQueue queue;
 
     private SwipeRefreshLayout swipeRefreshLayout;
-
+    private String userId;
+    int lastVisiblesItems, visibleItemCount, totalItemCount;
+    private LinearLayoutManager mLayoutManager;
+    private boolean loading, swipe = false;
     private List<BlogHome> blogHomeList = new ArrayList<BlogHome>();
     private RecyclerAdapterBlogHome recyclerAdapterBlogHome;
 
@@ -56,12 +67,29 @@ public class BlogFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         View view = inflater.inflate(R.layout.fragment_blog, container, false);
         context = getActivity().getApplicationContext();
 
+
+        //mapping web view
+        mapping(view);
+
+        mLayoutManager = new LinearLayoutManager(context);
+
+        SharedPreferences sharedpreferences = context.getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+        String userName = sharedpreferences.getString(Name, null);
+        userId = sharedpreferences.getString(Id, null);
+
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_layout);
         swipeRefreshLayout.setOnRefreshListener(this);
 
         blogRecyclerView(view);
 
         return view;
+    }
+
+    private void mapping(View view) {
+
+
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_layout);
+        swipeRefreshLayout.setOnRefreshListener(this);
     }
 
     @Override
@@ -77,7 +105,7 @@ public class BlogFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         int loadLimit = 4;
 
         //Volley's inbuilt class to make Json array request
-        makeJsonArrayRequestBlog(1,loadLimit);
+        makeJsonArrayRequestBlog(0,loadLimit);
 
     }
 
@@ -107,7 +135,40 @@ public class BlogFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 }
         );
 
+        blog_view.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0) {
+
+                    visibleItemCount = mLayoutManager.getChildCount();
+                    totalItemCount = mLayoutManager.getItemCount();
+                    lastVisiblesItems = mLayoutManager.findFirstVisibleItemPosition();
+/*
+
+                    Log.d("error", ""+visibleItemCount+totalItemCount+lastVisiblesItems);
+*/
+
+                    if (!loading) {
+                        loadMoreData(totalItemCount);
+                        loading = true;
+                    }
+
+                }
+            }
+        });
+
         recyclerAdapterBlogHome.setClickListener(this);
+
+    }
+
+    private void loadMoreData(int totalItemCount) {
+
+        // I have not used current page for showing demo, if u use a webservice
+        // then it is useful for every call request
+        makeJsonArrayRequestBlog(totalItemCount, totalItemCount + 3 );
+
+        recyclerAdapterBlogHome.notifyDataSetChanged();
+
 
     }
 
@@ -116,29 +177,45 @@ public class BlogFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         if (swipeRefreshLayout.isRefreshing()) {
             swipeRefreshLayout.setRefreshing(false);
         }
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET , BaseUri + "/blogService/blog"+ "?start=" + start + "&size=" + size, null, new Response.Listener<JSONArray>() {
+
+
+
+
+        Log.d("error", "loaded" + BaseUri + "/blogService/blog" + userId + "?start=" + start + "&size=" + size);
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, BaseUri + "/blogService/blog?start=" + start + "&size=" + size, null, new Response.Listener<JSONObject>() {
+            JSONArray jsonObjectJSON = null;
 
             @Override
-            public void onResponse(JSONArray response) {
+            public void onResponse(JSONObject jsonObject) {
+/*
+                Log.d("error", jsonObject.toString());*/
+                try {
+                    jsonObjectJSON = jsonObject.getJSONArray("");
 
-                //clearing blogList
-                blogHomeList.clear();
+                    blogHomeList.clear();
 
-                for (int i = 0; i < response.length(); i++) {
-                    Log.d("error", response.toString());
-                    try {
-                        JSONObject obj = response.getJSONObject(i);
-                        BlogHome blogView = new BlogHome(obj.getString("image"), obj.getString("header"), obj.getString("author"), obj.getString("modified_by"), obj.getString("id"));
-                        // adding movie to blogHomeList array
-                        blogHomeList.add(blogView);
+                    for (int i = 0; i < jsonObjectJSON.length(); i++) {
+                     /*   Log.d("error", jsonObjectJSON.toString());*/
+                        try {
 
-                    } catch (Exception e) {
-                        Log.d("error", e.getMessage());
-                        System.out.println(e.getMessage());
-                    } finally {
-                        //Notify adapter about data changes
-                        recyclerAdapterBlogHome.notifyDataSetChanged();
+                            JSONObject obj = jsonObjectJSON.getJSONObject(i);
+                            BlogHome blogHome = new BlogHome(obj.getString("image"), obj.getString("header"), obj.getString("author"), obj.getString("modified_by"), obj.getString("id"));
+                            // adding movie to blogHomeList array
+                            blogHomeList.add(blogHome);
+
+                        } catch (Exception e) {
+                            Log.d("error", e.getMessage());
+                            System.out.println(e.getMessage());
+                        } finally {
+                            //Notify adapter about data changes
+                            recyclerAdapterBlogHome.notifyDataSetChanged();
+                            loading = false;
+                        }
                     }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
             }
 
@@ -151,7 +228,7 @@ public class BlogFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             }
         });
 
-        queue.add(jsonArrayRequest);
+        queue.add(jsonObjectRequest);
 
     }
 

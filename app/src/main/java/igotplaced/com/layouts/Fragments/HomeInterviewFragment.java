@@ -218,8 +218,8 @@ public class HomeInterviewFragment extends Fragment implements SwipeRefreshLayou
     private void loadData() {
         // I have not used current page for showing demo, if u use a webservice
         // then it is useful for every call request
-        int loadLimit = 10;
-        makeJsonObjectRequestInterviewHome(1, loadLimit);
+        int loadLimit = 5;
+        makeJsonObjectRequestInterviewHome(0, loadLimit);
 
     }
 
