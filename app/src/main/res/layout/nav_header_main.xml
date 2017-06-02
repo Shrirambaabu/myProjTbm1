@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/view_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -17,12 +18,22 @@
         android:orientation="vertical"
         android:padding="@dimen/margin_16">
 
-        <ImageView
-            android:id="@+id/img_profile"
-            android:layout_width="@dimen/margin_75"
-            android:layout_height="@dimen/margin_75"
-            android:paddingTop="@dimen/margin_16"
-            app:srcCompat="@android:drawable/sym_def_app_icon" />
+        <android.support.v7.widget.CardView
+            android:id="@+id/img_profile_card"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_weight="1"
+            app:cardCornerRadius="5dp"
+            tools:targetApi="lollipop">
+
+            <com.android.volley.toolbox.NetworkImageView
+                android:id="@+id/img_profile"
+                android:layout_width="@dimen/margin_75"
+                android:layout_height="@dimen/margin_75"
+                app:srcCompat="@android:drawable/sym_def_app_icon" />
+        </android.support.v7.widget.CardView>
+
+
 
         <TextView
             android:id="@+id/name"

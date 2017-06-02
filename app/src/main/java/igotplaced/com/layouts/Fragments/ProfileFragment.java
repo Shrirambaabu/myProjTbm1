@@ -44,7 +44,6 @@ public class ProfileFragment extends Fragment {
     private Context context;
     private RequestQueue queue;
 
-
     private ImageView profViewEditButton;
     private NetworkImageView profile_img;
     private TextView userProfileName,userProfileDepartment,userProfileCollege;
