@@ -1,7 +1,9 @@
 package igotplaced.com.layouts;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,6 +14,7 @@ import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatSpinner;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -32,30 +35,40 @@ import com.thomashaertel.widget.MultiSpinner;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import igotplaced.com.layouts.Model.Profile;
+import igotplaced.com.layouts.Model.ProfileHome;
 import igotplaced.com.layouts.Utils.CustomAutoCompleteView;
 import igotplaced.com.layouts.Utils.MyApplication;
+import igotplaced.com.layouts.Utils.NetworkController;
 import igotplaced.com.layouts.Utils.Utils;
 import igotplaced.com.layouts.Utils.Validation;
 
 import static igotplaced.com.layouts.Utils.Utils.BaseUri;
+import static igotplaced.com.layouts.Utils.Utils.Email;
+import static igotplaced.com.layouts.Utils.Utils.Id;
+import static igotplaced.com.layouts.Utils.Utils.MyPREFERENCES;
+import static igotplaced.com.layouts.Utils.Utils.Name;
 
 public class EditProfileActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
     private String yearPassOutSpinnerValue = null;
     private ScrollView scrollView;
-    private NetworkImageView profileImage;
+
+    private RequestQueue queue;
+
     private AppCompatEditText editProfileName, editProfileEmail;
     private CustomAutoCompleteView editProfileCollegeName, editProfileDepartment;
     private AppCompatSpinner passOutYearSpinner;
     private TextInputLayout profileName, profileEmailAddress, profileViewCollege, profileViewDepartment;
     private AppCompatButton submitbtn;
     private AppCompatCheckBox checkBoxIntrested;
-    private boolean checkBoxIntrestedBoolean = false;
+    private NetworkImageView profileImage;
     private ArrayAdapter<String> departmentAutoCompleteAdapter, collegeAutoCompleteAdapter;
 
     private String department, college;
@@ -69,13 +82,14 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
     private AppCompatSpinner industrySpinnerOne = null, industrySpinnerTwo = null, industrySpinnerThree = null;
     private MultiSpinner companySpinnerOne = null, companySpinnerTwo = null, companySpinnerThree = null;
 
-    private ArrayAdapter<String> spinnerYearArrayAdapter, spinnerArrayAdapter, companyArrayAdapter1, companyArrayAdapter2, companyArrayAdapter3;
+    private ArrayAdapter<String> spinnerYearArrayAdapter, spinnerArrayAdapterI1,spinnerArrayAdapterI2,spinnerArrayAdapterI3, companyArrayAdapter1, companyArrayAdapter2, companyArrayAdapter3;
     private List<String> industrySpinnerArrayList;
 
 
-    private Intent intent;
-    String userId, interest;
+    private SharedPreferences sharedpreferences;
+    private String userName = null, userId = null, userEmail;
 
+    private int yearOfPassOutSpinnerPosition = 0,industry1SpinnerPosition =0,industry2SpinnerPosition=0,industry3SpinnerPosition=0;
 
     private ProgressDialog pDialog;
     private String URL = BaseUri;
@@ -86,6 +100,14 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
         setContentView(R.layout.activity_edit_profile);
 
         addressingView();
+
+        queue = NetworkController.getInstance(EditProfileActivity.this).getRequestQueue();
+
+        sharedpreferences =  getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+        userName = sharedpreferences.getString(Name, null);
+        userId = sharedpreferences.getString(Id, null);
+        userEmail = sharedpreferences.getString(Email, null);
+
 
         addingListener();
 
@@ -109,50 +131,6 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
             mobileNumberEditText.setEnabled(false);
             locationEditText.setEnabled(false);
         }
-    }
-
-
-    private void addressingView() {
-
-        profileName = (TextInputLayout) findViewById(R.id.profileName);
-        profileEmailAddress = (TextInputLayout) findViewById(R.id.profileEmailAddress);
-        profileViewCollege = (TextInputLayout) findViewById(R.id.profileViewCollege);
-        profileViewDepartment = (TextInputLayout) findViewById(R.id.profileViewDepartment);
-
-
-        editProfileName = (AppCompatEditText) findViewById(R.id.editProfileName);
-        editProfileEmail = (AppCompatEditText) findViewById(R.id.editProfileEmail);
-        editProfileCollegeName = (CustomAutoCompleteView) findViewById(R.id.editProfileCollegeName);
-        editProfileDepartment = (CustomAutoCompleteView) findViewById(R.id.editProfileDepartment);
-
-        checkBoxIntrested = (AppCompatCheckBox) findViewById(R.id.checkBoxProfile);
-
-        scrollView = (ScrollView) findViewById(R.id.scroll_view_activity_register);
-        scrollView.setDescendantFocusability(ViewGroup.FOCUS_BEFORE_DESCENDANTS);
-        scrollView.setFocusable(true);
-        scrollView.setFocusableInTouchMode(true);
-
-
-        mobileNumberEditText = (AppCompatEditText) findViewById(R.id.editProfileMobileNumber);
-        locationEditText = (AppCompatAutoCompleteTextView) findViewById(R.id.editProfileLocation);
-
-        industrySpinnerOne = (AppCompatSpinner) findViewById(R.id.profile_industry_spinner1);
-        industrySpinnerTwo = (AppCompatSpinner) findViewById(R.id.profile_industry_spinner2);
-        industrySpinnerThree = (AppCompatSpinner) findViewById(R.id.profile_industry_spinner3);
-
-        companySpinnerOne = (MultiSpinner) findViewById(R.id.profile_company_spinner1);
-        companySpinnerTwo = (MultiSpinner) findViewById(R.id.profile_company_spinner2);
-        companySpinnerThree = (MultiSpinner) findViewById(R.id.profile_company_spinner3);
-
-
-        inputLayoutMobileNumber = (TextInputLayout) findViewById(R.id.profileViewMobileNumberTextInputLayout);
-        inputLayoutLocation = (TextInputLayout) findViewById(R.id.profileViewLocationTextInputLayout);
-
-        submitbtn = (AppCompatButton) findViewById(R.id.profile_submit);
-
-
-        passOutYearSpinner = (AppCompatSpinner) findViewById(R.id.profile_passed_out_year_spinner);
-
     }
 
     private void addingListener() {
@@ -474,11 +452,13 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
 
     private void settingIndustrySpinner() {
         List<String> industryList = networkIndustrySpinnerArrayRequest();
-        spinnerArrayAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item_custom, industryList);
+        spinnerArrayAdapterI1 = new ArrayAdapter<String>(this, R.layout.spinner_item_custom, industryList);
+        spinnerArrayAdapterI2 = new ArrayAdapter<String>(this, R.layout.spinner_item_custom, industryList);
+        spinnerArrayAdapterI3 = new ArrayAdapter<String>(this, R.layout.spinner_item_custom, industryList);
 
-        industrySpinnerOne.setAdapter(spinnerArrayAdapter);
-        industrySpinnerTwo.setAdapter(spinnerArrayAdapter);
-        industrySpinnerThree.setAdapter(spinnerArrayAdapter);
+        industrySpinnerOne.setAdapter(spinnerArrayAdapterI1);
+        industrySpinnerTwo.setAdapter(spinnerArrayAdapterI2);
+        industrySpinnerThree.setAdapter(spinnerArrayAdapterI3);
 
 
     }
@@ -496,7 +476,9 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
                 for (int i = 0; i < response.length(); i++) {
                     try {
                         industrySpinnerArrayList.add(String.valueOf(response.get(i)));
-                        spinnerArrayAdapter.notifyDataSetChanged();
+                        spinnerArrayAdapterI1.notifyDataSetChanged();
+                        spinnerArrayAdapterI2.notifyDataSetChanged();
+                        spinnerArrayAdapterI3.notifyDataSetChanged();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -899,6 +881,130 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
             }
         }
     };
+
+
+
+
+    private void addressingView() {
+
+        profileName = (TextInputLayout) findViewById(R.id.profileName);
+        profileEmailAddress = (TextInputLayout) findViewById(R.id.profileEmailAddress);
+        profileViewCollege = (TextInputLayout) findViewById(R.id.profileViewCollege);
+        profileViewDepartment = (TextInputLayout) findViewById(R.id.profileViewDepartment);
+
+        profileImage = (NetworkImageView) findViewById(R.id.editProfileImage);
+
+        editProfileName = (AppCompatEditText) findViewById(R.id.editProfileName);
+        editProfileEmail = (AppCompatEditText) findViewById(R.id.editProfileEmail);
+        editProfileCollegeName = (CustomAutoCompleteView) findViewById(R.id.editProfileCollegeName);
+        editProfileDepartment = (CustomAutoCompleteView) findViewById(R.id.editProfileDepartment);
+
+        checkBoxIntrested = (AppCompatCheckBox) findViewById(R.id.checkBoxProfile);
+
+        scrollView = (ScrollView) findViewById(R.id.scroll_view_activity_register);
+        scrollView.setDescendantFocusability(ViewGroup.FOCUS_BEFORE_DESCENDANTS);
+        scrollView.setFocusable(true);
+        scrollView.setFocusableInTouchMode(true);
+
+
+        mobileNumberEditText = (AppCompatEditText) findViewById(R.id.editProfileMobileNumber);
+        locationEditText = (AppCompatAutoCompleteTextView) findViewById(R.id.editProfileLocation);
+
+        industrySpinnerOne = (AppCompatSpinner) findViewById(R.id.profile_industry_spinner1);
+        industrySpinnerTwo = (AppCompatSpinner) findViewById(R.id.profile_industry_spinner2);
+        industrySpinnerThree = (AppCompatSpinner) findViewById(R.id.profile_industry_spinner3);
+
+        companySpinnerOne = (MultiSpinner) findViewById(R.id.profile_company_spinner1);
+        companySpinnerTwo = (MultiSpinner) findViewById(R.id.profile_company_spinner2);
+        companySpinnerThree = (MultiSpinner) findViewById(R.id.profile_company_spinner3);
+
+
+        inputLayoutMobileNumber = (TextInputLayout) findViewById(R.id.profileViewMobileNumberTextInputLayout);
+        inputLayoutLocation = (TextInputLayout) findViewById(R.id.profileViewLocationTextInputLayout);
+
+        submitbtn = (AppCompatButton) findViewById(R.id.profile_submit);
+
+        passOutYearSpinner = (AppCompatSpinner) findViewById(R.id.profile_passed_out_year_spinner);
+
+    }
+
+
+
+    private void makeJsonArrayRequestProfile() {
+
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(BaseUri + "/profileService/profileEdit/"+userId, new Response.Listener<JSONArray>() {
+
+            @Override
+            public void onResponse(JSONArray response) {
+
+
+                for (int i = 0; i < response.length(); i++) {
+                    Log.d("error", response.toString());
+                    try {
+                        JSONObject obj = response.getJSONObject(i);
+
+                        Profile profile = new Profile(obj.getString("imgname"),obj.getString("fname"),obj.getString("department"),
+                                obj.getString("college"),obj.getString("email"),obj.getString("passout"),obj.getString("interest"),
+                                obj.getString("phone"),obj.getString("location"),obj.getString("industry1"),obj.getString("industry2"),
+                                obj.getString("industry3"),obj.getString("company1"),obj.getString("company2"),obj.getString("company3"));
+
+
+                        editProfileName.setText(profile.getProfileName());
+                        editProfileEmail.setText(profile.getEmail());
+                        editProfileCollegeName.setText(profile.getCollegeName());
+
+                        checkBoxIntrested.setChecked(Boolean.parseBoolean(profile.getInterest()));
+
+                        editProfileDepartment.setText(profile.getDepartmentName());
+                        locationEditText.setText(profile.getLocation());
+                        mobileNumberEditText.setText(profile.getCollegeName());
+
+                        if (!profile.getYearOfPassOut().equals(null)) {
+                            yearOfPassOutSpinnerPosition = spinnerYearArrayAdapter.getPosition(profile.getYearOfPassOut());
+                            passOutYearSpinner.setSelection(yearOfPassOutSpinnerPosition);
+                        }
+
+                        if (!profile.getCompany1().equals(null)) {
+                            industry1SpinnerPosition = spinnerArrayAdapterI1.getPosition(profile.getCompany1());
+                            industrySpinnerOne.setSelection(industry1SpinnerPosition);
+                        }
+
+                        if (!profile.getCompany2().equals(null)) {
+                            industry2SpinnerPosition = spinnerArrayAdapterI2.getPosition(profile.getCompany2());
+                            industrySpinnerTwo.setSelection(industry2SpinnerPosition);
+                        }
+
+                        if (!profile.getCompany3().equals(null)) {
+                            industry3SpinnerPosition = spinnerArrayAdapterI3.getPosition(profile.getCompany3());
+                            industrySpinnerThree.setSelection(industry3SpinnerPosition);
+                        }
+
+
+                        companySpinnerOne.setAllText(profile.getCompany1());
+                        companySpinnerTwo.setAllText(profile.getCompany2());
+                        companySpinnerThree.setAllText(profile.getCompany3());
+
+                        profileImage.setImageUrl(Utils.BaseImageUri + profile.getImageName(), NetworkController.getInstance(EditProfileActivity.this).getImageLoader());
+
+
+                    } catch (Exception e) {
+                        Log.d("error", e.getMessage());
+                    }
+                }
+            }
+
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("error", "Error: " + error.getMessage());
+            }
+        });
+
+        queue.add(jsonArrayRequest);
+
+    }
+
 
 }
 

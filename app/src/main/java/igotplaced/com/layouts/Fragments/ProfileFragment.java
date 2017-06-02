@@ -2,6 +2,7 @@ package igotplaced.com.layouts.Fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -14,7 +15,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -37,6 +37,10 @@ import igotplaced.com.layouts.Utils.NetworkController;
 import igotplaced.com.layouts.Utils.Utils;
 
 import static igotplaced.com.layouts.Utils.Utils.BaseUri;
+import static igotplaced.com.layouts.Utils.Utils.Email;
+import static igotplaced.com.layouts.Utils.Utils.Id;
+import static igotplaced.com.layouts.Utils.Utils.MyPREFERENCES;
+import static igotplaced.com.layouts.Utils.Utils.Name;
 
 
 public class ProfileFragment extends Fragment {
@@ -46,7 +50,7 @@ public class ProfileFragment extends Fragment {
 
     private ImageView profViewEditButton;
     private NetworkImageView profile_img;
-    private TextView userProfileName,userProfileDepartment,userProfileCollege;
+    private TextView userProfileName, userProfileDepartment, userProfileCollege;
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -59,6 +63,8 @@ public class ProfileFragment extends Fragment {
             R.drawable.ic_forum_white_24dp
     };
 
+    private SharedPreferences sharedpreferences;
+    private String userName = null, userId = null, userEmail;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -72,7 +78,7 @@ public class ProfileFragment extends Fragment {
             container.removeAllViews();
         }*/
 
-        context =  getActivity().getApplicationContext();
+        context = getActivity().getApplicationContext();
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
@@ -85,6 +91,12 @@ public class ProfileFragment extends Fragment {
 
 
         queue = NetworkController.getInstance(context).getRequestQueue();
+
+
+         sharedpreferences =  context.getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+         userName = sharedpreferences.getString(Name, null);
+         userId = sharedpreferences.getString(Id, null);
+         userEmail = sharedpreferences.getString(Email, null);
 
 
         tabLayout = (TabLayout) view.findViewById(R.id.tabLayout);
@@ -122,7 +134,7 @@ public class ProfileFragment extends Fragment {
 
     private void makeJsonArrayRequestProfile() {
 
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(BaseUri + "/profileService/profile/3", new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(BaseUri + "/profileService/profile/"+userId, new Response.Listener<JSONArray>() {
 
             @Override
             public void onResponse(JSONArray response) {
