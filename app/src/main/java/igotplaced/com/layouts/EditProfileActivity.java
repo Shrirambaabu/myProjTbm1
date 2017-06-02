@@ -28,6 +28,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
+import com.thomashaertel.widget.MultiSpinner;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -66,7 +67,8 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
     private AppCompatEditText mobileNumberEditText;
     private AppCompatAutoCompleteTextView locationEditText;
     private TextInputLayout inputLayoutMobileNumber, inputLayoutLocation;
-    private AppCompatSpinner industrySpinnerOne = null, industrySpinnerTwo = null, industrySpinnerThree = null, companySpinnerOne = null, companySpinnerTwo = null, companySpinnerThree = null;
+    private AppCompatSpinner industrySpinnerOne = null, industrySpinnerTwo = null, industrySpinnerThree = null;
+    private MultiSpinner companySpinnerOne = null, companySpinnerTwo = null, companySpinnerThree = null;
 
     private ArrayAdapter<String> spinnerYearArrayAdapter, spinnerArrayAdapter, companyArrayAdapter1, companyArrayAdapter2, companyArrayAdapter3;
     private List<String> industrySpinnerArrayList;
@@ -139,9 +141,9 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
         industrySpinnerTwo = (AppCompatSpinner) findViewById(R.id.profile_industry_spinner2);
         industrySpinnerThree = (AppCompatSpinner) findViewById(R.id.profile_industry_spinner3);
 
-        companySpinnerOne = (AppCompatSpinner) findViewById(R.id.profile_company_spinner1);
-        companySpinnerTwo = (AppCompatSpinner) findViewById(R.id.profile_company_spinner2);
-        companySpinnerThree = (AppCompatSpinner) findViewById(R.id.profile_company_spinner3);
+        companySpinnerOne = (MultiSpinner) findViewById(R.id.profile_company_spinner1);
+        companySpinnerTwo = (MultiSpinner) findViewById(R.id.profile_company_spinner2);
+        companySpinnerThree = (MultiSpinner) findViewById(R.id.profile_company_spinner3);
 
 
         inputLayoutMobileNumber = (TextInputLayout) findViewById(R.id.profileViewMobileNumberTextInputLayout);
@@ -171,11 +173,10 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
 
         industrySpinnerOne.setOnItemSelectedListener(this);
         industrySpinnerTwo.setOnItemSelectedListener(this);
-        industrySpinnerThree.setOnItemSelectedListener(this);
+        industrySpinnerThree.setOnItemSelectedListener(this);/*
         companySpinnerOne.setOnItemSelectedListener(this);
         companySpinnerTwo.setOnItemSelectedListener(this);
-        companySpinnerThree.setOnItemSelectedListener(this);
-
+        companySpinnerThree.setOnItemSelectedListener(this);*/
 
         scrollView.setOnClickListener(this);
         // checkBoxIntrested.setOnClickListener(this);
@@ -523,9 +524,9 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
 
         companyArrayAdapter3 = new ArrayAdapter<String>(this, R.layout.spinner_item_custom);
 
-        companySpinnerOne.setAdapter(companyArrayAdapter1);
-        companySpinnerTwo.setAdapter(companyArrayAdapter2);
-        companySpinnerThree.setAdapter(companyArrayAdapter3);
+        companySpinnerOne.setAdapter(companyArrayAdapter1, false, onSelectedListener1);
+        companySpinnerTwo.setAdapter(companyArrayAdapter2, false, onSelectedListener2);
+        companySpinnerThree.setAdapter(companyArrayAdapter3, false, onSelectedListener3);
 
     }
 
@@ -550,13 +551,13 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
                     industrySpinnerOneValue = "";
                 }
                 break;
-            case R.id.profile_company_spinner1:
+         /*   case R.id.profile_company_spinner1:
                 if (position != 0) {
                     companySpinnerOneValue = companySpinnerOne.getSelectedItem().toString();
                 } else {
                     companySpinnerOneValue = "";
                 }
-                break;
+                break;*/
             case R.id.profile_industry_spinner2:
                 if (position != 0) {
                     industrySpinnerTwoValue = industrySpinnerTwo.getSelectedItem().toString();
@@ -565,13 +566,13 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
                     industrySpinnerTwoValue = "";
                 }
                 break;
-            case R.id.profile_company_spinner2:
+            /*case R.id.profile_company_spinner2:
                 if (position != 0) {
                     companySpinnerTwoValue = companySpinnerTwo.getSelectedItem().toString();
                 } else {
                     companySpinnerTwoValue = "";
                 }
-                break;
+                break;*/
             case R.id.profile_industry_spinner3:
                 if (position != 0) {
                     industrySpinnerThreeValue = industrySpinnerThree.getSelectedItem().toString();
@@ -580,13 +581,13 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
                     industrySpinnerThreeValue = "";
                 }
                 break;
-            case R.id.profile_company_spinner3:
+           /* case R.id.profile_company_spinner3:
                 if (position != 0) {
                     companySpinnerThreeValue = companySpinnerThree.getSelectedItem().toString();
                 } else {
                     companySpinnerThreeValue = "";
                 }
-                break;
+                break;*/
 
         }
     }
@@ -601,12 +602,9 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
                 companyArrayAdapter1.add("");
                 if (response.length() <= 0) {
                     companyArrayAdapter1.clear();
-                    companyArrayAdapter1.add(" --Select-- ");
-                    companyArrayAdapter1.add("No company to select");
                     companyArrayAdapter1.notifyDataSetChanged();
                 } else {
                     companyArrayAdapter1.clear();
-                    companyArrayAdapter1.add(" --Select-- ");
                     for (int i = 0; i < response.length(); i++) {
                         try {
                             companyArrayAdapter1.add(String.valueOf(response.get(i)));
@@ -653,12 +651,9 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
                 companyArrayAdapter2.add("");
                 if (response.length() <= 0) {
                     companyArrayAdapter2.clear();
-                    companyArrayAdapter2.add(" --Select-- ");
-                    companyArrayAdapter2.add("No company to select");
                     companyArrayAdapter2.notifyDataSetChanged();
                 } else {
                     companyArrayAdapter2.clear();
-                    companyArrayAdapter2.add(" --Select-- ");
                     for (int i = 0; i < response.length(); i++) {
                         try {
                             companyArrayAdapter2.add(String.valueOf(response.get(i)));
@@ -705,12 +700,9 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
                 companyArrayAdapter3.add("");
                 if (response.length() <= 0) {
                     companyArrayAdapter3.clear();
-                    companyArrayAdapter3.add(" --Select-- ");
-                    companyArrayAdapter3.add("No company to select");
                     companyArrayAdapter3.notifyDataSetChanged();
                 } else {
                     companyArrayAdapter3.clear();
-                    companyArrayAdapter3.add(" --Select-- ");
                     for (int i = 0; i < response.length(); i++) {
                         try {
                             companyArrayAdapter3.add(String.valueOf(response.get(i)));
@@ -789,22 +781,16 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
         if (!Validation.validateDepartmentCheck(editProfileDepartment, department, profileViewDepartment, EditProfileActivity.this)) {
             return;
         }
-        if (Objects.equals(industrySpinnerOneValue, "") || Objects.equals(companySpinnerOneValue, "")) {
+        if (Objects.equals(industrySpinnerOneValue, "")) {
             if (Objects.equals(industrySpinnerOneValue, "")) {
                 industrySpinnerOne.setFocusable(true);
                 industrySpinnerOne.setFocusableInTouchMode(true);
                 industrySpinnerOne.requestFocus();
                 Utils.setSpinnerError(industrySpinnerOne, "Field can't be empty", EditProfileActivity.this);
                 return;
-            } else {
-                companySpinnerOne.setFocusable(true);
-                companySpinnerOne.setFocusableInTouchMode(true);
-                companySpinnerOne.requestFocus();
-                Utils.setSpinnerError(companySpinnerOne, "Field can't be empty", EditProfileActivity.this);
-                return;
             }
         }
-        if (Objects.equals(industrySpinnerTwoValue, "") || Objects.equals(companySpinnerTwoValue, "")) {
+      /*  if (Objects.equals(industrySpinnerTwoValue, "") || Objects.equals(companySpinnerTwoValue, "")) {
             if (Objects.equals(industrySpinnerTwoValue, "") && !Objects.equals(companySpinnerTwoValue, "")) {
                 industrySpinnerTwo.setFocusable(true);
                 industrySpinnerTwo.setFocusableInTouchMode(true);
@@ -815,7 +801,7 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
                 companySpinnerTwo.setFocusable(true);
                 companySpinnerTwo.setFocusableInTouchMode(true);
                 companySpinnerTwo.requestFocus();
-                Utils.setSpinnerError(companySpinnerTwo, "Field can't be empty", EditProfileActivity.this);
+                //Utils.setSpinnerError(companySpinnerTwo, "Field can't be empty", EditProfileActivity.this);
                 return;
             }
         }
@@ -831,10 +817,10 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
                 companySpinnerThree.setFocusable(true);
                 companySpinnerThree.setFocusableInTouchMode(true);
                 companySpinnerThree.requestFocus();
-                Utils.setSpinnerError(companySpinnerThree, "Field can't be empty", EditProfileActivity.this);
+               // Utils.setSpinnerError(companySpinnerThree, "Field can't be empty", EditProfileActivity.this);
                 return;
             }
-        }
+        }*/
 
         if (checkBoxIntrested.isChecked()) {
 
@@ -857,6 +843,63 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
         Toast.makeText(EditProfileActivity.this, "Your Profile is updated Successful", Toast.LENGTH_LONG).show();
     }
 
+
+    private MultiSpinner.MultiSpinnerListener onSelectedListener1 = new MultiSpinner.MultiSpinnerListener() {
+        public void onItemsSelected(boolean[] selected) {
+            // Do something here with the selected items
+            StringBuilder builder = new StringBuilder();
+
+            for (int i = 0; i < selected.length; i++) {
+                if (selected[i]) {
+                    builder.append(companyArrayAdapter1.getItem(i)).append(",");
+                }
+            }
+            if (!builder.toString().equals("")) {
+                companySpinnerOneValue = builder.toString();
+            } else {
+                companySpinnerOneValue = "";
+            }
+        }
+    };
+
+
+    private MultiSpinner.MultiSpinnerListener onSelectedListener2 = new MultiSpinner.MultiSpinnerListener() {
+        public void onItemsSelected(boolean[] selected) {
+            // Do something here with the selected items
+            StringBuilder builder = new StringBuilder();
+
+            for (int i = 0; i < selected.length; i++) {
+                if (selected[i]) {
+                    builder.append(companyArrayAdapter2.getItem(i)).append(",");
+                }
+            }
+            if (!builder.toString().equals("")) {
+                companySpinnerTwoValue = builder.toString();
+            } else {
+                companySpinnerTwoValue = "";
+            }
+        }
+    };
+
+
+    private MultiSpinner.MultiSpinnerListener onSelectedListener3 = new MultiSpinner.MultiSpinnerListener() {
+        public void onItemsSelected(boolean[] selected) {
+            // Do something here with the selected items
+            StringBuilder builder = new StringBuilder();
+
+            for (int i = 0; i < selected.length; i++) {
+                if (selected[i]) {
+                    builder.append(companyArrayAdapter3.getItem(i)).append(",");
+                }
+            }
+
+            if (!builder.toString().equals("")) {
+                companySpinnerThreeValue = builder.toString();
+            } else {
+                companySpinnerThreeValue = "";
+            }
+        }
+    };
 
 }
 
