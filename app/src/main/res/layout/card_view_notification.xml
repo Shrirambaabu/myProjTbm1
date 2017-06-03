@@ -16,7 +16,6 @@
         android:layout_margin="@dimen/margin_4"
         android:orientation="horizontal">
 
-
         <android.support.v7.widget.CardView
             android:id="@+id/notify_image_card"
             android:layout_width="80dp"
