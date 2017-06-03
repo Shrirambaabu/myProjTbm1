@@ -52,7 +52,7 @@ import igotplaced.com.layouts.Utils.Utils;
         holder.questionsIndustry.setText(questions.getQuestionsIndustry());
         holder.questionsProfileName.setText(questions.getQuestionsProfileName());
         holder.questionsTime.setText(questions.getQuestionsTime());
-        holder.comment_profile_img.setImageUrl(Utils.BaseImageUri + questions.getCommentProfileImage(), NetworkController.getInstance(context).getImageLoader());
+  //      holder.comment_profile_img.setImageUrl(Utils.BaseImageUri + questions.getCommentProfileImage(), NetworkController.getInstance(context).getImageLoader());
         holder.questionsImage.setImageUrl(Utils.BaseImageUri + questions.getQuestionsImage(), NetworkController.getInstance(context).getImageLoader());
 
     }
@@ -80,7 +80,7 @@ import igotplaced.com.layouts.Utils.Utils;
 
             // Volley's NetworkImageView which will load Image from URL
             questionsImage = (NetworkImageView) itemView.findViewById(R.id.questions_img);
-            comment_profile_img = (NetworkImageView) itemView.findViewById(R.id.comment_profile_img);
+      //      comment_profile_img = (NetworkImageView) itemView.findViewById(R.id.comment_profile_img);
 
             itemView.setOnClickListener(this);
         }

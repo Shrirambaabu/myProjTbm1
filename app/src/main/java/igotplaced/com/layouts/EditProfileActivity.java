@@ -91,16 +91,16 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
     private AppCompatSpinner industrySpinnerOne = null, industrySpinnerTwo = null, industrySpinnerThree = null;
     private MultiSpinner companySpinnerOne = null, companySpinnerTwo = null, companySpinnerThree = null;
 
-    private ArrayAdapter<String> spinnerYearArrayAdapter, spinnerArrayAdapterI1,spinnerArrayAdapterI2,spinnerArrayAdapterI3, companyArrayAdapter1, companyArrayAdapter2, companyArrayAdapter3;
+    private ArrayAdapter<String> spinnerYearArrayAdapter, spinnerArrayAdapterI1, spinnerArrayAdapterI2, spinnerArrayAdapterI3, companyArrayAdapter1, companyArrayAdapter2, companyArrayAdapter3;
     private List<String> industrySpinnerArrayList;
 
     private boolean checkBoxIntrestedBoolean = false;
     private SharedPreferences sharedpreferences;
     private String userName = null, userId = null, userEmail = null;
 
-    private TextView company1TextView,company2TextView,company3TextView;
+    private TextView company1TextView, company2TextView, company3TextView;
 
-    private int yearOfPassOutSpinnerPosition = 0,industry1SpinnerPosition =0,industry2SpinnerPosition=0,industry3SpinnerPosition=0;
+    private int yearOfPassOutSpinnerPosition = 0, industry1SpinnerPosition = 0, industry2SpinnerPosition = 0, industry3SpinnerPosition = 0;
 
     private ProgressDialog pDialog;
     private String URL = BaseUri;
@@ -114,17 +114,16 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
 
         queue = NetworkController.getInstance(EditProfileActivity.this).getRequestQueue();
 
-        sharedpreferences =  getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+        sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         userName = sharedpreferences.getString(Name, null);
         userId = sharedpreferences.getString(Id, null);
         userEmail = sharedpreferences.getString(Email, null);
 
-        BaseUri += "/"+userId;
 
         addingListener();
 
 
-        pDialog = new ProgressDialog(EditProfileActivity.this,R.style.MyThemeProgress);
+        pDialog = new ProgressDialog(EditProfileActivity.this, R.style.MyThemeProgress);
         pDialog.setProgressStyle(android.R.style.Widget_ProgressBar_Large);
         pDialog.onBackPressed();
         pDialog.show();
@@ -557,8 +556,8 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
             case R.id.profile_industry_spinner1:
                 if (position != 0) {
                     industrySpinnerOneValue = industrySpinnerOne.getSelectedItem().toString();
-                    company1TextView.setVisibility(View.GONE);
-                    companySpinnerOne.setVisibility(View.VISIBLE);
+                 /*   company1TextView.setVisibility(View.GONE);
+                    companySpinnerOne.setVisibility(View.VISIBLE);*/
                     networkCompanySpinnerArrayRequest1(industrySpinnerOneValue);
                 } else {
                     industrySpinnerOneValue = "";
@@ -574,8 +573,8 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
             case R.id.profile_industry_spinner2:
                 if (position != 0) {
                     industrySpinnerTwoValue = industrySpinnerTwo.getSelectedItem().toString();
-                    company2TextView.setVisibility(View.GONE);
-                    companySpinnerTwo.setVisibility(View.VISIBLE);
+               /*     company2TextView.setVisibility(View.GONE);
+                    companySpinnerTwo.setVisibility(View.VISIBLE);*/
                     networkCompanySpinnerArrayRequest2(industrySpinnerTwoValue);
                 } else {
                     industrySpinnerTwoValue = "";
@@ -591,8 +590,8 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
             case R.id.profile_industry_spinner3:
                 if (position != 0) {
                     industrySpinnerThreeValue = industrySpinnerThree.getSelectedItem().toString();
-                    company3TextView.setVisibility(View.GONE);
-                    companySpinnerThree.setVisibility(View.VISIBLE);
+                 /*   company3TextView.setVisibility(View.GONE);
+                    companySpinnerThree.setVisibility(View.VISIBLE);*/
                     networkCompanySpinnerArrayRequest3(industrySpinnerThreeValue);
                 } else {
                     industrySpinnerThreeValue = "";
@@ -870,7 +869,7 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
         pDialog.show();
 
 
-        StringRequest request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+        StringRequest request = new StringRequest(Request.Method.POST, BaseUri + "/profileService/profileUpdate/" + userId, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
 
@@ -898,7 +897,7 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
                  *  incorrect IP
                  *  Server not deployed
                  */Log.d("error", "" + volleyError);
-                Utils.showDialogue(EditProfileActivity.this, "Sorry! Server Error");
+              //  Utils.showDialogue(EditProfileActivity.this, "Sorry! Server Error");
             }
         }) {
             @Override
@@ -914,21 +913,21 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
                 parameters.put("industry2", industrySpinnerTwoValue);
                 parameters.put("industry3", industrySpinnerThreeValue);
 
-                if(company1TextView.getVisibility() == View.VISIBLE){
+                if (company1TextView.getVisibility() == View.VISIBLE) {
                     parameters.put("company1", company1TextView.getText().toString());
-                }else{
+                } else {
                     parameters.put("company1", companySpinnerOneValue);
                 }
 
-                if(company2TextView.getVisibility() == View.VISIBLE){
+                if (company2TextView.getVisibility() == View.VISIBLE) {
                     parameters.put("company2", company2TextView.getText().toString());
-                }else{
+                } else {
                     parameters.put("company2", companySpinnerTwoValue);
                 }
 
-                if(company3TextView.getVisibility() == View.VISIBLE){
+                if (company3TextView.getVisibility() == View.VISIBLE) {
                     parameters.put("company3", company3TextView.getText().toString());
-                }else{
+                } else {
                     parameters.put("company3", companySpinnerThreeValue);
                 }
 
@@ -1028,8 +1027,6 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
     };
 
 
-
-
     private void addressingView() {
 
         company1TextView = (TextView) findViewById(R.id.profile_company_spinner1_text);
@@ -1079,7 +1076,7 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
 
     private void makeJsonArrayRequestProfile() {
 
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(BaseUri + "/profileService/profileEdit/"+userId, new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(BaseUri + "/profileService/profileEdit/" + userId, new Response.Listener<JSONArray>() {
 
             @Override
             public void onResponse(JSONArray response) {
@@ -1091,23 +1088,23 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
                     try {
                         JSONObject obj = response.getJSONObject(i);
 
-                        Profile profile = new Profile(obj.getString("imgname"),obj.getString("fname"),obj.getString("department"),
-                                obj.getString("college"),obj.getString("email"),obj.getString("passout"),obj.getString("interest"),
-                                obj.getString("phone"),obj.getString("location"),obj.getString("industry1"),obj.getString("industry2"),
-                                obj.getString("industry3"),obj.getString("company1"),obj.getString("company2"),obj.getString("company3"));
+                        Profile profile = new Profile(obj.getString("imgname"), obj.getString("fname"), obj.getString("department"),
+                                obj.getString("college"), obj.getString("email"), obj.getString("passout"), obj.getString("interest"),
+                                obj.getString("phone"), obj.getString("location"), obj.getString("industry1"), obj.getString("industry2"),
+                                obj.getString("industry3"), obj.getString("company1"), obj.getString("company2"), obj.getString("company3"));
 
 
                         editProfileName.setText(profile.getProfileName());
                         editProfileEmail.setText(profile.getEmail());
-                        editProfileCollegeName.setText(profile.getCollegeName());
+                        //  editProfileCollegeName.setText(profile.getCollegeName());
 
-                        if(profile.getInterest().equals("1")){
+                        if (profile.getInterest().equals("1")) {
                             checkBoxIntrested.setChecked(true);
-                        }else {
+                        } else {
                             checkBoxIntrested.setChecked(false);
                         }
 
-                        editProfileDepartment.setText(profile.getDepartmentName());
+                        // editProfileDepartment.setText(profile.getDepartmentName());
                         locationEditText.setText(profile.getLocation());
                         mobileNumberEditText.setText(profile.getMobileNumber());
 
@@ -1135,12 +1132,19 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
                         company2TextView.setText(profile.getCompany2());
                         company3TextView.setText(profile.getCompany3());
 
-                        company1TextView.setVisibility(View.GONE);
-                        company2TextView.setVisibility(View.GONE);
-                        company3TextView.setVisibility(View.GONE);
-
+                        if (!company1TextView.getText().toString().equals("")) {
+                            companySpinnerOne.setVisibility(View.GONE);
+                            company1TextView.setVisibility(View.VISIBLE);
+                        }
+                        if (!company1TextView.getText().toString().equals("")) {
+                            companySpinnerTwo.setVisibility(View.GONE);
+                            company2TextView.setVisibility(View.VISIBLE);
+                        }
+                        if (!company1TextView.getText().toString().equals("")) {
+                            companySpinnerThree.setVisibility(View.GONE);
+                            company3TextView.setVisibility(View.VISIBLE);
+                        }
                         profileImage.setImageUrl(Utils.BaseImageUri + profile.getImageName(), NetworkController.getInstance(EditProfileActivity.this).getImageLoader());
-
 
 
                     } catch (Exception e) {

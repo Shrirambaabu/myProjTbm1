@@ -54,7 +54,7 @@ public class RecyclerAdapterInterviewHome extends RecyclerView.Adapter<RecyclerA
         holder.interviewIndustry.setText(interview.getInterviewIndustry());
         holder.interviewProfileName.setText(interview.getInterviewProfileName());
         holder.interviewTime.setText(interview.getInterviewTime());
-        holder.userImage.setImageUrl(Utils.BaseImageUri + interview.getUserImage(), NetworkController.getInstance(context).getImageLoader());
+      //  holder.userImage.setImageUrl(Utils.BaseImageUri + interview.getUserImage(), NetworkController.getInstance(context).getImageLoader());
         holder.interviewImage.setImageUrl(Utils.BaseImageUri + interview.getInterviewImage(), NetworkController.getInstance(context).getImageLoader());
 
     }

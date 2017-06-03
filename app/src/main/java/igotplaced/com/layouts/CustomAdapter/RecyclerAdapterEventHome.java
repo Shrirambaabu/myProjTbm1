@@ -62,7 +62,7 @@ public class RecyclerAdapterEventHome extends RecyclerView.Adapter<RecyclerAdapt
 
         holder.event_time.setText(events.getEventTime());
 
-        holder.userImage.setImageUrl(Utils.BaseImageUri + events.getCommentProfileImage(), NetworkController.getInstance(context).getImageLoader());
+      //  holder.userImage.setImageUrl(Utils.BaseImageUri + events.getCommentProfileImage(), NetworkController.getInstance(context).getImageLoader());
         holder.event_img.setImageUrl(Utils.BaseImageUri + events.getEventImage(), NetworkController.getInstance(context).getImageLoader());
 
 
