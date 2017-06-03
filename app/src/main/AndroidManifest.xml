@@ -52,7 +52,7 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".Utils.BlogDetailsActivity" />
+        <activity android:name=".BlogDetailsActivity" />
         <activity android:name=".EditProfileActivity"></activity>
     </application>
 

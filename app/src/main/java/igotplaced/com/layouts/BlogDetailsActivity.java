@@ -1,4 +1,4 @@
-package igotplaced.com.layouts.Utils;
+package igotplaced.com.layouts;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.webkit.WebView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -17,12 +16,9 @@ import com.android.volley.toolbox.NetworkImageView;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import igotplaced.com.layouts.CustomAdapter.RecyclerAdapterBlogHome;
 import igotplaced.com.layouts.Model.BlogHome;
-import igotplaced.com.layouts.R;
+import igotplaced.com.layouts.Utils.NetworkController;
+import igotplaced.com.layouts.Utils.Utils;
 
 import static igotplaced.com.layouts.Utils.Utils.BaseUri;
 

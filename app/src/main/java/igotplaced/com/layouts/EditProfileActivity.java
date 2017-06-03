@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Handler;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -120,7 +121,18 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
         settingCompanySpinner();
 
         settingCheckBoxValue();
-        makeJsonArrayRequestProfile();
+
+        Handler handler = new Handler();
+
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+
+                makeJsonArrayRequestProfile();
+            }
+        };
+
+        handler.postDelayed(runnable, 3000);
 
     }
 
@@ -954,38 +966,57 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
                         editProfileEmail.setText(profile.getEmail());
                         editProfileCollegeName.setText(profile.getCollegeName());
 
-                        checkBoxIntrested.setChecked(Boolean.parseBoolean(profile.getInterest()));
+                        if(profile.getInterest().equals("1")){
+                            checkBoxIntrested.setChecked(true);
+                        }else {
+                            checkBoxIntrested.setChecked(false);
+                        }
 
                         editProfileDepartment.setText(profile.getDepartmentName());
                         locationEditText.setText(profile.getLocation());
-                        mobileNumberEditText.setText(profile.getCollegeName());
+                        mobileNumberEditText.setText(profile.getMobileNumber());
 
                         if (!profile.getYearOfPassOut().equals(null)) {
                             yearOfPassOutSpinnerPosition = spinnerYearArrayAdapter.getPosition(profile.getYearOfPassOut());
                             passOutYearSpinner.setSelection(yearOfPassOutSpinnerPosition);
                         }
 
-                        if (!profile.getCompany1().equals(null)) {
-                            industry1SpinnerPosition = spinnerArrayAdapterI1.getPosition(profile.getCompany1());
+                        if (!profile.getIndustry1().equals(null)) {
+                            industry1SpinnerPosition = spinnerArrayAdapterI1.getPosition(profile.getIndustry1());
                             industrySpinnerOne.setSelection(industry1SpinnerPosition);
                         }
 
-                        if (!profile.getCompany2().equals(null)) {
-                            industry2SpinnerPosition = spinnerArrayAdapterI2.getPosition(profile.getCompany2());
+                        if (!profile.getIndustry2().equals(null)) {
+                            industry2SpinnerPosition = spinnerArrayAdapterI2.getPosition(profile.getIndustry2());
                             industrySpinnerTwo.setSelection(industry2SpinnerPosition);
                         }
 
-                        if (!profile.getCompany3().equals(null)) {
-                            industry3SpinnerPosition = spinnerArrayAdapterI3.getPosition(profile.getCompany3());
+                        if (!profile.getIndustry3().equals(null)) {
+                            industry3SpinnerPosition = spinnerArrayAdapterI3.getPosition(profile.getIndustry3());
                             industrySpinnerThree.setSelection(industry3SpinnerPosition);
                         }
 
+/*
+
+                        // set initial selection
+                        boolean[] selectedItems = new boolean[companyArrayAdapter1.getCount()];
+                        selectedItems[1] = true; // select second item
+                        companySpinnerOne.setSelected(selectedItems);
+*/
+
+
+                        companySpinnerOne.setDefaultText(profile.getCompany1());
 
                         companySpinnerOne.setAllText(profile.getCompany1());
                         companySpinnerTwo.setAllText(profile.getCompany2());
                         companySpinnerThree.setAllText(profile.getCompany3());
 
                         profileImage.setImageUrl(Utils.BaseImageUri + profile.getImageName(), NetworkController.getInstance(EditProfileActivity.this).getImageLoader());
+
+                        Toast.makeText(EditProfileActivity.this,""+profile.getCompany1(),Toast.LENGTH_LONG).show();
+
+                        Toast.makeText(EditProfileActivity.this,""+profile.getCompany3(),Toast.LENGTH_LONG).show();
+
 
 
                     } catch (Exception e) {

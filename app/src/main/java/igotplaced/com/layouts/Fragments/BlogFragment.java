@@ -12,13 +12,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONArray;
@@ -30,9 +28,8 @@ import java.util.List;
 
 import igotplaced.com.layouts.CustomAdapter.RecyclerAdapterBlogHome;
 import igotplaced.com.layouts.Model.BlogHome;
-import igotplaced.com.layouts.Model.Post;
 import igotplaced.com.layouts.R;
-import igotplaced.com.layouts.Utils.BlogDetailsActivity;
+import igotplaced.com.layouts.BlogDetailsActivity;
 import igotplaced.com.layouts.Utils.ClickListener;
 import igotplaced.com.layouts.Utils.NetworkController;
 

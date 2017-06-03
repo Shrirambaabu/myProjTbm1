@@ -151,9 +151,7 @@ public class ProfilePostFragment extends Fragment implements ClickListener {
     private void loadData() {
         // I have not used current page for showing demo, if u use a webservice
         // then it is useful for every call request
-
         makeJsonArrayRequestPostHome();
-
 
         recyclerAdapterPostHome.notifyDataSetChanged();
 
