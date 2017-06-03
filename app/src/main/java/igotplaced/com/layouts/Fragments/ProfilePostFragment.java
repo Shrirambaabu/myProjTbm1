@@ -119,7 +119,9 @@ public class ProfilePostFragment extends Fragment implements ClickListener {
                     try {
                          postList.clear();
                         JSONObject obj = response.getJSONObject(i);
+
                         Post post = new Post(obj.getString("post"), obj.getString("Industry"), obj.getString("post_created_user_image"), obj.getString("created_uname"), obj.getString("created_by"), obj.getString("post_created_user_image"), obj.getString("created_uname"));
+
                         // adding movie to blogHomeList array
                         postList.add(post);
 
@@ -147,7 +149,6 @@ public class ProfilePostFragment extends Fragment implements ClickListener {
 
     }
 
-    // By default, we add 10 objects for first time.
     private void loadData() {
         // I have not used current page for showing demo, if u use a webservice
         // then it is useful for every call request

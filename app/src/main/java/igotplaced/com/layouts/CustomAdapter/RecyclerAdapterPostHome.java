@@ -53,7 +53,7 @@ public class RecyclerAdapterPostHome extends RecyclerView.Adapter<RecyclerAdapte
         holder.postIndustry.setText(post.getPostIndustry());
         holder.postProfileName.setText(post.getPostProfileName());
         holder.postTime.setText(post.getPostTime());
-        holder.userImage.setImageUrl(Utils.BaseImageUri + post.getUserImage(), NetworkController.getInstance(context).getImageLoader());
+      //  holder.userImage.setImageUrl(Utils.BaseImageUri + post.getUserImage(), NetworkController.getInstance(context).getImageLoader());
         holder.postImage.setImageUrl(Utils.BaseImageUri + post.getPostImage(), NetworkController.getInstance(context).getImageLoader());
 
     }

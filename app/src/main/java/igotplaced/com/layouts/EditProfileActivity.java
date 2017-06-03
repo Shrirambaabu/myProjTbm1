@@ -25,12 +25,15 @@ import android.widget.CompoundButton;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.NetworkImageView;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.thomashaertel.widget.MultiSpinner;
 
@@ -39,7 +42,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import igotplaced.com.layouts.Model.Profile;
@@ -86,7 +92,7 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
     private ArrayAdapter<String> spinnerYearArrayAdapter, spinnerArrayAdapterI1,spinnerArrayAdapterI2,spinnerArrayAdapterI3, companyArrayAdapter1, companyArrayAdapter2, companyArrayAdapter3;
     private List<String> industrySpinnerArrayList;
 
-
+    private boolean checkBoxIntrestedBoolean = false;
     private SharedPreferences sharedpreferences;
     private String userName = null, userId = null, userEmail;
 
@@ -746,6 +752,9 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
                 updateDetails();
                 break;
             case R.id.checkBox:
+                if (checkBoxIntrested.isChecked()) {
+                    checkBoxIntrestedBoolean = checkBoxIntrested.isChecked();
+                }
                 break;
         }
     }
@@ -832,9 +841,86 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
         }
     }
 
-    private void submitDetails() {
+    private void submitDetails() {// Showing progress dialog
 
-        Toast.makeText(EditProfileActivity.this, "Your Profile is updated Successful", Toast.LENGTH_LONG).show();
+        pDialog = new ProgressDialog(EditProfileActivity.this,R.style.MyThemeProgress);
+        pDialog.setProgressStyle(android.R.style.Widget_ProgressBar_Large);
+        pDialog.onBackPressed();
+        pDialog.show();
+
+
+        StringRequest request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String s) {
+
+                pDialog.dismiss();
+
+                if (Integer.parseInt(s) != 0) {
+                    Toast.makeText(EditProfileActivity.this, "Your profile updated Successfully", Toast.LENGTH_LONG).show();
+                   /* Intent registrationCompleteIntent = new Intent(RegisterPasswordActivity.this, RegisterPasswordActivity.class);
+                    registrationCompleteIntent.putExtra("id",Integer.parseInt(s));
+                    registrationCompleteIntent.putExtra("interest",String.valueOf(checkBoxIntrestedBoolean));
+                    startActivity(registrationCompleteIntent);*/
+                } else {
+                    Utils.showDialogue(EditProfileActivity.this, "Already Updated Your Profile!!!");
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+
+                pDialog.dismiss();
+                /**
+                 *  Returns error message when,
+                 *  server is down,
+                 *  incorrect IP
+                 *  Server not deployed
+                 */Log.d("error", "" + volleyError);
+                Utils.showDialogue(EditProfileActivity.this, "Sorry! Server Error");
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> parameters = new HashMap<String, String>();
+                parameters.put("id", userId);
+                parameters.put("name", editProfileName.getText().toString());
+                parameters.put("email", editProfileEmail.getText().toString());
+                parameters.put("year", yearPassOutSpinnerValue);
+                parameters.put("colg", editProfileCollegeName.getText().toString());
+                parameters.put("dept", editProfileDepartment.getText().toString());
+                parameters.put("industry1", industrySpinnerOneValue);
+                parameters.put("industry2", industrySpinnerTwoValue);
+                parameters.put("industry3", industrySpinnerThreeValue);
+                parameters.put("company1", companySpinnerOneValue);
+                parameters.put("company2", companySpinnerTwoValue);
+                parameters.put("company3", companySpinnerThreeValue);
+                parameters.put("phone", mobileNumberEditText.getText().toString());
+                parameters.put("check", String.valueOf((checkBoxIntrestedBoolean) ? 1 : 0));
+                parameters.put("location", locationEditText.getText().toString());
+                return checkParams(parameters);
+            }
+
+            private Map<String, String> checkParams(Map<String, String> parameters) {
+                Iterator<Map.Entry<String, String>> it = parameters.entrySet().iterator();
+                while (it.hasNext()) {
+                    Map.Entry<String, String> pairs = (Map.Entry<String, String>) it.next();
+                    if (pairs.getValue() == null) {
+                        parameters.put(pairs.getKey(), "");
+                    }
+                }
+                return parameters;
+            }
+        };
+
+        int MY_SOCKET_TIMEOUT_MS = 30000;//30 seconds - change to what you want
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                MY_SOCKET_TIMEOUT_MS,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        RequestQueue rQueue = Volley.newRequestQueue(EditProfileActivity.this);
+        rQueue.add(request);
     }
 
 
