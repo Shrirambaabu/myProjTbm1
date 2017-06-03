@@ -122,6 +122,12 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
 
         addingListener();
 
+
+        pDialog = new ProgressDialog(EditProfileActivity.this,R.style.MyThemeProgress);
+        pDialog.setProgressStyle(android.R.style.Widget_ProgressBar_Large);
+        pDialog.onBackPressed();
+        pDialog.show();
+
         networkSettingSpinnerAndAutoComplete();
 
         //Setting industry spinner value
@@ -860,9 +866,6 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
 
     private void submitDetails() {// Showing progress dialog
 
-        pDialog = new ProgressDialog(EditProfileActivity.this,R.style.MyThemeProgress);
-        pDialog.setProgressStyle(android.R.style.Widget_ProgressBar_Large);
-        pDialog.onBackPressed();
         pDialog.show();
 
 
@@ -1080,6 +1083,7 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
             @Override
             public void onResponse(JSONArray response) {
 
+                pDialog.dismiss();
 
                 for (int i = 0; i < response.length(); i++) {
                     Log.d("error", response.toString());
@@ -1148,6 +1152,9 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
 
             @Override
             public void onErrorResponse(VolleyError error) {
+
+                pDialog.dismiss();
+
                 Log.d("error", "Error: " + error.getMessage());
             }
         });
