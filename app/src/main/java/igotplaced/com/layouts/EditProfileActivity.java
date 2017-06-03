@@ -23,6 +23,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.CompoundButton;
 import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -40,6 +41,7 @@ import com.thomashaertel.widget.MultiSpinner;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -94,7 +96,9 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
 
     private boolean checkBoxIntrestedBoolean = false;
     private SharedPreferences sharedpreferences;
-    private String userName = null, userId = null, userEmail;
+    private String userName = null, userId = null, userEmail = null;
+
+    private TextView company1TextView,company2TextView,company3TextView;
 
     private int yearOfPassOutSpinnerPosition = 0,industry1SpinnerPosition =0,industry2SpinnerPosition=0,industry3SpinnerPosition=0;
 
@@ -595,6 +599,9 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
 
     private void networkCompanySpinnerArrayRequest1(String keyword) {
 
+
+        companySpinnerOne.setDefaultText(" --Select-- ");
+
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(BaseUri + "/spinner/company/" + keyword, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -644,6 +651,8 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
 
     private void networkCompanySpinnerArrayRequest2(String keyword) {
 
+        companySpinnerTwo.setDefaultText(" --Select-- ");
+
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(BaseUri + "/spinner/company/" + keyword, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -692,6 +701,8 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
 
 
     private void networkCompanySpinnerArrayRequest3(String keyword) {
+
+        companySpinnerThree.setDefaultText(" --Select-- ");
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(BaseUri + "/spinner/company/" + keyword, new Response.Listener<JSONArray>() {
             @Override
@@ -892,9 +903,25 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
                 parameters.put("industry1", industrySpinnerOneValue);
                 parameters.put("industry2", industrySpinnerTwoValue);
                 parameters.put("industry3", industrySpinnerThreeValue);
-                parameters.put("company1", companySpinnerOneValue);
-                parameters.put("company2", companySpinnerTwoValue);
-                parameters.put("company3", companySpinnerThreeValue);
+
+                if(company1TextView.getVisibility() == View.VISIBLE){
+                    parameters.put("company1", company1TextView.getText().toString());
+                }else{
+                    parameters.put("company1", companySpinnerOneValue);
+                }
+
+                if(company2TextView.getVisibility() == View.VISIBLE){
+                    parameters.put("company2", company2TextView.getText().toString());
+                }else{
+                    parameters.put("company2", companySpinnerTwoValue);
+                }
+
+                if(company3TextView.getVisibility() == View.VISIBLE){
+                    parameters.put("company3", company3TextView.getText().toString());
+                }else{
+                    parameters.put("company3", companySpinnerThreeValue);
+                }
+
                 parameters.put("phone", mobileNumberEditText.getText().toString());
                 parameters.put("check", String.valueOf((checkBoxIntrestedBoolean) ? 1 : 0));
                 parameters.put("location", locationEditText.getText().toString());
@@ -927,6 +954,10 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
     private MultiSpinner.MultiSpinnerListener onSelectedListener1 = new MultiSpinner.MultiSpinnerListener() {
         public void onItemsSelected(boolean[] selected) {
             // Do something here with the selected items
+
+            company1TextView.setVisibility(View.GONE);
+            companySpinnerOne.setVisibility(View.VISIBLE);
+
             StringBuilder builder = new StringBuilder();
 
             for (int i = 0; i < selected.length; i++) {
@@ -936,6 +967,7 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
             }
             if (!builder.toString().equals("")) {
                 companySpinnerOneValue = builder.toString();
+
             } else {
                 companySpinnerOneValue = "";
             }
@@ -945,6 +977,8 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
 
     private MultiSpinner.MultiSpinnerListener onSelectedListener2 = new MultiSpinner.MultiSpinnerListener() {
         public void onItemsSelected(boolean[] selected) {
+            company2TextView.setVisibility(View.GONE);
+            companySpinnerTwo.setVisibility(View.VISIBLE);
             // Do something here with the selected items
             StringBuilder builder = new StringBuilder();
 
@@ -965,6 +999,8 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
     private MultiSpinner.MultiSpinnerListener onSelectedListener3 = new MultiSpinner.MultiSpinnerListener() {
         public void onItemsSelected(boolean[] selected) {
             // Do something here with the selected items
+            company3TextView.setVisibility(View.GONE);
+            companySpinnerThree.setVisibility(View.VISIBLE);
             StringBuilder builder = new StringBuilder();
 
             for (int i = 0; i < selected.length; i++) {
@@ -985,6 +1021,10 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
 
 
     private void addressingView() {
+
+        company1TextView = (TextView) findViewById(R.id.profile_company_spinner1_text);
+        company2TextView = (TextView) findViewById(R.id.profile_company_spinner2_text);
+        company3TextView = (TextView) findViewById(R.id.profile_company_spinner3_text);
 
         profileName = (TextInputLayout) findViewById(R.id.profileName);
         profileEmailAddress = (TextInputLayout) findViewById(R.id.profileEmailAddress);
@@ -1091,17 +1131,16 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
 */
 
 
-                        companySpinnerOne.setDefaultText(profile.getCompany1());
 
-                        companySpinnerOne.setAllText(profile.getCompany1());
-                        companySpinnerTwo.setAllText(profile.getCompany2());
-                        companySpinnerThree.setAllText(profile.getCompany3());
+                        company1TextView.setText(profile.getCompany1());
+                        company2TextView.setText(profile.getCompany2());
+                        company3TextView.setText(profile.getCompany3());
+
+                        company1TextView.setVisibility(View.GONE);
+                        company2TextView.setVisibility(View.GONE);
+                        company3TextView.setVisibility(View.GONE);
 
                         profileImage.setImageUrl(Utils.BaseImageUri + profile.getImageName(), NetworkController.getInstance(EditProfileActivity.this).getImageLoader());
-
-                        Toast.makeText(EditProfileActivity.this,""+profile.getCompany1(),Toast.LENGTH_LONG).show();
-
-                        Toast.makeText(EditProfileActivity.this,""+profile.getCompany3(),Toast.LENGTH_LONG).show();
 
 
 
