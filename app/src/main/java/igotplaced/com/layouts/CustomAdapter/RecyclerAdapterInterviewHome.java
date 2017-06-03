@@ -81,7 +81,7 @@ public class RecyclerAdapterInterviewHome extends RecyclerView.Adapter<RecyclerA
             interviewTime = (TextView) itemView.findViewById(R.id.interview_time);
             // Volley's NetworkImageView which will load Image from URL
             interviewImage = (NetworkImageView) itemView.findViewById(R.id.interview_img);
-            userImage = (NetworkImageView) itemView.findViewById(R.id.comment_profile_img);
+          //  userImage = (NetworkImageView) itemView.findViewById(R.id.comment_profile_img);
 
             itemView.setOnClickListener(this);
         }

@@ -97,7 +97,7 @@ public class RecyclerAdapterEventHome extends RecyclerView.Adapter<RecyclerAdapt
             event_time = (TextView) itemView.findViewById(R.id.event_time);
             // Volley's NetworkImageView which will load Image from URL
             event_img = (NetworkImageView) itemView.findViewById(R.id.event_img);
-            userImage = (NetworkImageView) itemView.findViewById(R.id.comment_profile_img);
+           // userImage = (NetworkImageView) itemView.findViewById(R.id.comment_profile_img);
 
             itemView.setOnClickListener(this);
         }
