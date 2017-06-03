@@ -550,6 +550,8 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
             case R.id.profile_industry_spinner1:
                 if (position != 0) {
                     industrySpinnerOneValue = industrySpinnerOne.getSelectedItem().toString();
+                    company1TextView.setVisibility(View.GONE);
+                    companySpinnerOne.setVisibility(View.VISIBLE);
                     networkCompanySpinnerArrayRequest1(industrySpinnerOneValue);
                 } else {
                     industrySpinnerOneValue = "";
@@ -565,6 +567,8 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
             case R.id.profile_industry_spinner2:
                 if (position != 0) {
                     industrySpinnerTwoValue = industrySpinnerTwo.getSelectedItem().toString();
+                    company2TextView.setVisibility(View.GONE);
+                    companySpinnerTwo.setVisibility(View.VISIBLE);
                     networkCompanySpinnerArrayRequest2(industrySpinnerTwoValue);
                 } else {
                     industrySpinnerTwoValue = "";
@@ -580,6 +584,8 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
             case R.id.profile_industry_spinner3:
                 if (position != 0) {
                     industrySpinnerThreeValue = industrySpinnerThree.getSelectedItem().toString();
+                    company3TextView.setVisibility(View.GONE);
+                    companySpinnerThree.setVisibility(View.VISIBLE);
                     networkCompanySpinnerArrayRequest3(industrySpinnerThreeValue);
                 } else {
                     industrySpinnerThreeValue = "";
@@ -1067,8 +1073,6 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
 
     }
 
-
-
     private void makeJsonArrayRequestProfile() {
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(BaseUri + "/profileService/profileEdit/"+userId, new Response.Listener<JSONArray>() {
@@ -1121,16 +1125,6 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
                             industry3SpinnerPosition = spinnerArrayAdapterI3.getPosition(profile.getIndustry3());
                             industrySpinnerThree.setSelection(industry3SpinnerPosition);
                         }
-
-/*
-
-                        // set initial selection
-                        boolean[] selectedItems = new boolean[companyArrayAdapter1.getCount()];
-                        selectedItems[1] = true; // select second item
-                        companySpinnerOne.setSelected(selectedItems);
-*/
-
-
 
                         company1TextView.setText(profile.getCompany1());
                         company2TextView.setText(profile.getCompany2());
