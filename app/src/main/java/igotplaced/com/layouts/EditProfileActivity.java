@@ -119,6 +119,7 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
         userId = sharedpreferences.getString(Id, null);
         userEmail = sharedpreferences.getString(Email, null);
 
+        BaseUri += "/"+userId;
 
         addingListener();
 
@@ -882,7 +883,7 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
                     registrationCompleteIntent.putExtra("interest",String.valueOf(checkBoxIntrestedBoolean));
                     startActivity(registrationCompleteIntent);*/
                 } else {
-                    Utils.showDialogue(EditProfileActivity.this, "Already Updated Your Profile!!!");
+                    Utils.showDialogue(EditProfileActivity.this, "Already Your Profile is upp-to date!!!");
                 }
 
             }
