@@ -146,7 +146,7 @@ public class HomeEventFragment extends Fragment implements SwipeRefreshLayout.On
 
         // I have not used current page for showing demo, if u use a webservice
         // then it is useful for every call request
-        makeJsonObjectRequestEventHome(totalItemCount, totalItemCount + 10);
+        makeJsonObjectRequestEventHome(totalItemCount, totalItemCount + 5);
 
         recyclerAdapterEventHome.notifyDataSetChanged();
 

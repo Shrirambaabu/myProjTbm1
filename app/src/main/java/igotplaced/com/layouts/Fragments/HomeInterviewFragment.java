@@ -228,7 +228,7 @@ public class HomeInterviewFragment extends Fragment implements SwipeRefreshLayou
 
         // I have not used current page for showing demo, if u use a webservice
         // then it is useful for every call request
-        makeJsonObjectRequestInterviewHome(totalItemCount, totalItemCount + 10);
+        makeJsonObjectRequestInterviewHome(totalItemCount, totalItemCount + 5);
 
         recyclerAdapterInterviewHome.notifyDataSetChanged();
 
