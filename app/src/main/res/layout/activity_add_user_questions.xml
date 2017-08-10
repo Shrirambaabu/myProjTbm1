@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    tools:context="igotplaced.com.layouts.AddUserExperience">
+
+
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/getUserQuestionsData"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:background="@drawable/shape"
+        android:textColorHint="@color/text_main"
+        android:padding="@dimen/margin_2"
+        android:layout_margin="@dimen/margin_4"
+        android:hint=" Have An Aptitude Question Or An Interview Question Share And Discuss Here!"
+        android:textSize="18sp" />
+
+    <LinearLayout
+        android:id="@+id/company_titile_questions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/getUserQuestionsData"
+        android:weightSum="2">
+
+        <TextView
+            android:id="@+id/textViewIndustry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_16"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="@dimen/margin_4"
+            android:text="@string/industry"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textViewCompany"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_16"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="@dimen/margin_4"
+            android:text="Company"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/spinner_questions"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="@dimen/margin_4"
+        android:layout_below="@+id/company_titile_questions"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <android.support.v7.widget.AppCompatSpinner
+            android:id="@+id/industry_spinner3"
+            android:layout_width="match_parent"
+            style="@style/Platform.Widget.AppCompat.Spinner"
+            android:layout_height="48dp"
+            android:layout_marginEnd="@dimen/margin_16"
+            android:layout_marginStart="@dimen/margin_16"
+            android:layout_weight="1"
+            app:backgroundTint="@color/white" />
+
+        <com.thomashaertel.widget.MultiSpinner
+            android:id="@+id/company_spinner3"
+            android:layout_width="match_parent"
+            style="@style/Platform.Widget.AppCompat.Spinner"
+            android:layout_height="48dp"
+            android:layout_marginEnd="@dimen/margin_16"
+            android:layout_marginStart="@dimen/margin_16"
+            android:layout_weight="1"
+            app:backgroundTint="@color/white" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/spinner_questions"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/add"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:gravity="center"
+            android:text="Add"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimary"
+            android:textSize="18sp" />
+
+
+        <Button
+            android:id="@+id/cancel"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:gravity="center"
+            android:text="Cancel"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimary"
+            android:textSize="18sp" />
+
+
+    </LinearLayout>
+
+</RelativeLayout>

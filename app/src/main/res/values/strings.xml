@@ -84,6 +84,7 @@
     <string name="editProfile">Edit Profile</string>
     <string name="areaOfInterest">AREA OF INTEREST</string>
     <string name="upload">Upload</string>
+    <string name="title_activity_add_user_experience">AddUserExperience</string>
 
 
 </resources>

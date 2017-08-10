@@ -22,6 +22,12 @@ public class Profile {
     private String company2;
     private String company3;
 
+    public Profile(String imageName, String profileName, String email) {
+        this.imageName = imageName;
+        this.profileName = profileName;
+        this.email = email;
+    }
+
     public Profile() {
     }
 

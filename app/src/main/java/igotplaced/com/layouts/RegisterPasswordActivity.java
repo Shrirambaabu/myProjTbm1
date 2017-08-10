@@ -626,6 +626,9 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
         switch (v.getId()) {
             case R.id.register_submit:
                 finalRegistrationSuccess();
+                Intent loginIntent = new Intent(new Intent(RegisterPasswordActivity.this, LoginActivity.class));
+                loginIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(loginIntent);
                 break;
         }
     }

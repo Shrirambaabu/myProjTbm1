@@ -859,6 +859,8 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
         }
         if (Utils.checkConnection(submitbtn, EditProfileActivity.this)) {
             submitDetails();
+
+
         } else {
             Utils.showDialogue(EditProfileActivity.this, "Sorry! Not connected to internet");
         }
@@ -897,7 +899,7 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
                  *  incorrect IP
                  *  Server not deployed
                  */Log.d("error", "" + volleyError);
-              //  Utils.showDialogue(EditProfileActivity.this, "Sorry! Server Error");
+                //  Utils.showDialogue(EditProfileActivity.this, "Sorry! Server Error");
             }
         }) {
             @Override
@@ -913,6 +915,7 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
                 parameters.put("industry2", industrySpinnerTwoValue);
                 parameters.put("industry3", industrySpinnerThreeValue);
 
+                Log.e("Chenge Clg", "" + parameters.put("colg", editProfileCollegeName.getText().toString()));
                 if (company1TextView.getVisibility() == View.VISIBLE) {
                     parameters.put("company1", company1TextView.getText().toString());
                 } else {
@@ -957,6 +960,9 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
 
         RequestQueue rQueue = Volley.newRequestQueue(EditProfileActivity.this);
         rQueue.add(request);
+        Intent profileUpdated = new Intent(new Intent(EditProfileActivity.this, MainActivity.class));
+        profileUpdated.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(profileUpdated);
     }
 
 

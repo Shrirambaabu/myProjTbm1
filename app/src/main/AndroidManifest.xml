@@ -43,6 +43,15 @@
             android:name=".RegisterPasswordActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".AddUserExperience"
+            android:theme="@android:style/Theme.DeviceDefault.Light.Dialog" />
+        <activity
+            android:name=".AddUserInterviewExperience"
+            android:theme="@android:style/Theme.DeviceDefault.Light.Dialog" />
+        <activity
+            android:name=".AddUserQuestions"
+            android:theme="@android:style/Theme.DeviceDefault.Light.Dialog" />
          
         <receiver
             android:name=".Utils.ConnectivityReceiver"
@@ -53,7 +62,8 @@
         </receiver>
 
         <activity android:name=".BlogDetailsActivity" />
-        <activity android:name=".EditProfileActivity"></activity>
+        <activity android:name=".EditProfileActivity" />
+
     </application>
 
 </manifest>

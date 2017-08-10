@@ -2,11 +2,14 @@ package igotplaced.com.layouts;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.GravityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatEditText;
 import android.text.Editable;
@@ -141,7 +144,6 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
 */
 
 
-
         if (!Validation.validateEmail(emailEditText, inputLayoutEmail, LoginActivity.this)) {
             return;
         }
@@ -154,11 +156,25 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_alert).setTitle("Exit")
+                .setMessage("Are you sure you want to exit?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        LoginActivity.super.onBackPressed();
+                    }
+                }).setNegativeButton("No", null).show();
+
+
+    }
+
     private void login() {
 
         // Showing progress dialog
 
-        pDialog = new ProgressDialog(LoginActivity.this,R.style.MyThemeProgress);
+        pDialog = new ProgressDialog(LoginActivity.this, R.style.MyThemeProgress);
         pDialog.setProgressStyle(android.R.style.Widget_ProgressBar_Large);
         pDialog.onBackPressed();
         pDialog.show();
@@ -178,7 +194,7 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
                     editor.putString(Id, tokens[0]);
                     editor.putString(Name, tokens[1]);
                     editor.putString(Email, emailEditText.getText().toString().trim());
-                    editor.apply();
+                    editor.commit();
 
                     Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
                     Intent loginIntent = new Intent(LoginActivity.this, MainActivity.class);

@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import igotplaced.com.layouts.CustomAdapter.RecyclerAdapterPostHome;
+import igotplaced.com.layouts.CustomAdapter.RecyclerAdapterProfilePost;
 import igotplaced.com.layouts.Model.Post;
 import igotplaced.com.layouts.R;
 import igotplaced.com.layouts.Utils.ClickListener;
@@ -46,7 +47,7 @@ public class ProfilePostFragment extends Fragment implements ClickListener {
 
     private String userId;
     private List<Post> postList = new ArrayList<Post>();
-    private RecyclerAdapterPostHome recyclerAdapterPostHome;
+    private RecyclerAdapterProfilePost recyclerAdapterProfilePost;
 
     int lastVisiblesItems, visibleItemCount, totalItemCount;
 
@@ -83,7 +84,7 @@ public class ProfilePostFragment extends Fragment implements ClickListener {
         //mapping RecyclerView
         RecyclerView post_view = (RecyclerView) view.findViewById(R.id.recycler_view_profile_post);
         //feeding values to RecyclerView using custom RecyclerView adapter
-        recyclerAdapterPostHome = new RecyclerAdapterPostHome(context, postList);
+        recyclerAdapterProfilePost = new RecyclerAdapterProfilePost(context, postList);
 
         //setting fixed size
         post_view.setHasFixedSize(true);
@@ -91,14 +92,16 @@ public class ProfilePostFragment extends Fragment implements ClickListener {
         post_view.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
         mLayoutManager = (LinearLayoutManager) post_view.getLayoutManager();
         //setting RecyclerView adapter
-        post_view.setAdapter(recyclerAdapterPostHome);
+        post_view.setAdapter(recyclerAdapterProfilePost);
+
+        Log.e("PostRecycler",""+recyclerAdapterProfilePost.getItemCount());
         //Getting Instance of Volley Request Queue
         queue = NetworkController.getInstance(context).getRequestQueue();
 
         loadData();
 
 
-        recyclerAdapterPostHome.setClickListener(this);
+        recyclerAdapterProfilePost.setClickListener(this);
 
     }
 
@@ -106,18 +109,17 @@ public class ProfilePostFragment extends Fragment implements ClickListener {
     private void makeJsonArrayRequestPostHome() {
 
 
-        Log.d("error", "loaded" + BaseUri + "/profileService/profilePost" + userId );
-
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, BaseUri + "/profileService/profilePost/" + userId, null,  new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, BaseUri + "/profileService/profilePost/" + userId, null, new Response.Listener<JSONArray>() {
 
 
             @Override
             public void onResponse(JSONArray response) {
 
+
                 for (int i = 0; i < response.length(); i++) {
-                    Log.d("error", response.toString());
+
                     try {
-                         postList.clear();
+
                         JSONObject obj = response.getJSONObject(i);
 
                         Post post = new Post(obj.getString("post"), obj.getString("Industry"), obj.getString("post_created_user_image"), obj.getString("created_uname"), obj.getString("created_by"), obj.getString("post_created_user_image"), obj.getString("created_uname"));
@@ -130,7 +132,10 @@ public class ProfilePostFragment extends Fragment implements ClickListener {
                         System.out.println(e.getMessage());
                     } finally {
                         //Notify adapter about data changes
-                        recyclerAdapterPostHome.notifyDataSetChanged();
+                        recyclerAdapterProfilePost.notifyDataSetChanged();
+
+                        Log.e("Req Profile",""+recyclerAdapterProfilePost.toString());
+                        Log.e("Req Profile cou",""+recyclerAdapterProfilePost.getItemCount());
                     }
                 }
             }
@@ -154,7 +159,7 @@ public class ProfilePostFragment extends Fragment implements ClickListener {
         // then it is useful for every call request
         makeJsonArrayRequestPostHome();
 
-        recyclerAdapterPostHome.notifyDataSetChanged();
+        recyclerAdapterProfilePost.notifyDataSetChanged();
 
     }
 

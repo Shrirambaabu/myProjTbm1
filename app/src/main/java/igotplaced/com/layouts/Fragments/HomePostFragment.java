@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -63,7 +65,9 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_post, container, false);
         context = getActivity().getApplicationContext();
-
+        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        if (actionBar != null)
+            actionBar.setTitle("Posts");
 
         //mapping web view
         mapping(view);
@@ -171,7 +175,7 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
                     jsonObjectJSON = jsonObject.getJSONArray("");
 
                     //clearing blogList
-                    // postList.clear();
+                   postList.clear();
 
                     for (int i = 0; i < jsonObjectJSON.length(); i++) {
                      /*   Log.d("error", jsonObjectJSON.toString());*/
@@ -181,6 +185,7 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
                             Post post = new Post(obj.getString("post"), obj.getString("Industry"), obj.getString("postuserimgname"), obj.getString("created_uname"), obj.getString("created_by"), obj.getString("imgname"), obj.getString("fname"));
                             // adding movie to blogHomeList array
                             postList.add(post);
+
 
                         } catch (Exception e) {
                             Log.d("error", e.getMessage());

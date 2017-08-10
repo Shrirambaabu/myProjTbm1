@@ -45,7 +45,8 @@ public class SplashScreenActivity extends AppCompatActivity {
                 String userName = sharedpreferences.getString(Name, null);
                 String userId = sharedpreferences.getString(Id, null);
                 String userEmail = sharedpreferences.getString(Email, null);
-
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.commit();
                 if (userName == null || userId == null || userEmail == null) {
                     Intent loginIntent = new Intent(SplashScreenActivity.this, LoginActivity.class);
                     startActivity(loginIntent);

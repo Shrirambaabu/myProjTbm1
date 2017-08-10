@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -63,7 +65,9 @@ public class NotificationFragment extends Fragment implements SwipeRefreshLayout
         View view = inflater.inflate(R.layout.fragment_notification, container, false);
         context = getActivity().getApplicationContext();
 
-
+        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        if (actionBar != null)
+            actionBar.setTitle("Notifications");
         //mapping web view
         mapping(view);
 

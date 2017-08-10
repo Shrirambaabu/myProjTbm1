@@ -12,7 +12,6 @@ import com.android.volley.toolbox.NetworkImageView;
 
 import java.util.List;
 
-import igotplaced.com.layouts.Model.BlogHome;
 import igotplaced.com.layouts.Model.Post;
 import igotplaced.com.layouts.R;
 import igotplaced.com.layouts.Utils.ClickListener;
@@ -20,44 +19,49 @@ import igotplaced.com.layouts.Utils.NetworkController;
 import igotplaced.com.layouts.Utils.Utils;
 
 /**
- * Created by Ashith VL on 5/29/2017.
+ * Created by Shriram on 09-Aug-17.
  */
 
-public class RecyclerAdapterPostHome extends RecyclerView.Adapter<RecyclerAdapterPostHome.MyViewHolder> {
+public class RecyclerAdapterProfilePost extends RecyclerView.Adapter<RecyclerAdapterProfilePost.MyViewHolder> {
+
 
     private List<Post> postList;
     private Context context;
     private LayoutInflater inflater;
     private ClickListener clickListener;
 
-    public RecyclerAdapterPostHome(Context context, List<Post> postList) {
+    public RecyclerAdapterProfilePost(Context context, List<Post> postList) {
 
         this.context = context;
         this.postList = postList;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
-
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
+    public RecyclerAdapterProfilePost.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View rootView = inflater.inflate(R.layout.card_view_post, parent, false);
-        return new RecyclerAdapterPostHome.MyViewHolder(rootView);
+        return new RecyclerAdapterProfilePost.MyViewHolder(rootView);
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerAdapterProfilePost.MyViewHolder holder, int position) {
+
         Post post = postList.get(position);
 
-
+        Log.e("Profile Post",""+postList);
         //Pass the values of feeds object to Views
         holder.post.setText(post.getPost());
         holder.postIndustry.setText(post.getPostIndustry());
         holder.postProfileName.setText(post.getPostProfileName());
         holder.postTime.setText(post.getPostTime());
-      //  holder.userImage.setImageUrl(Utils.BaseImageUri + post.getUserImage(), NetworkController.getInstance(context).getImageLoader());
+        //  holder.userImage.setImageUrl(Utils.BaseImageUri + post.getUserImage(), NetworkController.getInstance(context).getImageLoader());
         holder.postImage.setImageUrl(Utils.BaseImageUri + post.getPostImage(), NetworkController.getInstance(context).getImageLoader());
 
+
+    }
+
+    public void setClickListener(ClickListener itemClickListener) {
+        this.clickListener = itemClickListener;
     }
 
     @Override
@@ -65,26 +69,20 @@ public class RecyclerAdapterPostHome extends RecyclerView.Adapter<RecyclerAdapte
         return postList.size();
     }
 
-    public void setClickListener(ClickListener itemClickListener) {
-        this.clickListener = itemClickListener;
-    }
-
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private TextView post, postIndustry, postProfileName, postTime;
-        private NetworkImageView postImage,userImage;
+        private NetworkImageView postImage;
 
         public MyViewHolder(View itemView) {
             super(itemView);
+
             post = (TextView) itemView.findViewById(R.id.post);
             postIndustry = (TextView) itemView.findViewById(R.id.post_industry);
             postProfileName = (TextView) itemView.findViewById(R.id.post_profile_name);
             postTime = (TextView) itemView.findViewById(R.id.post_time);
-           // postTime = (TextView) itemView.findViewById(R.id.post_time);
             // Volley's NetworkImageView which will load Image from URL
             postImage = (NetworkImageView) itemView.findViewById(R.id.post_img);
-           // userImage = (NetworkImageView) itemView.findViewById(R.id.comment_profile_img);
-
             itemView.setOnClickListener(this);
         }
 
@@ -93,7 +91,4 @@ public class RecyclerAdapterPostHome extends RecyclerView.Adapter<RecyclerAdapte
             if (clickListener != null) clickListener.onClick(v, getAdapterPosition());
         }
     }
-
-
-
 }
