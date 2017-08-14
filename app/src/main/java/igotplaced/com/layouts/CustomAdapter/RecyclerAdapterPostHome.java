@@ -1,3 +1,4 @@
+/*
 package igotplaced.com.layouts.CustomAdapter;
 
 import android.app.Activity;
@@ -43,9 +44,11 @@ import static igotplaced.com.layouts.Utils.Utils.Id;
 import static igotplaced.com.layouts.Utils.Utils.MyPREFERENCES;
 import static igotplaced.com.layouts.Utils.Utils.Name;
 
+*/
 /**
  * Created by Ashith VL on 5/29/2017.
- */
+ *//*
+
 
 public class RecyclerAdapterPostHome extends RecyclerView.Adapter<RecyclerAdapterPostHome.MyViewHolder> {
 
@@ -91,7 +94,7 @@ public class RecyclerAdapterPostHome extends RecyclerView.Adapter<RecyclerAdapte
         holder.comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                postList.get(position);
                 if (holder.userComment.getText().toString().isEmpty()) {
                     Toast.makeText(context, "Enter the Comment", Toast.LENGTH_SHORT).show();
 
@@ -123,12 +126,14 @@ public class RecyclerAdapterPostHome extends RecyclerView.Adapter<RecyclerAdapte
             @Override
             public void onErrorResponse(VolleyError volleyError) {
 
-                /**
+                */
+/**
                  *  Returns error message when,
                  *  server is down,
                  *  incorrect IP
                  *  Server not deployed
-                 */
+                 *//*
+
                 Utils.showDialogue((Activity) context, "Sorry! Server Error");
             }
         }) {
@@ -201,3 +206,4 @@ public class RecyclerAdapterPostHome extends RecyclerView.Adapter<RecyclerAdapte
 
 
 }
+*/

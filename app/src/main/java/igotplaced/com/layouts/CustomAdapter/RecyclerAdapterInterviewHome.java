@@ -1,3 +1,4 @@
+/*
 package igotplaced.com.layouts.CustomAdapter;
 
 import android.app.Activity;
@@ -40,9 +41,11 @@ import static igotplaced.com.layouts.Utils.Utils.Id;
 import static igotplaced.com.layouts.Utils.Utils.MyPREFERENCES;
 import static igotplaced.com.layouts.Utils.Utils.Name;
 
+*/
 /**
  * Created by Admin on 5/30/2017.
- */
+ *//*
+
 
 public class RecyclerAdapterInterviewHome extends RecyclerView.Adapter<RecyclerAdapterInterviewHome.MyViewHolder> {
 
@@ -120,12 +123,14 @@ public class RecyclerAdapterInterviewHome extends RecyclerView.Adapter<RecyclerA
             @Override
             public void onErrorResponse(VolleyError volleyError) {
 
-                /**
+                */
+/**
                  *  Returns error message when,
                  *  server is down,
                  *  incorrect IP
                  *  Server not deployed
-                 */
+                 *//*
+
                 Utils.showDialogue((Activity) context, "Sorry! Server Error");
             }
         }) {
@@ -194,3 +199,4 @@ public class RecyclerAdapterInterviewHome extends RecyclerView.Adapter<RecyclerA
 
 
 }
+*/

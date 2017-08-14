@@ -1,0 +1,110 @@
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="igotplaced.com.layouts.Fragments.PostDetailsFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.android.volley.toolbox.NetworkImageView
+            android:id="@+id/post_img"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_margin="@dimen/margin_16" />
+
+        <TextView
+            android:id="@+id/post_profile_name"
+            android:layout_width="wrap_content"
+            android:layout_height="24dp"
+            android:layout_marginTop="@dimen/margin_16"
+            android:layout_toEndOf="@+id/post_img"
+            android:gravity="center|start"
+            android:maxLines="1"
+            android:text="THARUNBHARAThasd"
+            android:textColor="@color/colorBackground"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/post_time"
+            android:layout_width="wrap_content"
+            android:layout_height="24dp"
+            android:layout_below="@+id/post_profile_name"
+            android:layout_marginStart="@dimen/margin_2"
+            android:layout_marginTop="@dimen/margin_8"
+            android:layout_toEndOf="@+id/post_img"
+            android:gravity="center|start"
+            android:maxLines="1"
+            android:text="20/05/2017 18:36 "
+            android:textColor="@color/colorBackground"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/post"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/post_img"
+            android:layout_marginEnd="@dimen/margin_16"
+            android:layout_marginStart="@dimen/margin_16"
+            android:gravity="start"
+            android:text="I am trained engineefd r in dfdsf dfgdgdf sfdsadasdasd  ds  dsds  dsja..."
+            android:textColor="@color/text_main"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/post_industry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/post"
+            android:layout_marginStart="@dimen/margin_16"
+            android:layout_marginTop="@dimen/margin_16"
+            android:gravity="center"
+            android:maxLines="1"
+            android:padding="@dimen/margin_2"
+            android:text="IT INDUSTRY"
+            android:textAllCaps="true"
+            android:textColor="@color/industry_company"
+            android:textSize="16sp"
+            android:textStyle="italic|bold" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/comments_post_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/post_industry"
+            android:layout_margin="@dimen/margin_16">
+
+        </android.support.v7.widget.RecyclerView>
+
+        <EditText
+            android:id="@+id/user_comment"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_below="@+id/comments_post_recycler"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/margin_16"
+            android:background="@drawable/comment_style"
+            android:gravity="center|start"
+            android:hint="Comment"
+            android:maxLength="60"
+            android:maxLines="1"
+            android:paddingEnd="64dp"
+            android:textColor="@color/colorBackground"
+            android:textColorHint="@color/colorPrimary"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/send_comment"
+            android:layout_width="36dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/comments_post_recycler"
+            android:layout_marginEnd="24dp"
+            android:layout_marginTop="24dp"
+            android:src="@drawable/ic_send_black_24dp" />
+
+    </RelativeLayout>
+</android.support.v4.widget.NestedScrollView>

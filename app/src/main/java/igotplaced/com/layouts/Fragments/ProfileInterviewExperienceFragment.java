@@ -27,7 +27,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import igotplaced.com.layouts.CustomAdapter.RecyclerAdapterInterviewHome;
 import igotplaced.com.layouts.Model.Interview;
 import igotplaced.com.layouts.Model.Post;
 import igotplaced.com.layouts.R;
@@ -48,7 +47,7 @@ public class ProfileInterviewExperienceFragment extends Fragment implements Clic
 
     private String userId;
     private List<Interview> interviewList = new ArrayList<Interview>();
-    private RecyclerAdapterInterviewHome recyclerAdapterInterviewHome;
+    private HomeInterviewFragment.RecyclerAdapterInterviewHome recyclerAdapterInterviewHome;
 
     int lastVisiblesItems, visibleItemCount, totalItemCount;
 
@@ -78,18 +77,18 @@ public class ProfileInterviewExperienceFragment extends Fragment implements Clic
 
         Log.d("error", userId);
 
-        interviewRecyclerView(view);
+      //  interviewRecyclerView(view);
 
         return view;
 
     }
 
 
-    private void interviewRecyclerView(View view) {
+   /* private void interviewRecyclerView(View view) {
         //mapping RecyclerView
         RecyclerView interview_view = (RecyclerView) view.findViewById(R.id.recycler_view_profile_interview);
         //feeding values to RecyclerView using custom RecyclerView adapter
-        recyclerAdapterInterviewHome = new RecyclerAdapterInterviewHome(context, interviewList);
+        recyclerAdapterInterviewHome = new HomeInterviewFragment.RecyclerAdapterInterviewHome(context, interviewList);
 
         //setting fixed size
         interview_view.setHasFixedSize(true);
@@ -108,7 +107,7 @@ public class ProfileInterviewExperienceFragment extends Fragment implements Clic
 
         recyclerAdapterInterviewHome.setClickListener(this);
 
-    }
+    }*/
 
 
     private void makeJsonArrayRequestInterviewHome() {

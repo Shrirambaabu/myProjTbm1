@@ -27,7 +27,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import igotplaced.com.layouts.CustomAdapter.RecyclerAdapterPostHome;
+
 import igotplaced.com.layouts.CustomAdapter.RecyclerAdapterProfilePost;
 import igotplaced.com.layouts.Model.Post;
 import igotplaced.com.layouts.R;

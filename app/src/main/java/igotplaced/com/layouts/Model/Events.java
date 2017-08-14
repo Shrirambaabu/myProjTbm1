@@ -6,6 +6,8 @@ package igotplaced.com.layouts.Model;
 
 public class Events {
 
+    private String eventId;
+    private String eventUserId;
     private String eventCaption;
     private String eventDesignation;
     private String eventVenue;
@@ -21,6 +23,23 @@ public class Events {
     private String userComment;
 
 
+    public Events(String eventId, String eventUserId, String eventCaption, String eventDesignation, String eventVenue, String eventDate, String eventRegistered, String eventStatus, String event, String eventIndustry, String eventImage, String eventProfileName, String eventTime, String commentProfileImage, String userComment) {
+        this.eventId = eventId;
+        this.eventUserId = eventUserId;
+        this.eventCaption = eventCaption;
+        this.eventDesignation = eventDesignation;
+        this.eventVenue = eventVenue;
+        this.eventDate = eventDate;
+        this.eventRegistered = eventRegistered;
+        this.eventStatus = eventStatus;
+        this.event = event;
+        this.eventIndustry = eventIndustry;
+        this.eventImage = eventImage;
+        this.eventProfileName = eventProfileName;
+        this.eventTime = eventTime;
+        this.commentProfileImage = commentProfileImage;
+        this.userComment = userComment;
+    }
     public Events(String eventCaption, String eventDesignation, String eventVenue, String eventDate, String eventRegistered, String eventStatus, String event, String eventIndustry, String eventImage, String eventProfileName, String eventTime, String commentProfileImage, String userComment) {
         this.eventCaption = eventCaption;
         this.eventDesignation = eventDesignation;
@@ -49,6 +68,14 @@ public class Events {
         this.eventTime = eventTime;
         this.commentProfileImage = commentProfileImage;
         this.userComment = userComment;
+    }
+
+    public String getEventId() {
+        return eventId;
+    }
+
+    public String getEventUserId() {
+        return eventUserId;
     }
 
     public String getEventCaption() {

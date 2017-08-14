@@ -4,7 +4,7 @@ package igotplaced.com.layouts.Model;
  * Created by Ashith VL on 5/29/2017.
  */
 
-public class    Post {
+public class Post {
     private String postId;
     private String postedUserId;
     private String post;
@@ -14,6 +14,14 @@ public class    Post {
     private String postTime;
     private String userImage;
     private String userProfileName;
+    private String comentedUserImage;
+    private String commentedMessage;
+
+
+    public Post(String comenteduserImage, String commentedMessage) {
+        this.comentedUserImage = comenteduserImage;
+        this.commentedMessage = commentedMessage;
+    }
 
     public Post() {
     }
@@ -60,6 +68,13 @@ public class    Post {
     }
 
 
+    public String getComentedUserImage() {
+        return comentedUserImage;
+    }
+
+    public String getCommentedMessage() {
+        return commentedMessage;
+    }
 
     public String getPostedUserId() {
         return postedUserId;
@@ -68,12 +83,15 @@ public class    Post {
     public void setPostedUserId(String postedUserId) {
         this.postedUserId = postedUserId;
     }
+
     public void setPostId(String postId) {
         this.postId = postId;
     }
+
     public String getPostId() {
         return postId;
     }
+
     public String getUserImage() {
         return userImage;
     }
