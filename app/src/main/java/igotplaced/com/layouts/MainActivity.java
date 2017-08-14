@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
@@ -18,19 +19,25 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.NetworkImageView;
+import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import igotplaced.com.layouts.Fragments.AboutUsFragment;
@@ -39,9 +46,10 @@ import igotplaced.com.layouts.Fragments.HomeFragment;
 import igotplaced.com.layouts.Fragments.NotificationFragment;
 import igotplaced.com.layouts.Fragments.ProfileFragment;
 import igotplaced.com.layouts.Model.Profile;
-import igotplaced.com.layouts.Model.ProfileHome;
+import igotplaced.com.layouts.Utils.CustomAutoCompleteView;
 import igotplaced.com.layouts.Utils.NetworkController;
 import igotplaced.com.layouts.Utils.Utils;
+import igotplaced.com.layouts.Utils.Validation;
 
 import static igotplaced.com.layouts.Utils.Utils.BaseUri;
 import static igotplaced.com.layouts.Utils.Utils.Email;
@@ -59,6 +67,10 @@ public class MainActivity extends AppCompatActivity {
     private TextView nameHeader, emailHeader;
     private NetworkImageView profile_img;
 
+    private ArrayAdapter<String> searchAutoCompleteAdapter;
+    SearchView searchView;
+   /* private CustomAutoCompleteView searchEditText;
+    private TextInputLayout inputLayoutSearch;*/
     private DrawerLayout drawerLayout;
     private boolean isMain = false;
     private SharedPreferences sharedpreferences;
@@ -83,6 +95,10 @@ public class MainActivity extends AppCompatActivity {
         userEmail = sharedpreferences.getString(Email, null);
         userId = sharedpreferences.getString(Id, null);
 
+/*
+        searchEditText =(CustomAutoCompleteView) findViewById(R.id.editViewSearch) ;
+        inputLayoutSearch=(TextInputLayout) findViewById(R.id.viewSearch) ;
+        searchEditText.addTextChangedListener(new CustomWatcher(searchEditText));*/
 
 
         queue = NetworkController.getInstance(context).getRequestQueue();
@@ -96,7 +112,29 @@ public class MainActivity extends AppCompatActivity {
         displaySelectedScreen(R.id.home);
 
     }
+   /* private class CustomWatcher implements TextWatcher {
 
+        private View view;
+
+        CustomWatcher(View view) {
+            this.view = view;
+        }
+
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        }
+
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        }
+
+        public void afterTextChanged(Editable editable) {
+            switch (view.getId()) {
+
+                case R.id.editViewSearch:
+                    Validation.validateDepartment(searchEditText, inputLayoutSearch, MainActivity.this);
+                    break;
+            }
+        }
+    }*/
     private void makeJsonArrayRequestProfile() {
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(BaseUri + "/profileService/profileEdit/" + userId, new Response.Listener<JSONArray>() {
 
@@ -218,7 +256,7 @@ public class MainActivity extends AppCompatActivity {
                 editor.putString(Name, null);
                 editor.commit();
                 Intent logOut = new Intent(this, LoginActivity.class);
-                logOut.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                logOut.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(logOut);
                 break;
 
@@ -291,7 +329,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void endApplication() {
         Intent intent = new Intent(Intent.ACTION_MAIN);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         intent.addCategory(Intent.CATEGORY_HOME);
         startActivity(intent);
     }
@@ -308,7 +346,7 @@ public class MainActivity extends AppCompatActivity {
                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                           MainActivity.super.onBackPressed();
+                            MainActivity.super.onBackPressed();
                         }
                     }).setNegativeButton("No", null).show();
 
@@ -317,14 +355,57 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void networkSearchAutoCompleteRequest(String keyword) {
+
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(BaseUri + "/autocompleteService/searchAll/" + keyword, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+
+                searchAutoCompleteAdapter.clear();
+                for (int i = 0; i < response.length(); i++) {
+                    try {
+                        searchAutoCompleteAdapter.add(String.valueOf(response.get(i)));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                /**
+                 *  Returns error message when,
+                 *  server is down,
+                 *  incorrect IP
+                 *  Server not deployed
+                 */
+                Utils.showDialogue(MainActivity.this, "Sorry! Server Error");
+            }
+        });
+
+
+        int MY_SOCKET_TIMEOUT_MS = 3000;//3 seconds - change to what you want
+        jsonArrayRequest.setRetryPolicy(new DefaultRetryPolicy(
+                MY_SOCKET_TIMEOUT_MS,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        RequestQueue rQueue = Volley.newRequestQueue(MainActivity.this);
+        rQueue.add(jsonArrayRequest);
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.serach, menu);
         // Retrieve the SearchView and plug it into SearchManager
-        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
+        searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
         SearchManager searchManager = (SearchManager) getSystemService(SEARCH_SERVICE);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+
+
+        searchAutoCompleteAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item_custom);
+        networkSearchAutoCompleteRequest("INTERNET");
 
         return true;
     }

@@ -150,7 +150,7 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
             }
         });
 
-        recyclerAdapterPostHome.setClickListener(this);
+       // recyclerAdapterPostHome.setClickListener(this);
 
     }
 
@@ -182,7 +182,7 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
                         try {
 
                             JSONObject obj = jsonObjectJSON.getJSONObject(i);
-                            Post post = new Post(obj.getString("post"), obj.getString("Industry"), obj.getString("postuserimgname"), obj.getString("created_uname"), obj.getString("created_by"), obj.getString("imgname"), obj.getString("fname"));
+                            Post post = new Post(obj.getString("pid"),obj.getString("created_user"),obj.getString("post"), obj.getString("Industry"), obj.getString("postuserimgname"), obj.getString("created_uname"), obj.getString("created_by"), obj.getString("imgname"), obj.getString("fname"));
                             // adding movie to blogHomeList array
                             postList.add(post);
 

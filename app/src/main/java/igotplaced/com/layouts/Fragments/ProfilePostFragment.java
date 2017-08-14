@@ -94,7 +94,9 @@ public class ProfilePostFragment extends Fragment implements ClickListener {
         //setting RecyclerView adapter
         post_view.setAdapter(recyclerAdapterProfilePost);
 
-        Log.e("PostRecycler",""+recyclerAdapterProfilePost.getItemCount());
+        if (postList.isEmpty()) {
+            Toast.makeText(getContext(), "No Profile post data Found", Toast.LENGTH_LONG).show();
+        }
         //Getting Instance of Volley Request Queue
         queue = NetworkController.getInstance(context).getRequestQueue();
 
@@ -115,7 +117,7 @@ public class ProfilePostFragment extends Fragment implements ClickListener {
             @Override
             public void onResponse(JSONArray response) {
 
-
+                postList.clear();
                 for (int i = 0; i < response.length(); i++) {
 
                     try {
@@ -126,17 +128,15 @@ public class ProfilePostFragment extends Fragment implements ClickListener {
 
                         // adding movie to blogHomeList array
                         postList.add(post);
-
+                        recyclerAdapterProfilePost.notifyDataSetChanged();
                     } catch (Exception e) {
                         Log.d("error", e.getMessage());
                         System.out.println(e.getMessage());
-                    } finally {
+                    } /*finally {
                         //Notify adapter about data changes
                         recyclerAdapterProfilePost.notifyDataSetChanged();
 
-                        Log.e("Req Profile",""+recyclerAdapterProfilePost.toString());
-                        Log.e("Req Profile cou",""+recyclerAdapterProfilePost.getItemCount());
-                    }
+                    }*/
                 }
             }
 

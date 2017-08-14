@@ -5,6 +5,8 @@ package igotplaced.com.layouts.Model;
  */
 
 public class Questions {
+    private String questionId;
+    private String questionUserId;
     private String questions;
     private String questionsIndustry;
     private String questionsImage;
@@ -15,7 +17,17 @@ public class Questions {
 
     public Questions() {
     }
-
+    public Questions(String questionId, String questionUserId, String questions, String questionsIndustry, String questionsImage, String questionsProfileName, String questionsTime, String commentProfileImage, String userQuestionComments) {
+        this.questionId = questionId;
+        this.questionUserId = questionUserId;
+        this.questions = questions;
+        this.questionsIndustry = questionsIndustry;
+        this.questionsImage = questionsImage;
+        this.questionsProfileName = questionsProfileName;
+        this.questionsTime = questionsTime;
+        this.commentProfileImage = commentProfileImage;
+        this.userQuestionComments = userQuestionComments;
+    }
     public Questions(String questions, String questionsIndustry, String questionsImage, String questionsProfileName, String questionsTime, String commentProfileImage, String userQuestionComments) {
         this.questions = questions;
         this.questionsIndustry = questionsIndustry;
@@ -26,6 +38,13 @@ public class Questions {
         this.userQuestionComments=userQuestionComments;
     }
 
+    public String getQuestionId() {
+        return questionId;
+    }
+
+    public String getQuestionUserId() {
+        return questionUserId;
+    }
     public String getQuestions() {
         return questions;
     }

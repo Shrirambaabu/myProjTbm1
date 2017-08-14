@@ -113,8 +113,7 @@ public class ForgetPasswordActivity extends AppCompatActivity implements View.On
 
                     Toast.makeText(getApplicationContext(), "Email send Successfully", Toast.LENGTH_SHORT).show();
 
-                    Intent loginCompleteIntent = new Intent(ForgetPasswordActivity.this, LoginActivity.class);
-                    startActivity(loginCompleteIntent);
+                   finish();
                 } else {
                     Utils.showDialogue(ForgetPasswordActivity.this, "Sorry!!! Wrong email id");
                 }

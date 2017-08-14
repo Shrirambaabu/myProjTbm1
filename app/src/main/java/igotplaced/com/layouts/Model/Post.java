@@ -5,6 +5,8 @@ package igotplaced.com.layouts.Model;
  */
 
 public class    Post {
+    private String postId;
+    private String postedUserId;
     private String post;
     private String postIndustry;
     private String postImage;
@@ -14,6 +16,29 @@ public class    Post {
     private String userProfileName;
 
     public Post() {
+    }
+
+    public Post(String postId, String postedUserId, String post, String postIndustry, String postImage, String postProfileName, String postTime, String userImage, String userProfileName) {
+        this.postId = postId;
+        this.postedUserId = postedUserId;
+        this.post = post;
+        this.postIndustry = postIndustry;
+        this.postImage = postImage;
+        this.postProfileName = postProfileName;
+        this.postTime = postTime;
+        this.userImage = userImage;
+        this.userProfileName = userProfileName;
+    }
+
+    public Post(String postId, String post, String postIndustry, String postImage, String postProfileName, String postTime, String userImage, String userProfileName) {
+        this.postId = postId;
+        this.post = post;
+        this.postIndustry = postIndustry;
+        this.postImage = postImage;
+        this.postProfileName = postProfileName;
+        this.postTime = postTime;
+        this.userImage = userImage;
+        this.userProfileName = userProfileName;
     }
 
     public Post(String post, String postIndustry, String postImage, String postProfileName, String postTime) {
@@ -34,6 +59,21 @@ public class    Post {
         this.userProfileName = userProfileName;
     }
 
+
+
+    public String getPostedUserId() {
+        return postedUserId;
+    }
+
+    public void setPostedUserId(String postedUserId) {
+        this.postedUserId = postedUserId;
+    }
+    public void setPostId(String postId) {
+        this.postId = postId;
+    }
+    public String getPostId() {
+        return postId;
+    }
     public String getUserImage() {
         return userImage;
     }

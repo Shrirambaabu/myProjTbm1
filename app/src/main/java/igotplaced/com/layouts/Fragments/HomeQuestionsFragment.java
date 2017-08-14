@@ -183,7 +183,7 @@ public class HomeQuestionsFragment extends Fragment implements SwipeRefreshLayou
                         try {
 
                             JSONObject obj = jsonObjectJSON.getJSONObject(i);
-                            Questions questions = new Questions(obj.getString("question"), obj.getString("industryname"), obj.getString("questionUserImgName"), obj.getString("created_uname"), obj.getString("created_by"), obj.getString("imgname"), obj.getString("fname"));
+                            Questions questions = new Questions(obj.getString("id"),obj.getString("created_user"),obj.getString("question"), obj.getString("industryname"), obj.getString("questionUserImgName"), obj.getString("created_uname"), obj.getString("created_by"), obj.getString("imgname"), obj.getString("fname"));
                             // adding movie to blogHomeList array
                             questionsList.add(questions);
 

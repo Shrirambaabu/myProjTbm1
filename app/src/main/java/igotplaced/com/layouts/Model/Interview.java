@@ -5,6 +5,8 @@ package igotplaced.com.layouts.Model;
  */
 
 public class Interview {
+    private String interviewId;
+    private String interviewUserId;
     private String interview;
     private String interviewIndustry;
     private String interviewImage;
@@ -15,6 +17,19 @@ public class Interview {
 
     public Interview() {
     }
+
+    public Interview(String interviewId, String interviewUserId, String interview, String interviewIndustry, String interviewImage, String interviewProfileName, String interviewTime, String userImage, String userComment) {
+        this.interviewId = interviewId;
+        this.interviewUserId = interviewUserId;
+        this.interview = interview;
+        this.interviewIndustry = interviewIndustry;
+        this.interviewImage = interviewImage;
+        this.interviewProfileName = interviewProfileName;
+        this.interviewTime = interviewTime;
+        this.userImage = userImage;
+        this.userComment = userComment;
+    }
+
 
     public Interview(String interview, String interviewIndustry, String interviewImage, String interviewProfileName, String interviewTime, String userComment) {
         this.interview = interview;
@@ -33,6 +48,14 @@ public class Interview {
         this.interviewTime = interviewTime;
         this.userImage = userImage;
         this.userComment = userComment;
+    }
+
+    public String getInterviewId() {
+        return interviewId;
+    }
+
+    public String getInterviewUserId() {
+        return interviewUserId;
     }
 
     public String getInterview() {
