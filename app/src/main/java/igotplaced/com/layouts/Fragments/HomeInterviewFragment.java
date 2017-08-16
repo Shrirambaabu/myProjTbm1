@@ -167,7 +167,7 @@ public class HomeInterviewFragment extends Fragment implements SwipeRefreshLayou
             }
         });
 
-     //   recyclerAdapterInterviewHome.setClickListener(this);
+        //   recyclerAdapterInterviewHome.setClickListener(this);
 
     }
 
@@ -199,7 +199,7 @@ public class HomeInterviewFragment extends Fragment implements SwipeRefreshLayou
                         try {
 
                             JSONObject obj = jsonObjectJSON.getJSONObject(i);
-                            Interview interview = new Interview(obj.getString("id"),obj.getString("user_id"),obj.getString("feedback"), obj.getString("industryname"), obj.getString("interviewUserImgName"), obj.getString("username"), obj.getString("created_by"), obj.getString("imgname"), obj.getString("fname"));
+                            Interview interview = new Interview(obj.getString("id"), obj.getString("user_id"), obj.getString("feedback"), obj.getString("industryname"), obj.getString("interviewUserImgName"), obj.getString("username"), obj.getString("created_by"), obj.getString("imgname"), obj.getString("fname"));
                             // adding movie to blogHomeList array
                             interviewList.add(interview);
 
@@ -260,7 +260,7 @@ public class HomeInterviewFragment extends Fragment implements SwipeRefreshLayou
         startActivity(i);*/
     }
 
-    class RecyclerAdapterInterviewHome extends RecyclerView.Adapter<RecyclerAdapterInterviewHome.MyViewHolder>{
+    class RecyclerAdapterInterviewHome extends RecyclerView.Adapter<RecyclerAdapterInterviewHome.MyViewHolder> {
         private String userId = null, userName = null;
         private String URL = BaseUri + "/home/interviewComments";
         private String interviewId, postedinterviewId, userinterviewComment;
@@ -295,8 +295,8 @@ public class HomeInterviewFragment extends Fragment implements SwipeRefreshLayou
 
             Interview interview = interviewList.get(position);
 
-            interviewId=interview.getInterviewId();
-            postedinterviewId=interview.getInterviewUserId();
+            interviewId = interview.getInterviewId();
+            postedinterviewId = interview.getInterviewUserId();
 
             //Pass the values of feeds object to Views
             holder.interview.setText(interview.getInterview());
@@ -306,19 +306,6 @@ public class HomeInterviewFragment extends Fragment implements SwipeRefreshLayou
             //  holder.userImage.setImageUrl(Utils.BaseImageUri + interview.getUserImage(), NetworkController.getInstance(context).getImageLoader());
             holder.interviewImage.setImageUrl(Utils.BaseImageUri + interview.getInterviewImage(), NetworkController.getInstance(context).getImageLoader());
 
-       holder.comment.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               if (holder.userComment.getText().toString().isEmpty()){
-                   Toast.makeText(context, "Enter the Comment", Toast.LENGTH_SHORT).show();
-               }else{
-                   userinterviewComment= holder.userComment.getText().toString();
-                   insertUserComment();
-                   Toast.makeText(context, "Comment added", Toast.LENGTH_SHORT).show();
-               }
-               holder.userComment.setText("");
-           }
-       });
 
             holder.setItemClickListener(new ItemClickListener() {
                 @Override
@@ -327,6 +314,12 @@ public class HomeInterviewFragment extends Fragment implements SwipeRefreshLayou
                     InterviewDetails interviewDetails = new InterviewDetails();
                     Bundle bundle = new Bundle();
                     bundle.putString("iid", interviewList.get(position).getInterviewId());
+                    bundle.putString("created_uname", interviewList.get(position).getInterviewProfileName());
+                    bundle.putString("created_by", interviewList.get(position).getInterviewTime());
+                    bundle.putString("interview", interviewList.get(position).getInterview());
+                    bundle.putString("interviewImage", interviewList.get(position).getInterviewImage());
+                    bundle.putString("interviewIndustry", interviewList.get(position).getInterviewIndustry());
+                    bundle.putString("interview_createdid", interviewList.get(position).getInterviewUserId());
                     interviewDetails.setArguments(bundle);
                     getActivity().getSupportFragmentManager()
                             .beginTransaction()
@@ -338,48 +331,6 @@ public class HomeInterviewFragment extends Fragment implements SwipeRefreshLayou
 
         }
 
-        private void insertUserComment() {
-            StringRequest request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
-                @Override
-                public void onResponse(String s) {
-
-                }
-            }, new Response.ErrorListener() {
-
-                @Override
-                public void onErrorResponse(VolleyError volleyError) {
-
-                    /**
-                     *  Returns error message when,
-                     *  server is down,
-                     *  incorrect IP
-                     *  Server not deployed
-                     */
-                    Utils.showDialogue((Activity) context, "Sorry! Server Error");
-                }
-            }) {
-                @Override
-                protected Map<String, String> getParams() throws AuthFailureError {
-                    Map<String, String> parameters = new HashMap<String, String>();
-                    parameters.put("iid", interviewId);
-                    parameters.put("intex_createrid", postedinterviewId);
-                    parameters.put("user_id", userId);
-                    parameters.put("comments", userinterviewComment);
-                    parameters.put("created_uname", userName);
-
-                    return parameters;
-                }
-            };
-
-            int MY_SOCKET_TIMEOUT_MS = 30000;//30 seconds - change to what you want
-            request.setRetryPolicy(new DefaultRetryPolicy(
-                    MY_SOCKET_TIMEOUT_MS,
-                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-
-            RequestQueue rQueue = Volley.newRequestQueue(context);
-            rQueue.add(request);
-        }
 
         @Override
         public int getItemCount() {
@@ -389,19 +340,19 @@ public class HomeInterviewFragment extends Fragment implements SwipeRefreshLayou
 
         public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-            private TextView interview, interviewIndustry, interviewProfileName, interviewTime;
-            private NetworkImageView interviewImage,userImage;
-            private ImageView comment;
-            private EditText userComment;
+            private TextView interview, interviewIndustry, interviewProfileName, interviewTime,viewMore;
+            private NetworkImageView interviewImage, userImage;
+
             private ItemClickListener itemClickListener;
+
             public MyViewHolder(View itemView) {
                 super(itemView);
                 interview = (TextView) itemView.findViewById(R.id.interview);
                 interviewIndustry = (TextView) itemView.findViewById(R.id.interview_industry);
                 interviewProfileName = (TextView) itemView.findViewById(R.id.interview_profile_name);
                 interviewTime = (TextView) itemView.findViewById(R.id.interview_time);
-                comment = (ImageView) itemView.findViewById(R.id.send_comment);
-                userComment = (EditText) itemView.findViewById(R.id.user_comment);
+                viewMore = (TextView) itemView.findViewById(R.id.view_more);
+
 
                 // Volley's NetworkImageView which will load Image from URL
                 interviewImage = (NetworkImageView) itemView.findViewById(R.id.interview_img);
@@ -415,13 +366,12 @@ public class HomeInterviewFragment extends Fragment implements SwipeRefreshLayou
             public void onClick(View v) {
                 this.itemClickListener.onItemClick(v, getLayoutPosition());
             }
+
             void setItemClickListener(ItemClickListener ic) {
                 this.itemClickListener = ic;
             }
         }
     }
-
-
 
 
 }

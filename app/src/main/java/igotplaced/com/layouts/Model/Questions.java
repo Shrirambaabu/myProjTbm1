@@ -5,6 +5,10 @@ package igotplaced.com.layouts.Model;
  */
 
 public class Questions {
+
+    private String commentUserImage;
+    private String commentUserMessage;
+
     private String questionId;
     private String questionUserId;
     private String questions;
@@ -36,6 +40,20 @@ public class Questions {
         this.questionsTime = questionsTime;
         this.commentProfileImage = commentProfileImage;
         this.userQuestionComments=userQuestionComments;
+    }
+
+    public Questions(String commentUserImage, String commentUserMessage) {
+        this.commentUserImage = commentUserImage;
+        this.commentUserMessage = commentUserMessage;
+    }
+
+
+    public String getCommentUserImage() {
+        return commentUserImage;
+    }
+
+    public String getCommentUserMessage() {
+        return commentUserMessage;
     }
 
     public String getQuestionId() {

@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -19,6 +20,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.NetworkImageView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,11 +30,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-import igotplaced.com.layouts.CustomAdapter.RecyclerAdapterProfilePost;
 import igotplaced.com.layouts.Model.Post;
 import igotplaced.com.layouts.R;
 import igotplaced.com.layouts.Utils.ClickListener;
 import igotplaced.com.layouts.Utils.NetworkController;
+import igotplaced.com.layouts.Utils.Utils;
 
 import static igotplaced.com.layouts.Utils.Utils.BaseUri;
 import static igotplaced.com.layouts.Utils.Utils.Id;
@@ -94,16 +96,13 @@ public class ProfilePostFragment extends Fragment implements ClickListener {
         //setting RecyclerView adapter
         post_view.setAdapter(recyclerAdapterProfilePost);
 
-        if (postList.isEmpty()) {
-            Toast.makeText(getContext(), "No Profile post data Found", Toast.LENGTH_LONG).show();
-        }
         //Getting Instance of Volley Request Queue
         queue = NetworkController.getInstance(context).getRequestQueue();
 
         loadData();
 
 
-        recyclerAdapterProfilePost.setClickListener(this);
+    //    recyclerAdapterProfilePost.setClickListener(this);
 
     }
 
@@ -132,11 +131,11 @@ public class ProfilePostFragment extends Fragment implements ClickListener {
                     } catch (Exception e) {
                         Log.d("error", e.getMessage());
                         System.out.println(e.getMessage());
-                    } /*finally {
+                    } finally {
                         //Notify adapter about data changes
                         recyclerAdapterProfilePost.notifyDataSetChanged();
 
-                    }*/
+                    }
                 }
             }
 
@@ -171,4 +170,66 @@ public class ProfilePostFragment extends Fragment implements ClickListener {
         i.putExtra("postId", blog.getId());
         startActivity(i);*/
     }
+
+
+
+    class RecyclerAdapterProfilePost extends RecyclerView.Adapter<RecyclerAdapterProfilePost.MyViewHolder>{
+
+        private List<Post> postList;
+        private Context context;
+        private LayoutInflater inflater;
+
+
+        public RecyclerAdapterProfilePost(Context context, List<Post> postList) {
+
+            this.context = context;
+            this.postList = postList;
+            inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        }
+
+        @Override
+        public RecyclerAdapterProfilePost.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View rootView = inflater.inflate(R.layout.card_view_post, parent, false);
+            return new RecyclerAdapterProfilePost.MyViewHolder(rootView);
+        }
+
+        @Override
+        public void onBindViewHolder(RecyclerAdapterProfilePost.MyViewHolder holder, int position) {
+
+            Post post = postList.get(position);
+            holder.post.setText(post.getPost());
+            holder.postIndustry.setText(post.getPostIndustry());
+            holder.postProfileName.setText(post.getPostProfileName());
+            holder.postTime.setText(post.getPostTime());
+            //  holder.userImage.setImageUrl(Utils.BaseImageUri + post.getUserImage(), NetworkController.getInstance(context).getImageLoader());
+            holder.postImage.setImageUrl(Utils.BaseImageUri + post.getPostImage(), NetworkController.getInstance(context).getImageLoader());
+
+        }
+
+        @Override
+        public int getItemCount() {
+            return postList.size();
+        }
+
+        public class MyViewHolder extends RecyclerView.ViewHolder {
+
+            private TextView post, postIndustry, postProfileName, postTime;
+            private NetworkImageView postImage;
+
+            public MyViewHolder(View itemView) {
+
+                super(itemView);
+
+                post = (TextView) itemView.findViewById(R.id.post);
+                postIndustry = (TextView) itemView.findViewById(R.id.post_industry);
+                postProfileName = (TextView) itemView.findViewById(R.id.post_profile_name);
+                postTime = (TextView) itemView.findViewById(R.id.post_time);
+                // Volley's NetworkImageView which will load Image from URL
+                postImage = (NetworkImageView) itemView.findViewById(R.id.post_img);
+
+            }
+        }
+    }
+
+
 }

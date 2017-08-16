@@ -83,20 +83,7 @@ public class RecyclerAdapterQuestionsHome extends RecyclerView.Adapter<RecyclerA
         holder.questionsTime.setText(questions.getQuestionsTime());
         //      holder.comment_profile_img.setImageUrl(Utils.BaseImageUri + questions.getCommentProfileImage(), NetworkController.getInstance(context).getImageLoader());
         holder.questionsImage.setImageUrl(Utils.BaseImageUri + questions.getQuestionsImage(), NetworkController.getInstance(context).getImageLoader());
-        holder.comment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (holder.userComment.getText().toString().isEmpty()) {
-                    Toast.makeText(context, "Enter the Comment", Toast.LENGTH_SHORT).show();
-                } else {
-                    userPostedComment = holder.userComment.getText().toString();
-                    insertUserComment();
-                    Toast.makeText(context, "Comment added", Toast.LENGTH_SHORT).show();
-                }
-                holder.userComment.setText("");
 
-            }
-        });
 
     }
 
@@ -155,10 +142,9 @@ public class RecyclerAdapterQuestionsHome extends RecyclerView.Adapter<RecyclerA
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private TextView questions, questionsIndustry, questionsProfileName, questionsTime;
+        private TextView questions, questionsIndustry, questionsProfileName, questionsTime,viewMore;
         private NetworkImageView questionsImage, comment_profile_img;
-        private ImageView comment;
-        private EditText userComment;
+
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -166,8 +152,8 @@ public class RecyclerAdapterQuestionsHome extends RecyclerView.Adapter<RecyclerA
             questionsIndustry = (TextView) itemView.findViewById(R.id.questions_industry);
             questionsProfileName = (TextView) itemView.findViewById(R.id.questions_profile_name);
             questionsTime = (TextView) itemView.findViewById(R.id.questions_time);
-            comment = (ImageView) itemView.findViewById(R.id.send_comment);
-            userComment = (EditText) itemView.findViewById(R.id.user_comment);
+            viewMore = (TextView) itemView.findViewById(R.id.view_more);
+
 
             // Volley's NetworkImageView which will load Image from URL
             questionsImage = (NetworkImageView) itemView.findViewById(R.id.questions_img);

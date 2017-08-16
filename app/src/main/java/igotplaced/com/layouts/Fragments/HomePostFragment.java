@@ -300,22 +300,6 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
             //  holder.userImage.setImageUrl(Utils.BaseImageUri + post.getUserImage(), NetworkController.getInstance(context).getImageLoader());
             holder.postImage.setImageUrl(Utils.BaseImageUri + post.getPostImage(), NetworkController.getInstance(context).getImageLoader());
 
-            holder.comment.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    postList.get(position);
-                    Log.e("commentPosition",""+ postList.get(position));
-                    if (holder.userComment.getText().toString().isEmpty()){
-                        Toast.makeText(context, "Enter the Comment", Toast.LENGTH_SHORT).show();
-                    }else {
-                        userPostedComment=holder.userComment.getText().toString();
-                        insertUserComment();
-                        Toast.makeText(context, "Comment added", Toast.LENGTH_SHORT).show();
-                    }
-                    holder.userComment.setText("");
-                }
-            });
-
             holder.setItemClickListener(new ItemClickListener() {
                 @Override
                 public void onItemClick(View v, int pos) {
@@ -339,48 +323,6 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
 
         }
 
-        private void insertUserComment() {
-            StringRequest request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
-                @Override
-                public void onResponse(String s) {
-
-                }
-            }, new Response.ErrorListener() {
-
-                @Override
-                public void onErrorResponse(VolleyError volleyError) {
-
-                    /**
-                     *  Returns error message when,
-                     *  server is down,
-                     *  incorrect IP
-                     *  Server not deployed
-                     */
-                    Utils.showDialogue((Activity) context, "Sorry! Server Error");
-                }
-            }) {
-                @Override
-                protected Map<String, String> getParams() throws AuthFailureError {
-                    Map<String, String> parameters = new HashMap<String, String>();
-                    parameters.put("pid", postId);
-                    parameters.put("post_createdid", postedUserId);
-                    parameters.put("user_id", userId);
-                    parameters.put("comments", userPostedComment);
-                    parameters.put("created_uname", userName);
-
-                    return parameters;
-                }
-            };
-
-            int MY_SOCKET_TIMEOUT_MS = 30000;//30 seconds - change to what you want
-            request.setRetryPolicy(new DefaultRetryPolicy(
-                    MY_SOCKET_TIMEOUT_MS,
-                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-
-            RequestQueue rQueue = Volley.newRequestQueue(context);
-            rQueue.add(request);
-        }
 
         @Override
         public int getItemCount() {
@@ -388,9 +330,8 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
         }
 
         public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-            private TextView post, postIndustry, postProfileName, postTime;
-            private ImageView comment;
-            private EditText userComment;
+            private TextView post, postIndustry, postProfileName, postTime,viewMore;
+
             private NetworkImageView postImage, userImage;
             private ItemClickListener itemClickListener;
 
@@ -401,9 +342,9 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
                 postIndustry = (TextView) itemView.findViewById(R.id.post_industry);
                 postProfileName = (TextView) itemView.findViewById(R.id.post_profile_name);
                 postTime = (TextView) itemView.findViewById(R.id.post_time);
+                viewMore = (TextView) itemView.findViewById(R.id.view_more);
 
-                comment = (ImageView) itemView.findViewById(R.id.send_comment);
-                userComment = (EditText) itemView.findViewById(R.id.user_comment);
+
 
                 // postTime = (TextView) itemView.findViewById(R.id.post_time);
                 // Volley's NetworkImageView which will load Image from URL

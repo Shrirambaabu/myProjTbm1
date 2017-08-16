@@ -100,7 +100,7 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
 
     private TextView company1TextView, company2TextView, company3TextView;
 
-    private int yearOfPassOutSpinnerPosition = 0, industry1SpinnerPosition = 0, industry2SpinnerPosition = 0, industry3SpinnerPosition = 0;
+    private int yearOfPassOutSpinnerPosition = 0, industry1SpinnerPosition = 0, industry2SpinnerPosition = 0, industry3SpinnerPosition = 0,company1SpinnerPosition;
 
     private ProgressDialog pDialog;
     private String URL = BaseUri;
@@ -935,8 +935,11 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
                 }
 
                 parameters.put("phone", mobileNumberEditText.getText().toString());
-                parameters.put("check", String.valueOf((checkBoxIntrestedBoolean) ? 1 : 0));
+                parameters.put("interest", String.valueOf((checkBoxIntrestedBoolean) ? 1 : 0));
                 parameters.put("location", locationEditText.getText().toString());
+
+                Log.e("Update",""+parameters);
+
                 return checkParams(parameters);
             }
 

@@ -60,7 +60,6 @@ public class PostDetailsFragment extends Fragment implements View.OnClickListene
     private List<Post> postList = new ArrayList<Post>();
     private LinearLayoutManager mLayoutManager;
 
-    private Context context;
     private RequestQueue queue;
 
 
@@ -103,7 +102,7 @@ public class PostDetailsFragment extends Fragment implements View.OnClickListene
             Log.e("post_createdid", postUserId);
         }
 
-        postImage.setImageUrl(Utils.BaseImageUri + image, NetworkController.getInstance(context).getImageLoader());
+        postImage.setImageUrl(Utils.BaseImageUri + image, NetworkController.getInstance(getContext()).getImageLoader());
         profileName.setText(name);
         profileTime.setText(time);
         postMessage.setText(post);
@@ -122,12 +121,12 @@ public class PostDetailsFragment extends Fragment implements View.OnClickListene
         //setting fixed size
         postRecycler.setHasFixedSize(true);
         //setting horizontal layout
-        postRecycler.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
+        postRecycler.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         mLayoutManager = (LinearLayoutManager) postRecycler.getLayoutManager();
         //setting RecyclerView adapter
         postRecycler.setAdapter(recyclerAdapterPostDetails);
         //Getting Instance of Volley Request Queue
-        queue = NetworkController.getInstance(context).getRequestQueue();
+        queue = NetworkController.getInstance(getContext()).getRequestQueue();
 
         makePostCommentsRequest();
 

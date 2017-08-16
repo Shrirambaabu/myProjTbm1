@@ -314,19 +314,6 @@ public class HomeEventFragment extends Fragment implements SwipeRefreshLayout.On
             //  holder.userImage.setImageUrl(Utils.BaseImageUri + events.getCommentProfileImage(), NetworkController.getInstance(context).getImageLoader());
             holder.event_img.setImageUrl(Utils.BaseImageUri + events.getEventImage(), NetworkController.getInstance(context).getImageLoader());
 
-        holder.sendComment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (holder.userComment.getText().toString().isEmpty()){
-                    Toast.makeText(context, "Enter the Comment", Toast.LENGTH_SHORT).show();
-                }else {
-                    userPostedComment = holder.userComment.getText().toString();
-                    insertUserComment();
-                    Toast.makeText(context, "Comment added", Toast.LENGTH_SHORT).show();
-                }
-                holder.userComment.setText("");
-            }
-        });
 
             holder.setItemClickListener(new ItemClickListener() {
                 @Override
@@ -335,6 +322,18 @@ public class HomeEventFragment extends Fragment implements SwipeRefreshLayout.On
                     EventDetailsFragment eventDetailsFragment = new EventDetailsFragment();
                     Bundle bundle = new Bundle();
                     bundle.putString("eid", eventList.get(position).getEventId());
+                    bundle.putString("ename", eventList.get(position).getEventProfileName());
+                    bundle.putString("eTime", eventList.get(position).getEventTime());
+                    bundle.putString("eCaption", eventList.get(position).getEventCaption());
+                    bundle.putString("eDesign", eventList.get(position).getEventDesignation());
+                    bundle.putString("eVenue", eventList.get(position).getEventVenue());
+                    bundle.putString("eDate", eventList.get(position).getEventDate());
+                    bundle.putString("eReg", eventList.get(position).getEventRegistered());
+                    bundle.putString("eStatus", eventList.get(position).getEventStatus());
+                    bundle.putString("eEvnt", eventList.get(position).getEvent());
+                    bundle.putString("eIndustry", eventList.get(position).getEventIndustry());
+                    bundle.putString("eImage", eventList.get(position).getEventImage());
+                    bundle.putString("eUserId", eventList.get(position).getEventUserId());
                     eventDetailsFragment.setArguments(bundle);
                     getActivity().getSupportFragmentManager()
                             .beginTransaction()
@@ -347,48 +346,6 @@ public class HomeEventFragment extends Fragment implements SwipeRefreshLayout.On
 
         }
 
-        private void insertUserComment() {
-            StringRequest request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
-                @Override
-                public void onResponse(String s) {
-
-                }
-            }, new Response.ErrorListener() {
-
-                @Override
-                public void onErrorResponse(VolleyError volleyError) {
-
-                    /**
-                     *  Returns error message when,
-                     *  server is down,
-                     *  incorrect IP
-                     *  Server not deployed
-                     */
-                    Utils.showDialogue((Activity) context, "Sorry! Server Error");
-                }
-            }) {
-                @Override
-                protected Map<String, String> getParams() throws AuthFailureError {
-                    Map<String, String> parameters = new HashMap<String, String>();
-                    parameters.put("eid", eventsId);
-                    parameters.put("evt_createrid", postedEventsUserId);
-                    parameters.put("user_id", userId);
-                    parameters.put("comments", userPostedComment);
-                    parameters.put("created_uname", userName);
-
-                    return parameters;
-                }
-            };
-
-            int MY_SOCKET_TIMEOUT_MS = 30000;//30 seconds - change to what you want
-            request.setRetryPolicy(new DefaultRetryPolicy(
-                    MY_SOCKET_TIMEOUT_MS,
-                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-
-            RequestQueue rQueue = Volley.newRequestQueue(context);
-            rQueue.add(request);
-        }
 
         @Override
         public int getItemCount() {
@@ -396,10 +353,9 @@ public class HomeEventFragment extends Fragment implements SwipeRefreshLayout.On
         }
 
         public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-            private TextView eventCaption, eventDesignation, eventVenue, eventDate, eventRegistered, eventStatus, event, event_industry, event_profile_name, event_time;
+            private TextView eventCaption, eventDesignation, eventVenue, eventDate, eventRegistered, eventStatus, event, event_industry, event_profile_name, event_time,viewMore;
             private NetworkImageView event_img, userImage;
-            private EditText userComment;
-            private ImageView sendComment;
+
             private ItemClickListener itemClickListener;
             public MyViewHolder(View itemView) {
                 super(itemView);
@@ -415,8 +371,7 @@ public class HomeEventFragment extends Fragment implements SwipeRefreshLayout.On
                 event = (TextView) itemView.findViewById(R.id.event);
                 event_industry = (TextView) itemView.findViewById(R.id.event_industry);
                 event_profile_name = (TextView) itemView.findViewById(R.id.event_profile_name);
-                userComment = (EditText) itemView.findViewById(R.id.user_comment);
-                sendComment = (ImageView) itemView.findViewById(R.id.send_comment);
+                viewMore = (TextView) itemView.findViewById(R.id.view_more);
 
                 event_time = (TextView) itemView.findViewById(R.id.event_time);
                 // Volley's NetworkImageView which will load Image from URL

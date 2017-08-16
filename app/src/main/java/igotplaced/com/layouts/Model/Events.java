@@ -6,6 +6,8 @@ package igotplaced.com.layouts.Model;
 
 public class Events {
 
+    private String eventCommentImage;
+    private String eventCommentMessage;
     private String eventId;
     private String eventUserId;
     private String eventCaption;
@@ -22,6 +24,10 @@ public class Events {
     private String commentProfileImage;
     private String userComment;
 
+    public Events(String eventCommentImage, String eventCommentMessage) {
+        this.eventCommentImage = eventCommentImage;
+        this.eventCommentMessage = eventCommentMessage;
+    }
 
     public Events(String eventId, String eventUserId, String eventCaption, String eventDesignation, String eventVenue, String eventDate, String eventRegistered, String eventStatus, String event, String eventIndustry, String eventImage, String eventProfileName, String eventTime, String commentProfileImage, String userComment) {
         this.eventId = eventId;
@@ -40,6 +46,7 @@ public class Events {
         this.commentProfileImage = commentProfileImage;
         this.userComment = userComment;
     }
+
     public Events(String eventCaption, String eventDesignation, String eventVenue, String eventDate, String eventRegistered, String eventStatus, String event, String eventIndustry, String eventImage, String eventProfileName, String eventTime, String commentProfileImage, String userComment) {
         this.eventCaption = eventCaption;
         this.eventDesignation = eventDesignation;
@@ -68,6 +75,14 @@ public class Events {
         this.eventTime = eventTime;
         this.commentProfileImage = commentProfileImage;
         this.userComment = userComment;
+    }
+
+    public String getEventCommentImage() {
+        return eventCommentImage;
+    }
+
+    public String getEventCommentMessage() {
+        return eventCommentMessage;
     }
 
     public String getEventId() {

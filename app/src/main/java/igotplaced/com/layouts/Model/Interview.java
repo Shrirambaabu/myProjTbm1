@@ -14,8 +14,16 @@ public class Interview {
     private String interviewTime;
     private String userImage;
     private String userComment;
+    private String comentUserImage;
+    private String commentMessage;
+
 
     public Interview() {
+    }
+
+    public Interview(String comentUserImage, String commentMessage) {
+        this.comentUserImage = comentUserImage;
+        this.commentMessage = commentMessage;
     }
 
     public Interview(String interviewId, String interviewUserId, String interview, String interviewIndustry, String interviewImage, String interviewProfileName, String interviewTime, String userImage, String userComment) {
@@ -48,6 +56,14 @@ public class Interview {
         this.interviewTime = interviewTime;
         this.userImage = userImage;
         this.userComment = userComment;
+    }
+
+    public String getComentUserImage() {
+        return comentUserImage;
+    }
+
+    public String getCommentMessage() {
+        return commentMessage;
     }
 
     public String getInterviewId() {

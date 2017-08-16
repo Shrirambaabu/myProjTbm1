@@ -300,19 +300,6 @@ public class HomeQuestionsFragment extends Fragment implements SwipeRefreshLayou
             //      holder.comment_profile_img.setImageUrl(Utils.BaseImageUri + questions.getCommentProfileImage(), NetworkController.getInstance(context).getImageLoader());
             holder.questionsImage.setImageUrl(Utils.BaseImageUri + questions.getQuestionsImage(), NetworkController.getInstance(context).getImageLoader());
 
-            holder.comment.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (holder.userComment.getText().toString().isEmpty()){
-                        Toast.makeText(context, "Enter the Comment", Toast.LENGTH_SHORT).show();
-                    } else {
-                        userPostedComment = holder.userComment.getText().toString();
-                        insertUserComment();
-                        Toast.makeText(context, "Comment added", Toast.LENGTH_SHORT).show();
-                    }
-                    holder.userComment.setText("");
-                }
-            });
 
 
             holder.setItemClickListener(new ItemClickListener() {
@@ -322,6 +309,12 @@ public class HomeQuestionsFragment extends Fragment implements SwipeRefreshLayou
                     QuestionsDetailsFragment questionsDetailsFragment = new QuestionsDetailsFragment();
                     Bundle bundle = new Bundle();
                     bundle.putString("qid", questionsList.get(position).getQuestionId());
+                    bundle.putString("created_uname", questionsList.get(position).getQuestionsProfileName());
+                    bundle.putString("created_by", questionsList.get(position).getQuestionsTime());
+                    bundle.putString("question", questionsList.get(position).getQuestions());
+                    bundle.putString("postImage", questionsList.get(position).getQuestionsImage());
+                    bundle.putString("postIndustry", questionsList.get(position).getQuestionsIndustry());
+                    bundle.putString("post_createdid", questionsList.get(position).getQuestionUserId());
                     questionsDetailsFragment.setArguments(bundle);
                     getActivity().getSupportFragmentManager()
                             .beginTransaction()
@@ -331,48 +324,6 @@ public class HomeQuestionsFragment extends Fragment implements SwipeRefreshLayou
             });
         }
 
-        private void insertUserComment() {
-            StringRequest request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
-                @Override
-                public void onResponse(String s) {
-
-                }
-            }, new Response.ErrorListener() {
-
-                @Override
-                public void onErrorResponse(VolleyError volleyError) {
-
-                    /**
-                     *  Returns error message when,
-                     *  server is down,
-                     *  incorrect IP
-                     *  Server not deployed
-                     */
-                    Utils.showDialogue((Activity) context, "Sorry! Server Error");
-                }
-            }) {
-                @Override
-                protected Map<String, String> getParams() throws AuthFailureError {
-                    Map<String, String> parameters = new HashMap<String, String>();
-                    parameters.put("qid", questionsId);
-                    parameters.put("ques_createrid", postedQuestionUserId);
-                    parameters.put("user_id", userId);
-                    parameters.put("comments", userPostedComment);
-                    parameters.put("created_uname", userName);
-
-                    return parameters;
-                }
-            };
-
-            int MY_SOCKET_TIMEOUT_MS = 30000;//30 seconds - change to what you want
-            request.setRetryPolicy(new DefaultRetryPolicy(
-                    MY_SOCKET_TIMEOUT_MS,
-                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-
-            RequestQueue rQueue = Volley.newRequestQueue(context);
-            rQueue.add(request);
-        }
 
         @Override
         public int getItemCount() {
@@ -381,10 +332,9 @@ public class HomeQuestionsFragment extends Fragment implements SwipeRefreshLayou
 
         public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-            private TextView questions, questionsIndustry, questionsProfileName, questionsTime;
+            private TextView questions, questionsIndustry, questionsProfileName, questionsTime,viewMore;
             private NetworkImageView questionsImage, comment_profile_img;
-            private ImageView comment;
-            private EditText userComment;
+
             private ItemClickListener itemClickListener;
 
             public MyViewHolder(View itemView) {
@@ -393,8 +343,8 @@ public class HomeQuestionsFragment extends Fragment implements SwipeRefreshLayou
                 questionsIndustry = (TextView) itemView.findViewById(R.id.questions_industry);
                 questionsProfileName = (TextView) itemView.findViewById(R.id.questions_profile_name);
                 questionsTime = (TextView) itemView.findViewById(R.id.questions_time);
-                comment = (ImageView) itemView.findViewById(R.id.send_comment);
-                userComment = (EditText) itemView.findViewById(R.id.user_comment);
+                viewMore = (TextView) itemView.findViewById(R.id.view_more);
+
 
                 // Volley's NetworkImageView which will load Image from URL
                 questionsImage = (NetworkImageView) itemView.findViewById(R.id.questions_img);

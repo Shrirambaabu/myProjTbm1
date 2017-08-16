@@ -1,3 +1,4 @@
+/*
 package igotplaced.com.layouts.CustomAdapter;
 
 import android.content.Context;
@@ -18,9 +19,11 @@ import igotplaced.com.layouts.Utils.ClickListener;
 import igotplaced.com.layouts.Utils.NetworkController;
 import igotplaced.com.layouts.Utils.Utils;
 
+*/
 /**
  * Created by Shriram on 09-Aug-17.
- */
+ *//*
+
 
 public class RecyclerAdapterProfilePost extends RecyclerView.Adapter<RecyclerAdapterProfilePost.MyViewHolder> {
 
@@ -92,3 +95,4 @@ public class RecyclerAdapterProfilePost extends RecyclerView.Adapter<RecyclerAda
         }
     }
 }
+*/
