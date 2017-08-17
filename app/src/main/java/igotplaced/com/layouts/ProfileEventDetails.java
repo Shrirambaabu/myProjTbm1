@@ -1,16 +1,14 @@
-package igotplaced.com.layouts.Fragments;
+package igotplaced.com.layouts;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -37,7 +35,6 @@ import java.util.Map;
 
 import igotplaced.com.layouts.CustomAdapter.RecyclerAdapterEventDetails;
 import igotplaced.com.layouts.Model.Events;
-import igotplaced.com.layouts.R;
 import igotplaced.com.layouts.Utils.NetworkController;
 import igotplaced.com.layouts.Utils.Utils;
 
@@ -46,16 +43,16 @@ import static igotplaced.com.layouts.Utils.Utils.Id;
 import static igotplaced.com.layouts.Utils.Utils.MyPREFERENCES;
 import static igotplaced.com.layouts.Utils.Utils.Name;
 
+public class ProfileEventDetails extends AppCompatActivity implements View.OnClickListener {
 
-public class EventDetailsFragment extends Fragment implements View.OnClickListener {
-    private String id = null,image=null,name=null,time=null,caption=null,designation=null,venue=null,date=null,registered=null,status=null,event=null,industry=null,postedUserId=null;
+    private String id = null, image = null, name = null, time = null, caption = null, designation = null, venue = null, date = null, registered = null, status = null, event = null, industry = null, postedUserId = null;
 
     private String userId = null, userName = null;
     private String userPostedComment;
     private String URL = BaseUri + "/home/eventsComments";
 
     private NetworkImageView eventImage;
-    private TextView eventName,eventTime,eventCaption,eventDesignation,eventVenue,eventDate,eventRegistered,eventStatus,eventMessage,eventIndustry;
+    private TextView eventName, eventTime, eventCaption, eventDesignation, eventVenue, eventDate, eventRegistered, eventStatus, eventMessage, eventIndustry;
 
     private EditText userComment;
     private ImageView sendComment;
@@ -64,45 +61,27 @@ public class EventDetailsFragment extends Fragment implements View.OnClickListen
     private LinearLayoutManager mLayoutManager;
 
     private RequestQueue queue;
+    private Intent intent;
 
     private RecyclerAdapterEventDetails recyclerAdapterEventDetails;
 
-    public EventDetailsFragment() {
-        // Required empty public constructor
-    }
-
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-        SharedPreferences sharedpreferences = getContext().getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+        SharedPreferences sharedpreferences = getApplicationContext().getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         userName = sharedpreferences.getString(Name, null);
         userId = sharedpreferences.getString(Id, null);
-        // Inflate the layout for this fragment
 
-        View view = inflater.inflate(R.layout.fragment_event_details, container, false);
-        addressingView(view);
-        addingListeners(view);
+        setContentView(R.layout.activity_profile_event_details);
 
-        Bundle bundle = this.getArguments();
-        if (bundle != null) {
-            id = bundle.getString("eid");
-            image = bundle.getString("eImage");
-            name = bundle.getString("ename");
-            time = bundle.getString("eTime");
-            caption = bundle.getString("eCaption");
-            designation = bundle.getString("eDesign");
-            venue = bundle.getString("eVenue");
-            date = bundle.getString("eDate");
-            registered = bundle.getString("eReg");
-            status = bundle.getString("eStatus");
-            event = bundle.getString("eEvnt");
-            industry = bundle.getString("eIndustry");
-            postedUserId = bundle.getString("eUserId");
-        }
+        addressingView();
+        addingListeners();
+        //initial value from intent
+        initialization();
 
-        eventImage.setImageUrl(Utils.BaseImageUri + image, NetworkController.getInstance(getContext()).getImageLoader());
+        eventImage.setImageUrl(Utils.BaseImageUri + image, NetworkController.getInstance(getApplicationContext()).getImageLoader());
         eventName.setText(name);
         eventTime.setText(time);
         eventCaption.setText(caption);
@@ -114,27 +93,24 @@ public class EventDetailsFragment extends Fragment implements View.OnClickListen
         eventMessage.setText(event);
         eventIndustry.setText(industry);
 
-        postRecyclerView(view);
-        // Inflate the layout for this fragment
-        return view;
+        postRecyclerView();
     }
 
-    private void postRecyclerView(View view) {
+    private void postRecyclerView() {
 
-        RecyclerView eventRecycler = (RecyclerView) view.findViewById(R.id.comments_events_recycler);
-        recyclerAdapterEventDetails = new RecyclerAdapterEventDetails(getContext(), eventList);
+        RecyclerView eventRecycler = (RecyclerView) findViewById(R.id.comments_events_recycler);
+        recyclerAdapterEventDetails = new RecyclerAdapterEventDetails(getApplicationContext(), eventList);
         //setting fixed size
         eventRecycler.setHasFixedSize(true);
         //setting horizontal layout
-        eventRecycler.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        eventRecycler.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
         mLayoutManager = (LinearLayoutManager) eventRecycler.getLayoutManager();
         //setting RecyclerView adapter
         eventRecycler.setAdapter(recyclerAdapterEventDetails);
         //Getting Instance of Volley Request Queue
-        queue = NetworkController.getInstance(getContext()).getRequestQueue();
+        queue = NetworkController.getInstance(getApplicationContext()).getRequestQueue();
 
         makePostCommentsRequest();
-
     }
 
     private void makePostCommentsRequest() {
@@ -179,36 +155,54 @@ public class EventDetailsFragment extends Fragment implements View.OnClickListen
         queue.add(jsonArrayRequest);
     }
 
-    private void addressingView(View view) {
-        eventImage=(NetworkImageView) view.findViewById(R.id.event_img);
-        eventName=(TextView) view.findViewById(R.id.event_profile_name);
-        eventTime=(TextView) view.findViewById(R.id.event_time);
-        eventCaption=(TextView) view.findViewById(R.id.eventCaption);
-        eventDesignation=(TextView) view.findViewById(R.id.eventDesignation);
-        eventVenue=(TextView) view.findViewById(R.id.eventVenue);
-        eventDate=(TextView) view.findViewById(R.id.eventDate);
-        eventRegistered=(TextView) view.findViewById(R.id.eventRegistered);
-        eventStatus=(TextView) view.findViewById(R.id.eventStatus);
-        eventMessage=(TextView) view.findViewById(R.id.event);
-        eventIndustry=(TextView) view.findViewById(R.id.event_industry);
-        userComment=(EditText) view.findViewById(R.id.user_comment);
-        sendComment=(ImageView) view.findViewById(R.id.send_comment);
+    private void addressingView() {
+
+        eventImage = (NetworkImageView) findViewById(R.id.event_img);
+        eventName = (TextView) findViewById(R.id.event_profile_name);
+        eventTime = (TextView) findViewById(R.id.event_time);
+        eventCaption = (TextView) findViewById(R.id.eventCaption);
+        eventDesignation = (TextView) findViewById(R.id.eventDesignation);
+        eventVenue = (TextView) findViewById(R.id.eventVenue);
+        eventDate = (TextView) findViewById(R.id.eventDate);
+        eventRegistered = (TextView) findViewById(R.id.eventRegistered);
+        eventStatus = (TextView) findViewById(R.id.eventStatus);
+        eventMessage = (TextView) findViewById(R.id.event);
+        eventIndustry = (TextView) findViewById(R.id.event_industry);
+        userComment = (EditText) findViewById(R.id.user_comment);
+        sendComment = (ImageView) findViewById(R.id.send_comment);
     }
 
-    private void addingListeners(View view) {
-
+    private void addingListeners() {
         sendComment.setOnClickListener(this);
+    }
+
+    private void initialization() {
+        intent = getIntent();
+
+        id = intent.getStringExtra("eid");
+        image = intent.getStringExtra("eImage");
+        name =intent.getStringExtra("ename");
+        time = intent.getStringExtra("eTime");
+        caption = intent.getStringExtra("eCaption");
+        designation = intent.getStringExtra("eDesign");
+        venue = intent.getStringExtra("eVenue");
+        date = intent.getStringExtra("eDate");
+        registered = intent.getStringExtra("eReg");
+        status = intent.getStringExtra("eStatus");
+        event = intent.getStringExtra("eEvnt");
+        industry = intent.getStringExtra("eIndustry");
+        postedUserId = intent.getStringExtra("eUserId");
     }
 
     @Override
     public void onClick(View v) {
         if (userComment.getText().toString().isEmpty()) {
-            Toast.makeText(getContext(), "Enter the Comment", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Enter the Comment", Toast.LENGTH_SHORT).show();
         } else {
             userPostedComment = userComment.getText().toString();
             insertUserComment();
             recyclerAdapterEventDetails.notifyDataSetChanged();
-            Toast.makeText(getContext(), "Comment added", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Comment added", Toast.LENGTH_SHORT).show();
         }
         userComment.setText("");
     }
@@ -231,7 +225,7 @@ public class EventDetailsFragment extends Fragment implements View.OnClickListen
                  *  incorrect IP
                  *  Server not deployed
                  */
-                Utils.showDialogue(getActivity(), "Sorry! Server Error");
+                Utils.showDialogue(ProfileEventDetails.this, "Sorry! Server Error");
             }
         }) {
             @Override
@@ -253,55 +247,7 @@ public class EventDetailsFragment extends Fragment implements View.OnClickListen
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
-        RequestQueue rQueue = Volley.newRequestQueue(getContext());
+        RequestQueue rQueue = Volley.newRequestQueue(ProfileEventDetails.this);
         rQueue.add(request);
     }
-
-
-   /* class RecyclerAdapterEventDetails extends RecyclerView.Adapter<RecyclerAdapterEventDetails.MyViewHolder>{
-
-        private List<Events> eventsList;
-        private Context context;
-        private LayoutInflater inflater;
-
-        public RecyclerAdapterEventDetails(Context context, List<Events> eventsList) {
-
-            this.context = context;
-            this.eventsList = eventsList;
-            inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        }
-
-
-
-        @Override
-        public RecyclerAdapterEventDetails.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View rootView = inflater.inflate(R.layout.post_comments, parent, false);
-            return new MyViewHolder(rootView);
-        }
-
-        @Override
-        public void onBindViewHolder(RecyclerAdapterEventDetails.MyViewHolder holder, int position) {
-
-            Events events = eventsList.get(position);
-            holder.commentedPost.setText(events.getEventCommentMessage());
-            holder.postImage.setImageUrl(Utils.BaseImageUri + events.getEventCommentImage(), NetworkController.getInstance(context).getImageLoader());
-
-        }
-
-        @Override
-        public int getItemCount() {
-            return eventsList.size();
-        }
-
-        public class MyViewHolder extends RecyclerView.ViewHolder {
-            private NetworkImageView postImage;
-            private TextView commentedPost;
-
-            public MyViewHolder(View itemView) {
-                super(itemView);
-                postImage=(NetworkImageView) itemView.findViewById(R.id.post_img);
-                commentedPost=(TextView) itemView.findViewById(R.id.commented_post);
-            }
-        }
-    }*/
 }

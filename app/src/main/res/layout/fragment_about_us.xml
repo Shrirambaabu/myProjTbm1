@@ -9,7 +9,8 @@
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_16"
         android:background="@color/colorBackground">
 
         <LinearLayout
@@ -157,26 +158,29 @@
 
             </LinearLayout>
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="8">
+                android:orientation="horizontal">
 
                 <ImageView
                     android:id="@+id/whatsApp1"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
+                    android:layout_marginTop="@dimen/margin_16"
                     android:layout_gravity="center"
                     android:layout_marginStart="@dimen/margin_16"
                     app:srcCompat="@drawable/wlogo" />
 
-                <android.support.v7.widget.AppCompatEditText
+                <TextView
                     android:id="@+id/whatsApp11"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/margin_18"
+                    android:layout_marginTop="@dimen/margin_16"
                     android:text="+91 87547 98211"
+                    android:layout_toEndOf="@+id/whatsApp1"
+                    android:layout_marginStart="@dimen/margin_8"
+                    android:textSize="18sp"
                     android:textColor="@color/white"
                     app:backgroundTint="@color/colorAccent" />
 
@@ -184,19 +188,26 @@
                     android:id="@+id/whatsApp2"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
+                    android:layout_marginTop="@dimen/margin_16"
                     android:layout_gravity="center"
+                    android:layout_below="@+id/whatsApp1"
                     android:layout_marginStart="@dimen/margin_16"
                     app:srcCompat="@drawable/wlogo" />
 
-                <android.support.v7.widget.AppCompatEditText
+                <TextView
                     android:id="@+id/whatsApp21"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_16"
                     android:layout_marginEnd="@dimen/margin_18"
+                    android:layout_toEndOf="@+id/whatsApp2"
+                    android:layout_marginStart="@dimen/margin_8"
+                    android:layout_below="@+id/whatsApp1"
+                    android:textSize="18sp"
                     android:text="+91 87547 98211"
                     android:textColor="@color/white"
                     app:backgroundTint="@color/colorAccent" />
-            </LinearLayout>
+            </RelativeLayout>
 
         </LinearLayout>
 

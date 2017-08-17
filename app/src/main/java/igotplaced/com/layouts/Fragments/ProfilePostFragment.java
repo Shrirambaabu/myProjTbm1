@@ -1,6 +1,7 @@
 package igotplaced.com.layouts.Fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -31,8 +32,10 @@ import java.util.List;
 
 
 import igotplaced.com.layouts.Model.Post;
+import igotplaced.com.layouts.ProfilePostDetailsActivity;
 import igotplaced.com.layouts.R;
 import igotplaced.com.layouts.Utils.ClickListener;
+import igotplaced.com.layouts.Utils.ItemClickListener;
 import igotplaced.com.layouts.Utils.NetworkController;
 import igotplaced.com.layouts.Utils.Utils;
 
@@ -50,11 +53,8 @@ public class ProfilePostFragment extends Fragment implements ClickListener {
     private String userId;
     private List<Post> postList = new ArrayList<Post>();
     private RecyclerAdapterProfilePost recyclerAdapterProfilePost;
-
-    int lastVisiblesItems, visibleItemCount, totalItemCount;
-
     private LinearLayoutManager mLayoutManager;
-    private boolean loading, swipe = false;
+
 
     public ProfilePostFragment() {
         // Required empty public constructor
@@ -68,11 +68,10 @@ public class ProfilePostFragment extends Fragment implements ClickListener {
         View view = inflater.inflate(R.layout.fragment_profile_post, container, false);
         context = getActivity().getApplicationContext();
 
-
         mLayoutManager = new LinearLayoutManager(context);
 
         SharedPreferences sharedpreferences = context.getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
-        String userName = sharedpreferences.getString(Name, null);
+
         userId = sharedpreferences.getString(Id, null);
 
         postRecyclerView(view);
@@ -98,17 +97,14 @@ public class ProfilePostFragment extends Fragment implements ClickListener {
 
         //Getting Instance of Volley Request Queue
         queue = NetworkController.getInstance(context).getRequestQueue();
-
         loadData();
 
-
-    //    recyclerAdapterProfilePost.setClickListener(this);
+        //    recyclerAdapterProfilePost.setClickListener(this);
 
     }
 
 
     private void makeJsonArrayRequestPostHome() {
-
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, BaseUri + "/profileService/profilePost/" + userId, null, new Response.Listener<JSONArray>() {
 
@@ -116,18 +112,18 @@ public class ProfilePostFragment extends Fragment implements ClickListener {
             @Override
             public void onResponse(JSONArray response) {
 
-                postList.clear();
+
                 for (int i = 0; i < response.length(); i++) {
 
                     try {
 
                         JSONObject obj = response.getJSONObject(i);
 
-                        Post post = new Post(obj.getString("post"), obj.getString("Industry"), obj.getString("post_created_user_image"), obj.getString("created_uname"), obj.getString("created_by"), obj.getString("post_created_user_image"), obj.getString("created_uname"));
+                        Post post = new  Post(obj.getString("pid"),obj.getString("created_user"),obj.getString("post"), obj.getString("Industry"), obj.getString("post_created_user_image"), obj.getString("created_uname"), obj.getString("created_by"), obj.getString("post_created_user_image"), obj.getString("created_uname"));
 
-                        // adding movie to blogHomeList array
                         postList.add(post);
-                        recyclerAdapterProfilePost.notifyDataSetChanged();
+
+
                     } catch (Exception e) {
                         Log.d("error", e.getMessage());
                         System.out.println(e.getMessage());
@@ -157,8 +153,7 @@ public class ProfilePostFragment extends Fragment implements ClickListener {
         // I have not used current page for showing demo, if u use a webservice
         // then it is useful for every call request
         makeJsonArrayRequestPostHome();
-
-        recyclerAdapterProfilePost.notifyDataSetChanged();
+        // recyclerAdapterProfilePost.notifyDataSetChanged();
 
     }
 
@@ -172,8 +167,7 @@ public class ProfilePostFragment extends Fragment implements ClickListener {
     }
 
 
-
-    class RecyclerAdapterProfilePost extends RecyclerView.Adapter<RecyclerAdapterProfilePost.MyViewHolder>{
+    class RecyclerAdapterProfilePost extends RecyclerView.Adapter<RecyclerAdapterProfilePost.MyViewHolder> {
 
         private List<Post> postList;
         private Context context;
@@ -194,7 +188,7 @@ public class ProfilePostFragment extends Fragment implements ClickListener {
         }
 
         @Override
-        public void onBindViewHolder(RecyclerAdapterProfilePost.MyViewHolder holder, int position) {
+        public void onBindViewHolder(RecyclerAdapterProfilePost.MyViewHolder holder, final int position) {
 
             Post post = postList.get(position);
             holder.post.setText(post.getPost());
@@ -204,6 +198,24 @@ public class ProfilePostFragment extends Fragment implements ClickListener {
             //  holder.userImage.setImageUrl(Utils.BaseImageUri + post.getUserImage(), NetworkController.getInstance(context).getImageLoader());
             holder.postImage.setImageUrl(Utils.BaseImageUri + post.getPostImage(), NetworkController.getInstance(context).getImageLoader());
 
+            holder.setItemClickListener(new ItemClickListener() {
+                @Override
+                public void onItemClick(View v, int pos) {
+                    Log.e("tag", "click" + postList.get(position).getPostId());
+
+                    Intent profileDetails=new Intent(getContext(), ProfilePostDetailsActivity.class);
+
+                    profileDetails.putExtra("pid", postList.get(position).getPostId());
+                    profileDetails.putExtra("created_uname", postList.get(position).getPostProfileName());
+                    profileDetails.putExtra("created_by", postList.get(position).getPostTime());
+                    profileDetails.putExtra("post", postList.get(position).getPost());
+                    profileDetails.putExtra("postImage", postList.get(position).getPostImage());
+                    profileDetails.putExtra("postIndustry", postList.get(position).getPostIndustry());
+                    profileDetails.putExtra("post_createdid", postList.get(position).getPostedUserId());
+
+                    startActivity(profileDetails);
+                }
+            });
         }
 
         @Override
@@ -211,10 +223,11 @@ public class ProfilePostFragment extends Fragment implements ClickListener {
             return postList.size();
         }
 
-        public class MyViewHolder extends RecyclerView.ViewHolder {
+        public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
             private TextView post, postIndustry, postProfileName, postTime;
             private NetworkImageView postImage;
+            private ItemClickListener itemClickListener;
 
             public MyViewHolder(View itemView) {
 
@@ -226,7 +239,16 @@ public class ProfilePostFragment extends Fragment implements ClickListener {
                 postTime = (TextView) itemView.findViewById(R.id.post_time);
                 // Volley's NetworkImageView which will load Image from URL
                 postImage = (NetworkImageView) itemView.findViewById(R.id.post_img);
+                itemView.setOnClickListener(this);
+            }
 
+            @Override
+            public void onClick(View v) {
+                this.itemClickListener.onItemClick(v, getLayoutPosition());
+            }
+
+            void setItemClickListener(ItemClickListener ic) {
+                this.itemClickListener = ic;
             }
         }
     }

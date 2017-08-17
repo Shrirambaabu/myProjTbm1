@@ -505,12 +505,13 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
 
     private void setupViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getFragmentManager());
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
         adapter.addFragment(new ProfilePostFragment());
         adapter.addFragment(new ProfileInterviewExperienceFragment());
         adapter.addFragment(new ProfileEventsFragment());
         adapter.addFragment(new ProfileQuestionFragment());
         viewPager.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
 
 

@@ -1,17 +1,15 @@
-package igotplaced.com.layouts.Fragments;
+package igotplaced.com.layouts;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -38,7 +36,6 @@ import java.util.Map;
 
 import igotplaced.com.layouts.CustomAdapter.RecyclerAdapterQuestionDetails;
 import igotplaced.com.layouts.Model.Questions;
-import igotplaced.com.layouts.R;
 import igotplaced.com.layouts.Utils.NetworkController;
 import igotplaced.com.layouts.Utils.Utils;
 
@@ -47,8 +44,9 @@ import static igotplaced.com.layouts.Utils.Utils.Id;
 import static igotplaced.com.layouts.Utils.Utils.MyPREFERENCES;
 import static igotplaced.com.layouts.Utils.Utils.Name;
 
+public class ProfileQuestionsDetailsActivity extends AppCompatActivity implements View.OnClickListener {
 
-public class QuestionsDetailsFragment extends Fragment implements View.OnClickListener {
+
     private String id = null,name=null,time=null,image=null,message=null,industry=null,postedUserId=null;
     private String userId = null, userName = null;
     private NetworkImageView questionImage;
@@ -61,72 +59,55 @@ public class QuestionsDetailsFragment extends Fragment implements View.OnClickLi
     private LinearLayoutManager mLayoutManager;
 
     private RequestQueue queue;
-
+    private Intent intent;
     private List<Questions> questionsList = new ArrayList<Questions>();
 
     private RecyclerAdapterQuestionDetails recyclerAdapterQuestionDetails;
 
-    public QuestionsDetailsFragment() {
-        // Required empty public constructor
-    }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-        SharedPreferences sharedpreferences = getContext().getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+        SharedPreferences sharedpreferences = getApplicationContext().getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         userName = sharedpreferences.getString(Name, null);
         userId = sharedpreferences.getString(Id, null);
 
+        setContentView(R.layout.activity_profile_questions_details);
 
-        View view = inflater.inflate(R.layout.fragment_questions_details, container, false);
+        addressingView();
+        addingListeners();
 
+        initialization();
 
-        addressingView(view);
-        addingListeners(view);
-
-        Bundle bundle = this.getArguments();
-        if (bundle != null) {
-            id = bundle.getString("qid");
-            name = bundle.getString("created_uname");
-            time = bundle.getString("created_by");
-            image = bundle.getString("postImage");
-            message = bundle.getString("question");
-            industry = bundle.getString("postIndustry");
-            postedUserId = bundle.getString("post_createdid");
-            Log.e("qid", id);
-        }
-
-        questionImage.setImageUrl(Utils.BaseImageUri + image, NetworkController.getInstance(getContext()).getImageLoader());
+        questionImage.setImageUrl(Utils.BaseImageUri + image, NetworkController.getInstance(getApplicationContext()).getImageLoader());
         profileName.setText(name);
         profileTime.setText(time);
         questionMessage.setText(message);
         questionIndustry.setText(industry);
 
-        postRecyclerView(view);
-        // Inflate the layout for this fragment
-        return view;
+        postRecyclerView();
+
     }
 
-    private void postRecyclerView(View view) {
-
-        RecyclerView postRecycler = (RecyclerView) view.findViewById(R.id.comments_question_recycler);
-        recyclerAdapterQuestionDetails = new RecyclerAdapterQuestionDetails(getContext(), questionsList);
+    private void postRecyclerView() {
+        RecyclerView postRecycler = (RecyclerView) findViewById(R.id.comments_question_recycler);
+        recyclerAdapterQuestionDetails = new RecyclerAdapterQuestionDetails(getApplicationContext(), questionsList);
         //setting fixed size
         postRecycler.setHasFixedSize(true);
         //setting horizontal layout
-        postRecycler.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        postRecycler.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
         mLayoutManager = (LinearLayoutManager) postRecycler.getLayoutManager();
         //setting RecyclerView adapter
         postRecycler.setAdapter(recyclerAdapterQuestionDetails);
         //Getting Instance of Volley Request Queue
-        queue = NetworkController.getInstance(getContext()).getRequestQueue();
+        queue = NetworkController.getInstance(getApplicationContext()).getRequestQueue();
 
         makePostCommentsRequest();
-
     }
 
     private void makePostCommentsRequest() {
+
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, BaseUri + "/home/questionsCommentList/" + id, null,  new Response.Listener<JSONArray>() {
 
 
@@ -167,38 +148,47 @@ public class QuestionsDetailsFragment extends Fragment implements View.OnClickLi
         queue.add(jsonArrayRequest);
     }
 
-    private void addressingView(View view) {
-        questionImage = (NetworkImageView) view.findViewById(R.id.questions_img);
-        profileName = (TextView) view.findViewById(R.id.questions_profile_name);
-        profileTime = (TextView) view.findViewById(R.id.questions_time);
-        questionMessage = (TextView) view.findViewById(R.id.questions);
-        questionIndustry = (TextView) view.findViewById(R.id.questions_industry);
-        userComment = (EditText) view.findViewById(R.id.user_comment);
-        sendComment = (ImageView) view.findViewById(R.id.send_comment);
+    private void addressingView() {
+
+        questionImage = (NetworkImageView) findViewById(R.id.questions_img);
+        profileName = (TextView) findViewById(R.id.questions_profile_name);
+        profileTime = (TextView) findViewById(R.id.questions_time);
+        questionMessage = (TextView) findViewById(R.id.questions);
+        questionIndustry = (TextView) findViewById(R.id.questions_industry);
+        userComment = (EditText) findViewById(R.id.user_comment);
+        sendComment = (ImageView) findViewById(R.id.send_comment);
     }
 
-    private void addingListeners(View view) {
+    private void addingListeners() {
         sendComment.setOnClickListener(this);
+    }
+
+    private void initialization() {
+        intent = getIntent();
+
+        id = intent.getStringExtra("qid");
+        name =intent.getStringExtra("created_uname");
+        time = intent.getStringExtra("created_by");
+        image = intent.getStringExtra("postImage");
+        message = intent.getStringExtra("question");
+        industry = intent.getStringExtra("postIndustry");
+        postedUserId = intent.getStringExtra("post_createdid");
 
     }
 
     @Override
     public void onClick(View v) {
-
         if (userComment.getText().toString().isEmpty()) {
-            Toast.makeText(getContext(), "Enter the Comment", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Enter the Comment", Toast.LENGTH_SHORT).show();
         } else {
             userPostedComment = userComment.getText().toString();
             insertUserComment();
-            Toast.makeText(getContext(), "Comment added", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Comment added", Toast.LENGTH_SHORT).show();
         }
         userComment.setText("");
-        recyclerAdapterQuestionDetails.notifyDataSetChanged();
-
     }
 
     private void insertUserComment() {
-
 
         StringRequest request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
@@ -216,7 +206,7 @@ public class QuestionsDetailsFragment extends Fragment implements View.OnClickLi
                  *  incorrect IP
                  *  Server not deployed
                  */
-                Utils.showDialogue((Activity) getContext(), "Sorry! Server Error");
+                Utils.showDialogue(ProfileQuestionsDetailsActivity.this, "Sorry! Server Error");
             }
         }) {
             @Override
@@ -238,56 +228,8 @@ public class QuestionsDetailsFragment extends Fragment implements View.OnClickLi
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
-        RequestQueue rQueue = Volley.newRequestQueue(getContext());
+        RequestQueue rQueue = Volley.newRequestQueue(ProfileQuestionsDetailsActivity.this);
         rQueue.add(request);
 
     }
-
-
-    /*class RecyclerAdapterQuestionDetails extends RecyclerView.Adapter<RecyclerAdapterQuestionDetails.MyViewHolder> {
-
-
-        private List<Questions> questionsList;
-        private Context context;
-        private LayoutInflater inflater;
-
-        public RecyclerAdapterQuestionDetails(Context context, List<Questions> questionsList) {
-
-            this.context = context;
-            this.questionsList = questionsList;
-            inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        }
-
-
-        @Override
-        public RecyclerAdapterQuestionDetails.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View rootView = inflater.inflate(R.layout.post_comments, parent, false);
-            return new MyViewHolder(rootView);
-        }
-
-        @Override
-        public void onBindViewHolder(RecyclerAdapterQuestionDetails.MyViewHolder holder, int position) {
-            Questions questions = questionsList.get(position);
-
-            holder.commentedPost.setText(questions.getCommentUserMessage());
-            holder.postImage.setImageUrl(Utils.BaseImageUri + questions.getCommentUserImage(), NetworkController.getInstance(context).getImageLoader());
-
-        }
-
-        @Override
-        public int getItemCount() {
-            return questionsList.size();
-        }
-
-        public class MyViewHolder extends RecyclerView.ViewHolder {
-            private NetworkImageView postImage;
-            private TextView commentedPost;
-
-            public MyViewHolder(View itemView) {
-                super(itemView);
-                postImage=(NetworkImageView) itemView.findViewById(R.id.post_img);
-                commentedPost=(TextView) itemView.findViewById(R.id.commented_post);
-            }
-        }
-    }*/
 }

@@ -4,20 +4,9 @@
     android:layout_height="match_parent"
     tools:context="igotplaced.com.layouts.Fragments.ProfilePostFragment">
 
-    <TextView
-        android:id="@+id/prof_post"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Profile Post"
-        android:textSize="16sp"
-        android:layout_margin="@dimen/margin_16"
-        android:textColor="@color/colorPrimary"/>
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view_profile_post"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/prof_post"
-        android:layout_gravity="center_vertical"
         android:orientation="vertical" />
 </RelativeLayout>

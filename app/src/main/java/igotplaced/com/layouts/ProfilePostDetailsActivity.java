@@ -1,17 +1,16 @@
-package igotplaced.com.layouts.Fragments;
-
+package igotplaced.com.layouts;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -37,9 +36,7 @@ import java.util.List;
 import java.util.Map;
 
 import igotplaced.com.layouts.CustomAdapter.RecyclerAdapterPostDetails;
-import igotplaced.com.layouts.Model.Interview;
 import igotplaced.com.layouts.Model.Post;
-import igotplaced.com.layouts.R;
 import igotplaced.com.layouts.Utils.NetworkController;
 import igotplaced.com.layouts.Utils.Utils;
 
@@ -48,7 +45,8 @@ import static igotplaced.com.layouts.Utils.Utils.Id;
 import static igotplaced.com.layouts.Utils.Utils.MyPREFERENCES;
 import static igotplaced.com.layouts.Utils.Utils.Name;
 
-public class PostDetailsFragment extends Fragment implements View.OnClickListener {
+public class ProfilePostDetailsActivity extends AppCompatActivity implements View.OnClickListener {
+
 
     private String id = null, name = null, time = null, post = null, image = null, industry = null, postUserId = null;
 
@@ -62,79 +60,58 @@ public class PostDetailsFragment extends Fragment implements View.OnClickListene
     private LinearLayoutManager mLayoutManager;
 
     private RequestQueue queue;
-
+    private Intent intent;
 
     private RecyclerAdapterPostDetails recyclerAdapterPostDetails;
 
     private String userId = null, userName = null;
     private String URL = BaseUri + "/home/postComments";
     private String userPostedComment;
-
-    public PostDetailsFragment() {
-        // Required empty public constructor
-    }
+    private Toolbar toolbar;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        SharedPreferences sharedpreferences = getContext().getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        SharedPreferences sharedpreferences = getApplicationContext().getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         userName = sharedpreferences.getString(Name, null);
         userId = sharedpreferences.getString(Id, null);
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_post_details, container, false);
-        addressingView(view);
-        addingListeners(view);
 
-        Bundle bundle = this.getArguments();
-        if (bundle != null) {
-            id = bundle.getString("pid");
-            name = bundle.getString("created_uname");
-            time = bundle.getString("created_by");
-            post = bundle.getString("post");
-            image = bundle.getString("postImage");
-            industry = bundle.getString("postIndustry");
-            postUserId = bundle.getString("post_createdid");
-            Log.e("pid", id);
-            Log.e("created_uname", name);
-            Log.e("created_by", time);
-            Log.e("post", post);
-            Log.e("postImage", image);
-            Log.e("postIndustry", industry);
-            Log.e("post_createdid", postUserId);
-        }
+        setContentView(R.layout.activity_profile_post_details);
+        addressingView();
+        addingListeners();
+        //initial value from intent
+        initialization();
 
-        postImage.setImageUrl(Utils.BaseImageUri + image, NetworkController.getInstance(getContext()).getImageLoader());
+
+        postImage.setImageUrl(Utils.BaseImageUri + image, NetworkController.getInstance(getApplicationContext()).getImageLoader());
         profileName.setText(name);
         profileTime.setText(time);
         postMessage.setText(post);
         postIndustry.setText(industry);
 
-        postRecyclerView(view);
-
-        return view;
+        postRecyclerView();
 
     }
 
-    private void postRecyclerView(View view) {
-
-        RecyclerView postRecycler = (RecyclerView) view.findViewById(R.id.comments_post_recycler);
-        recyclerAdapterPostDetails = new RecyclerAdapterPostDetails(getContext(), postList);
+    private void postRecyclerView() {
+        RecyclerView postRecycler = (RecyclerView) findViewById(R.id.comments_post_recycler);
+        recyclerAdapterPostDetails = new RecyclerAdapterPostDetails(getApplicationContext(), postList);
         //setting fixed size
         postRecycler.setHasFixedSize(true);
         //setting horizontal layout
-        postRecycler.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        postRecycler.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
         mLayoutManager = (LinearLayoutManager) postRecycler.getLayoutManager();
         //setting RecyclerView adapter
         postRecycler.setAdapter(recyclerAdapterPostDetails);
         //Getting Instance of Volley Request Queue
-        queue = NetworkController.getInstance(getContext()).getRequestQueue();
+        queue = NetworkController.getInstance(getApplicationContext()).getRequestQueue();
 
         makePostCommentsRequest();
-
-
     }
 
     private void makePostCommentsRequest() {
+
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, BaseUri + "/home/postCommentList/" + id, null,  new Response.Listener<JSONArray>() {
 
 
@@ -173,36 +150,44 @@ public class PostDetailsFragment extends Fragment implements View.OnClickListene
         });
 
         queue.add(jsonArrayRequest);
-
     }
 
-    private void addingListeners(View view) {
+    private void addingListeners() {
         sendComment.setOnClickListener(this);
-
     }
 
-    private void addressingView(View view) {
+    private void addressingView() {
 
-        postImage = (NetworkImageView) view.findViewById(R.id.post_img);
-        profileName = (TextView) view.findViewById(R.id.post_profile_name);
-        profileTime = (TextView) view.findViewById(R.id.post_time);
-        postMessage = (TextView) view.findViewById(R.id.post);
-        postIndustry = (TextView) view.findViewById(R.id.post_industry);
-        userComment = (EditText) view.findViewById(R.id.user_comment);
-        sendComment = (ImageView) view.findViewById(R.id.send_comment);
+        postImage = (NetworkImageView) findViewById(R.id.post_img);
+        profileName = (TextView) findViewById(R.id.post_profile_name);
+        profileTime = (TextView) findViewById(R.id.post_time);
+        postMessage = (TextView) findViewById(R.id.post);
+        postIndustry = (TextView) findViewById(R.id.post_industry);
+        userComment = (EditText) findViewById(R.id.user_comment);
+        sendComment = (ImageView) findViewById(R.id.send_comment);
+    }
 
+    private void initialization() {
+        intent = getIntent();
+        //getting value from intent
+        id = intent.getStringExtra("pid");
+        name = intent.getStringExtra("created_uname");
+        time = intent.getStringExtra("created_by");
+        post = intent.getStringExtra("post");
+        image = intent.getStringExtra("postImage");
+        industry = intent.getStringExtra("postIndustry");
+        postUserId = intent.getStringExtra("post_createdid");
     }
 
     @Override
     public void onClick(View v) {
-
         if (userComment.getText().toString().isEmpty()) {
-            Toast.makeText(getContext(), "Enter the Comment", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Enter the Comment", Toast.LENGTH_SHORT).show();
         } else {
             userPostedComment = userComment.getText().toString();
             insertUserComment();
             recyclerAdapterPostDetails.notifyDataSetChanged();
-            Toast.makeText(getContext(), "Comment added", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Comment added", Toast.LENGTH_SHORT).show();
         }
         userComment.setText("");
     }
@@ -225,7 +210,7 @@ public class PostDetailsFragment extends Fragment implements View.OnClickListene
                  *  incorrect IP
                  *  Server not deployed
                  */
-                Utils.showDialogue(getActivity(), "Sorry! Server Error");
+                Utils.showDialogue(ProfilePostDetailsActivity.this, "Sorry! Server Error");
             }
         }) {
             @Override
@@ -247,56 +232,7 @@ public class PostDetailsFragment extends Fragment implements View.OnClickListene
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
-        RequestQueue rQueue = Volley.newRequestQueue(getContext());
+        RequestQueue rQueue = Volley.newRequestQueue(ProfilePostDetailsActivity.this);
         rQueue.add(request);
     }
-
-
-   /* class RecyclerAdapterPostDetails extends RecyclerView.Adapter<RecyclerAdapterPostDetails.MyViewHolder> {
-
-        private List<Post> postList;
-        private Context context;
-        private LayoutInflater inflater;
-
-        public RecyclerAdapterPostDetails(Context context, List<Post> postList) {
-
-            this.context = context;
-            this.postList = postList;
-            inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        }
-
-
-        @Override
-        public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View rootView = inflater.inflate(R.layout.post_comments, parent, false);
-            return new MyViewHolder(rootView);
-        }
-
-        @Override
-        public void onBindViewHolder(MyViewHolder holder, int position) {
-            Post post = postList.get(position);
-            holder.commentedPost.setText(post.getCommentedMessage());
-            holder.postImage.setImageUrl(Utils.BaseImageUri + post.getComentedUserImage(), NetworkController.getInstance(context).getImageLoader());
-
-        }
-
-        @Override
-        public int getItemCount() {
-            return postList.size();
-        }
-
-        public class MyViewHolder extends RecyclerView.ViewHolder {
-            private NetworkImageView postImage;
-            private TextView commentedPost;
-
-            public MyViewHolder(View itemView) {
-                super(itemView);
-
-                postImage=(NetworkImageView) itemView.findViewById(R.id.post_img);
-                commentedPost=(TextView) itemView.findViewById(R.id.commented_post);
-            }
-        }
-    }*/
-
-
 }

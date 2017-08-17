@@ -40,7 +40,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import igotplaced.com.layouts.CustomAdapter.RecyclerAdapterEventHome;
 
 import igotplaced.com.layouts.Model.Events;
 import igotplaced.com.layouts.Model.Post;
@@ -155,7 +154,7 @@ public class HomeEventFragment extends Fragment implements SwipeRefreshLayout.On
 
         });
 
-      //  recyclerAdapterEventHome.setClickListener(this);
+        //  recyclerAdapterEventHome.setClickListener(this);
 
 
     }
@@ -223,7 +222,7 @@ public class HomeEventFragment extends Fragment implements SwipeRefreshLayout.On
                         try {
 
                             JSONObject obj = jsonObjectJSON.getJSONObject(i);
-                            Events event = new Events(obj.getString("id"),obj.getString("created_user"),obj.getString("eventname"), obj.getString("eventtype"), obj.getString("location"), obj.getString("datetime"), obj.getString("count"), obj.getString("event"), obj.getString("notes"), obj.getString("Industry"), obj.getString("eventImgName"), obj.getString("created_uname"), obj.getString("created_by"), obj.getString("imgname"), obj.getString("fname"));
+                            Events event = new Events(obj.getString("id"), obj.getString("created_user"), obj.getString("eventname"), obj.getString("eventtype"), obj.getString("location"), obj.getString("datetime"), obj.getString("count"), obj.getString("event"), obj.getString("notes"), obj.getString("Industry"), obj.getString("eventImgName"), obj.getString("created_uname"), obj.getString("created_by"), obj.getString("imgname"), obj.getString("fname"));
                             // adding movie to blogHomeList array
                             eventList.add(event);
 
@@ -260,7 +259,7 @@ public class HomeEventFragment extends Fragment implements SwipeRefreshLayout.On
     }
 
 
-    class RecyclerAdapterEventHome extends RecyclerView.Adapter<RecyclerAdapterEventHome.MyViewHolder>{
+    class RecyclerAdapterEventHome extends RecyclerView.Adapter<RecyclerAdapterEventHome.MyViewHolder> {
 
 
         private String userId = null, userName = null;
@@ -281,7 +280,6 @@ public class HomeEventFragment extends Fragment implements SwipeRefreshLayout.On
             this.eventsList = eventsList;
             inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
-
 
 
         @Override
@@ -338,10 +336,9 @@ public class HomeEventFragment extends Fragment implements SwipeRefreshLayout.On
                     getActivity().getSupportFragmentManager()
                             .beginTransaction()
                             .replace(R.id.rootLayout, eventDetailsFragment, "tag")
-                            .addToBackStack("tag").commit();
+                            .commit();
                 }
             });
-
 
 
         }
@@ -353,10 +350,11 @@ public class HomeEventFragment extends Fragment implements SwipeRefreshLayout.On
         }
 
         public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-            private TextView eventCaption, eventDesignation, eventVenue, eventDate, eventRegistered, eventStatus, event, event_industry, event_profile_name, event_time,viewMore;
+            private TextView eventCaption, eventDesignation, eventVenue, eventDate, eventRegistered, eventStatus, event, event_industry, event_profile_name, event_time, viewMore;
             private NetworkImageView event_img, userImage;
 
             private ItemClickListener itemClickListener;
+
             public MyViewHolder(View itemView) {
                 super(itemView);
 
@@ -385,15 +383,12 @@ public class HomeEventFragment extends Fragment implements SwipeRefreshLayout.On
             public void onClick(View v) {
                 this.itemClickListener.onItemClick(v, getLayoutPosition());
             }
+
             void setItemClickListener(ItemClickListener ic) {
                 this.itemClickListener = ic;
             }
         }
     }
-
-
-
-
 
 
 }

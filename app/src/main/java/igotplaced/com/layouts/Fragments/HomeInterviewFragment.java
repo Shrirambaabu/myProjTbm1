@@ -324,7 +324,7 @@ public class HomeInterviewFragment extends Fragment implements SwipeRefreshLayou
                     getActivity().getSupportFragmentManager()
                             .beginTransaction()
                             .replace(R.id.rootLayout, interviewDetails, "tag")
-                            .addToBackStack("tag").commit();
+                            .commit();
                 }
             });
 

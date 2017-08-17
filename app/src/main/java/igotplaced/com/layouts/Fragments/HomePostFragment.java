@@ -39,7 +39,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import igotplaced.com.layouts.CustomAdapter.RecyclerAdapterEventHome;
 
 import igotplaced.com.layouts.Model.Post;
 import igotplaced.com.layouts.R;
@@ -317,7 +316,7 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
                     getActivity().getSupportFragmentManager()
                             .beginTransaction()
                             .replace(R.id.rootLayout, postDetailsFragment, "tag")
-                           .addToBackStack("tag").commit();
+                           .commit();
                 }
             });
 

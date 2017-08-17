@@ -39,7 +39,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import igotplaced.com.layouts.CustomAdapter.RecyclerAdapterQuestionsHome;
 import igotplaced.com.layouts.Model.Questions;
 import igotplaced.com.layouts.R;
 import igotplaced.com.layouts.Utils.ClickListener;
@@ -319,7 +318,7 @@ public class HomeQuestionsFragment extends Fragment implements SwipeRefreshLayou
                     getActivity().getSupportFragmentManager()
                             .beginTransaction()
                             .replace(R.id.rootLayout, questionsDetailsFragment, "tag")
-                            .addToBackStack("tag").commit();
+                            .commit();
                 }
             });
         }

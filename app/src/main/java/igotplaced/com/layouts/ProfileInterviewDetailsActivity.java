@@ -1,16 +1,14 @@
-package igotplaced.com.layouts.Fragments;
-
+package igotplaced.com.layouts;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -37,8 +35,6 @@ import java.util.Map;
 
 import igotplaced.com.layouts.CustomAdapter.RecyclerAdapterInterviewDetails;
 import igotplaced.com.layouts.Model.Interview;
-import igotplaced.com.layouts.Model.Post;
-import igotplaced.com.layouts.R;
 import igotplaced.com.layouts.Utils.NetworkController;
 import igotplaced.com.layouts.Utils.Utils;
 
@@ -47,8 +43,8 @@ import static igotplaced.com.layouts.Utils.Utils.Id;
 import static igotplaced.com.layouts.Utils.Utils.MyPREFERENCES;
 import static igotplaced.com.layouts.Utils.Utils.Name;
 
+public class ProfileInterviewDetailsActivity extends AppCompatActivity implements View.OnClickListener {
 
-public class InterviewDetails extends Fragment implements View.OnClickListener {
     private String id = null, name = null, time = null, interview = null, image = null, industry = null, interviewUserId = null;
 
     private NetworkImageView interviewImage;
@@ -60,81 +56,43 @@ public class InterviewDetails extends Fragment implements View.OnClickListener {
 
     private RecyclerAdapterInterviewDetails recyclerAdapterInterviewDetails;
     private RequestQueue queue;
+    private Intent intent;
+
     private List<Interview> interviewList = new ArrayList<Interview>();
 
     private String userId = null, userName = null;
     private String URL = BaseUri + "/home/interviewComments";
     private String userPostedComment;
 
-
-    public InterviewDetails() {
-        // Required empty public constructor
-    }
-
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-        SharedPreferences sharedpreferences = getContext().getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+        SharedPreferences sharedpreferences = getApplicationContext().getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         userName = sharedpreferences.getString(Name, null);
         userId = sharedpreferences.getString(Id, null);
 
 
-        View view = inflater.inflate(R.layout.fragment_interview_details, container, false);
+        setContentView(R.layout.activity_profile_interview_details);
 
-        addressingView(view);
-        addingListeners(view);
+        addressingView();
+        addingListeners();
+        //initial value from intent
+        initialization();
 
-
-
-        Bundle bundle = this.getArguments();
-        if (bundle != null) {
-            id = bundle.getString("iid");
-            name = bundle.getString("created_uname");
-            time = bundle.getString("created_by");
-            interview = bundle.getString("interview");
-            image = bundle.getString("interviewImage");
-            industry = bundle.getString("interviewIndustry");
-            interviewUserId = bundle.getString("interview_createdid");
-            Log.e("iid", id);
-            Log.e("postImage", image);
-        }
-
-
-        interviewImage.setImageUrl(Utils.BaseImageUri + image, NetworkController.getInstance(getContext()).getImageLoader());
+        interviewImage.setImageUrl(Utils.BaseImageUri + image, NetworkController.getInstance(getApplicationContext()).getImageLoader());
         profileName.setText(name);
         profileTime.setText(time);
         interviewMessage.setText(interview);
         interviewIndustry.setText(industry);
 
-
-        postRecyclerView(view);
-
-
-        // Inflate the layout for this fragment
-        return view;
-    }
-
-    private void postRecyclerView(View view) {
-
-        RecyclerView postRecycler = (RecyclerView) view.findViewById(R.id.comments_interview_recycler);
-        recyclerAdapterInterviewDetails = new RecyclerAdapterInterviewDetails(getContext(), interviewList);
-        //setting fixed size
-        postRecycler.setHasFixedSize(true);
-        //setting horizontal layout
-        postRecycler.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        mLayoutManager = (LinearLayoutManager) postRecycler.getLayoutManager();
-        //setting RecyclerView adapter
-        postRecycler.setAdapter(recyclerAdapterInterviewDetails);
-        //Getting Instance of Volley Request Queue
-        queue = NetworkController.getInstance(getContext()).getRequestQueue();
+        postRecyclerView();
 
         makePostCommentsRequest();
+
     }
 
     private void makePostCommentsRequest() {
-
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, BaseUri + "/home/interviewCommentList/" + id, null,  new Response.Listener<JSONArray>() {
 
 
@@ -175,33 +133,58 @@ public class InterviewDetails extends Fragment implements View.OnClickListener {
         queue.add(jsonArrayRequest);
     }
 
-    private void addingListeners(View view) {
+    private void postRecyclerView() {
+
+        RecyclerView postRecycler = (RecyclerView) findViewById(R.id.comments_interview_recycler);
+        recyclerAdapterInterviewDetails = new RecyclerAdapterInterviewDetails(getApplicationContext(), interviewList);
+        //setting fixed size
+        postRecycler.setHasFixedSize(true);
+        //setting horizontal layout
+        postRecycler.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
+        mLayoutManager = (LinearLayoutManager) postRecycler.getLayoutManager();
+        //setting RecyclerView adapter
+        postRecycler.setAdapter(recyclerAdapterInterviewDetails);
+        //Getting Instance of Volley Request Queue
+        queue = NetworkController.getInstance(getApplicationContext()).getRequestQueue();
+    }
+
+    private void addressingView() {
+
+
+        interviewImage = (NetworkImageView) findViewById(R.id.interview_img);
+        profileName = (TextView) findViewById(R.id.interview_profile_name);
+        profileTime = (TextView) findViewById(R.id.interview_time);
+        interviewMessage = (TextView) findViewById(R.id.interview);
+        interviewIndustry = (TextView) findViewById(R.id.interview_industry);
+        userComment = (EditText) findViewById(R.id.user_comment);
+        sendComment = (ImageView) findViewById(R.id.send_comment);
+    }
+
+    private void addingListeners() {
         sendComment.setOnClickListener(this);
     }
 
-    private void addressingView(View view) {
+    private void initialization() {
+        intent = getIntent();
 
-
-
-        interviewImage = (NetworkImageView) view.findViewById(R.id.interview_img);
-        profileName = (TextView) view.findViewById(R.id.interview_profile_name);
-        profileTime = (TextView) view.findViewById(R.id.interview_time);
-        interviewMessage = (TextView) view.findViewById(R.id.interview);
-        interviewIndustry = (TextView) view.findViewById(R.id.interview_industry);
-        userComment = (EditText) view.findViewById(R.id.user_comment);
-        sendComment = (ImageView) view.findViewById(R.id.send_comment);
-
+        id = intent.getStringExtra("iid");
+        name = intent.getStringExtra("created_uname");
+        time = intent.getStringExtra("created_by");
+        interview = intent.getStringExtra("interview");
+        image = intent.getStringExtra("interviewImage");
+        industry = intent.getStringExtra("interviewIndustry");
+        interviewUserId = intent.getStringExtra("interview_createdid");
     }
 
     @Override
     public void onClick(View v) {
         if (userComment.getText().toString().isEmpty()) {
-            Toast.makeText(getContext(), "Enter the Comment", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Enter the Comment", Toast.LENGTH_SHORT).show();
         } else {
             userPostedComment = userComment.getText().toString();
             insertUserComment();
             recyclerAdapterInterviewDetails.notifyDataSetChanged();
-            Toast.makeText(getContext(), "Comment added", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Comment added", Toast.LENGTH_SHORT).show();
         }
         userComment.setText("");
     }
@@ -224,7 +207,7 @@ public class InterviewDetails extends Fragment implements View.OnClickListener {
                  *  incorrect IP
                  *  Server not deployed
                  */
-                Utils.showDialogue(getActivity(), "Sorry! Server Error");
+                Utils.showDialogue(ProfileInterviewDetailsActivity.this, "Sorry! Server Error");
             }
         }) {
             @Override
@@ -246,52 +229,7 @@ public class InterviewDetails extends Fragment implements View.OnClickListener {
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
-        RequestQueue rQueue = Volley.newRequestQueue(getContext());
+        RequestQueue rQueue = Volley.newRequestQueue(ProfileInterviewDetailsActivity.this);
         rQueue.add(request);
     }
-
-    /*class RecyclerAdapterInterviewDetails extends RecyclerView.Adapter<RecyclerAdapterInterviewDetails.MyViewHolder>{
-
-
-         private List<Interview> interviewList;
-         private Context context;
-         private LayoutInflater inflater;
-
-
-         public RecyclerAdapterInterviewDetails(Context context, List<Interview> interviewList) {
-             this.context = context;
-             this.interviewList = interviewList;
-             inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-         }
-
-         @Override
-         public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-             View rootView = inflater.inflate(R.layout.post_comments, parent, false);
-             return new MyViewHolder(rootView);
-         }
-
-         @Override
-         public void onBindViewHolder(MyViewHolder holder, int position) {
-             Interview interview = interviewList.get(position);
-             holder.commentedPost.setText(interview.getCommentMessage());
-             holder.postImage.setImageUrl(Utils.BaseImageUri + interview.getComentUserImage(), NetworkController.getInstance(context).getImageLoader());
-
-         }
-
-         @Override
-         public int getItemCount() {
-             return interviewList.size();
-         }
-
-         public class MyViewHolder extends RecyclerView.ViewHolder {
-             private NetworkImageView postImage;
-             private TextView commentedPost;
-
-             public MyViewHolder(View itemView) {
-                 super(itemView);
-                 postImage=(NetworkImageView) itemView.findViewById(R.id.post_img);
-                 commentedPost=(TextView) itemView.findViewById(R.id.commented_post);
-             }
-         }
-     }*/
 }

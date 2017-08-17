@@ -565,7 +565,7 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
             case R.id.industry_spinner1:
                 if (position != 0) {
                     industrySpinnerOneValue = industrySpinnerOne.getSelectedItem().toString();
-                    networkCompanySpinnerArrayRequest1(industrySpinnerOneValue);
+                    networkCompanySpinnerArrayRequest1(industrySpinnerOneValue.replaceAll("\\s+","").substring(0,2));
                 } else {
                     industrySpinnerOneValue = "";
                 }
@@ -580,7 +580,7 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
             case R.id.industry_spinner2:
                 if (position != 0) {
                     industrySpinnerTwoValue = industrySpinnerTwo.getSelectedItem().toString();
-                    networkCompanySpinnerArrayRequest2(industrySpinnerTwoValue);
+                    networkCompanySpinnerArrayRequest2(industrySpinnerTwoValue.replaceAll("\\s+","").substring(0,2));
                 } else {
                     industrySpinnerTwoValue = "";
                 }
@@ -595,7 +595,7 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
             case R.id.industry_spinner3:
                 if (position != 0) {
                     industrySpinnerThreeValue = industrySpinnerThree.getSelectedItem().toString();
-                    networkCompanySpinnerArrayRequest3(industrySpinnerThreeValue);
+                    networkCompanySpinnerArrayRequest3(industrySpinnerThreeValue.replaceAll("\\s+","").substring(0,2));
                 } else {
                     industrySpinnerThreeValue = "";
                 }

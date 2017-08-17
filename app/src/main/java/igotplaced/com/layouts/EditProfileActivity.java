@@ -198,6 +198,8 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
         } else {
             mobileNumberEditText.setEnabled(false);
             locationEditText.setEnabled(false);
+            mobileNumberEditText.setText("");
+            locationEditText.setText("");
         }
     }
 
@@ -556,9 +558,10 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
             case R.id.profile_industry_spinner1:
                 if (position != 0) {
                     industrySpinnerOneValue = industrySpinnerOne.getSelectedItem().toString();
+                    Log.e("iS Value",""+industrySpinnerOneValue.replaceAll("\\s+","").substring(0,2));
                  /*   company1TextView.setVisibility(View.GONE);
                     companySpinnerOne.setVisibility(View.VISIBLE);*/
-                    networkCompanySpinnerArrayRequest1(industrySpinnerOneValue);
+                    networkCompanySpinnerArrayRequest1(industrySpinnerOneValue.replaceAll("\\s+","").substring(0,2));
                 } else {
                     industrySpinnerOneValue = "";
                 }
@@ -575,7 +578,7 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
                     industrySpinnerTwoValue = industrySpinnerTwo.getSelectedItem().toString();
                /*     company2TextView.setVisibility(View.GONE);
                     companySpinnerTwo.setVisibility(View.VISIBLE);*/
-                    networkCompanySpinnerArrayRequest2(industrySpinnerTwoValue);
+                    networkCompanySpinnerArrayRequest2(industrySpinnerTwoValue.replaceAll("\\s+","").substring(0,2));
                 } else {
                     industrySpinnerTwoValue = "";
                 }
@@ -592,7 +595,7 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
                     industrySpinnerThreeValue = industrySpinnerThree.getSelectedItem().toString();
                  /*   company3TextView.setVisibility(View.GONE);
                     companySpinnerThree.setVisibility(View.VISIBLE);*/
-                    networkCompanySpinnerArrayRequest3(industrySpinnerThreeValue);
+                    networkCompanySpinnerArrayRequest3(industrySpinnerThreeValue.replaceAll("\\s+","").substring(0,2));
                 } else {
                     industrySpinnerThreeValue = "";
                 }
@@ -1137,9 +1140,13 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
                             industrySpinnerThree.setSelection(industry3SpinnerPosition);
                         }
 
-                        company1TextView.setText(profile.getCompany1());
+                       /* company1TextView.setText(profile.getCompany1());
                         company2TextView.setText(profile.getCompany2());
                         company3TextView.setText(profile.getCompany3());
+
+                        Log.e("c1",""+company1TextView.getText().toString());
+                        Log.e("c2",""+company2TextView.getText().toString());
+                        Log.e("c3",""+company3TextView.getText().toString());
 
                         if (!company1TextView.getText().toString().equals("")) {
                             companySpinnerOne.setVisibility(View.GONE);
@@ -1152,7 +1159,7 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
                         if (!company1TextView.getText().toString().equals("")) {
                             companySpinnerThree.setVisibility(View.GONE);
                             company3TextView.setVisibility(View.VISIBLE);
-                        }
+                        }*/
                         profileImage.setImageUrl(Utils.BaseImageUri + profile.getImageName(), NetworkController.getInstance(EditProfileActivity.this).getImageLoader());
 
 
