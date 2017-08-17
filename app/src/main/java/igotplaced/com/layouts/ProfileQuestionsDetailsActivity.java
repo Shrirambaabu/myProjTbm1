@@ -4,11 +4,14 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -60,6 +63,7 @@ public class ProfileQuestionsDetailsActivity extends AppCompatActivity implement
 
     private RequestQueue queue;
     private Intent intent;
+    private Toolbar toolbar;
     private List<Questions> questionsList = new ArrayList<Questions>();
 
     private RecyclerAdapterQuestionDetails recyclerAdapterQuestionDetails;
@@ -74,7 +78,7 @@ public class ProfileQuestionsDetailsActivity extends AppCompatActivity implement
         userId = sharedpreferences.getString(Id, null);
 
         setContentView(R.layout.activity_profile_questions_details);
-
+        setupToolbar();
         addressingView();
         addingListeners();
 
@@ -88,6 +92,29 @@ public class ProfileQuestionsDetailsActivity extends AppCompatActivity implement
 
         postRecyclerView();
 
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+        return true;
+    }
+
+    private void setupToolbar() {
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setHomeButtonEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle("Questions");
+        }
     }
 
     private void postRecyclerView() {
@@ -218,6 +245,7 @@ public class ProfileQuestionsDetailsActivity extends AppCompatActivity implement
                 parameters.put("comments", userPostedComment);
                 parameters.put("created_uname", userName);
 
+                Log.e("Passs",""+parameters);
                 return parameters;
             }
         };

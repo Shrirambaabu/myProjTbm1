@@ -3,11 +3,14 @@ package igotplaced.com.layouts;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -62,6 +65,7 @@ public class ProfileEventDetails extends AppCompatActivity implements View.OnCli
 
     private RequestQueue queue;
     private Intent intent;
+    private Toolbar toolbar;
 
     private RecyclerAdapterEventDetails recyclerAdapterEventDetails;
 
@@ -75,7 +79,7 @@ public class ProfileEventDetails extends AppCompatActivity implements View.OnCli
         userId = sharedpreferences.getString(Id, null);
 
         setContentView(R.layout.activity_profile_event_details);
-
+        setupToolbar();
         addressingView();
         addingListeners();
         //initial value from intent
@@ -94,6 +98,28 @@ public class ProfileEventDetails extends AppCompatActivity implements View.OnCli
         eventIndustry.setText(industry);
 
         postRecyclerView();
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+        return true;
+    }
+    private void setupToolbar() {
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setHomeButtonEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle("Events");
+        }
     }
 
     private void postRecyclerView() {
@@ -115,6 +141,7 @@ public class ProfileEventDetails extends AppCompatActivity implements View.OnCli
 
     private void makePostCommentsRequest() {
 
+        Log.e("URL",""+ BaseUri + "/home/eventCommentList/" + id);
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, BaseUri + "/home/eventCommentList/" + id, null,  new Response.Listener<JSONArray>() {
 
 

@@ -132,7 +132,7 @@ public class ProfileInterviewExperienceFragment extends Fragment implements Clic
 
                         interviewList.clear();
                         JSONObject obj = response.getJSONObject(i);
-                        Interview interview = new Interview(obj.getString("feedback"), obj.getString("industryname"), obj.getString("interviewExperienceimgname"), obj.getString("username"), obj.getString("created_by"), obj.getString("interviewExperienceimgname"),obj.getString("username"));
+                        Interview interview = new Interview(obj.getString("fid"), obj.getString("user_id"), obj.getString("feedback"), obj.getString("industryname"), obj.getString("interviewExperienceimgname"), obj.getString("username"), obj.getString("created_by"), obj.getString("interviewExperienceimgname"), obj.getString("username"));
                         // adding movie to blogHomeList array
                         interviewList.add(interview);
 

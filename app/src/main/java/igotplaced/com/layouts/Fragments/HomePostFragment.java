@@ -2,6 +2,7 @@ package igotplaced.com.layouts.Fragments;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -41,6 +42,7 @@ import java.util.Map;
 
 
 import igotplaced.com.layouts.Model.Post;
+import igotplaced.com.layouts.ProfilePostDetailsActivity;
 import igotplaced.com.layouts.R;
 import igotplaced.com.layouts.Utils.ClickListener;
 import igotplaced.com.layouts.Utils.ItemClickListener;
@@ -303,20 +305,18 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
                 @Override
                 public void onItemClick(View v, int pos) {
                     Log.e("tag", "click" + postList.get(position).getPostId());
-                    PostDetailsFragment postDetailsFragment = new PostDetailsFragment();
-                    Bundle bundle = new Bundle();
-                    bundle.putString("pid", postList.get(position).getPostId());
-                    bundle.putString("created_uname", postList.get(position).getPostProfileName());
-                    bundle.putString("created_by", postList.get(position).getPostTime());
-                    bundle.putString("post", postList.get(position).getPost());
-                    bundle.putString("postImage", postList.get(position).getPostImage());
-                    bundle.putString("postIndustry", postList.get(position).getPostIndustry());
-                    bundle.putString("post_createdid", postList.get(position).getPostedUserId());
-                    postDetailsFragment.setArguments(bundle);
-                    getActivity().getSupportFragmentManager()
-                            .beginTransaction()
-                            .replace(R.id.rootLayout, postDetailsFragment, "tag")
-                           .commit();
+
+                    Intent profileDetails=new Intent(getContext(), ProfilePostDetailsActivity.class);
+
+                    profileDetails.putExtra("pid", postList.get(position).getPostId());
+                    profileDetails.putExtra("created_uname", postList.get(position).getPostProfileName());
+                    profileDetails.putExtra("created_by", postList.get(position).getPostTime());
+                    profileDetails.putExtra("post", postList.get(position).getPost());
+                    profileDetails.putExtra("postImage", postList.get(position).getPostImage());
+                    profileDetails.putExtra("postIndustry", postList.get(position).getPostIndustry());
+                    profileDetails.putExtra("post_createdid", postList.get(position).getPostedUserId());
+
+                    startActivity(profileDetails);
                 }
             });
 

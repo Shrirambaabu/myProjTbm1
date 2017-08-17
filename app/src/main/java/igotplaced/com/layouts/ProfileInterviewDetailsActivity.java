@@ -3,11 +3,14 @@ package igotplaced.com.layouts;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -57,7 +60,7 @@ public class ProfileInterviewDetailsActivity extends AppCompatActivity implement
     private RecyclerAdapterInterviewDetails recyclerAdapterInterviewDetails;
     private RequestQueue queue;
     private Intent intent;
-
+    private Toolbar toolbar;
     private List<Interview> interviewList = new ArrayList<Interview>();
 
     private String userId = null, userName = null;
@@ -74,7 +77,7 @@ public class ProfileInterviewDetailsActivity extends AppCompatActivity implement
 
 
         setContentView(R.layout.activity_profile_interview_details);
-
+        setupToolbar();
         addressingView();
         addingListeners();
         //initial value from intent
@@ -91,9 +94,31 @@ public class ProfileInterviewDetailsActivity extends AppCompatActivity implement
         makePostCommentsRequest();
 
     }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+        return true;
+    }
+    private void setupToolbar() {
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setHomeButtonEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle("Interview Experience");
+        }
+    }
 
     private void makePostCommentsRequest() {
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, BaseUri + "/home/interviewCommentList/" + id, null,  new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, BaseUri + "/home/interviewCommentList/" + id, null, new Response.Listener<JSONArray>() {
 
 
             @Override
@@ -109,7 +134,7 @@ public class ProfileInterviewDetailsActivity extends AppCompatActivity implement
                         // adding movie to blogHomeList array
                         interviewList.add(interview);
 
-                        Log.e("Comments",""+ obj.getString("comments"));
+                        Log.e("Comments", "" + obj.getString("comments"));
 
                     } catch (Exception e) {
                         Log.d("error", e.getMessage());

@@ -1,6 +1,7 @@
 package igotplaced.com.layouts.Fragments;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v4.app.Fragment;
 import android.content.Context;
@@ -40,6 +41,7 @@ import java.util.List;
 import java.util.Map;
 
 import igotplaced.com.layouts.Model.Questions;
+import igotplaced.com.layouts.ProfileQuestionsDetailsActivity;
 import igotplaced.com.layouts.R;
 import igotplaced.com.layouts.Utils.ClickListener;
 import igotplaced.com.layouts.Utils.ItemClickListener;
@@ -304,21 +306,17 @@ public class HomeQuestionsFragment extends Fragment implements SwipeRefreshLayou
             holder.setItemClickListener(new ItemClickListener() {
                 @Override
                 public void onItemClick(View v, int pos) {
-                    Log.e("tag", "click" + questionsList.get(position).getQuestionId());
-                    QuestionsDetailsFragment questionsDetailsFragment = new QuestionsDetailsFragment();
-                    Bundle bundle = new Bundle();
-                    bundle.putString("qid", questionsList.get(position).getQuestionId());
-                    bundle.putString("created_uname", questionsList.get(position).getQuestionsProfileName());
-                    bundle.putString("created_by", questionsList.get(position).getQuestionsTime());
-                    bundle.putString("question", questionsList.get(position).getQuestions());
-                    bundle.putString("postImage", questionsList.get(position).getQuestionsImage());
-                    bundle.putString("postIndustry", questionsList.get(position).getQuestionsIndustry());
-                    bundle.putString("post_createdid", questionsList.get(position).getQuestionUserId());
-                    questionsDetailsFragment.setArguments(bundle);
-                    getActivity().getSupportFragmentManager()
-                            .beginTransaction()
-                            .replace(R.id.rootLayout, questionsDetailsFragment, "tag")
-                            .commit();
+                    Intent questionDetails=new Intent(getContext(), ProfileQuestionsDetailsActivity.class);
+
+                    questionDetails.putExtra("qid", questionsList.get(position).getQuestionId());
+                    questionDetails.putExtra("created_uname", questionsList.get(position).getQuestionsProfileName());
+                    questionDetails.putExtra("created_by", questionsList.get(position).getQuestionsTime());
+                    questionDetails.putExtra("question", questionsList.get(position).getQuestions());
+                    questionDetails.putExtra("postImage", questionsList.get(position).getQuestionsImage());
+                    questionDetails.putExtra("postIndustry", questionsList.get(position).getQuestionsIndustry());
+                    questionDetails.putExtra("post_createdid", questionsList.get(position).getQuestionUserId());
+
+                    startActivity(questionDetails);
                 }
             });
         }

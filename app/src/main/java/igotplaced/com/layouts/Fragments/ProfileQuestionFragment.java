@@ -128,7 +128,7 @@ public class ProfileQuestionFragment extends Fragment implements ClickListener {
                     try {
                         questionsList.clear();
                         JSONObject obj = response.getJSONObject(i);
-                        Questions questions = new Questions(obj.getString("question"), obj.getString("industryname"), obj.getString("questionimgname"), obj.getString("created_uname"), obj.getString("created_by"), obj.getString("questionimgname"), obj.getString("created_uname"));
+                        Questions questions = new Questions(obj.getString("qid"),obj.getString("created_user"),obj.getString("question"), obj.getString("industryname"), obj.getString("questionimgname"), obj.getString("created_uname"), obj.getString("created_by"), obj.getString("questionimgname"), obj.getString("created_uname"));
                         // adding movie to blogHomeList array
                         questionsList.add(questions);
 

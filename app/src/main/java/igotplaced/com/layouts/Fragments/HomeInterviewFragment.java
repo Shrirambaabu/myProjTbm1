@@ -3,6 +3,7 @@ package igotplaced.com.layouts.Fragments;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -44,6 +45,7 @@ import java.util.Map;
 
 import igotplaced.com.layouts.Model.Interview;
 import igotplaced.com.layouts.Model.Post;
+import igotplaced.com.layouts.ProfileInterviewDetailsActivity;
 import igotplaced.com.layouts.R;
 import igotplaced.com.layouts.Utils.ClickListener;
 import igotplaced.com.layouts.Utils.ItemClickListener;
@@ -310,21 +312,16 @@ public class HomeInterviewFragment extends Fragment implements SwipeRefreshLayou
             holder.setItemClickListener(new ItemClickListener() {
                 @Override
                 public void onItemClick(View v, int pos) {
-                    Log.e("tag", "click" + interviewList.get(position).getInterviewId());
-                    InterviewDetails interviewDetails = new InterviewDetails();
-                    Bundle bundle = new Bundle();
-                    bundle.putString("iid", interviewList.get(position).getInterviewId());
-                    bundle.putString("created_uname", interviewList.get(position).getInterviewProfileName());
-                    bundle.putString("created_by", interviewList.get(position).getInterviewTime());
-                    bundle.putString("interview", interviewList.get(position).getInterview());
-                    bundle.putString("interviewImage", interviewList.get(position).getInterviewImage());
-                    bundle.putString("interviewIndustry", interviewList.get(position).getInterviewIndustry());
-                    bundle.putString("interview_createdid", interviewList.get(position).getInterviewUserId());
-                    interviewDetails.setArguments(bundle);
-                    getActivity().getSupportFragmentManager()
-                            .beginTransaction()
-                            .replace(R.id.rootLayout, interviewDetails, "tag")
-                            .commit();
+                    Intent profileInterview=new Intent(getContext(), ProfileInterviewDetailsActivity.class);
+
+                    profileInterview.putExtra("iid", interviewList.get(position).getInterviewId());
+                    profileInterview.putExtra("created_uname", interviewList.get(position).getInterviewProfileName());
+                    profileInterview.putExtra("created_by", interviewList.get(position).getInterviewTime());
+                    profileInterview.putExtra("interview", interviewList.get(position).getInterview());
+                    profileInterview.putExtra("interviewImage", interviewList.get(position).getInterviewImage());
+                    profileInterview.putExtra("interviewIndustry", interviewList.get(position).getInterviewIndustry());
+                    profileInterview.putExtra("interview_createdid", interviewList.get(position).getInterviewUserId());
+                    startActivity(profileInterview);
                 }
             });
 

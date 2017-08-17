@@ -123,7 +123,7 @@ public class ProfileEventsFragment extends Fragment implements ClickListener {
                     try {
                         eventsList.clear();
                         JSONObject obj = response.getJSONObject(i);
-                        Events events = new Events(obj.getString("eventname"), obj.getString("eventtype"), obj.getString("location"), obj.getString("datetime"), obj.getString("count"), obj.getString("Industry"), obj.getString("eventimgname"), obj.getString("created_uname"), obj.getString("created_by"), obj.getString("eventimgname"), obj.getString("created_uname"));
+                        Events events = new Events(obj.getString("eid"), obj.getString("created_user"), obj.getString("eventname"), obj.getString("eventtype"), obj.getString("location"), obj.getString("datetime"), obj.getString("count"), obj.getString("event"), obj.getString("notes"), obj.getString("Industry"), obj.getString("eventimgname"), obj.getString("created_uname"), obj.getString("created_by"), obj.getString("eventimgname"), obj.getString("created_uname"));
                         // adding movie to blogHomeList array
                         eventsList.add(events);
 

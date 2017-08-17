@@ -1,6 +1,7 @@
 package igotplaced.com.layouts.Fragments;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v4.app.Fragment;
 import android.content.Context;
@@ -43,6 +44,7 @@ import java.util.Map;
 
 import igotplaced.com.layouts.Model.Events;
 import igotplaced.com.layouts.Model.Post;
+import igotplaced.com.layouts.ProfileEventDetails;
 import igotplaced.com.layouts.R;
 import igotplaced.com.layouts.Utils.ClickListener;
 import igotplaced.com.layouts.Utils.ItemClickListener;
@@ -316,27 +318,24 @@ public class HomeEventFragment extends Fragment implements SwipeRefreshLayout.On
             holder.setItemClickListener(new ItemClickListener() {
                 @Override
                 public void onItemClick(View v, int pos) {
-                    Log.e("tag", "click" + eventList.get(position).getEventId());
-                    EventDetailsFragment eventDetailsFragment = new EventDetailsFragment();
-                    Bundle bundle = new Bundle();
-                    bundle.putString("eid", eventList.get(position).getEventId());
-                    bundle.putString("ename", eventList.get(position).getEventProfileName());
-                    bundle.putString("eTime", eventList.get(position).getEventTime());
-                    bundle.putString("eCaption", eventList.get(position).getEventCaption());
-                    bundle.putString("eDesign", eventList.get(position).getEventDesignation());
-                    bundle.putString("eVenue", eventList.get(position).getEventVenue());
-                    bundle.putString("eDate", eventList.get(position).getEventDate());
-                    bundle.putString("eReg", eventList.get(position).getEventRegistered());
-                    bundle.putString("eStatus", eventList.get(position).getEventStatus());
-                    bundle.putString("eEvnt", eventList.get(position).getEvent());
-                    bundle.putString("eIndustry", eventList.get(position).getEventIndustry());
-                    bundle.putString("eImage", eventList.get(position).getEventImage());
-                    bundle.putString("eUserId", eventList.get(position).getEventUserId());
-                    eventDetailsFragment.setArguments(bundle);
-                    getActivity().getSupportFragmentManager()
-                            .beginTransaction()
-                            .replace(R.id.rootLayout, eventDetailsFragment, "tag")
-                            .commit();
+                    Intent profileEventDetails =new Intent(getContext(),ProfileEventDetails.class);
+
+
+                    profileEventDetails.putExtra("eid", eventsList.get(position).getEventId());
+                    profileEventDetails.putExtra("ename", eventsList.get(position).getEventProfileName());
+                    profileEventDetails.putExtra("eTime", eventsList.get(position).getEventTime());
+                    profileEventDetails.putExtra("eCaption", eventsList.get(position).getEventCaption());
+                    profileEventDetails.putExtra("eDesign", eventsList.get(position).getEventDesignation());
+                    profileEventDetails.putExtra("eVenue", eventsList.get(position).getEventVenue());
+                    profileEventDetails.putExtra("eDate", eventsList.get(position).getEventDate());
+                    profileEventDetails.putExtra("eReg", eventsList.get(position).getEventRegistered());
+                    profileEventDetails.putExtra("eStatus", eventsList.get(position).getEventStatus());
+                    profileEventDetails.putExtra("eEvnt", eventsList.get(position).getEvent());
+                    profileEventDetails.putExtra("eIndustry", eventsList.get(position).getEventIndustry());
+                    profileEventDetails.putExtra("eImage", eventsList.get(position).getEventImage());
+                    profileEventDetails.putExtra("eUserId", eventsList.get(position).getEventUserId());
+
+                    startActivity(profileEventDetails);
                 }
             });
 
