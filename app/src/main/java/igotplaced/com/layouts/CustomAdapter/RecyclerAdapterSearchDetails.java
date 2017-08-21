@@ -40,6 +40,11 @@ public class RecyclerAdapterSearchDetails extends RecyclerView.Adapter<RecyclerA
 
 
     @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
+    @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         if (viewType == post) {
@@ -116,10 +121,7 @@ public class RecyclerAdapterSearchDetails extends RecyclerView.Adapter<RecyclerA
     }
 
 
-    @Override
-    public int getItemViewType(int position) {
-        return 0;
-    }
+
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public MyViewHolder(View itemView) {

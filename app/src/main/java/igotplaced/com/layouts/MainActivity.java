@@ -453,6 +453,9 @@ public class MainActivity extends AppCompatActivity {
                         .beginTransaction()
                         .replace(R.id.rootLayout, searchResults, "tag")
                         .addToBackStack("tag").commit();
+                searchView.setQuery("",false); //clear the text
+
+
 /*
                 Intent intent = new Intent(MainActivity.this, ProfilePostDetailsActivity.class);
                 intent.setAction(Intent.ACTION_SEARCH);

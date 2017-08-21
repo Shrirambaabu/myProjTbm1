@@ -11,6 +11,18 @@ public class SearchResultsModel {
     private String postUserName;
     private String postUserImage;
     private String postDate;
+
+    public SearchResultsModel(String postId, String postedUserId, String postUserName, String postUserImage, String postDate, String postMessage, String postIndustry, String postCompany) {
+        this.postId = postId;
+        this.postedUserId = postedUserId;
+        this.postUserName = postUserName;
+        this.postUserImage = postUserImage;
+        this.postDate = postDate;
+        this.postMessage = postMessage;
+        this.postIndustry = postIndustry;
+        this.postCompany = postCompany;
+    }
+
     private String postMessage;
     private String postIndustry;
     private String postCompany;
@@ -31,6 +43,24 @@ public class SearchResultsModel {
     private String eventDate;
     private String eventName;
     private String eventType;
+
+    public SearchResultsModel(String eventId, String eventUserId, String eventUserName, String eventUserImage, String eventDate, String eventName, String eventType, String eventLocation, String dateTime, String count, String event, String notes, String eventIndustry, String eventCompany) {
+        this.eventId = eventId;
+        this.eventUserId = eventUserId;
+        this.eventUserName = eventUserName;
+        this.eventUserImage = eventUserImage;
+        this.eventDate = eventDate;
+        this.eventName = eventName;
+        this.eventType = eventType;
+        this.eventLocation = eventLocation;
+        this.dateTime = dateTime;
+        this.count = count;
+        this.event = event;
+        this.notes = notes;
+        this.eventIndustry = eventIndustry;
+        this.eventCompany = eventCompany;
+    }
+
     private String eventLocation;
     private String dateTime;
     private String count;

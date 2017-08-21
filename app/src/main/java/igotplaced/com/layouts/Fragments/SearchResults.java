@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import igotplaced.com.layouts.CustomAdapter.RecyclerAdapterSearchDetails;
+import igotplaced.com.layouts.Model.Post;
 import igotplaced.com.layouts.Model.SearchResultsModel;
 import igotplaced.com.layouts.R;
 import igotplaced.com.layouts.Utils.NetworkController;
@@ -40,7 +41,7 @@ public class SearchResults extends Fragment {
     private Context context;
     private RequestQueue queue;
     private LinearLayoutManager mLayoutManager;
-
+    ArrayList list= new ArrayList();
     private TextView noResult;
     private List<SearchResultsModel> searchResultsList = new ArrayList<>();
 
@@ -101,16 +102,16 @@ public class SearchResults extends Fragment {
     private void makeSearchResultsRequest() {
 
 
-        Log.e("loaded", "" + BaseUri + "/autocompleteService/searchResult/" + Query.substring(0,3));
+        Log.e("loaded", "" + BaseUri + "/autocompleteService/searchResult/" + Query.replaceAll("\\s",""));
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, BaseUri + "/autocompleteService/searchResult/" + Query.substring(0,3), null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, BaseUri + "/autocompleteService/searchResult/" + Query.replaceAll("\\s",""), null, new Response.Listener<JSONObject>() {
             JSONArray jsonObjectJSON = null;
 
             @Override
             public void onResponse(JSONObject jsonObject) {
 
                 try {
-                    jsonObjectJSON = jsonObject.getJSONArray("");
+                    jsonObjectJSON = jsonObject.getJSONArray("post");
 
                     //clearing blogList
                     searchResultsList.clear();
@@ -122,7 +123,7 @@ public class SearchResults extends Fragment {
                             JSONObject obj = jsonObjectJSON.getJSONObject(i);
                             Log.e("Testing data",""+obj.getString("Industry"));
 
-                            SearchResultsModel searchResultsModel = new SearchResultsModel(obj.getString("pid"), obj.getString("created_user"), obj.getString("post"), obj.getString("Industry"), obj.getString("postuserimgname"), obj.getString("created_uname"), obj.getString("created_by"), obj.getString("imgname"), obj.getString("fname"), obj.getString("pid"), obj.getString("created_user"), obj.getString("post"), obj.getString("Industry"), obj.getString("postuserimgname"), obj.getString("created_uname"), obj.getString("created_by"), obj.getString("imgname"), obj.getString("fname"), obj.getString("pid"), obj.getString("created_user"), obj.getString("post"), obj.getString("Industry"), obj.getString("postuserimgname"), obj.getString("created_uname"), obj.getString("created_by"), obj.getString("imgname"), obj.getString("fname"), obj.getString("pid"), obj.getString("created_user"), obj.getString("post"), obj.getString("Industry"), obj.getString("postuserimgname"), obj.getString("created_uname"), obj.getString("created_by"), obj.getString("imgname"), obj.getString("fname"), obj.getString("imgname"), obj.getString("fname"));
+                            SearchResultsModel searchResultsModel = new SearchResultsModel(obj.getString("pid"), obj.getString("created_user"), obj.getString("companyname"), obj.getString("postuserimgname"), obj.getString("created_by"), obj.getString("post"), obj.getString("Industry"), obj.getString("companyname"));
 
                             searchResultsList.add(searchResultsModel);
 
