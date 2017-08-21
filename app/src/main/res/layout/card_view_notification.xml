@@ -1,26 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/margin_2"
     android:background="@color/white"
-    android:gravity="center"
-    android:orientation="vertical">
+    android:gravity="center">
 
-    <LinearLayout
-        android:id="@+id/top_layout"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_margin="@dimen/margin_4"
-        android:orientation="horizontal">
+
 
         <android.support.v7.widget.CardView
             android:id="@+id/notify_image_card"
             android:layout_width="48dp"
-            android:layout_height="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="@dimen/margin_8"
+            android:layout_marginStart="@dimen/margin_8"
             app:cardCornerRadius="5dp"
+            android:layout_marginBottom="@dimen/margin_4"
             tools:targetApi="lollipop">
 
 
@@ -32,18 +29,16 @@
              />
         </android.support.v7.widget.CardView>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+
 
             <TextView
                 android:id="@+id/notifyMsg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/notify_image_card"
                 android:layout_gravity="start|center"
                 android:layout_marginStart="@dimen/margin_8"
-                android:layout_marginTop="@dimen/margin_4"
+                android:layout_marginTop="@dimen/margin_8"
                 android:maxLines="3"
                 android:text="@string/notificationMessage"
                 android:textColor="@color/colorBackground"
@@ -68,8 +63,5 @@
                 android:textSize="12sp"
                 app:paddingEnd="@dimen/margin_8" />
 
-        </RelativeLayout>
 
-    </LinearLayout>
-
-</LinearLayout>
+</RelativeLayout>

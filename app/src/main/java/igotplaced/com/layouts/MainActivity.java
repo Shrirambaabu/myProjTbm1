@@ -5,7 +5,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.MatrixCursor;
 import android.os.Bundle;
+import android.provider.BaseColumns;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TextInputLayout;
@@ -14,6 +17,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -45,6 +49,7 @@ import igotplaced.com.layouts.Fragments.BlogFragment;
 import igotplaced.com.layouts.Fragments.HomeFragment;
 import igotplaced.com.layouts.Fragments.NotificationFragment;
 import igotplaced.com.layouts.Fragments.ProfileFragment;
+import igotplaced.com.layouts.Fragments.SearchResults;
 import igotplaced.com.layouts.Model.Profile;
 import igotplaced.com.layouts.Utils.CustomAutoCompleteView;
 import igotplaced.com.layouts.Utils.NetworkController;
@@ -59,6 +64,13 @@ import static igotplaced.com.layouts.Utils.Utils.Name;
 
 public class MainActivity extends AppCompatActivity {
 
+
+    private SimpleCursorAdapter mAdapter;
+
+
+    JSONArray terms;
+
+
     //Defining Variables
     private Toolbar toolbar;
     private Context context;
@@ -69,8 +81,8 @@ public class MainActivity extends AppCompatActivity {
 
     private ArrayAdapter<String> searchAutoCompleteAdapter;
     SearchView searchView;
-   /* private CustomAutoCompleteView searchEditText;
-    private TextInputLayout inputLayoutSearch;*/
+    /* private CustomAutoCompleteView searchEditText;
+     private TextInputLayout inputLayoutSearch;*/
     private DrawerLayout drawerLayout;
     private boolean isMain = false;
     private SharedPreferences sharedpreferences;
@@ -95,11 +107,6 @@ public class MainActivity extends AppCompatActivity {
         userEmail = sharedpreferences.getString(Email, null);
         userId = sharedpreferences.getString(Id, null);
 
-/*
-        searchEditText =(CustomAutoCompleteView) findViewById(R.id.editViewSearch) ;
-        inputLayoutSearch=(TextInputLayout) findViewById(R.id.viewSearch) ;
-        searchEditText.addTextChangedListener(new CustomWatcher(searchEditText));*/
-
 
         queue = NetworkController.getInstance(context).getRequestQueue();
 
@@ -112,29 +119,7 @@ public class MainActivity extends AppCompatActivity {
         displaySelectedScreen(R.id.home);
 
     }
-   /* private class CustomWatcher implements TextWatcher {
 
-        private View view;
-
-        CustomWatcher(View view) {
-            this.view = view;
-        }
-
-        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-        }
-
-        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-        }
-
-        public void afterTextChanged(Editable editable) {
-            switch (view.getId()) {
-
-                case R.id.editViewSearch:
-                    Validation.validateDepartment(searchEditText, inputLayoutSearch, MainActivity.this);
-                    break;
-            }
-        }
-    }*/
     private void makeJsonArrayRequestProfile() {
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(BaseUri + "/profileService/profileEdit/" + userId, new Response.Listener<JSONArray>() {
 
@@ -360,7 +345,7 @@ public class MainActivity extends AppCompatActivity {
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(BaseUri + "/autocompleteService/searchAll/" + keyword, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-
+                terms = response;
                 searchAutoCompleteAdapter.clear();
                 for (int i = 0; i < response.length(); i++) {
                     try {
@@ -379,7 +364,7 @@ public class MainActivity extends AppCompatActivity {
                  *  incorrect IP
                  *  Server not deployed
                  */
-                Utils.showDialogue(MainActivity.this, "Sorry! Server Error");
+                //  Utils.showDialogue(MainActivity.this, "Sorry! Server Error");
             }
         });
 
@@ -403,6 +388,85 @@ public class MainActivity extends AppCompatActivity {
         SearchManager searchManager = (SearchManager) getSystemService(SEARCH_SERVICE);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 
+        mAdapter = new SimpleCursorAdapter(
+                context, android.R.layout.simple_list_item_1, null,
+                new String[]{SearchManager.SUGGEST_COLUMN_TEXT_1},
+                new int[]{android.R.id.text1}, 1);
+
+        searchView.setSuggestionsAdapter(mAdapter);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                if (query.length() >= 1) {
+
+                   /* Intent intent = new Intent(MainActivity.this, ProfilePostDetailsActivity.class);
+                    intent.setAction(Intent.ACTION_SEARCH);
+                    intent.putExtra(SearchManager.QUERY, query);
+                    Log.e("QuerySubmit",""+query);
+                    startActivity(intent);*/
+
+                    SearchResults searchResults = new SearchResults();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("QuerySubmit", query);
+                    searchResults.setArguments(bundle);
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.rootLayout, searchResults, "tag")
+                            .addToBackStack("tag").commit();
+
+                    searchView.getSuggestionsAdapter().changeCursor(null);
+                }
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String query) {
+                if (query.length() >= 1) {
+                    networkSearchAutoCompleteRequest(query);
+                    if (!query.isEmpty()) {
+                        populateAdapter(query);
+                        Log.e("QueryChange", "" + query);
+                    }
+                } else {
+                    searchView.getSuggestionsAdapter().changeCursor(null);
+                }
+
+                return true;
+            }
+        });
+
+
+        searchView.setOnSuggestionListener(new SearchView.OnSuggestionListener() {
+            @Override
+            public boolean onSuggestionSelect(int position) {
+                Cursor cursor = (Cursor) searchView.getSuggestionsAdapter().getItem(position);
+                String term = cursor.getString(cursor.getColumnIndex(SearchManager.SUGGEST_COLUMN_TEXT_1));
+                cursor.close();
+
+                Log.e("Cursor select", "" + term);
+                SearchResults searchResults = new SearchResults();
+                Bundle bundle = new Bundle();
+                bundle.putString("QuerySubmit", term);
+                searchResults.setArguments(bundle);
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.rootLayout, searchResults, "tag")
+                        .addToBackStack("tag").commit();
+/*
+                Intent intent = new Intent(MainActivity.this, ProfilePostDetailsActivity.class);
+                intent.setAction(Intent.ACTION_SEARCH);
+                intent.putExtra(SearchManager.QUERY, term);
+                Log.e("Term", "" + term);
+                startActivity(intent);*/
+                return true;
+            }
+
+            @Override
+            public boolean onSuggestionClick(int position) {
+                return onSuggestionSelect(position);
+            }
+        });
 
         searchAutoCompleteAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item_custom);
         networkSearchAutoCompleteRequest("INTERNET");
@@ -410,4 +474,25 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    private void populateAdapter(String query) {
+        final MatrixCursor c = new MatrixCursor(new String[]{BaseColumns._ID, SearchManager.SUGGEST_COLUMN_TEXT_1});
+
+        if (!query.isEmpty()) {
+
+            networkSearchAutoCompleteRequest(query);
+
+            for (int index = 0; index < terms.length(); index++) {
+                String term = null;
+                try {
+                    term = terms.getString(index);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                Object[] row = new Object[]{index, term};
+                c.addRow(row);
+            }
+        }
+        mAdapter.changeCursor(c);
+    }
 }

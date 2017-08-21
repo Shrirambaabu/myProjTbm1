@@ -66,7 +66,7 @@
         <activity android:name=".ProfilePostDetailsActivity" />
         <activity android:name=".ProfileInterviewDetailsActivity" />
         <activity android:name=".ProfileEventDetails" />
-        <activity android:name=".ProfileQuestionsDetailsActivity"></activity>
+        <activity android:name=".ProfileQuestionsDetailsActivity" />
     </application>
 
 </manifest>

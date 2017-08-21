@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.webkit.WebView;
 import android.widget.TextView;
 
@@ -28,6 +30,7 @@ public class BlogDetailsActivity extends AppCompatActivity {
     private RequestQueue queue;
     private Intent intent;
     private String postId;
+    private Toolbar toolbar;
 
     private WebView webPost;
     private TextView blogPost, blogPostedBy;
@@ -37,10 +40,8 @@ public class BlogDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_blog_details);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null)
-            actionBar.setTitle("Blogs");
 
+        setupToolbar();
 
         //initial value from intent
         initialization();
@@ -53,8 +54,30 @@ public class BlogDetailsActivity extends AppCompatActivity {
         makeJsonArrayRequestBlogDetails(postId);
 
 
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+        return true;
+    }
 
+    private void setupToolbar() {
 
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setHomeButtonEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle("Blog");
+        }
     }
 
     private void mapping() {
