@@ -185,6 +185,8 @@
                 android:paddingBottom="@dimen/margin_4"
                 android:paddingEnd="@dimen/margin_16"
                 android:paddingTop="@dimen/margin_10"
+                android:maxLines="2"
+                android:ellipsize="end"
                 android:text="I am trained engineefd r in dfdsf dfgdgdf sfdsadasdasd  ds  dsds  dsja.."
                 android:textColor="@color/text_main"
                 android:textSize="16sp"

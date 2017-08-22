@@ -405,14 +405,14 @@ public class MainActivity extends AppCompatActivity {
                     intent.putExtra(SearchManager.QUERY, query);
                     Log.e("QuerySubmit",""+query);
                     startActivity(intent);*/
-
+                    selectedPosition = 8;
                     SearchResults searchResults = new SearchResults();
                     Bundle bundle = new Bundle();
                     bundle.putString("QuerySubmit", query);
                     searchResults.setArguments(bundle);
                     getSupportFragmentManager()
                             .beginTransaction()
-                            .replace(R.id.rootLayout, searchResults, "tag")
+                            .replace(R.id.frame, searchResults, "tag")
                             .addToBackStack("tag").commit();
 
                     searchView.getSuggestionsAdapter().changeCursor(null);
@@ -445,13 +445,14 @@ public class MainActivity extends AppCompatActivity {
                 cursor.close();
 
                 Log.e("Cursor select", "" + term);
+                selectedPosition = 7;
                 SearchResults searchResults = new SearchResults();
                 Bundle bundle = new Bundle();
                 bundle.putString("QuerySubmit", term);
                 searchResults.setArguments(bundle);
                 getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.rootLayout, searchResults, "tag")
+                        .replace(R.id.frame, searchResults, "tag")
                         .addToBackStack("tag").commit();
                 searchView.setQuery("",false); //clear the text
 

@@ -97,6 +97,8 @@
                 android:layout_marginEnd="@dimen/margin_16"
                 android:layout_marginStart="@dimen/margin_16"
                 android:gravity="start"
+                android:maxLines="2"
+                android:ellipsize="end"
                 android:text="I am trained engineefd r in dfdsf dfgdgdf sfdsadasdasd  ds  dsds  dsja..."
                 android:textColor="@color/text_main"
                 android:textSize="18sp"

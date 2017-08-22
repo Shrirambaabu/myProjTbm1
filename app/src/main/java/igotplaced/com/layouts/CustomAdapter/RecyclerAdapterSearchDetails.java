@@ -2,6 +2,7 @@ package igotplaced.com.layouts.CustomAdapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,9 +10,9 @@ import android.widget.TextView;
 
 import com.android.volley.toolbox.NetworkImageView;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import igotplaced.com.layouts.Model.Post;
 import igotplaced.com.layouts.Model.SearchResultsModel;
 import igotplaced.com.layouts.R;
 import igotplaced.com.layouts.Utils.ItemClickListener;
@@ -22,97 +23,142 @@ import igotplaced.com.layouts.Utils.Utils;
  * Created by Shriram on 21-Aug-17.
  */
 
-public class RecyclerAdapterSearchDetails extends RecyclerView.Adapter<RecyclerAdapterSearchDetails.MyViewHolder> {
+public class RecyclerAdapterSearchDetails extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<SearchResultsModel> searchResultsModelList;
+    ArrayList<Integer> list;
     private Context context;
     private LayoutInflater inflater;
     private final int post = 0, interview = 1, events = 2, questions = 3;
 
-    public RecyclerAdapterSearchDetails(Context context, List<SearchResultsModel> searchResultsModelList) {
+    public RecyclerAdapterSearchDetails(Context context, List<SearchResultsModel> searchResultsModelList, ArrayList<Integer> list) {
 
+        this.list = list;
         this.context = context;
         this.searchResultsModelList = searchResultsModelList;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-
+        Log.e("ListSize", "" + list.size());
     }
 
 
     @Override
     public int getItemViewType(int position) {
-        return position;
+        Log.e("ListPos", "" + list.get(position));
+        if (list.get(position) == 0) {
+            return post;
+        } else if (list.get(position) == 1) {
+            return interview;
+        } else if (list.get(position) == 2) {
+            return events;
+        } else  if (list.get(position) == 3){
+            return questions;
+        }else {
+            return -1;
+        }
     }
 
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
+        Log.e("ViewType", "" + viewType);
         if (viewType == post) {
             View rootView = inflater.inflate(R.layout.card_view_post, parent, false);
-            return new MyViewHolder(rootView);
+            PostViewHolder holder = new PostViewHolder(rootView);
+            return holder;
         } else if (viewType == interview) {
             View rootView = inflater.inflate(R.layout.card_view_interview, parent, false);
-            return new MyViewHolder(rootView);
+            InterviewViewHolder holder = new InterviewViewHolder(rootView);
+            return holder;
         } else if (viewType == events) {
             View rootView = inflater.inflate(R.layout.card_view_event, parent, false);
-            return new MyViewHolder(rootView);
+            EventsViewHolder holder = new EventsViewHolder(rootView);
+            return holder;
         } else if (viewType == questions) {
             View rootView = inflater.inflate(R.layout.card_view_questions, parent, false);
-            return new MyViewHolder(rootView);
+            QuestionsViewHolder holder = new QuestionsViewHolder(rootView);
+            return holder;
         }
 
         return null;
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
-        final int itemType = getItemViewType(position);
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+        //  final int itemType = getItemViewType(position);
+        Integer integer = list.get(position);
         SearchResultsModel searchResultsModel = searchResultsModelList.get(position);
-        if (itemType == post) {
+        Log.e("IndustryInterview",""+searchResultsModel.getCompany());
+        if (integer != null) {
 
-            ((MyViewHolder.postViewHolder)holder).post.setText(searchResultsModel.getPostMessage());
-            ((MyViewHolder.postViewHolder)holder).postIndustry.setText(searchResultsModel.getPostIndustry()+ " "+searchResultsModel.getPostCompany());
-            ((MyViewHolder.postViewHolder)holder).postProfileName.setText(searchResultsModel.getPostUserName());
-            ((MyViewHolder.postViewHolder)holder).postTime.setText(searchResultsModel.getPostDate());
-            ((MyViewHolder.postViewHolder)holder).postImage.setImageUrl(Utils.BaseImageUri + searchResultsModel.getPostUserImage(), NetworkController.getInstance(context).getImageLoader());
+            if (integer==0) {
 
+                ((PostViewHolder) holder).post.setText(searchResultsModel.getMessage());
+                ((PostViewHolder) holder).postIndustry.setText(searchResultsModel.getIndustry() + " " + searchResultsModel.getCompany());
+                ((PostViewHolder) holder).postProfileName.setText(searchResultsModel.getUserName());
+                ((PostViewHolder) holder).postTime.setText(searchResultsModel.getCreatedDate());
+                ((PostViewHolder) holder).postImage.setImageUrl(Utils.BaseImageUri + searchResultsModel.getUserImage(), NetworkController.getInstance(context).getImageLoader());
+                ((PostViewHolder) holder).setItemClickListener(new ItemClickListener() {
+                    @Override
+                    public void onItemClick(View v, int pos) {
+                        Log.e("Item Click post", "" + searchResultsModelList.get(position).getId());
+                    }
+                });
 
-        }else if (itemType==interview){
+            } else if (integer==1) {
 
-            ((MyViewHolder.interviewViewHolder)holder).interview.setText(searchResultsModel.getInterviewMessage());
-            ((MyViewHolder.interviewViewHolder)holder).interviewIndustry.setText(searchResultsModel.getInterviewIndustry()+ " "+ searchResultsModel.getInterviewCompany());
-            ((MyViewHolder.interviewViewHolder)holder).interviewProfileName.setText(searchResultsModel.getInterviewProfileName());
-            ((MyViewHolder.interviewViewHolder)holder).interviewTime.setText(searchResultsModel.getInterviewProfileDate());
-            ((MyViewHolder.interviewViewHolder)holder).interviewImage.setImageUrl(Utils.BaseImageUri + searchResultsModel.getInterviewProfileImage(), NetworkController.getInstance(context).getImageLoader());
+                ((InterviewViewHolder) holder).interview.setText(searchResultsModel.getMessage());
+                ((InterviewViewHolder) holder).interviewIndustry.setText(searchResultsModel.getIndustry() + " " + searchResultsModel.getCompany());
+                ((InterviewViewHolder) holder).interviewProfileName.setText(searchResultsModel.getUserName());
+                ((InterviewViewHolder) holder).interviewTime.setText(searchResultsModel.getCreatedDate());
+                ((InterviewViewHolder) holder).interviewImage.setImageUrl(Utils.BaseImageUri + searchResultsModel.getUserImage(), NetworkController.getInstance(context).getImageLoader());
 
-
-
-        }else if (itemType==events){
-
-            ((MyViewHolder.eventsViewHolder)holder).eventCaption.setText(searchResultsModel.getEventName());
-            ((MyViewHolder.eventsViewHolder)holder).eventDesignation.setText(searchResultsModel.getEventType());
-            ((MyViewHolder.eventsViewHolder)holder).eventVenue.setText(searchResultsModel.getEventLocation());
-            ((MyViewHolder.eventsViewHolder)holder).eventDate.setText(searchResultsModel.getDateTime());
-            ((MyViewHolder.eventsViewHolder)holder).eventRegistered.setText(searchResultsModel.getCount());
-            ((MyViewHolder.eventsViewHolder)holder).eventStatus.setText(searchResultsModel.getEvent());
-            ((MyViewHolder.eventsViewHolder)holder).event.setText(searchResultsModel.getNotes());
-            ((MyViewHolder.eventsViewHolder)holder).event_industry.setText(searchResultsModel.getEventIndustry()+ "  " +searchResultsModel.getEventCompany());
-            ((MyViewHolder.eventsViewHolder)holder).event_profile_name.setText(searchResultsModel.getEventUserName());
-            ((MyViewHolder.eventsViewHolder)holder).event_time.setText(searchResultsModel.getEventDate());
-            ((MyViewHolder.eventsViewHolder)holder).event_img.setImageUrl(Utils.BaseImageUri + searchResultsModel.getEventUserImage(), NetworkController.getInstance(context).getImageLoader());
-
+                ((InterviewViewHolder) holder).setItemClickListener(new ItemClickListener() {
+                    @Override
+                    public void onItemClick(View v, int pos) {
+                        Log.e("Item Click Interview", "" + searchResultsModelList.get(position).getId());
+                    }
+                });
 
 
-        }else if (itemType==questions){
+            } else if (integer==2) {
 
-            ((MyViewHolder.questionsViewHolder)holder).questions.setText(searchResultsModel.getQuestionMessage());
-            ((MyViewHolder.questionsViewHolder)holder).questionsIndustry.setText(searchResultsModel.getQuestionIndustry()+ " " +searchResultsModel.getQuestionIndustry());
-            ((MyViewHolder.questionsViewHolder)holder).questionsProfileName.setText(searchResultsModel.getQuestionUserName());
-            ((MyViewHolder.questionsViewHolder)holder).questionsTime.setText(searchResultsModel.getQuestionDate());
-            ((MyViewHolder.questionsViewHolder)holder).questionsImage.setImageUrl(Utils.BaseImageUri + searchResultsModel.getQuestionUserImage(), NetworkController.getInstance(context).getImageLoader());
+                ((EventsViewHolder) holder).eventCaption.setText(searchResultsModel.getEventCaption());
+                ((EventsViewHolder) holder).eventDesignation.setText(searchResultsModel.getEventType());
+                ((EventsViewHolder) holder).eventVenue.setText(searchResultsModel.getEventLocation());
+                ((EventsViewHolder) holder).eventDate.setText(searchResultsModel.getEventDateTime());
+                ((EventsViewHolder) holder).eventRegistered.setText(searchResultsModel.getEventCount());
+                ((EventsViewHolder) holder).eventStatus.setText(searchResultsModel.getEventStatus());
+                ((EventsViewHolder) holder).event.setText(searchResultsModel.getMessage());
+                ((EventsViewHolder) holder).event_industry.setText(searchResultsModel.getIndustry() + "  " + searchResultsModel.getCompany());
+                ((EventsViewHolder) holder).event_profile_name.setText(searchResultsModel.getUserName());
+                ((EventsViewHolder) holder).event_time.setText(searchResultsModel.getCreatedDate());
+                ((EventsViewHolder) holder).event_img.setImageUrl(Utils.BaseImageUri + searchResultsModel.getUserImage(), NetworkController.getInstance(context).getImageLoader());
 
+                ((EventsViewHolder) holder).setItemClickListener(new ItemClickListener() {
+                    @Override
+                    public void onItemClick(View v, int pos) {
+                        Log.e("Item Click Event", "" + searchResultsModelList.get(position).getId());
+                    }
+                });
+
+
+            } else if (integer==3) {
+
+                ((QuestionsViewHolder) holder).questions.setText(searchResultsModel.getMessage());
+                ((QuestionsViewHolder) holder).questionsIndustry.setText(searchResultsModel.getIndustry() + " " + searchResultsModel.getCompany());
+                ((QuestionsViewHolder) holder).questionsProfileName.setText(searchResultsModel.getUserName());
+                ((QuestionsViewHolder) holder).questionsTime.setText(searchResultsModel.getCreatedDate());
+                ((QuestionsViewHolder) holder).questionsImage.setImageUrl(Utils.BaseImageUri + searchResultsModel.getUserImage(), NetworkController.getInstance(context).getImageLoader());
+
+                ((QuestionsViewHolder) holder).setItemClickListener(new ItemClickListener() {
+                    @Override
+                    public void onItemClick(View v, int pos) {
+                        Log.e("Item Click question", "" + searchResultsModelList.get(position).getId());
+                    }
+                });
+            }
         }
-
     }
 
     @Override
@@ -121,139 +167,141 @@ public class RecyclerAdapterSearchDetails extends RecyclerView.Adapter<RecyclerA
     }
 
 
-
-
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public MyViewHolder(View itemView) {
             super(itemView);
         }
-
-        class postViewHolder extends MyViewHolder implements View.OnClickListener {
-            private TextView post, postIndustry, postProfileName, postTime,viewMore;
-
-            private NetworkImageView postImage, userImage;
-            private ItemClickListener itemClickListener;
-
-
-            public postViewHolder(View itemView) {
-                super(itemView);
-                post = (TextView) itemView.findViewById(R.id.post);
-                postIndustry = (TextView) itemView.findViewById(R.id.post_industry);
-                postProfileName = (TextView) itemView.findViewById(R.id.post_profile_name);
-                postTime = (TextView) itemView.findViewById(R.id.post_time);
-                viewMore = (TextView) itemView.findViewById(R.id.view_more);
-
-                // postTime = (TextView) itemView.findViewById(R.id.post_time);
-                // Volley's NetworkImageView which will load Image from URL
-                postImage = (NetworkImageView) itemView.findViewById(R.id.post_img);
-                itemView.setOnClickListener(this);
-            }
-
-            @Override
-            public void onClick(View v) {
-                this.itemClickListener.onItemClick(v, getLayoutPosition());
-            }
-            void setItemClickListener(ItemClickListener ic) {
-                this.itemClickListener = ic;
-            }
-        }
-
-        class interviewViewHolder extends MyViewHolder implements View.OnClickListener {
-            private TextView interview, interviewIndustry, interviewProfileName, interviewTime,viewMore;
-            private NetworkImageView interviewImage, userImage;
-            private ItemClickListener itemClickListener;
-
-
-            public interviewViewHolder(View itemView) {
-                super(itemView);
-
-                interview = (TextView) itemView.findViewById(R.id.interview);
-                interviewIndustry = (TextView) itemView.findViewById(R.id.interview_industry);
-                interviewProfileName = (TextView) itemView.findViewById(R.id.interview_profile_name);
-                interviewTime = (TextView) itemView.findViewById(R.id.interview_time);
-                viewMore = (TextView) itemView.findViewById(R.id.view_more);
-
-                // Volley's NetworkImageView which will load Image from URL
-                interviewImage = (NetworkImageView) itemView.findViewById(R.id.interview_img);
-                itemView.setOnClickListener(this);
-            }
-
-            @Override
-            public void onClick(View v) {
-                this.itemClickListener.onItemClick(v, getLayoutPosition());
-            }
-            void setItemClickListener(ItemClickListener ic) {
-                this.itemClickListener = ic;
-            }
-        }
-
-        class eventsViewHolder extends MyViewHolder implements View.OnClickListener {
-            private TextView eventCaption, eventDesignation, eventVenue, eventDate, eventRegistered, eventStatus, event, event_industry, event_profile_name, event_time, viewMore;
-            private NetworkImageView event_img, userImage;
-            private ItemClickListener itemClickListener;
-
-            public eventsViewHolder(View itemView) {
-                super(itemView);
-                eventCaption = (TextView) itemView.findViewById(R.id.eventCaption);
-                eventDesignation = (TextView) itemView.findViewById(R.id.eventDesignation);
-                eventVenue = (TextView) itemView.findViewById(R.id.eventVenue);
-                eventDate = (TextView) itemView.findViewById(R.id.eventDate);
-                eventRegistered = (TextView) itemView.findViewById(R.id.eventRegistered);
-
-                eventStatus = (TextView) itemView.findViewById(R.id.eventStatus);
-                event = (TextView) itemView.findViewById(R.id.event);
-                event_industry = (TextView) itemView.findViewById(R.id.event_industry);
-                event_profile_name = (TextView) itemView.findViewById(R.id.event_profile_name);
-                viewMore = (TextView) itemView.findViewById(R.id.view_more);
-
-                event_time = (TextView) itemView.findViewById(R.id.event_time);
-                // Volley's NetworkImageView which will load Image from URL
-                event_img = (NetworkImageView) itemView.findViewById(R.id.event_img);
-
-                itemView.setOnClickListener(this);
-            }
-
-            @Override
-            public void onClick(View v) {
-                this.itemClickListener.onItemClick(v, getLayoutPosition());
-            }
-            void setItemClickListener(ItemClickListener ic) {
-                this.itemClickListener = ic;
-            }
-        }
-
-
-        class questionsViewHolder extends MyViewHolder implements View.OnClickListener {
-
-            private TextView questions, questionsIndustry, questionsProfileName, questionsTime,viewMore;
-            private NetworkImageView questionsImage, comment_profile_img;
-            private ItemClickListener itemClickListener;
-
-
-            public questionsViewHolder(View itemView) {
-                super(itemView);
-
-                questions = (TextView) itemView.findViewById(R.id.questions);
-                questionsIndustry = (TextView) itemView.findViewById(R.id.questions_industry);
-                questionsProfileName = (TextView) itemView.findViewById(R.id.questions_profile_name);
-                questionsTime = (TextView) itemView.findViewById(R.id.questions_time);
-                viewMore = (TextView) itemView.findViewById(R.id.view_more);
-
-                // Volley's NetworkImageView which will load Image from URL
-                questionsImage = (NetworkImageView) itemView.findViewById(R.id.questions_img);
-                itemView.setOnClickListener(this);
-
-            }
-
-            @Override
-            public void onClick(View v) {
-                this.itemClickListener.onItemClick(v, getLayoutPosition());
-            }
-            void setItemClickListener(ItemClickListener ic) {
-                this.itemClickListener = ic;
-            }
-        }
-
-
     }
+
+    class PostViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        private TextView post, postIndustry, postProfileName, postTime, viewMore;
+
+        private NetworkImageView postImage, userImage;
+        private ItemClickListener itemClickListener;
+
+
+        public PostViewHolder(View itemView) {
+            super(itemView);
+            post = (TextView) itemView.findViewById(R.id.post);
+            postIndustry = (TextView) itemView.findViewById(R.id.post_industry);
+            postProfileName = (TextView) itemView.findViewById(R.id.post_profile_name);
+            postTime = (TextView) itemView.findViewById(R.id.post_time);
+            viewMore = (TextView) itemView.findViewById(R.id.view_more);
+
+            // postTime = (TextView) itemView.findViewById(R.id.post_time);
+            // Volley's NetworkImageView which will load Image from URL
+            postImage = (NetworkImageView) itemView.findViewById(R.id.post_img);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            this.itemClickListener.onItemClick(v, getLayoutPosition());
+        }
+
+        void setItemClickListener(ItemClickListener ic) {
+            this.itemClickListener = ic;
+        }
+    }
+
+    class InterviewViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        private TextView interview, interviewIndustry, interviewProfileName, interviewTime, viewMore;
+        private NetworkImageView interviewImage, userImage;
+        private ItemClickListener itemClickListener;
+
+
+        public InterviewViewHolder(View itemView) {
+            super(itemView);
+
+            interview = (TextView) itemView.findViewById(R.id.interview);
+            interviewIndustry = (TextView) itemView.findViewById(R.id.interview_industry);
+            interviewProfileName = (TextView) itemView.findViewById(R.id.interview_profile_name);
+            interviewTime = (TextView) itemView.findViewById(R.id.interview_time);
+            viewMore = (TextView) itemView.findViewById(R.id.view_more);
+
+            // Volley's NetworkImageView which will load Image from URL
+            interviewImage = (NetworkImageView) itemView.findViewById(R.id.interview_img);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            this.itemClickListener.onItemClick(v, getLayoutPosition());
+        }
+
+        void setItemClickListener(ItemClickListener ic) {
+            this.itemClickListener = ic;
+        }
+    }
+
+    class EventsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        private TextView eventCaption, eventDesignation, eventVenue, eventDate, eventRegistered, eventStatus, event, event_industry, event_profile_name, event_time, viewMore;
+        private NetworkImageView event_img, userImage;
+        private ItemClickListener itemClickListener;
+
+        public EventsViewHolder(View itemView) {
+            super(itemView);
+            eventCaption = (TextView) itemView.findViewById(R.id.eventCaption);
+            eventDesignation = (TextView) itemView.findViewById(R.id.eventDesignation);
+            eventVenue = (TextView) itemView.findViewById(R.id.eventVenue);
+            eventDate = (TextView) itemView.findViewById(R.id.eventDate);
+            eventRegistered = (TextView) itemView.findViewById(R.id.eventRegistered);
+
+            eventStatus = (TextView) itemView.findViewById(R.id.eventStatus);
+            event = (TextView) itemView.findViewById(R.id.event);
+            event_industry = (TextView) itemView.findViewById(R.id.event_industry);
+            event_profile_name = (TextView) itemView.findViewById(R.id.event_profile_name);
+            viewMore = (TextView) itemView.findViewById(R.id.view_more);
+
+            event_time = (TextView) itemView.findViewById(R.id.event_time);
+            // Volley's NetworkImageView which will load Image from URL
+            event_img = (NetworkImageView) itemView.findViewById(R.id.event_img);
+
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            this.itemClickListener.onItemClick(v, getLayoutPosition());
+        }
+
+        void setItemClickListener(ItemClickListener ic) {
+            this.itemClickListener = ic;
+        }
+    }
+
+
+    class QuestionsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+        private TextView questions, questionsIndustry, questionsProfileName, questionsTime, viewMore;
+        private NetworkImageView questionsImage, comment_profile_img;
+        private ItemClickListener itemClickListener;
+
+
+        public QuestionsViewHolder(View itemView) {
+            super(itemView);
+
+            questions = (TextView) itemView.findViewById(R.id.questions);
+            questionsIndustry = (TextView) itemView.findViewById(R.id.questions_industry);
+            questionsProfileName = (TextView) itemView.findViewById(R.id.questions_profile_name);
+            questionsTime = (TextView) itemView.findViewById(R.id.questions_time);
+            viewMore = (TextView) itemView.findViewById(R.id.view_more);
+
+            // Volley's NetworkImageView which will load Image from URL
+            questionsImage = (NetworkImageView) itemView.findViewById(R.id.questions_img);
+            itemView.setOnClickListener(this);
+
+        }
+
+        @Override
+        public void onClick(View v) {
+            this.itemClickListener.onItemClick(v, getLayoutPosition());
+        }
+
+        void setItemClickListener(ItemClickListener ic) {
+            this.itemClickListener = ic;
+        }
+    }
+
+
 }

@@ -41,7 +41,7 @@ public class SearchResults extends Fragment {
     private Context context;
     private RequestQueue queue;
     private LinearLayoutManager mLayoutManager;
-    ArrayList list= new ArrayList();
+    ArrayList<Integer> list = new ArrayList();
     private TextView noResult;
     private List<SearchResultsModel> searchResultsList = new ArrayList<>();
 
@@ -67,7 +67,7 @@ public class SearchResults extends Fragment {
         }
         Log.e("QuerySubmit Result", Query);
 
-        noResult=(TextView) view.findViewById(R.id.no_result);
+        //  noResult = (TextView) view.findViewById(R.id.no_result);
 
         searchRecyclerView(view);
 
@@ -79,7 +79,9 @@ public class SearchResults extends Fragment {
         RecyclerView searchRecycler = (RecyclerView) view.findViewById(R.id.recycler_view_search_results);
 
 
-        recyclerAdapterSearchDetails = new RecyclerAdapterSearchDetails(getContext(), searchResultsList);
+        recyclerAdapterSearchDetails = new RecyclerAdapterSearchDetails(getContext(), searchResultsList, list);
+
+        Log.e("ListCall", "" + searchResultsList.size());
         //setting fixed size
         searchRecycler.setHasFixedSize(true);
         //setting horizontal layout
@@ -91,42 +93,53 @@ public class SearchResults extends Fragment {
         queue = NetworkController.getInstance(getContext()).getRequestQueue();
 
         makeSearchResultsRequest();
-        if (searchResultsList.isEmpty()){
+       /* if (searchResultsList.isEmpty()){
             noResult.setVisibility(View.VISIBLE);
         }else {
             noResult.setVisibility(View.GONE);
-        }
+        }*/
 
     }
 
     private void makeSearchResultsRequest() {
 
 
-        Log.e("loaded", "" + BaseUri + "/autocompleteService/searchResult/" + Query.replaceAll("\\s",""));
+        Log.e("loaded", "" + BaseUri + "/autocompleteService/searchResult/" + Query.replaceAll("\\s", ""));
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, BaseUri + "/autocompleteService/searchResult/" + Query.replaceAll("\\s",""), null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, BaseUri + "/autocompleteService/searchResult/" + Query.replaceAll("\\s", ""), null, new Response.Listener<JSONObject>() {
             JSONArray jsonObjectJSON = null;
 
             @Override
             public void onResponse(JSONObject jsonObject) {
 
+                //clearing blogList
+                searchResultsList.clear();
                 try {
                     jsonObjectJSON = jsonObject.getJSONArray("post");
 
-                    //clearing blogList
-                    searchResultsList.clear();
 
                     for (int i = 0; i < jsonObjectJSON.length(); i++) {
                      /*   Log.d("error", jsonObjectJSON.toString());*/
                         try {
 
                             JSONObject obj = jsonObjectJSON.getJSONObject(i);
-                            Log.e("Testing data",""+obj.getString("Industry"));
+                            Log.e("Testing data Post", "" + obj.getString("pid"));
 
-                            SearchResultsModel searchResultsModel = new SearchResultsModel(obj.getString("pid"), obj.getString("created_user"), obj.getString("companyname"), obj.getString("postuserimgname"), obj.getString("created_by"), obj.getString("post"), obj.getString("Industry"), obj.getString("companyname"));
+                            SearchResultsModel searchResultsModel = new SearchResultsModel( );
+                            searchResultsModel.setId(obj.getString("pid"));
+                            searchResultsModel.setUserId(obj.getString("created_user"));
+                            searchResultsModel.setUserName( obj.getString("created_uname"));
+                            searchResultsModel.setUserImage(obj.getString("postuserimgname"));
+                            searchResultsModel.setCreatedDate(obj.getString("created_by"));
+                            searchResultsModel.setMessage( obj.getString("post"));
+                            searchResultsModel.setIndustry(obj.getString("Industry"));
+                            searchResultsModel.setCompany(obj.getString("companyname"));
+
+
+
 
                             searchResultsList.add(searchResultsModel);
-
+                            list.add(0);
                         } catch (Exception e) {
                             Log.d("error", e.getMessage());
                             System.out.println(e.getMessage());
@@ -140,7 +153,132 @@ public class SearchResults extends Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+
+                try {
+                    jsonObjectJSON = jsonObject.getJSONArray("intexp");
+
+
+                    for (int i = 0; i < jsonObjectJSON.length(); i++) {
+                     /*   Log.d("error", jsonObjectJSON.toString());*/
+                        try {
+
+                            JSONObject obj = jsonObjectJSON.getJSONObject(i);
+                            Log.e("Testing data Interview", "" + obj.getString("id"));
+
+                            SearchResultsModel searchResultsModel = new SearchResultsModel( );
+                            searchResultsModel.setId(obj.getString("id"));
+                            searchResultsModel.setUserId(obj.getString("user_id"));
+                            searchResultsModel.setUserName( obj.getString("username"));
+                            searchResultsModel.setUserImage(obj.getString("interviewUserImgName"));
+                            searchResultsModel.setCreatedDate(obj.getString("created_by"));
+                            searchResultsModel.setMessage( obj.getString("feedback"));
+                            searchResultsModel.setIndustry(obj.getString("industryname"));
+                            searchResultsModel.setCompany(obj.getString("companyname"));
+
+                            searchResultsList.add(searchResultsModel);
+
+                            list.add(1);
+                        } catch (Exception e) {
+                            Log.d("error", e.getMessage());
+                            System.out.println(e.getMessage());
+                        } finally {
+                            //Notify adapter about data changes
+                            recyclerAdapterSearchDetails.notifyDataSetChanged();
+
+                        }
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    jsonObjectJSON = jsonObject.getJSONArray("events");
+
+
+                    for (int i = 0; i < jsonObjectJSON.length(); i++) {
+                     /*   Log.d("error", jsonObjectJSON.toString());*/
+                        try {
+
+                            JSONObject obj = jsonObjectJSON.getJSONObject(i);
+                            Log.e("Testing data Events", "" + obj.getString("id"));
+
+                            SearchResultsModel searchResultsModel = new SearchResultsModel();
+
+                            searchResultsModel.setId(obj.getString("id"));
+                            searchResultsModel.setUserId(obj.getString("created_user"));
+                            searchResultsModel.setUserName( obj.getString("created_uname"));
+                            searchResultsModel.setUserImage(obj.getString("eventImgName"));
+                            searchResultsModel.setCreatedDate(obj.getString("created_by"));
+                            searchResultsModel.setEventCaption(obj.getString("eventname"));
+                            searchResultsModel.setEventType(obj.getString("eventtype"));
+                            searchResultsModel.setEventLocation(obj.getString("location"));
+                            searchResultsModel.setEventDateTime(obj.getString("datetime"));
+                            searchResultsModel.setEventCount( obj.getString("count"));
+                            searchResultsModel.setEventStatus(obj.getString("event"));
+                            searchResultsModel.setMessage( obj.getString("notes"));
+                            searchResultsModel.setIndustry(obj.getString("Industry"));
+                            searchResultsModel.setCompany(obj.getString("companyname"));
+
+
+
+                            searchResultsList.add(searchResultsModel);
+                            list.add(2);
+                        } catch (Exception e) {
+                            Log.d("error", e.getMessage());
+                            System.out.println(e.getMessage());
+                        } finally {
+                            //Notify adapter about data changes
+                            recyclerAdapterSearchDetails.notifyDataSetChanged();
+
+                        }
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    jsonObjectJSON = jsonObject.getJSONArray("questions");
+
+
+                    for (int i = 0; i < jsonObjectJSON.length(); i++) {
+                     /*   Log.d("error", jsonObjectJSON.toString());*/
+                        try {
+
+                            JSONObject obj = jsonObjectJSON.getJSONObject(i);
+                            Log.e("Testing data Questions", "" + obj.getString("id"));
+
+                            SearchResultsModel searchResultsModel = new SearchResultsModel();
+
+                            searchResultsModel.setId(obj.getString("id"));
+                            searchResultsModel.setUserId(obj.getString("created_user"));
+                            searchResultsModel.setUserName( obj.getString("created_uname"));
+                            searchResultsModel.setUserImage(obj.getString("questionUserImgName"));
+                            searchResultsModel.setCreatedDate(obj.getString("created_by"));
+                            searchResultsModel.setMessage( obj.getString("question"));
+                            searchResultsModel.setIndustry(obj.getString("industryname"));
+                            searchResultsModel.setCompany(obj.getString("companyname"));
+
+
+                            searchResultsList.add(searchResultsModel);
+                            list.add(3);
+                        } catch (Exception e) {
+                            Log.d("error", e.getMessage());
+                            System.out.println(e.getMessage());
+                        } finally {
+                            //Notify adapter about data changes
+                            recyclerAdapterSearchDetails.notifyDataSetChanged();
+
+                        }
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                for (int i=0;i<searchResultsList.size();i++){
+                    Log.e("Total Id",""+searchResultsList.get(i).getId()+" Size "+searchResultsList.size());
+                }
             }
+
 
         }, new Response.ErrorListener() {
 

@@ -115,7 +115,7 @@ public class Utils {
         if (fragmentManager != null) {
             FragmentTransaction ft = fragmentManager.beginTransaction();
             if (ft != null) {
-                ft.replace(R.id.rootLayout, fragment);
+                ft.replace(R.id.home_frame, fragment);
                 ft.commit();
             }
         }

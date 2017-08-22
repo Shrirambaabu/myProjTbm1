@@ -6,270 +6,132 @@ package igotplaced.com.layouts.Model;
 
 public class SearchResultsModel {
 
-    private String postId;
-    private String postedUserId;
-    private String postUserName;
-    private String postUserImage;
-    private String postDate;
 
-    public SearchResultsModel(String postId, String postedUserId, String postUserName, String postUserImage, String postDate, String postMessage, String postIndustry, String postCompany) {
-        this.postId = postId;
-        this.postedUserId = postedUserId;
-        this.postUserName = postUserName;
-        this.postUserImage = postUserImage;
-        this.postDate = postDate;
-        this.postMessage = postMessage;
-        this.postIndustry = postIndustry;
-        this.postCompany = postCompany;
-    }
-
-    private String postMessage;
-    private String postIndustry;
-    private String postCompany;
-
-    private String interviewId;
-    private String inteviewUserid;
-    private String interviewProfileName;
-    private String interviewProfileImage;
-    private String interviewProfileDate;
-    private String interviewMessage;
-    private String interviewIndustry;
-    private String interviewCompany;
-
-    private String eventId;
-    private String eventUserId;
-    private String eventUserName;
-    private String eventUserImage;
-    private String eventDate;
-    private String eventName;
+    private String id;
+    private String userId;
+    private String userName;
+    private String userImage;
+    private String createdDate;
+    private String message;
+    private String industry;
+    private String company;
+    private String eventCaption;
     private String eventType;
-
-    public SearchResultsModel(String eventId, String eventUserId, String eventUserName, String eventUserImage, String eventDate, String eventName, String eventType, String eventLocation, String dateTime, String count, String event, String notes, String eventIndustry, String eventCompany) {
-        this.eventId = eventId;
-        this.eventUserId = eventUserId;
-        this.eventUserName = eventUserName;
-        this.eventUserImage = eventUserImage;
-        this.eventDate = eventDate;
-        this.eventName = eventName;
-        this.eventType = eventType;
-        this.eventLocation = eventLocation;
-        this.dateTime = dateTime;
-        this.count = count;
-        this.event = event;
-        this.notes = notes;
-        this.eventIndustry = eventIndustry;
-        this.eventCompany = eventCompany;
-    }
-
     private String eventLocation;
-    private String dateTime;
-    private String count;
-    private String event;
-    private String notes;
-    private String eventIndustry;
-    private String eventCompany;
+    private String eventDateTime;
+    private String eventCount;
+    private String eventStatus;
 
-
-    private String questionId;
-    private String questionUserId;
-    private String questionUserName;
-    private String questionUserImage;
-    private String questionDate;
-    private String questionMessage;
-    private String questionIndustry;
-    private String questionCompany;
-
-    public String getPostId() {
-        return postId;
+    public String getId() {
+        return id;
     }
 
-    public String getPostedUserId() {
-        return postedUserId;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getPostUserName() {
-        return postUserName;
+    public String getUserId() {
+        return userId;
     }
 
-    public String getPostUserImage() {
-        return postUserImage;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
-    public String getPostDate() {
-        return postDate;
+    public String getUserName() {
+        return userName;
     }
 
-    public String getPostMessage() {
-        return postMessage;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
-    public String getPostIndustry() {
-        return postIndustry;
+    public String getUserImage() {
+        return userImage;
     }
 
-    public String getPostCompany() {
-        return postCompany;
+    public void setUserImage(String userImage) {
+        this.userImage = userImage;
     }
 
-    public String getInterviewId() {
-        return interviewId;
+    public String getCreatedDate() {
+        return createdDate;
     }
 
-    public String getInteviewUserid() {
-        return inteviewUserid;
+    public void setCreatedDate(String createdDate) {
+        this.createdDate = createdDate;
     }
 
-    public String getInterviewProfileName() {
-        return interviewProfileName;
+    public String getMessage() {
+        return message;
     }
 
-    public String getInterviewProfileImage() {
-        return interviewProfileImage;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
-    public String getInterviewProfileDate() {
-        return interviewProfileDate;
+    public String getIndustry() {
+        return industry;
     }
 
-    public String getInterviewMessage() {
-        return interviewMessage;
+    public void setIndustry(String industry) {
+        this.industry = industry;
     }
 
-    public String getInterviewIndustry() {
-        return interviewIndustry;
+    public String getCompany() {
+        return company;
     }
 
-    public String getInterviewCompany() {
-        return interviewCompany;
+    public void setCompany(String company) {
+        this.company = company;
     }
 
-    public String getEventId() {
-        return eventId;
+    public String getEventCaption() {
+        return eventCaption;
     }
 
-    public String getEventUserId() {
-        return eventUserId;
-    }
-
-    public String getEventUserName() {
-        return eventUserName;
-    }
-
-    public String getEventUserImage() {
-        return eventUserImage;
-    }
-
-    public String getEventDate() {
-        return eventDate;
-    }
-
-    public String getEventName() {
-        return eventName;
+    public void setEventCaption(String eventCaption) {
+        this.eventCaption = eventCaption;
     }
 
     public String getEventType() {
         return eventType;
     }
 
+    public void setEventType(String eventType) {
+        this.eventType = eventType;
+    }
+
     public String getEventLocation() {
         return eventLocation;
     }
 
-    public String getDateTime() {
-        return dateTime;
-    }
-
-    public String getCount() {
-        return count;
-    }
-
-    public String getEvent() {
-        return event;
-    }
-
-    public String getNotes() {
-        return notes;
-    }
-
-    public String getEventIndustry() {
-        return eventIndustry;
-    }
-
-    public String getEventCompany() {
-        return eventCompany;
-    }
-
-    public String getQuestionId() {
-        return questionId;
-    }
-
-    public String getQuestionUserId() {
-        return questionUserId;
-    }
-
-    public String getQuestionUserName() {
-        return questionUserName;
-    }
-
-    public String getQuestionUserImage() {
-        return questionUserImage;
-    }
-
-    public String getQuestionDate() {
-        return questionDate;
-    }
-
-    public String getQuestionMessage() {
-        return questionMessage;
-    }
-
-    public String getQuestionIndustry() {
-        return questionIndustry;
-    }
-
-    public String getQuestionCompany() {
-        return questionCompany;
-    }
-
-    public SearchResultsModel(String postId, String postedUserId, String postUserName, String postUserImage, String postDate, String postMessage, String postIndustry, String postCompany, String interviewId, String inteviewUserid, String interviewProfileName, String interviewProfileImage, String interviewProfileDate, String interviewMessage, String interviewIndustry, String interviewCompany, String eventId, String eventUserId, String eventUserName, String eventUserImage, String eventDate, String eventName, String eventType, String eventLocation, String dateTime, String count, String event, String notes, String eventIndustry, String eventCompany, String questionId, String questionUserId, String questionUserName, String questionUserImage, String questionDate, String questionMessage, String questionIndustry, String questionCompany) {
-        this.postId = postId;
-        this.postedUserId = postedUserId;
-        this.postUserName = postUserName;
-        this.postUserImage = postUserImage;
-        this.postDate = postDate;
-        this.postMessage = postMessage;
-        this.postIndustry = postIndustry;
-        this.postCompany = postCompany;
-        this.interviewId = interviewId;
-        this.inteviewUserid = inteviewUserid;
-        this.interviewProfileName = interviewProfileName;
-        this.interviewProfileImage = interviewProfileImage;
-        this.interviewProfileDate = interviewProfileDate;
-        this.interviewMessage = interviewMessage;
-        this.interviewIndustry = interviewIndustry;
-        this.interviewCompany = interviewCompany;
-        this.eventId = eventId;
-        this.eventUserId = eventUserId;
-        this.eventUserName = eventUserName;
-        this.eventUserImage = eventUserImage;
-        this.eventDate = eventDate;
-        this.eventName = eventName;
-        this.eventType = eventType;
+    public void setEventLocation(String eventLocation) {
         this.eventLocation = eventLocation;
-        this.dateTime = dateTime;
-        this.count = count;
-        this.event = event;
-        this.notes = notes;
-        this.eventIndustry = eventIndustry;
-        this.eventCompany = eventCompany;
-        this.questionId = questionId;
-        this.questionUserId = questionUserId;
-        this.questionUserName = questionUserName;
-        this.questionUserImage = questionUserImage;
-        this.questionDate = questionDate;
-        this.questionMessage = questionMessage;
-        this.questionIndustry = questionIndustry;
-        this.questionCompany = questionCompany;
+    }
+
+    public String getEventDateTime() {
+        return eventDateTime;
+    }
+
+    public void setEventDateTime(String eventDateTime) {
+        this.eventDateTime = eventDateTime;
+    }
+
+    public String getEventCount() {
+        return eventCount;
+    }
+
+    public void setEventCount(String eventCount) {
+        this.eventCount = eventCount;
+    }
+
+    public String getEventStatus() {
+        return eventStatus;
+    }
+
+    public void setEventStatus(String eventStatus) {
+        this.eventStatus = eventStatus;
     }
 
     public SearchResultsModel() {
