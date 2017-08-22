@@ -414,7 +414,8 @@ public class MainActivity extends AppCompatActivity {
                             .beginTransaction()
                             .replace(R.id.frame, searchResults, "tag")
                             .addToBackStack("tag").commit();
-
+                    searchView.setQuery("",false); //clear the text
+                    searchView.clearFocus();//this closes the keyboard but does not remove focus
                     searchView.getSuggestionsAdapter().changeCursor(null);
                 }
                 return true;
@@ -455,7 +456,7 @@ public class MainActivity extends AppCompatActivity {
                         .replace(R.id.frame, searchResults, "tag")
                         .addToBackStack("tag").commit();
                 searchView.setQuery("",false); //clear the text
-
+                searchView.clearFocus();//this closes the keyboard but does not remove focus
 
 /*
                 Intent intent = new Intent(MainActivity.this, ProfilePostDetailsActivity.class);

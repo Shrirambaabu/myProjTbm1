@@ -1,6 +1,7 @@
 package igotplaced.com.layouts.CustomAdapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +15,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import igotplaced.com.layouts.Model.SearchResultsModel;
+import igotplaced.com.layouts.ProfileEventDetails;
+import igotplaced.com.layouts.ProfileInterviewDetailsActivity;
+import igotplaced.com.layouts.ProfilePostDetailsActivity;
+import igotplaced.com.layouts.ProfileQuestionsDetailsActivity;
 import igotplaced.com.layouts.R;
 import igotplaced.com.layouts.Utils.ItemClickListener;
 import igotplaced.com.layouts.Utils.NetworkController;
@@ -102,6 +107,17 @@ public class RecyclerAdapterSearchDetails extends RecyclerView.Adapter<RecyclerV
                     @Override
                     public void onItemClick(View v, int pos) {
                         Log.e("Item Click post", "" + searchResultsModelList.get(position).getId());
+                        Intent profileDetails=new Intent(context, ProfilePostDetailsActivity.class);
+
+                        profileDetails.putExtra("pid", searchResultsModelList.get(position).getId());
+                        profileDetails.putExtra("created_uname", searchResultsModelList.get(position).getUserName());
+                        profileDetails.putExtra("created_by", searchResultsModelList.get(position).getCreatedDate());
+                        profileDetails.putExtra("post", searchResultsModelList.get(position).getMessage());
+                        profileDetails.putExtra("postImage", searchResultsModelList.get(position).getUserImage());
+                        profileDetails.putExtra("postIndustry", searchResultsModelList.get(position).getIndustry());
+                        profileDetails.putExtra("post_createdid", searchResultsModelList.get(position).getUserId());
+
+                        context.startActivity(profileDetails);
                     }
                 });
 
@@ -117,6 +133,18 @@ public class RecyclerAdapterSearchDetails extends RecyclerView.Adapter<RecyclerV
                     @Override
                     public void onItemClick(View v, int pos) {
                         Log.e("Item Click Interview", "" + searchResultsModelList.get(position).getId());
+
+                        Intent profileInterview=new Intent(context, ProfileInterviewDetailsActivity.class);
+
+                        profileInterview.putExtra("iid", searchResultsModelList.get(position).getId());
+                        profileInterview.putExtra("created_uname", searchResultsModelList.get(position).getUserName());
+                        profileInterview.putExtra("created_by", searchResultsModelList.get(position).getCreatedDate());
+                        profileInterview.putExtra("interview", searchResultsModelList.get(position).getMessage());
+                        profileInterview.putExtra("interviewImage", searchResultsModelList.get(position).getUserImage());
+                        profileInterview.putExtra("interviewIndustry", searchResultsModelList.get(position).getIndustry());
+                        profileInterview.putExtra("interview_createdid", searchResultsModelList.get(position).getUserId());
+                        context.startActivity(profileInterview);
+
                     }
                 });
 
@@ -139,6 +167,24 @@ public class RecyclerAdapterSearchDetails extends RecyclerView.Adapter<RecyclerV
                     @Override
                     public void onItemClick(View v, int pos) {
                         Log.e("Item Click Event", "" + searchResultsModelList.get(position).getId());
+                        Intent profileEventDetails =new Intent(context,ProfileEventDetails.class);
+
+
+                        profileEventDetails.putExtra("eid", searchResultsModelList.get(position).getId());
+                        profileEventDetails.putExtra("ename", searchResultsModelList.get(position).getUserName());
+                        profileEventDetails.putExtra("eTime", searchResultsModelList.get(position).getCreatedDate());
+                        profileEventDetails.putExtra("eCaption", searchResultsModelList.get(position).getEventCaption());
+                        profileEventDetails.putExtra("eDesign", searchResultsModelList.get(position).getEventType());
+                        profileEventDetails.putExtra("eVenue", searchResultsModelList.get(position).getEventLocation());
+                        profileEventDetails.putExtra("eDate", searchResultsModelList.get(position).getEventDateTime());
+                        profileEventDetails.putExtra("eReg", searchResultsModelList.get(position).getEventCount());
+                        profileEventDetails.putExtra("eStatus", searchResultsModelList.get(position).getEventStatus());
+                        profileEventDetails.putExtra("eEvnt", searchResultsModelList.get(position).getMessage());
+                        profileEventDetails.putExtra("eIndustry", searchResultsModelList.get(position).getIndustry());
+                        profileEventDetails.putExtra("eImage", searchResultsModelList.get(position).getUserImage());
+                        profileEventDetails.putExtra("eUserId", searchResultsModelList.get(position).getUserId());
+
+                        context.startActivity(profileEventDetails);
                     }
                 });
 
@@ -155,6 +201,18 @@ public class RecyclerAdapterSearchDetails extends RecyclerView.Adapter<RecyclerV
                     @Override
                     public void onItemClick(View v, int pos) {
                         Log.e("Item Click question", "" + searchResultsModelList.get(position).getId());
+
+                        Intent questionDetails=new Intent(context, ProfileQuestionsDetailsActivity.class);
+
+                        questionDetails.putExtra("qid", searchResultsModelList.get(position).getId());
+                        questionDetails.putExtra("created_uname", searchResultsModelList.get(position).getUserName());
+                        questionDetails.putExtra("created_by", searchResultsModelList.get(position).getCreatedDate());
+                        questionDetails.putExtra("question", searchResultsModelList.get(position).getMessage());
+                        questionDetails.putExtra("postImage", searchResultsModelList.get(position).getUserImage());
+                        questionDetails.putExtra("postIndustry", searchResultsModelList.get(position).getIndustry());
+                        questionDetails.putExtra("post_createdid", searchResultsModelList.get(position).getUserId());
+
+                        context.startActivity(questionDetails);
                     }
                 });
             }
