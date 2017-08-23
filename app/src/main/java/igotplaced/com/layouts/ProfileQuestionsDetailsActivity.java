@@ -50,10 +50,10 @@ import static igotplaced.com.layouts.Utils.Utils.Name;
 public class ProfileQuestionsDetailsActivity extends AppCompatActivity implements View.OnClickListener {
 
 
-    private String id = null,name=null,time=null,image=null,message=null,industry=null,postedUserId=null;
+    private String id = null,name=null,time=null,image=null,message=null,industry=null,postedUserId=null,company=null;
     private String userId = null, userName = null;
     private NetworkImageView questionImage;
-    private TextView profileName, profileTime, questionMessage, questionIndustry;
+    private TextView profileName, profileTime, questionMessage, questionIndustry,questionsCompany;
     private String userPostedComment;
     private String URL = BaseUri + "/home/questionsComments";
     private EditText userComment;
@@ -78,17 +78,19 @@ public class ProfileQuestionsDetailsActivity extends AppCompatActivity implement
         userId = sharedpreferences.getString(Id, null);
 
         setContentView(R.layout.activity_profile_questions_details);
+
+        initialization();
         setupToolbar();
         addressingView();
         addingListeners();
 
-        initialization();
 
         questionImage.setImageUrl(Utils.BaseImageUri + image, NetworkController.getInstance(getApplicationContext()).getImageLoader());
         profileName.setText(name);
         profileTime.setText(time);
         questionMessage.setText(message);
         questionIndustry.setText(industry);
+        questionsCompany.setText(company);
 
         postRecyclerView();
 
@@ -182,6 +184,7 @@ public class ProfileQuestionsDetailsActivity extends AppCompatActivity implement
         profileTime = (TextView) findViewById(R.id.questions_time);
         questionMessage = (TextView) findViewById(R.id.questions);
         questionIndustry = (TextView) findViewById(R.id.questions_industry);
+        questionsCompany = (TextView) findViewById(R.id.questions_company);
         userComment = (EditText) findViewById(R.id.user_comment);
         sendComment = (ImageView) findViewById(R.id.send_comment);
     }
@@ -189,6 +192,7 @@ public class ProfileQuestionsDetailsActivity extends AppCompatActivity implement
     private void addingListeners() {
         sendComment.setOnClickListener(this);
         profileName.setOnClickListener(this);
+        questionsCompany.setOnClickListener(this);
     }
 
     private void initialization() {
@@ -201,6 +205,7 @@ public class ProfileQuestionsDetailsActivity extends AppCompatActivity implement
         message = intent.getStringExtra("question");
         industry = intent.getStringExtra("postIndustry");
         postedUserId = intent.getStringExtra("post_createdid");
+        company = intent.getStringExtra("postCompany");
 
     }
 
@@ -225,6 +230,13 @@ public class ProfileQuestionsDetailsActivity extends AppCompatActivity implement
                 otherProfileDetails.putExtra("post_createdid", postedUserId);
                 otherProfileDetails.putExtra("created_uname", name);
                 startActivity(otherProfileDetails);
+                break;
+            case R.id.questions_company:
+
+                Intent companyDetails=new Intent(getApplicationContext(),CompanyDetailsActivity.class);
+                companyDetails.putExtra("postCompany", company);
+                startActivity(companyDetails);
+                break;
         }
 
     }

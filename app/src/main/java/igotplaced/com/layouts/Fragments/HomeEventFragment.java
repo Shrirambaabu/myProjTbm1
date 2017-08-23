@@ -224,7 +224,7 @@ public class HomeEventFragment extends Fragment implements SwipeRefreshLayout.On
                         try {
 
                             JSONObject obj = jsonObjectJSON.getJSONObject(i);
-                            Events event = new Events(obj.getString("id"), obj.getString("created_user"), obj.getString("eventname"), obj.getString("eventtype"), obj.getString("location"), obj.getString("datetime"), obj.getString("count"), obj.getString("event"), obj.getString("notes"), obj.getString("Industry"), obj.getString("eventImgName"), obj.getString("created_uname"), obj.getString("created_by"), obj.getString("imgname"), obj.getString("fname"));
+                            Events event = new Events(obj.getString("id"), obj.getString("created_user"), obj.getString("eventname"), obj.getString("eventtype"), obj.getString("location"), obj.getString("datetime"), obj.getString("count"), obj.getString("event"), obj.getString("notes"), obj.getString("Industry"), obj.getString("eventImgName"), obj.getString("created_uname"), obj.getString("created_by"), obj.getString("imgname"), obj.getString("fname"), obj.getString("companyname"));
                             // adding movie to blogHomeList array
                             eventList.add(event);
 
@@ -303,7 +303,7 @@ public class HomeEventFragment extends Fragment implements SwipeRefreshLayout.On
             holder.eventVenue.setText(events.getEventVenue());
             holder.eventDate.setText(events.getEventDate());
             holder.eventRegistered.setText(events.getEventRegistered());
-
+            holder.eventCompany.setText(events.getEventCompany());
             holder.eventStatus.setText(events.getEventStatus());
             holder.event.setText(events.getEvent());
             holder.event_industry.setText(events.getEventIndustry());
@@ -318,7 +318,7 @@ public class HomeEventFragment extends Fragment implements SwipeRefreshLayout.On
             holder.setItemClickListener(new ItemClickListener() {
                 @Override
                 public void onItemClick(View v, int pos) {
-                    Intent profileEventDetails =new Intent(getContext(),ProfileEventDetails.class);
+                    Intent profileEventDetails = new Intent(getContext(), ProfileEventDetails.class);
 
 
                     profileEventDetails.putExtra("eid", eventsList.get(position).getEventId());
@@ -334,6 +334,7 @@ public class HomeEventFragment extends Fragment implements SwipeRefreshLayout.On
                     profileEventDetails.putExtra("eIndustry", eventsList.get(position).getEventIndustry());
                     profileEventDetails.putExtra("eImage", eventsList.get(position).getEventImage());
                     profileEventDetails.putExtra("eUserId", eventsList.get(position).getEventUserId());
+                    profileEventDetails.putExtra("postCompany", eventsList.get(position).getEventCompany());
 
                     startActivity(profileEventDetails);
                 }
@@ -349,7 +350,7 @@ public class HomeEventFragment extends Fragment implements SwipeRefreshLayout.On
         }
 
         public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-            private TextView eventCaption, eventDesignation, eventVenue, eventDate, eventRegistered, eventStatus, event, event_industry, event_profile_name, event_time, viewMore;
+            private TextView eventCaption, eventDesignation, eventVenue, eventCompany, eventDate, eventRegistered, eventStatus, event, event_industry, event_profile_name, event_time, viewMore;
             private NetworkImageView event_img, userImage;
 
             private ItemClickListener itemClickListener;
@@ -362,6 +363,7 @@ public class HomeEventFragment extends Fragment implements SwipeRefreshLayout.On
                 eventVenue = (TextView) itemView.findViewById(R.id.eventVenue);
                 eventDate = (TextView) itemView.findViewById(R.id.eventDate);
                 eventRegistered = (TextView) itemView.findViewById(R.id.eventRegistered);
+                eventCompany = (TextView) itemView.findViewById(R.id.event_company);
 
 
                 eventStatus = (TextView) itemView.findViewById(R.id.eventStatus);

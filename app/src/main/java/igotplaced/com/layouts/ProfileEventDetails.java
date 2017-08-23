@@ -48,14 +48,14 @@ import static igotplaced.com.layouts.Utils.Utils.Name;
 
 public class ProfileEventDetails extends AppCompatActivity implements View.OnClickListener {
 
-    private String id = null, image = null, name = null, time = null, caption = null, designation = null, venue = null, date = null, registered = null, status = null, event = null, industry = null, postedUserId = null;
+    private String id = null, image = null, name = null, time = null, caption = null, company=null,designation = null, venue = null, date = null, registered = null, status = null, event = null, industry = null, postedUserId = null;
 
     private String userId = null, userName = null;
     private String userPostedComment;
     private String URL = BaseUri + "/home/eventsComments";
 
     private NetworkImageView eventImage;
-    private TextView eventName, eventTime, eventCaption, eventDesignation, eventVenue, eventDate, eventRegistered, eventStatus, eventMessage, eventIndustry;
+    private TextView eventName, eventTime,eventCompany, eventCaption, eventDesignation, eventVenue, eventDate, eventRegistered, eventStatus, eventMessage, eventIndustry;
 
     private EditText userComment;
     private ImageView sendComment;
@@ -79,11 +79,12 @@ public class ProfileEventDetails extends AppCompatActivity implements View.OnCli
         userId = sharedpreferences.getString(Id, null);
 
         setContentView(R.layout.activity_profile_event_details);
+        //initial value from intent
+        initialization();
         setupToolbar();
         addressingView();
         addingListeners();
-        //initial value from intent
-        initialization();
+
 
         eventImage.setImageUrl(Utils.BaseImageUri + image, NetworkController.getInstance(getApplicationContext()).getImageLoader());
         eventName.setText(name);
@@ -96,6 +97,7 @@ public class ProfileEventDetails extends AppCompatActivity implements View.OnCli
         eventStatus.setText(status);
         eventMessage.setText(event);
         eventIndustry.setText(industry);
+        eventCompany.setText(company);
 
         postRecyclerView();
     }
@@ -195,6 +197,7 @@ public class ProfileEventDetails extends AppCompatActivity implements View.OnCli
         eventStatus = (TextView) findViewById(R.id.eventStatus);
         eventMessage = (TextView) findViewById(R.id.event);
         eventIndustry = (TextView) findViewById(R.id.event_industry);
+        eventCompany = (TextView) findViewById(R.id.event_company);
         userComment = (EditText) findViewById(R.id.user_comment);
         sendComment = (ImageView) findViewById(R.id.send_comment);
     }
@@ -220,6 +223,7 @@ public class ProfileEventDetails extends AppCompatActivity implements View.OnCli
         event = intent.getStringExtra("eEvnt");
         industry = intent.getStringExtra("eIndustry");
         postedUserId = intent.getStringExtra("eUserId");
+        company = intent.getStringExtra("postCompany");
     }
 
     @Override

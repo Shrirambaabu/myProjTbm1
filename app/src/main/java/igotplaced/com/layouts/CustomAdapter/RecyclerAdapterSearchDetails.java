@@ -99,9 +99,10 @@ public class RecyclerAdapterSearchDetails extends RecyclerView.Adapter<RecyclerV
             if (integer==0) {
 
                 ((PostViewHolder) holder).post.setText(searchResultsModel.getMessage());
-                ((PostViewHolder) holder).postIndustry.setText(searchResultsModel.getIndustry() + " " + searchResultsModel.getCompany());
+                ((PostViewHolder) holder).postIndustry.setText(searchResultsModel.getIndustry());
                 ((PostViewHolder) holder).postProfileName.setText(searchResultsModel.getUserName());
                 ((PostViewHolder) holder).postTime.setText(searchResultsModel.getCreatedDate());
+                ((PostViewHolder) holder).postCompany.setText(searchResultsModel.getCompany());
                 ((PostViewHolder) holder).postImage.setImageUrl(Utils.BaseImageUri + searchResultsModel.getUserImage(), NetworkController.getInstance(context).getImageLoader());
                 ((PostViewHolder) holder).setItemClickListener(new ItemClickListener() {
                     @Override
@@ -116,7 +117,7 @@ public class RecyclerAdapterSearchDetails extends RecyclerView.Adapter<RecyclerV
                         profileDetails.putExtra("postImage", searchResultsModelList.get(position).getUserImage());
                         profileDetails.putExtra("postIndustry", searchResultsModelList.get(position).getIndustry());
                         profileDetails.putExtra("post_createdid", searchResultsModelList.get(position).getUserId());
-
+                        profileDetails.putExtra("postCompany", searchResultsModelList.get(position).getCompany());
                         context.startActivity(profileDetails);
                     }
                 });
@@ -124,8 +125,9 @@ public class RecyclerAdapterSearchDetails extends RecyclerView.Adapter<RecyclerV
             } else if (integer==1) {
 
                 ((InterviewViewHolder) holder).interview.setText(searchResultsModel.getMessage());
-                ((InterviewViewHolder) holder).interviewIndustry.setText(searchResultsModel.getIndustry() + " " + searchResultsModel.getCompany());
+                ((InterviewViewHolder) holder).interviewIndustry.setText(searchResultsModel.getIndustry());
                 ((InterviewViewHolder) holder).interviewProfileName.setText(searchResultsModel.getUserName());
+                ((InterviewViewHolder) holder).interviewCompany.setText(searchResultsModel.getCompany());
                 ((InterviewViewHolder) holder).interviewTime.setText(searchResultsModel.getCreatedDate());
                 ((InterviewViewHolder) holder).interviewImage.setImageUrl(Utils.BaseImageUri + searchResultsModel.getUserImage(), NetworkController.getInstance(context).getImageLoader());
 
@@ -143,6 +145,7 @@ public class RecyclerAdapterSearchDetails extends RecyclerView.Adapter<RecyclerV
                         profileInterview.putExtra("interviewImage", searchResultsModelList.get(position).getUserImage());
                         profileInterview.putExtra("interviewIndustry", searchResultsModelList.get(position).getIndustry());
                         profileInterview.putExtra("interview_createdid", searchResultsModelList.get(position).getUserId());
+                        profileInterview.putExtra("postCompany",searchResultsModelList.get(position).getCompany());
                         context.startActivity(profileInterview);
 
                     }
@@ -192,7 +195,8 @@ public class RecyclerAdapterSearchDetails extends RecyclerView.Adapter<RecyclerV
             } else if (integer==3) {
 
                 ((QuestionsViewHolder) holder).questions.setText(searchResultsModel.getMessage());
-                ((QuestionsViewHolder) holder).questionsIndustry.setText(searchResultsModel.getIndustry() + " " + searchResultsModel.getCompany());
+                ((QuestionsViewHolder) holder).questionsIndustry.setText(searchResultsModel.getIndustry() );
+                ((QuestionsViewHolder) holder).questionsCompany.setText(searchResultsModel.getCompany() );
                 ((QuestionsViewHolder) holder).questionsProfileName.setText(searchResultsModel.getUserName());
                 ((QuestionsViewHolder) holder).questionsTime.setText(searchResultsModel.getCreatedDate());
                 ((QuestionsViewHolder) holder).questionsImage.setImageUrl(Utils.BaseImageUri + searchResultsModel.getUserImage(), NetworkController.getInstance(context).getImageLoader());
@@ -211,7 +215,7 @@ public class RecyclerAdapterSearchDetails extends RecyclerView.Adapter<RecyclerV
                         questionDetails.putExtra("postImage", searchResultsModelList.get(position).getUserImage());
                         questionDetails.putExtra("postIndustry", searchResultsModelList.get(position).getIndustry());
                         questionDetails.putExtra("post_createdid", searchResultsModelList.get(position).getUserId());
-
+                        questionDetails.putExtra("postCompany",searchResultsModelList.get(position).getCompany());
                         context.startActivity(questionDetails);
                     }
                 });
@@ -232,7 +236,7 @@ public class RecyclerAdapterSearchDetails extends RecyclerView.Adapter<RecyclerV
     }
 
     class PostViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private TextView post, postIndustry, postProfileName, postTime, viewMore;
+        private TextView post, postIndustry, postProfileName, postTime, postCompany,viewMore;
 
         private NetworkImageView postImage, userImage;
         private ItemClickListener itemClickListener;
@@ -245,6 +249,7 @@ public class RecyclerAdapterSearchDetails extends RecyclerView.Adapter<RecyclerV
             postProfileName = (TextView) itemView.findViewById(R.id.post_profile_name);
             postTime = (TextView) itemView.findViewById(R.id.post_time);
             viewMore = (TextView) itemView.findViewById(R.id.view_more);
+            postCompany = (TextView) itemView.findViewById(R.id.post_company);
 
             // postTime = (TextView) itemView.findViewById(R.id.post_time);
             // Volley's NetworkImageView which will load Image from URL
@@ -263,7 +268,7 @@ public class RecyclerAdapterSearchDetails extends RecyclerView.Adapter<RecyclerV
     }
 
     class InterviewViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private TextView interview, interviewIndustry, interviewProfileName, interviewTime, viewMore;
+        private TextView interview, interviewIndustry, interviewProfileName, interviewTime,interviewCompany, viewMore;
         private NetworkImageView interviewImage, userImage;
         private ItemClickListener itemClickListener;
 
@@ -276,7 +281,7 @@ public class RecyclerAdapterSearchDetails extends RecyclerView.Adapter<RecyclerV
             interviewProfileName = (TextView) itemView.findViewById(R.id.interview_profile_name);
             interviewTime = (TextView) itemView.findViewById(R.id.interview_time);
             viewMore = (TextView) itemView.findViewById(R.id.view_more);
-
+            interviewCompany = (TextView) itemView.findViewById(R.id.interview_company);
             // Volley's NetworkImageView which will load Image from URL
             interviewImage = (NetworkImageView) itemView.findViewById(R.id.interview_img);
             itemView.setOnClickListener(this);
@@ -331,7 +336,7 @@ public class RecyclerAdapterSearchDetails extends RecyclerView.Adapter<RecyclerV
 
     class QuestionsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private TextView questions, questionsIndustry, questionsProfileName, questionsTime, viewMore;
+        private TextView questions, questionsIndustry, questionsProfileName, questionsTime,questionsCompany, viewMore;
         private NetworkImageView questionsImage, comment_profile_img;
         private ItemClickListener itemClickListener;
 
@@ -344,7 +349,7 @@ public class RecyclerAdapterSearchDetails extends RecyclerView.Adapter<RecyclerV
             questionsProfileName = (TextView) itemView.findViewById(R.id.questions_profile_name);
             questionsTime = (TextView) itemView.findViewById(R.id.questions_time);
             viewMore = (TextView) itemView.findViewById(R.id.view_more);
-
+            questionsCompany = (TextView) itemView.findViewById(R.id.questions_company);
             // Volley's NetworkImageView which will load Image from URL
             questionsImage = (NetworkImageView) itemView.findViewById(R.id.questions_img);
             itemView.setOnClickListener(this);

@@ -49,10 +49,10 @@ import static igotplaced.com.layouts.Utils.Utils.Name;
 public class ProfilePostDetailsActivity extends AppCompatActivity implements View.OnClickListener {
 
 
-    private String id = null, name = null, time = null, post = null, image = null, industry = null, postUserId = null;
+    private String id = null, name = null, time = null, post = null, image = null, industry = null, postUserId = null,Company=null;
 
     private NetworkImageView postImage;
-    private TextView profileName, profileTime, postMessage, postIndustry;
+    private TextView profileName, profileTime, postMessage, postIndustry,postCompany;
 
     private EditText userComment;
     private ImageView sendComment;
@@ -79,12 +79,12 @@ public class ProfilePostDetailsActivity extends AppCompatActivity implements Vie
         userId = sharedpreferences.getString(Id, null);
 
         setContentView(R.layout.activity_profile_post_details);
-
+        //initial value from intent
+        initialization();
         setupToolbar();
         addressingView();
         addingListeners();
-        //initial value from intent
-        initialization();
+
 
 
         postImage.setImageUrl(Utils.BaseImageUri + image, NetworkController.getInstance(getApplicationContext()).getImageLoader());
@@ -92,6 +92,7 @@ public class ProfilePostDetailsActivity extends AppCompatActivity implements Vie
         profileTime.setText(time);
         postMessage.setText(post);
         postIndustry.setText(industry);
+        postCompany.setText(Company);
 
         postRecyclerView();
 
@@ -182,6 +183,7 @@ public class ProfilePostDetailsActivity extends AppCompatActivity implements Vie
     private void addingListeners() {
         sendComment.setOnClickListener(this);
         profileName.setOnClickListener(this);
+        postCompany.setOnClickListener(this);
     }
 
     private void addressingView() {
@@ -191,6 +193,7 @@ public class ProfilePostDetailsActivity extends AppCompatActivity implements Vie
         profileTime = (TextView) findViewById(R.id.post_time);
         postMessage = (TextView) findViewById(R.id.post);
         postIndustry = (TextView) findViewById(R.id.post_industry);
+        postCompany = (TextView) findViewById(R.id.post_company);
         userComment = (EditText) findViewById(R.id.user_comment);
         sendComment = (ImageView) findViewById(R.id.send_comment);
     }
@@ -205,6 +208,7 @@ public class ProfilePostDetailsActivity extends AppCompatActivity implements Vie
         image = intent.getStringExtra("postImage");
         industry = intent.getStringExtra("postIndustry");
         postUserId = intent.getStringExtra("post_createdid");
+        Company = intent.getStringExtra("postCompany");
     }
 
     @Override
@@ -228,6 +232,16 @@ public class ProfilePostDetailsActivity extends AppCompatActivity implements Vie
                 otherProfileDetails.putExtra("post_createdid", postUserId);
                 otherProfileDetails.putExtra("created_uname", name);
                 startActivity(otherProfileDetails);
+                break;
+
+            case R.id.post_company:
+
+                Intent companyDetails=new Intent(getApplicationContext(),CompanyDetailsActivity.class);
+                companyDetails.putExtra("postCompany", Company);
+                startActivity(companyDetails);
+                break;
+
+
         }
 
 

@@ -92,11 +92,32 @@
                 android:maxLines="1"
                 android:padding="@dimen/margin_2"
                 android:text="IT INDUSTRY"
+                android:maxLength="18"
+                android:ellipsize="end"
                 android:textAllCaps="true"
                 android:textColor="@color/industry_company"
                 android:textSize="16sp"
                 android:textStyle="italic|bold" />
 
+            <TextView
+                android:id="@+id/interview_company"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/interview"
+                android:layout_marginStart="@dimen/margin_16"
+                android:layout_marginEnd="@dimen/margin_16"
+                android:layout_marginTop="@dimen/margin_16"
+                android:gravity="center"
+                android:layout_toEndOf="@+id/interview_industry"
+                android:maxLines="1"
+                android:maxLength="18"
+                android:ellipsize="end"
+                android:padding="@dimen/margin_2"
+                android:text="INFOSYS"
+                android:textAllCaps="true"
+                android:textColor="@color/industry_company"
+                android:textSize="16sp"
+                android:textStyle="italic|bold" />
             <TextView
                 android:id="@+id/view_more"
                 android:layout_width="wrap_content"

@@ -201,7 +201,7 @@ public class HomeInterviewFragment extends Fragment implements SwipeRefreshLayou
                         try {
 
                             JSONObject obj = jsonObjectJSON.getJSONObject(i);
-                            Interview interview = new Interview(obj.getString("id"), obj.getString("user_id"), obj.getString("feedback"), obj.getString("industryname"), obj.getString("interviewUserImgName"), obj.getString("username"), obj.getString("created_by"), obj.getString("imgname"), obj.getString("fname"));
+                            Interview interview = new Interview(obj.getString("id"), obj.getString("user_id"), obj.getString("feedback"), obj.getString("industryname"), obj.getString("interviewUserImgName"), obj.getString("username"), obj.getString("created_by"), obj.getString("imgname"), obj.getString("fname"),obj.getString("companyname"));
                             // adding movie to blogHomeList array
                             interviewList.add(interview);
 
@@ -305,6 +305,7 @@ public class HomeInterviewFragment extends Fragment implements SwipeRefreshLayou
             holder.interviewIndustry.setText(interview.getInterviewIndustry());
             holder.interviewProfileName.setText(interview.getInterviewProfileName());
             holder.interviewTime.setText(interview.getInterviewTime());
+            holder.interviewCompany.setText(interview.getInterviewCompany());
             //  holder.userImage.setImageUrl(Utils.BaseImageUri + interview.getUserImage(), NetworkController.getInstance(context).getImageLoader());
             holder.interviewImage.setImageUrl(Utils.BaseImageUri + interview.getInterviewImage(), NetworkController.getInstance(context).getImageLoader());
 
@@ -321,6 +322,7 @@ public class HomeInterviewFragment extends Fragment implements SwipeRefreshLayou
                     profileInterview.putExtra("interviewImage", interviewList.get(position).getInterviewImage());
                     profileInterview.putExtra("interviewIndustry", interviewList.get(position).getInterviewIndustry());
                     profileInterview.putExtra("interview_createdid", interviewList.get(position).getInterviewUserId());
+                    profileInterview.putExtra("postCompany", interviewList.get(position).getInterviewCompany());
                     startActivity(profileInterview);
                 }
             });
@@ -337,7 +339,7 @@ public class HomeInterviewFragment extends Fragment implements SwipeRefreshLayou
 
         public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-            private TextView interview, interviewIndustry, interviewProfileName, interviewTime,viewMore;
+            private TextView interview, interviewIndustry, interviewProfileName, interviewTime,interviewCompany,viewMore;
             private NetworkImageView interviewImage, userImage;
 
             private ItemClickListener itemClickListener;
@@ -349,6 +351,7 @@ public class HomeInterviewFragment extends Fragment implements SwipeRefreshLayou
                 interviewProfileName = (TextView) itemView.findViewById(R.id.interview_profile_name);
                 interviewTime = (TextView) itemView.findViewById(R.id.interview_time);
                 viewMore = (TextView) itemView.findViewById(R.id.view_more);
+                interviewCompany = (TextView) itemView.findViewById(R.id.interview_company);
 
 
                 // Volley's NetworkImageView which will load Image from URL

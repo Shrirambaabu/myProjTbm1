@@ -104,7 +104,7 @@ public class OtherProfileQuestionsFragment extends Fragment {
                     try {
 
                         JSONObject obj = response.getJSONObject(i);
-                        Questions questions = new Questions(obj.getString("qid"), obj.getString("created_user"), obj.getString("question"), obj.getString("industryname"), obj.getString("questionimgname"), obj.getString("created_uname"), obj.getString("created_by"), obj.getString("questionimgname"), obj.getString("created_uname"));
+                        Questions questions = new Questions(obj.getString("qid"), obj.getString("created_user"), obj.getString("question"), obj.getString("industryname"), obj.getString("questionimgname"), obj.getString("created_uname"), obj.getString("created_by"), obj.getString("questionimgname"), obj.getString("created_uname"),obj.getString("companyname"));
                         // adding movie to blogHomeList array
                         questionsList.add(questions);
 
@@ -160,6 +160,7 @@ public class OtherProfileQuestionsFragment extends Fragment {
 
             //Pass the values of feeds object to Views
             holder.questions.setText(questions.getQuestions());
+            holder.questionsCompany.setText(questions.getQuestionsCompany());
             holder.questionsIndustry.setText(questions.getQuestionsIndustry());
             holder.questionsProfileName.setText(questions.getQuestionsProfileName());
             holder.questionsTime.setText(questions.getQuestionsTime());
@@ -179,7 +180,7 @@ public class OtherProfileQuestionsFragment extends Fragment {
                     questionDetails.putExtra("postImage", questionsList.get(position).getQuestionsImage());
                     questionDetails.putExtra("postIndustry", questionsList.get(position).getQuestionsIndustry());
                     questionDetails.putExtra("post_createdid", questionsList.get(position).getQuestionUserId());
-
+                    questionDetails.putExtra("postCompany", questionsList.get(position).getQuestionsCompany());
                     startActivity(questionDetails);
 
                 }
@@ -192,7 +193,7 @@ public class OtherProfileQuestionsFragment extends Fragment {
         }
 
         public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-            private TextView questions, questionsIndustry, questionsProfileName, questionsTime, viewMore;
+            private TextView questions, questionsIndustry, questionsProfileName, questionsTime,questionsCompany, viewMore;
             private NetworkImageView questionsImage;
             private ItemClickListener itemClickListener;
 
@@ -204,7 +205,7 @@ public class OtherProfileQuestionsFragment extends Fragment {
                 questionsProfileName = (TextView) itemView.findViewById(R.id.questions_profile_name);
                 questionsTime = (TextView) itemView.findViewById(R.id.questions_time);
                 viewMore = (TextView) itemView.findViewById(R.id.view_more);
-
+                questionsCompany = (TextView) itemView.findViewById(R.id.questions_company);
 
                 // Volley's NetworkImageView which will load Image from URL
                 questionsImage = (NetworkImageView) itemView.findViewById(R.id.questions_img);

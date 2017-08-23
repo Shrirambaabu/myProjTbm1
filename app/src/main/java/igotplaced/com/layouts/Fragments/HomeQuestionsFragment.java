@@ -198,7 +198,7 @@ public class HomeQuestionsFragment extends Fragment implements SwipeRefreshLayou
                         try {
 
                             JSONObject obj = jsonObjectJSON.getJSONObject(i);
-                            Questions questions = new Questions(obj.getString("id"),obj.getString("created_user"),obj.getString("question"), obj.getString("industryname"), obj.getString("questionUserImgName"), obj.getString("created_uname"), obj.getString("created_by"), obj.getString("imgname"), obj.getString("fname"));
+                            Questions questions = new Questions(obj.getString("id"),obj.getString("created_user"),obj.getString("question"), obj.getString("industryname"), obj.getString("questionUserImgName"), obj.getString("created_uname"), obj.getString("created_by"), obj.getString("imgname"), obj.getString("fname"),obj.getString("companyname"));
                             // adding movie to blogHomeList array
                             questionsList.add(questions);
 
@@ -295,6 +295,7 @@ public class HomeQuestionsFragment extends Fragment implements SwipeRefreshLayou
             postedQuestionUserId = questions.getQuestionUserId();
             //Pass the values of feeds object to Views
             holder.questions.setText(questions.getQuestions());
+            holder.questionsCompany.setText(questions.getQuestionsCompany());
             holder.questionsIndustry.setText(questions.getQuestionsIndustry());
             holder.questionsProfileName.setText(questions.getQuestionsProfileName());
             holder.questionsTime.setText(questions.getQuestionsTime());
@@ -315,7 +316,7 @@ public class HomeQuestionsFragment extends Fragment implements SwipeRefreshLayou
                     questionDetails.putExtra("postImage", questionsList.get(position).getQuestionsImage());
                     questionDetails.putExtra("postIndustry", questionsList.get(position).getQuestionsIndustry());
                     questionDetails.putExtra("post_createdid", questionsList.get(position).getQuestionUserId());
-
+                    questionDetails.putExtra("postCompany", questionsList.get(position).getQuestionsCompany());
                     startActivity(questionDetails);
                 }
             });
@@ -329,7 +330,7 @@ public class HomeQuestionsFragment extends Fragment implements SwipeRefreshLayou
 
         public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-            private TextView questions, questionsIndustry, questionsProfileName, questionsTime,viewMore;
+            private TextView questions, questionsIndustry, questionsProfileName,questionsCompany, questionsTime,viewMore;
             private NetworkImageView questionsImage, comment_profile_img;
 
             private ItemClickListener itemClickListener;
@@ -338,6 +339,7 @@ public class HomeQuestionsFragment extends Fragment implements SwipeRefreshLayou
                 super(itemView);
                 questions = (TextView) itemView.findViewById(R.id.questions);
                 questionsIndustry = (TextView) itemView.findViewById(R.id.questions_industry);
+                questionsCompany = (TextView) itemView.findViewById(R.id.questions_company);
                 questionsProfileName = (TextView) itemView.findViewById(R.id.questions_profile_name);
                 questionsTime = (TextView) itemView.findViewById(R.id.questions_time);
                 viewMore = (TextView) itemView.findViewById(R.id.view_more);

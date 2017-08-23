@@ -23,13 +23,18 @@ public class Events {
     private String eventTime;
     private String commentProfileImage;
     private String userComment;
+    private String eventCompany;
+
+    public String getEventCompany() {
+        return eventCompany;
+    }
 
     public Events(String eventCommentImage, String eventCommentMessage) {
         this.eventCommentImage = eventCommentImage;
         this.eventCommentMessage = eventCommentMessage;
     }
 
-    public Events(String eventId, String eventUserId, String eventCaption, String eventDesignation, String eventVenue, String eventDate, String eventRegistered, String eventStatus, String event, String eventIndustry, String eventImage, String eventProfileName, String eventTime, String commentProfileImage, String userComment) {
+    public Events(String eventId, String eventUserId, String eventCaption, String eventDesignation, String eventVenue, String eventDate, String eventRegistered, String eventStatus, String event, String eventIndustry, String eventImage, String eventProfileName, String eventTime, String commentProfileImage, String userComment,String eventCompany) {
         this.eventId = eventId;
         this.eventUserId = eventUserId;
         this.eventCaption = eventCaption;
@@ -45,6 +50,7 @@ public class Events {
         this.eventTime = eventTime;
         this.commentProfileImage = commentProfileImage;
         this.userComment = userComment;
+        this.eventCompany = eventCompany;
     }
 
     public Events(String eventCaption, String eventDesignation, String eventVenue, String eventDate, String eventRegistered, String eventStatus, String event, String eventIndustry, String eventImage, String eventProfileName, String eventTime, String commentProfileImage, String userComment) {

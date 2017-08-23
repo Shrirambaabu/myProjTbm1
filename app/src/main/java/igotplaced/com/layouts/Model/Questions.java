@@ -18,10 +18,15 @@ public class Questions {
     private String questionsTime;
     private String commentProfileImage;
     private String userQuestionComments;
+    private String questionsCompany;
+
+    public String getQuestionsCompany() {
+        return questionsCompany;
+    }
 
     public Questions() {
     }
-    public Questions(String questionId, String questionUserId, String questions, String questionsIndustry, String questionsImage, String questionsProfileName, String questionsTime, String commentProfileImage, String userQuestionComments) {
+    public Questions(String questionId, String questionUserId, String questions, String questionsIndustry, String questionsImage, String questionsProfileName, String questionsTime, String commentProfileImage, String userQuestionComments,String questionsCompany) {
         this.questionId = questionId;
         this.questionUserId = questionUserId;
         this.questions = questions;
@@ -31,6 +36,7 @@ public class Questions {
         this.questionsTime = questionsTime;
         this.commentProfileImage = commentProfileImage;
         this.userQuestionComments = userQuestionComments;
+        this.questionsCompany = questionsCompany;
     }
     public Questions(String questions, String questionsIndustry, String questionsImage, String questionsProfileName, String questionsTime, String commentProfileImage, String userQuestionComments) {
         this.questions = questions;

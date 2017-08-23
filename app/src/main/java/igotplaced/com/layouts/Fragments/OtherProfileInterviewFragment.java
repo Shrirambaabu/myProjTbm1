@@ -105,7 +105,7 @@ public class OtherProfileInterviewFragment extends Fragment {
                     try {
 
                         JSONObject obj = response.getJSONObject(i);
-                        Interview interview = new Interview(obj.getString("fid"), obj.getString("user_id"), obj.getString("feedback"), obj.getString("industryname"), obj.getString("interviewExperienceimgname"), obj.getString("username"), obj.getString("created_by"), obj.getString("interviewExperienceimgname"), obj.getString("username"));
+                        Interview interview = new Interview(obj.getString("fid"), obj.getString("user_id"), obj.getString("feedback"), obj.getString("industryname"), obj.getString("interviewExperienceimgname"), obj.getString("username"), obj.getString("created_by"), obj.getString("interviewExperienceimgname"), obj.getString("username"),obj.getString("companyname"));
                         // adding movie to blogHomeList array
                         interviewList.add(interview);
 
@@ -162,6 +162,7 @@ public class OtherProfileInterviewFragment extends Fragment {
             //Pass the values of feeds object to Views
             holder.interview.setText(interview.getInterview());
             holder.interviewIndustry.setText(interview.getInterviewIndustry());
+            holder.interviewCompany.setText(interview.getInterviewCompany());
             holder.interviewProfileName.setText(interview.getInterviewProfileName());
             holder.interviewTime.setText(interview.getInterviewTime());
             //  holder.userImage.setImageUrl(Utils.BaseImageUri + interview.getUserImage(), NetworkController.getInstance(context).getImageLoader());
@@ -190,7 +191,7 @@ public class OtherProfileInterviewFragment extends Fragment {
         }
 
         public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-            private TextView interview, interviewIndustry, interviewProfileName, interviewTime, viewMore;
+            private TextView interview, interviewIndustry, interviewProfileName, interviewTime,interviewCompany, viewMore;
             private NetworkImageView interviewImage, userImage;
             private ItemClickListener itemClickListener;
 
@@ -199,6 +200,7 @@ public class OtherProfileInterviewFragment extends Fragment {
 
                 interview = (TextView) itemView.findViewById(R.id.interview);
                 interviewIndustry = (TextView) itemView.findViewById(R.id.interview_industry);
+                interviewCompany = (TextView) itemView.findViewById(R.id.interview_company);
                 interviewProfileName = (TextView) itemView.findViewById(R.id.interview_profile_name);
                 interviewTime = (TextView) itemView.findViewById(R.id.interview_time);
                 viewMore = (TextView) itemView.findViewById(R.id.view_more);

@@ -48,10 +48,10 @@ import static igotplaced.com.layouts.Utils.Utils.Name;
 
 public class ProfileInterviewDetailsActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private String id = null, name = null, time = null, interview = null, image = null, industry = null, interviewUserId = null;
+    private String id = null, name = null, time = null, interview = null, image = null, industry = null, interviewUserId = null,company=null;
 
     private NetworkImageView interviewImage;
-    private TextView profileName, profileTime, interviewMessage, interviewIndustry;
+    private TextView profileName, profileTime, interviewMessage, interviewIndustry,interviewCompany;
 
     private EditText userComment;
     private ImageView sendComment;
@@ -77,17 +77,20 @@ public class ProfileInterviewDetailsActivity extends AppCompatActivity implement
 
 
         setContentView(R.layout.activity_profile_interview_details);
+
+        //initial value from intent
+        initialization();
         setupToolbar();
         addressingView();
         addingListeners();
-        //initial value from intent
-        initialization();
+
 
         interviewImage.setImageUrl(Utils.BaseImageUri + image, NetworkController.getInstance(getApplicationContext()).getImageLoader());
         profileName.setText(name);
         profileTime.setText(time);
         interviewMessage.setText(interview);
         interviewIndustry.setText(industry);
+        interviewCompany.setText(company);
 
         postRecyclerView();
 
@@ -181,6 +184,7 @@ public class ProfileInterviewDetailsActivity extends AppCompatActivity implement
         profileTime = (TextView) findViewById(R.id.interview_time);
         interviewMessage = (TextView) findViewById(R.id.interview);
         interviewIndustry = (TextView) findViewById(R.id.interview_industry);
+        interviewCompany = (TextView) findViewById(R.id.interview_company);
         userComment = (EditText) findViewById(R.id.user_comment);
         sendComment = (ImageView) findViewById(R.id.send_comment);
     }
@@ -188,6 +192,7 @@ public class ProfileInterviewDetailsActivity extends AppCompatActivity implement
     private void addingListeners() {
         sendComment.setOnClickListener(this);
         profileName.setOnClickListener(this);
+        interviewCompany.setOnClickListener(this);
     }
 
     private void initialization() {
@@ -200,6 +205,7 @@ public class ProfileInterviewDetailsActivity extends AppCompatActivity implement
         image = intent.getStringExtra("interviewImage");
         industry = intent.getStringExtra("interviewIndustry");
         interviewUserId = intent.getStringExtra("interview_createdid");
+        company = intent.getStringExtra("postCompany");
     }
 
     @Override
@@ -223,6 +229,12 @@ public class ProfileInterviewDetailsActivity extends AppCompatActivity implement
                 otherProfileDetails.putExtra("post_createdid", interviewUserId);
                 otherProfileDetails.putExtra("created_uname", name);
                 startActivity(otherProfileDetails);
+                break;
+
+            case R.id.interview_company:
+                Intent companyDetails=new Intent(getApplicationContext(),CompanyDetailsActivity.class);
+                companyDetails.putExtra("postCompany", company);
+                startActivity(companyDetails);
         }
 
 

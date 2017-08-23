@@ -110,7 +110,7 @@ public class ProfileEventsFragment extends Fragment implements ClickListener {
     private void makeJsonArrayRequestEventHome() {
 
 
-        Log.d("error", "loaded" + BaseUri + "/profileService/profileEvent/" + userId);
+        Log.e("error",  BaseUri + "/profileService/profileEvent/" + userId);
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, BaseUri + "/profileService/profileEvent/" + userId, null, new Response.Listener<JSONArray>() {
 
@@ -123,7 +123,8 @@ public class ProfileEventsFragment extends Fragment implements ClickListener {
                     try {
 
                         JSONObject obj = response.getJSONObject(i);
-                        Events events = new Events(obj.getString("eid"), obj.getString("created_user"), obj.getString("eventname"), obj.getString("eventtype"), obj.getString("location"), obj.getString("datetime"), obj.getString("count"), obj.getString("event"), obj.getString("notes"), obj.getString("Industry"), obj.getString("eventimgname"), obj.getString("created_uname"), obj.getString("created_by"), obj.getString("eventimgname"), obj.getString("created_uname"));
+                        Events events = new Events(obj.getString("eid"), obj.getString("created_user"), obj.getString("eventname"), obj.getString("eventtype"), obj.getString("location"), obj.getString("datetime"), obj.getString("count"), obj.getString("event"), obj.getString("notes"), obj.getString("Industry"), obj.getString("eventimgname"), obj.getString("created_uname"), obj.getString("created_by"), obj.getString("eventimgname"), obj.getString("created_uname"), obj.getString("companyname"));
+
                         // adding movie to blogHomeList array
                         eventsList.add(events);
 
@@ -209,7 +210,7 @@ public class ProfileEventsFragment extends Fragment implements ClickListener {
             holder.event.setText(events.getEvent());
             holder.event_industry.setText(events.getEventIndustry());
             holder.event_profile_name.setText(events.getEventProfileName());
-
+            holder.eventCompany.setText(events.getEventCompany());
             holder.event_time.setText(events.getEventTime());
 
             //  holder.userImage.setImageUrl(Utils.BaseImageUri + events.getCommentProfileImage(), NetworkController.getInstance(context).getImageLoader());
@@ -221,7 +222,7 @@ public class ProfileEventsFragment extends Fragment implements ClickListener {
                 public void onItemClick(View v, int pos) {
 
 
-                    Intent profileEventDetails =new Intent(getContext(),ProfileEventDetails.class);
+                    Intent profileEventDetails = new Intent(getContext(), ProfileEventDetails.class);
 
 
                     profileEventDetails.putExtra("eid", eventsList.get(position).getEventId());
@@ -237,6 +238,7 @@ public class ProfileEventsFragment extends Fragment implements ClickListener {
                     profileEventDetails.putExtra("eIndustry", eventsList.get(position).getEventIndustry());
                     profileEventDetails.putExtra("eImage", eventsList.get(position).getEventImage());
                     profileEventDetails.putExtra("eUserId", eventsList.get(position).getEventUserId());
+                    profileEventDetails.putExtra("postCompany", eventsList.get(position).getEventCompany());
 
                     startActivity(profileEventDetails);
                 }
@@ -251,7 +253,7 @@ public class ProfileEventsFragment extends Fragment implements ClickListener {
 
         public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-            private TextView eventCaption, eventDesignation, eventVenue, eventDate, eventRegistered, eventStatus, event, event_industry, event_profile_name, event_time;
+            private TextView eventCaption, eventDesignation, eventVenue, eventCompany, eventDate, eventRegistered, eventStatus, event, event_industry, event_profile_name, event_time;
             private NetworkImageView event_img, userImage;
             private ItemClickListener itemClickListener;
 
@@ -263,6 +265,7 @@ public class ProfileEventsFragment extends Fragment implements ClickListener {
                 eventVenue = (TextView) itemView.findViewById(R.id.eventVenue);
                 eventDate = (TextView) itemView.findViewById(R.id.eventDate);
                 eventRegistered = (TextView) itemView.findViewById(R.id.eventRegistered);
+                eventCompany = (TextView) itemView.findViewById(R.id.event_company);
 
 
                 eventStatus = (TextView) itemView.findViewById(R.id.eventStatus);

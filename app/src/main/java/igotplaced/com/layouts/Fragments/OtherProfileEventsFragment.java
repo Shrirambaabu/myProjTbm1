@@ -41,14 +41,14 @@ public class OtherProfileEventsFragment extends Fragment {
     private Context context;
     private RequestQueue queue;
     private List<Events> eventsList = new ArrayList<Events>();
-private RecyclerAdapterOtherProfileEvent recyclerAdapterOtherProfileEvent;
+    private RecyclerAdapterOtherProfileEvent recyclerAdapterOtherProfileEvent;
     private String userId;
 
     private LinearLayoutManager mLayoutManager;
+
     public OtherProfileEventsFragment() {
         // Required empty public constructor
     }
-
 
 
     @Override
@@ -107,7 +107,7 @@ private RecyclerAdapterOtherProfileEvent recyclerAdapterOtherProfileEvent;
                     try {
 
                         JSONObject obj = response.getJSONObject(i);
-                        Events events = new Events(obj.getString("eid"), obj.getString("created_user"), obj.getString("eventname"), obj.getString("eventtype"), obj.getString("location"), obj.getString("datetime"), obj.getString("count"), obj.getString("event"), obj.getString("notes"), obj.getString("Industry"), obj.getString("eventimgname"), obj.getString("created_uname"), obj.getString("created_by"), obj.getString("eventimgname"), obj.getString("created_uname"));
+                        Events events = new Events(obj.getString("eid"), obj.getString("created_user"), obj.getString("eventname"), obj.getString("eventtype"), obj.getString("location"), obj.getString("datetime"), obj.getString("count"), obj.getString("event"), obj.getString("notes"), obj.getString("Industry"), obj.getString("eventimgname"), obj.getString("created_uname"), obj.getString("created_by"), obj.getString("eventimgname"), obj.getString("created_uname"), obj.getString("companyname"));
                         // adding movie to blogHomeList array
                         eventsList.add(events);
 
@@ -136,7 +136,7 @@ private RecyclerAdapterOtherProfileEvent recyclerAdapterOtherProfileEvent;
     }
 
 
-    private class RecyclerAdapterOtherProfileEvent extends RecyclerView.Adapter<RecyclerAdapterOtherProfileEvent.MyViewHolder>  {
+    private class RecyclerAdapterOtherProfileEvent extends RecyclerView.Adapter<RecyclerAdapterOtherProfileEvent.MyViewHolder> {
 
 
         private List<Events> eventsList;
@@ -167,7 +167,7 @@ private RecyclerAdapterOtherProfileEvent recyclerAdapterOtherProfileEvent;
             holder.eventVenue.setText(events.getEventVenue());
             holder.eventDate.setText(events.getEventDate());
             holder.eventRegistered.setText(events.getEventRegistered());
-
+            holder.eventCompany.setText(events.getEventCompany());
             holder.eventStatus.setText(events.getEventStatus());
             holder.event.setText(events.getEvent());
             holder.event_industry.setText(events.getEventIndustry());
@@ -178,29 +178,30 @@ private RecyclerAdapterOtherProfileEvent recyclerAdapterOtherProfileEvent;
             //  holder.userImage.setImageUrl(Utils.BaseImageUri + events.getCommentProfileImage(), NetworkController.getInstance(context).getImageLoader());
             holder.event_img.setImageUrl(Utils.BaseImageUri + events.getEventImage(), NetworkController.getInstance(context).getImageLoader());
 
-holder.setItemClickListener(new ItemClickListener() {
-    @Override
-    public void onItemClick(View v, int pos) {
-        Intent profileEventDetails =new Intent(getContext(),ProfileEventDetails.class);
+            holder.setItemClickListener(new ItemClickListener() {
+                @Override
+                public void onItemClick(View v, int pos) {
+                    Intent profileEventDetails = new Intent(getContext(), ProfileEventDetails.class);
 
 
-        profileEventDetails.putExtra("eid", eventsList.get(position).getEventId());
-        profileEventDetails.putExtra("ename", eventsList.get(position).getEventProfileName());
-        profileEventDetails.putExtra("eTime", eventsList.get(position).getEventTime());
-        profileEventDetails.putExtra("eCaption", eventsList.get(position).getEventCaption());
-        profileEventDetails.putExtra("eDesign", eventsList.get(position).getEventDesignation());
-        profileEventDetails.putExtra("eVenue", eventsList.get(position).getEventVenue());
-        profileEventDetails.putExtra("eDate", eventsList.get(position).getEventDate());
-        profileEventDetails.putExtra("eReg", eventsList.get(position).getEventRegistered());
-        profileEventDetails.putExtra("eStatus", eventsList.get(position).getEventStatus());
-        profileEventDetails.putExtra("eEvnt", eventsList.get(position).getEvent());
-        profileEventDetails.putExtra("eIndustry", eventsList.get(position).getEventIndustry());
-        profileEventDetails.putExtra("eImage", eventsList.get(position).getEventImage());
-        profileEventDetails.putExtra("eUserId", eventsList.get(position).getEventUserId());
+                    profileEventDetails.putExtra("eid", eventsList.get(position).getEventId());
+                    profileEventDetails.putExtra("ename", eventsList.get(position).getEventProfileName());
+                    profileEventDetails.putExtra("eTime", eventsList.get(position).getEventTime());
+                    profileEventDetails.putExtra("eCaption", eventsList.get(position).getEventCaption());
+                    profileEventDetails.putExtra("eDesign", eventsList.get(position).getEventDesignation());
+                    profileEventDetails.putExtra("eVenue", eventsList.get(position).getEventVenue());
+                    profileEventDetails.putExtra("eDate", eventsList.get(position).getEventDate());
+                    profileEventDetails.putExtra("eReg", eventsList.get(position).getEventRegistered());
+                    profileEventDetails.putExtra("eStatus", eventsList.get(position).getEventStatus());
+                    profileEventDetails.putExtra("eEvnt", eventsList.get(position).getEvent());
+                    profileEventDetails.putExtra("eIndustry", eventsList.get(position).getEventIndustry());
+                    profileEventDetails.putExtra("eImage", eventsList.get(position).getEventImage());
+                    profileEventDetails.putExtra("eUserId", eventsList.get(position).getEventUserId());
+                    profileEventDetails.putExtra("postCompany", eventsList.get(position).getEventCompany());
 
-        startActivity(profileEventDetails);
-    }
-});
+                    startActivity(profileEventDetails);
+                }
+            });
         }
 
         @Override
@@ -210,7 +211,7 @@ holder.setItemClickListener(new ItemClickListener() {
 
         public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-            private TextView eventCaption, eventDesignation, eventVenue, eventDate, eventRegistered, eventStatus, event, event_industry, event_profile_name, event_time;
+            private TextView eventCaption, eventDesignation, eventVenue, eventCompany, eventDate, eventRegistered, eventStatus, event, event_industry, event_profile_name, event_time;
             private NetworkImageView event_img, userImage;
             private ItemClickListener itemClickListener;
 
@@ -222,7 +223,7 @@ holder.setItemClickListener(new ItemClickListener() {
                 eventVenue = (TextView) itemView.findViewById(R.id.eventVenue);
                 eventDate = (TextView) itemView.findViewById(R.id.eventDate);
                 eventRegistered = (TextView) itemView.findViewById(R.id.eventRegistered);
-
+                eventCompany = (TextView) itemView.findViewById(R.id.event_company);
 
                 eventStatus = (TextView) itemView.findViewById(R.id.eventStatus);
                 event = (TextView) itemView.findViewById(R.id.event);

@@ -105,7 +105,7 @@ public class OtherProfilePostFragment extends Fragment {
 
                         JSONObject obj = response.getJSONObject(i);
 
-                        Post post = new Post(obj.getString("pid"), obj.getString("created_user"), obj.getString("post"), obj.getString("Industry"), obj.getString("post_created_user_image"), obj.getString("created_uname"), obj.getString("created_by"), obj.getString("post_created_user_image"), obj.getString("created_uname"));
+                        Post post = new Post(obj.getString("pid"), obj.getString("created_user"), obj.getString("post"), obj.getString("Industry"), obj.getString("post_created_user_image"), obj.getString("created_uname"), obj.getString("created_by"), obj.getString("post_created_user_image"), obj.getString("created_uname"),obj.getString("companyname"));
 
                         postList.add(post);
 
@@ -163,6 +163,7 @@ public class OtherProfilePostFragment extends Fragment {
             Post post = postList.get(position);
             holder.post.setText(post.getPost());
             holder.postIndustry.setText(post.getPostIndustry());
+            holder.postCompany.setText(post.getPostCompany());
             holder.postProfileName.setText(post.getPostProfileName());
             holder.postTime.setText(post.getPostTime());
             //  holder.userImage.setImageUrl(Utils.BaseImageUri + post.getUserImage(), NetworkController.getInstance(context).getImageLoader());
@@ -180,6 +181,7 @@ public class OtherProfilePostFragment extends Fragment {
                     profileDetails.putExtra("postImage", postList.get(position).getPostImage());
                     profileDetails.putExtra("postIndustry", postList.get(position).getPostIndustry());
                     profileDetails.putExtra("post_createdid", postList.get(position).getPostedUserId());
+                    profileDetails.putExtra("postCompany", postList.get(position).getPostCompany());
 
                     startActivity(profileDetails);
                 }
@@ -194,7 +196,7 @@ public class OtherProfilePostFragment extends Fragment {
 
         public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-            private TextView post, postIndustry, postProfileName, postTime;
+            private TextView post, postIndustry, postProfileName, postTime,postCompany;
             private NetworkImageView postImage;
             private ItemClickListener itemClickListener;
 
@@ -202,6 +204,7 @@ public class OtherProfilePostFragment extends Fragment {
                 super(itemView);
                 post = (TextView) itemView.findViewById(R.id.post);
                 postIndustry = (TextView) itemView.findViewById(R.id.post_industry);
+                postCompany = (TextView) itemView.findViewById(R.id.post_company);
                 postProfileName = (TextView) itemView.findViewById(R.id.post_profile_name);
                 postTime = (TextView) itemView.findViewById(R.id.post_time);
                 // Volley's NetworkImageView which will load Image from URL

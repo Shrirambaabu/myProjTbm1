@@ -198,7 +198,7 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
                         try {
 
                             JSONObject obj = jsonObjectJSON.getJSONObject(i);
-                            Post post = new Post(obj.getString("pid"),obj.getString("created_user"),obj.getString("post"), obj.getString("Industry"), obj.getString("postuserimgname"), obj.getString("created_uname"), obj.getString("created_by"), obj.getString("imgname"), obj.getString("fname"));
+                            Post post = new Post(obj.getString("pid"),obj.getString("created_user"),obj.getString("post"), obj.getString("Industry"), obj.getString("postuserimgname"), obj.getString("created_uname"), obj.getString("created_by"), obj.getString("imgname"), obj.getString("fname"),obj.getString("companyname"));
                             // adding movie to blogHomeList array
                             postList.add(post);
 
@@ -298,6 +298,7 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
             holder.postIndustry.setText(post.getPostIndustry());
             holder.postProfileName.setText(post.getPostProfileName());
             holder.postTime.setText(post.getPostTime());
+            holder.postCompany.setText(post.getPostCompany());
             //  holder.userImage.setImageUrl(Utils.BaseImageUri + post.getUserImage(), NetworkController.getInstance(context).getImageLoader());
             holder.postImage.setImageUrl(Utils.BaseImageUri + post.getPostImage(), NetworkController.getInstance(context).getImageLoader());
 
@@ -315,6 +316,7 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
                     profileDetails.putExtra("postImage", postList.get(position).getPostImage());
                     profileDetails.putExtra("postIndustry", postList.get(position).getPostIndustry());
                     profileDetails.putExtra("post_createdid", postList.get(position).getPostedUserId());
+                    profileDetails.putExtra("postCompany", postList.get(position).getPostCompany());
 
                     startActivity(profileDetails);
                 }
@@ -329,7 +331,7 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
         }
 
         public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-            private TextView post, postIndustry, postProfileName, postTime,viewMore;
+            private TextView post, postIndustry, postProfileName, postTime,postCompany,viewMore;
 
             private NetworkImageView postImage, userImage;
             private ItemClickListener itemClickListener;
@@ -342,6 +344,7 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
                 postProfileName = (TextView) itemView.findViewById(R.id.post_profile_name);
                 postTime = (TextView) itemView.findViewById(R.id.post_time);
                 viewMore = (TextView) itemView.findViewById(R.id.view_more);
+                postCompany = (TextView) itemView.findViewById(R.id.post_company);
 
 
 

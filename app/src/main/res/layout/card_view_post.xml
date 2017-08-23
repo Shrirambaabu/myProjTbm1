@@ -27,6 +27,7 @@
                 android:layout_width="56dp"
                 android:layout_height="56dp"
                 android:layout_margin="@dimen/margin_16" />
+
             <ImageView
                 android:id="@+id/post_icon"
                 android:layout_width="24dp"
@@ -36,6 +37,7 @@
                 android:layout_marginStart="@dimen/margin_8"
                 android:layout_marginTop="@dimen/margin_16"
                 android:src="@drawable/ic_mail_black_24dp" />
+
             <TextView
                 android:id="@+id/post_profile_name"
                 android:layout_width="wrap_content"
@@ -72,9 +74,9 @@
                 android:layout_below="@+id/post_img"
                 android:layout_marginEnd="@dimen/margin_16"
                 android:layout_marginStart="@dimen/margin_16"
+                android:ellipsize="end"
                 android:gravity="start"
                 android:maxLines="2"
-                android:ellipsize="end"
                 android:text="I am trained engineefd r in dfdsf dfgdgdf sfdsadasdasd  ds  dsds  dsja..."
                 android:textColor="@color/text_main"
                 android:textSize="18sp"
@@ -91,6 +93,27 @@
                 android:maxLines="1"
                 android:padding="@dimen/margin_2"
                 android:text="IT INDUSTRY"
+                android:maxLength="18"
+                android:ellipsize="end"
+                android:textAllCaps="true"
+                android:textColor="@color/industry_company"
+                android:textSize="16sp"
+                android:textStyle="italic|bold" />
+
+            <TextView
+                android:id="@+id/post_company"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/post"
+                android:layout_marginStart="@dimen/margin_16"
+                android:layout_marginEnd="@dimen/margin_16"
+                android:layout_marginTop="@dimen/margin_16"
+                android:gravity="center"
+                android:layout_toEndOf="@+id/post_industry"
+                android:maxLines="1"
+                android:maxLength="18"
+                android:padding="@dimen/margin_2"
+                android:text="INFOSYS"
                 android:textAllCaps="true"
                 android:textColor="@color/industry_company"
                 android:textSize="16sp"
