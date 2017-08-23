@@ -1,6 +1,5 @@
 package igotplaced.com.layouts;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -182,6 +181,7 @@ public class ProfilePostDetailsActivity extends AppCompatActivity implements Vie
 
     private void addingListeners() {
         sendComment.setOnClickListener(this);
+        profileName.setOnClickListener(this);
     }
 
     private void addressingView() {
@@ -209,15 +209,28 @@ public class ProfilePostDetailsActivity extends AppCompatActivity implements Vie
 
     @Override
     public void onClick(View v) {
-        if (userComment.getText().toString().isEmpty()) {
-            Toast.makeText(getApplicationContext(), "Enter the Comment", Toast.LENGTH_SHORT).show();
-        } else {
-            userPostedComment = userComment.getText().toString();
-            insertUserComment();
-            recyclerAdapterPostDetails.notifyDataSetChanged();
-            Toast.makeText(getApplicationContext(), "Comment added", Toast.LENGTH_SHORT).show();
+        switch (v.getId()){
+            case R.id.send_comment:
+                if (userComment.getText().toString().isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "Enter the Comment", Toast.LENGTH_SHORT).show();
+                } else {
+                    userPostedComment = userComment.getText().toString();
+                    insertUserComment();
+                    recyclerAdapterPostDetails.notifyDataSetChanged();
+                    Toast.makeText(getApplicationContext(), "Comment added", Toast.LENGTH_SHORT).show();
+                }
+                userComment.setText("");
+                break;
+            case R.id.post_profile_name:
+
+                Intent otherProfileDetails=new Intent(getApplicationContext(), OtherProfileActivity.class);
+
+                otherProfileDetails.putExtra("post_createdid", postUserId);
+                otherProfileDetails.putExtra("created_uname", name);
+                startActivity(otherProfileDetails);
         }
-        userComment.setText("");
+
+
     }
 
     private void insertUserComment() {

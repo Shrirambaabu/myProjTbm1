@@ -188,6 +188,7 @@ public class ProfileQuestionsDetailsActivity extends AppCompatActivity implement
 
     private void addingListeners() {
         sendComment.setOnClickListener(this);
+        profileName.setOnClickListener(this);
     }
 
     private void initialization() {
@@ -205,14 +206,27 @@ public class ProfileQuestionsDetailsActivity extends AppCompatActivity implement
 
     @Override
     public void onClick(View v) {
-        if (userComment.getText().toString().isEmpty()) {
-            Toast.makeText(getApplicationContext(), "Enter the Comment", Toast.LENGTH_SHORT).show();
-        } else {
-            userPostedComment = userComment.getText().toString();
-            insertUserComment();
-            Toast.makeText(getApplicationContext(), "Comment added", Toast.LENGTH_SHORT).show();
+        switch (v.getId()){
+            case R.id.send_comment:
+                if (userComment.getText().toString().isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "Enter the Comment", Toast.LENGTH_SHORT).show();
+                } else {
+                    userPostedComment = userComment.getText().toString();
+                    insertUserComment();
+                    recyclerAdapterQuestionDetails.notifyDataSetChanged();
+                    Toast.makeText(getApplicationContext(), "Comment added", Toast.LENGTH_SHORT).show();
+                }
+                userComment.setText("");
+                break;
+            case R.id.questions_profile_name:
+
+                Intent otherProfileDetails=new Intent(getApplicationContext(), OtherProfileActivity.class);
+
+                otherProfileDetails.putExtra("post_createdid", postedUserId);
+                otherProfileDetails.putExtra("created_uname", name);
+                startActivity(otherProfileDetails);
         }
-        userComment.setText("");
+
     }
 
     private void insertUserComment() {

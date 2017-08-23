@@ -201,6 +201,7 @@ public class ProfileEventDetails extends AppCompatActivity implements View.OnCli
 
     private void addingListeners() {
         sendComment.setOnClickListener(this);
+        eventName.setOnClickListener(this);
     }
 
     private void initialization() {
@@ -223,15 +224,27 @@ public class ProfileEventDetails extends AppCompatActivity implements View.OnCli
 
     @Override
     public void onClick(View v) {
-        if (userComment.getText().toString().isEmpty()) {
-            Toast.makeText(getApplicationContext(), "Enter the Comment", Toast.LENGTH_SHORT).show();
-        } else {
-            userPostedComment = userComment.getText().toString();
-            insertUserComment();
-            recyclerAdapterEventDetails.notifyDataSetChanged();
-            Toast.makeText(getApplicationContext(), "Comment added", Toast.LENGTH_SHORT).show();
+        switch (v.getId()){
+            case R.id.send_comment:
+                if (userComment.getText().toString().isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "Enter the Comment", Toast.LENGTH_SHORT).show();
+                } else {
+                    userPostedComment = userComment.getText().toString();
+                    insertUserComment();
+                    recyclerAdapterEventDetails.notifyDataSetChanged();
+                    Toast.makeText(getApplicationContext(), "Comment added", Toast.LENGTH_SHORT).show();
+                }
+                userComment.setText("");
+                break;
+            case R.id.event_profile_name:
+
+                Intent otherProfileDetails=new Intent(getApplicationContext(), OtherProfileActivity.class);
+
+                otherProfileDetails.putExtra("post_createdid", postedUserId);
+                otherProfileDetails.putExtra("created_uname", name);
+                startActivity(otherProfileDetails);
         }
-        userComment.setText("");
+
     }
 
     private void insertUserComment() {
