@@ -11,17 +11,30 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.NetworkImageView;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import igotplaced.com.layouts.Fragments.OtherProfilePostFragment;
+import igotplaced.com.layouts.Model.Company;
+import igotplaced.com.layouts.Model.Post;
 import igotplaced.com.layouts.Utils.NetworkController;
+import igotplaced.com.layouts.Utils.Utils;
+
+import static igotplaced.com.layouts.Utils.Utils.BaseUri;
 
 public class CompanyDetailsActivity extends AppCompatActivity {
 
@@ -42,6 +55,7 @@ public class CompanyDetailsActivity extends AppCompatActivity {
     };
     private Intent intent;
     private String companyNameIntent;
+    private String companyId;
 
 
     @Override
@@ -68,7 +82,7 @@ public class CompanyDetailsActivity extends AppCompatActivity {
                 setupTabIcons();
             }
         });
-        makeJsonArrayRequestCompany();
+
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -76,10 +90,47 @@ public class CompanyDetailsActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setTitle(companyNameIntent);
         }
+        makeJsonArrayRequestCompany();
     }
 
     private void makeJsonArrayRequestCompany() {
 
+        Log.e("Company URL",""+ BaseUri + "/profileService/companyDetails/" + companyId);
+
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(BaseUri + "/profileService/companyDetails/" + companyId, new Response.Listener<JSONArray>() {
+
+            @Override
+            public void onResponse(JSONArray response) {
+
+
+                for (int i = 0; i < response.length(); i++) {
+                    Log.d("error", response.toString());
+                    try {
+                        JSONObject obj = response.getJSONObject(i);
+
+
+                        Company company = new Company(obj.getString("id"),obj.getString("companyname"),obj.getString("companywebsite"),obj.getString("companyImage"),obj.getString("aboutus"));
+
+                        companyName.setText(company.getCompanyName());
+                        companyWebsite.setText(company.getCompanyWebsite());
+                        profile_img.setImageUrl(Utils.BaseImageUri +company.getCompanyImage() , NetworkController.getInstance(context).getImageLoader());
+
+
+                    } catch (Exception e) {
+                        Log.d("error", e.getMessage());
+                    }
+                }
+            }
+
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("error", "Error: " + error.getMessage());
+            }
+        });
+
+        queue.add(jsonArrayRequest);
     }
 
     @Override
@@ -97,6 +148,7 @@ public class CompanyDetailsActivity extends AppCompatActivity {
     private void initialization() {
         intent = getIntent();
         companyNameIntent= intent.getStringExtra("postCompany");
+        companyId= intent.getStringExtra("companyId");
     }
 
     private void setupTabIcons() {

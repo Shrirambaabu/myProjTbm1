@@ -21,6 +21,15 @@ public class SearchResultsModel {
     private String eventDateTime;
     private String eventCount;
     private String eventStatus;
+private String companyId;
+
+    public String getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(String companyId) {
+        this.companyId = companyId;
+    }
 
     public String getId() {
         return id;

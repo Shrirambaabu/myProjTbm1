@@ -105,7 +105,7 @@ public class OtherProfilePostFragment extends Fragment {
 
                         JSONObject obj = response.getJSONObject(i);
 
-                        Post post = new Post(obj.getString("pid"), obj.getString("created_user"), obj.getString("post"), obj.getString("Industry"), obj.getString("post_created_user_image"), obj.getString("created_uname"), obj.getString("created_by"), obj.getString("post_created_user_image"), obj.getString("created_uname"),obj.getString("companyname"));
+                        Post post = new Post(obj.getString("pid"), obj.getString("created_user"), obj.getString("post"), obj.getString("Industry"), obj.getString("post_created_user_image"), obj.getString("created_uname"), obj.getString("created_by"), obj.getString("post_created_user_image"), obj.getString("created_uname"),obj.getString("companyname"),obj.getString("company_id"));
 
                         postList.add(post);
 
@@ -182,7 +182,7 @@ public class OtherProfilePostFragment extends Fragment {
                     profileDetails.putExtra("postIndustry", postList.get(position).getPostIndustry());
                     profileDetails.putExtra("post_createdid", postList.get(position).getPostedUserId());
                     profileDetails.putExtra("postCompany", postList.get(position).getPostCompany());
-
+                    profileDetails.putExtra("companyId", postList.get(position).getCompanyId());
                     startActivity(profileDetails);
                 }
             });

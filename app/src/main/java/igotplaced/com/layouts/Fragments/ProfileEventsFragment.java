@@ -123,7 +123,7 @@ public class ProfileEventsFragment extends Fragment implements ClickListener {
                     try {
 
                         JSONObject obj = response.getJSONObject(i);
-                        Events events = new Events(obj.getString("eid"), obj.getString("created_user"), obj.getString("eventname"), obj.getString("eventtype"), obj.getString("location"), obj.getString("datetime"), obj.getString("count"), obj.getString("event"), obj.getString("notes"), obj.getString("Industry"), obj.getString("eventimgname"), obj.getString("created_uname"), obj.getString("created_by"), obj.getString("eventimgname"), obj.getString("created_uname"), obj.getString("companyname"));
+                        Events events = new Events(obj.getString("eid"), obj.getString("created_user"), obj.getString("eventname"), obj.getString("eventtype"), obj.getString("location"), obj.getString("datetime"), obj.getString("count"), obj.getString("event"), obj.getString("notes"), obj.getString("Industry"), obj.getString("eventimgname"), obj.getString("created_uname"), obj.getString("created_by"), obj.getString("eventimgname"), obj.getString("created_uname"), obj.getString("created_uname"));
 
                         // adding movie to blogHomeList array
                         eventsList.add(events);
@@ -210,7 +210,7 @@ public class ProfileEventsFragment extends Fragment implements ClickListener {
             holder.event.setText(events.getEvent());
             holder.event_industry.setText(events.getEventIndustry());
             holder.event_profile_name.setText(events.getEventProfileName());
-            holder.eventCompany.setText(events.getEventCompany());
+            holder.eventCompany.setText("");
             holder.event_time.setText(events.getEventTime());
 
             //  holder.userImage.setImageUrl(Utils.BaseImageUri + events.getCommentProfileImage(), NetworkController.getInstance(context).getImageLoader());
@@ -238,7 +238,7 @@ public class ProfileEventsFragment extends Fragment implements ClickListener {
                     profileEventDetails.putExtra("eIndustry", eventsList.get(position).getEventIndustry());
                     profileEventDetails.putExtra("eImage", eventsList.get(position).getEventImage());
                     profileEventDetails.putExtra("eUserId", eventsList.get(position).getEventUserId());
-                    profileEventDetails.putExtra("postCompany", eventsList.get(position).getEventCompany());
+
 
                     startActivity(profileEventDetails);
                 }

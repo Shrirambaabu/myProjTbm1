@@ -118,6 +118,7 @@ public class RecyclerAdapterSearchDetails extends RecyclerView.Adapter<RecyclerV
                         profileDetails.putExtra("postIndustry", searchResultsModelList.get(position).getIndustry());
                         profileDetails.putExtra("post_createdid", searchResultsModelList.get(position).getUserId());
                         profileDetails.putExtra("postCompany", searchResultsModelList.get(position).getCompany());
+                        profileDetails.putExtra("companyId", searchResultsModelList.get(position).getCompanyId());
                         context.startActivity(profileDetails);
                     }
                 });
@@ -146,6 +147,7 @@ public class RecyclerAdapterSearchDetails extends RecyclerView.Adapter<RecyclerV
                         profileInterview.putExtra("interviewIndustry", searchResultsModelList.get(position).getIndustry());
                         profileInterview.putExtra("interview_createdid", searchResultsModelList.get(position).getUserId());
                         profileInterview.putExtra("postCompany",searchResultsModelList.get(position).getCompany());
+                        profileInterview.putExtra("companyId", searchResultsModelList.get(position).getCompanyId());
                         context.startActivity(profileInterview);
 
                     }
@@ -216,6 +218,7 @@ public class RecyclerAdapterSearchDetails extends RecyclerView.Adapter<RecyclerV
                         questionDetails.putExtra("postIndustry", searchResultsModelList.get(position).getIndustry());
                         questionDetails.putExtra("post_createdid", searchResultsModelList.get(position).getUserId());
                         questionDetails.putExtra("postCompany",searchResultsModelList.get(position).getCompany());
+                        questionDetails.putExtra("companyId", searchResultsModelList.get(position).getCompanyId());
                         context.startActivity(questionDetails);
                     }
                 });

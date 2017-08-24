@@ -48,7 +48,7 @@ import static igotplaced.com.layouts.Utils.Utils.Name;
 
 public class ProfileInterviewDetailsActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private String id = null, name = null, time = null, interview = null, image = null, industry = null, interviewUserId = null,company=null;
+    private String id = null, name = null, time = null,companyId=null, interview = null, image = null, industry = null, interviewUserId = null,company=null;
 
     private NetworkImageView interviewImage;
     private TextView profileName, profileTime, interviewMessage, interviewIndustry,interviewCompany;
@@ -206,6 +206,7 @@ public class ProfileInterviewDetailsActivity extends AppCompatActivity implement
         industry = intent.getStringExtra("interviewIndustry");
         interviewUserId = intent.getStringExtra("interview_createdid");
         company = intent.getStringExtra("postCompany");
+        companyId = intent.getStringExtra("companyId");
     }
 
     @Override
@@ -234,6 +235,7 @@ public class ProfileInterviewDetailsActivity extends AppCompatActivity implement
             case R.id.interview_company:
                 Intent companyDetails=new Intent(getApplicationContext(),CompanyDetailsActivity.class);
                 companyDetails.putExtra("postCompany", company);
+                companyDetails.putExtra("companyId", companyId);
                 startActivity(companyDetails);
         }
 

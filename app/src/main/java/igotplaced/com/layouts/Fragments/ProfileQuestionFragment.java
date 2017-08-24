@@ -128,7 +128,7 @@ public class ProfileQuestionFragment extends Fragment implements ClickListener {
                     try {
 
                         JSONObject obj = response.getJSONObject(i);
-                        Questions questions = new Questions(obj.getString("qid"),obj.getString("created_user"),obj.getString("question"), obj.getString("industryname"), obj.getString("questionimgname"), obj.getString("created_uname"), obj.getString("created_by"), obj.getString("questionimgname"), obj.getString("created_uname"),obj.getString("companyname"));
+                        Questions questions = new Questions(obj.getString("qid"),obj.getString("created_user"),obj.getString("question"), obj.getString("industryname"), obj.getString("questionimgname"), obj.getString("created_uname"), obj.getString("created_by"), obj.getString("questionimgname"), obj.getString("created_uname"),obj.getString("companyname"),obj.getString("company_id"));
                         // adding movie to blogHomeList array
                         questionsList.add(questions);
 
@@ -210,7 +210,12 @@ public class ProfileQuestionFragment extends Fragment implements ClickListener {
 
             //Pass the values of feeds object to Views
             holder.questions.setText(questions.getQuestions());
-            holder.questionsCompany.setText(questions.getQuestionsCompany());
+            if (questions.getQuestionsCompany().equals("Select Company")){
+                holder.questionsCompany.setText("");
+            }else{
+                holder.questionsCompany.setText(questions.getQuestionsCompany());
+            }
+
             holder.questionsIndustry.setText(questions.getQuestionsIndustry());
             holder.questionsProfileName.setText(questions.getQuestionsProfileName());
             holder.questionsTime.setText(questions.getQuestionsTime());
@@ -231,6 +236,7 @@ public class ProfileQuestionFragment extends Fragment implements ClickListener {
                     questionDetails.putExtra("postIndustry", questionsList.get(position).getQuestionsIndustry());
                     questionDetails.putExtra("post_createdid", questionsList.get(position).getQuestionUserId());
                     questionDetails.putExtra("postCompany", questionsList.get(position).getQuestionsCompany());
+                    questionDetails.putExtra("companyId", questionsList.get(position).getCompanyId());
                     startActivity(questionDetails);
 
                 }

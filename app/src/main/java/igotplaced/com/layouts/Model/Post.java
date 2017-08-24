@@ -17,7 +17,11 @@ public class Post {
     private String comentedUserImage;
     private String commentedMessage;
     private String postCompany;
+    private String companyId;
 
+    public String getCompanyId() {
+        return companyId;
+    }
 
     public Post(String comenteduserImage, String commentedMessage) {
         this.comentedUserImage = comenteduserImage;
@@ -27,7 +31,7 @@ public class Post {
     public Post() {
     }
 
-    public Post(String postId, String postedUserId, String post, String postIndustry, String postImage, String postProfileName, String postTime, String userImage, String userProfileName,String postCompany) {
+    public Post(String postId, String postedUserId, String post, String postIndustry, String postImage, String postProfileName, String postTime, String userImage, String userProfileName,String postCompany,String companyId) {
         this.postId = postId;
         this.postedUserId = postedUserId;
         this.post = post;
@@ -38,6 +42,7 @@ public class Post {
         this.userImage = userImage;
         this.userProfileName = userProfileName;
         this.postCompany = postCompany;
+        this.companyId = companyId;
     }
 
     public Post(String postId, String post, String postIndustry, String postImage, String postProfileName, String postTime, String userImage, String userProfileName) {

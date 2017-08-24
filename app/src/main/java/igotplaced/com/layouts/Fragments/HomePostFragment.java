@@ -198,7 +198,7 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
                         try {
 
                             JSONObject obj = jsonObjectJSON.getJSONObject(i);
-                            Post post = new Post(obj.getString("pid"),obj.getString("created_user"),obj.getString("post"), obj.getString("Industry"), obj.getString("postuserimgname"), obj.getString("created_uname"), obj.getString("created_by"), obj.getString("imgname"), obj.getString("fname"),obj.getString("companyname"));
+                            Post post = new Post(obj.getString("pid"),obj.getString("created_user"),obj.getString("post"), obj.getString("Industry"), obj.getString("postuserimgname"), obj.getString("created_uname"), obj.getString("created_by"), obj.getString("imgname"), obj.getString("fname"),obj.getString("companyname"),obj.getString("company_id"));
                             // adding movie to blogHomeList array
                             postList.add(post);
 
@@ -317,6 +317,7 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
                     profileDetails.putExtra("postIndustry", postList.get(position).getPostIndustry());
                     profileDetails.putExtra("post_createdid", postList.get(position).getPostedUserId());
                     profileDetails.putExtra("postCompany", postList.get(position).getPostCompany());
+                    profileDetails.putExtra("companyId", postList.get(position).getCompanyId());
 
                     startActivity(profileDetails);
                 }

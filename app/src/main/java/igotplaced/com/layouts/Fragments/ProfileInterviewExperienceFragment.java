@@ -129,7 +129,7 @@ public class ProfileInterviewExperienceFragment extends Fragment implements Clic
                     try {
 
                         JSONObject obj = response.getJSONObject(i);
-                        Interview interview = new Interview(obj.getString("fid"), obj.getString("user_id"), obj.getString("feedback"), obj.getString("industryname"), obj.getString("interviewExperienceimgname"), obj.getString("username"), obj.getString("created_by"), obj.getString("interviewExperienceimgname"), obj.getString("username"), obj.getString("companyname"));
+                        Interview interview = new Interview(obj.getString("fid"), obj.getString("user_id"), obj.getString("feedback"), obj.getString("industryname"), obj.getString("interviewExperienceimgname"), obj.getString("username"), obj.getString("created_by"), obj.getString("interviewExperienceimgname"), obj.getString("username"), obj.getString("companyname"),obj.getString("company_id"));
                         // adding movie to blogHomeList array
                         interviewList.add(interview);
 
@@ -228,6 +228,7 @@ public class ProfileInterviewExperienceFragment extends Fragment implements Clic
                     profileInterview.putExtra("interviewIndustry", interviewList.get(position).getInterviewIndustry());
                     profileInterview.putExtra("interview_createdid", interviewList.get(position).getInterviewUserId());
                     profileInterview.putExtra("postCompany", interviewList.get(position).getInterviewCompany());
+                    profileInterview.putExtra("companyId", interviewList.get(position).getCompanyId());
                     startActivity(profileInterview);
                 }
             });

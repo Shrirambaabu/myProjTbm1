@@ -119,7 +119,7 @@ public class ProfilePostFragment extends Fragment implements ClickListener {
 
                         JSONObject obj = response.getJSONObject(i);
 
-                        Post post = new  Post(obj.getString("pid"),obj.getString("created_user"),obj.getString("post"), obj.getString("Industry"), obj.getString("post_created_user_image"), obj.getString("created_uname"), obj.getString("created_by"), obj.getString("post_created_user_image"), obj.getString("created_uname"),obj.getString("companyname"));
+                        Post post = new  Post(obj.getString("pid"),obj.getString("created_user"),obj.getString("post"), obj.getString("Industry"), obj.getString("post_created_user_image"), obj.getString("created_uname"), obj.getString("created_by"), obj.getString("post_created_user_image"), obj.getString("created_uname"),obj.getString("companyname"),obj.getString("company_id"));
 
                         postList.add(post);
 
@@ -193,6 +193,7 @@ public class ProfilePostFragment extends Fragment implements ClickListener {
             Post post = postList.get(position);
             holder.post.setText(post.getPost());
             holder.postIndustry.setText(post.getPostIndustry());
+            holder.postCompany.setText(post.getPostCompany());
             holder.postProfileName.setText(post.getPostProfileName());
             holder.postTime.setText(post.getPostTime());
             //  holder.userImage.setImageUrl(Utils.BaseImageUri + post.getUserImage(), NetworkController.getInstance(context).getImageLoader());
@@ -213,6 +214,7 @@ public class ProfilePostFragment extends Fragment implements ClickListener {
                     profileDetails.putExtra("postIndustry", postList.get(position).getPostIndustry());
                     profileDetails.putExtra("post_createdid", postList.get(position).getPostedUserId());
                     profileDetails.putExtra("postCompany", postList.get(position).getPostCompany());
+                    profileDetails.putExtra("companyId", postList.get(position).getCompanyId());
                     startActivity(profileDetails);
                 }
             });
@@ -225,7 +227,7 @@ public class ProfilePostFragment extends Fragment implements ClickListener {
 
         public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-            private TextView post, postIndustry, postProfileName, postTime;
+            private TextView post, postIndustry, postProfileName, postTime,postCompany;
             private NetworkImageView postImage;
             private ItemClickListener itemClickListener;
 
@@ -235,6 +237,7 @@ public class ProfilePostFragment extends Fragment implements ClickListener {
 
                 post = (TextView) itemView.findViewById(R.id.post);
                 postIndustry = (TextView) itemView.findViewById(R.id.post_industry);
+                postCompany = (TextView) itemView.findViewById(R.id.post_company);
                 postProfileName = (TextView) itemView.findViewById(R.id.post_profile_name);
                 postTime = (TextView) itemView.findViewById(R.id.post_time);
                 // Volley's NetworkImageView which will load Image from URL

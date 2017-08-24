@@ -50,7 +50,7 @@ import static igotplaced.com.layouts.Utils.Utils.Name;
 public class ProfileQuestionsDetailsActivity extends AppCompatActivity implements View.OnClickListener {
 
 
-    private String id = null,name=null,time=null,image=null,message=null,industry=null,postedUserId=null,company=null;
+    private String id = null,name=null,time=null,image=null,companyId=null,message=null,industry=null,postedUserId=null,company=null;
     private String userId = null, userName = null;
     private NetworkImageView questionImage;
     private TextView profileName, profileTime, questionMessage, questionIndustry,questionsCompany;
@@ -90,8 +90,11 @@ public class ProfileQuestionsDetailsActivity extends AppCompatActivity implement
         profileTime.setText(time);
         questionMessage.setText(message);
         questionIndustry.setText(industry);
-        questionsCompany.setText(company);
-
+        if (company.equals("Select Company")){
+            questionsCompany.setText("");
+        }else {
+            questionsCompany.setText(company);
+        }
         postRecyclerView();
 
     }
@@ -206,6 +209,7 @@ public class ProfileQuestionsDetailsActivity extends AppCompatActivity implement
         industry = intent.getStringExtra("postIndustry");
         postedUserId = intent.getStringExtra("post_createdid");
         company = intent.getStringExtra("postCompany");
+        companyId = intent.getStringExtra("companyId");
 
     }
 
@@ -235,6 +239,7 @@ public class ProfileQuestionsDetailsActivity extends AppCompatActivity implement
 
                 Intent companyDetails=new Intent(getApplicationContext(),CompanyDetailsActivity.class);
                 companyDetails.putExtra("postCompany", company);
+                companyDetails.putExtra("companyId", companyId);
                 startActivity(companyDetails);
                 break;
         }

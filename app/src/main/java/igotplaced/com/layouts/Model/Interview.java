@@ -17,6 +17,11 @@ public class Interview {
     private String comentUserImage;
     private String commentMessage;
 private String interviewCompany;
+private String companyId;
+
+    public String getCompanyId() {
+        return companyId;
+    }
 
     public String getInterviewCompany() {
         return interviewCompany;
@@ -30,7 +35,7 @@ private String interviewCompany;
         this.commentMessage = commentMessage;
     }
 
-    public Interview(String interviewId, String interviewUserId, String interview, String interviewIndustry, String interviewImage, String interviewProfileName, String interviewTime, String userImage, String userComment,String interviewCompany) {
+    public Interview(String interviewId, String interviewUserId, String interview, String interviewIndustry, String interviewImage, String interviewProfileName, String interviewTime, String userImage, String userComment,String interviewCompany,String companyId) {
         this.interviewId = interviewId;
         this.interviewUserId = interviewUserId;
         this.interview = interview;
@@ -41,6 +46,7 @@ private String interviewCompany;
         this.userImage = userImage;
         this.userComment = userComment;
         this.interviewCompany = interviewCompany;
+        this.companyId = companyId;
     }
 
 

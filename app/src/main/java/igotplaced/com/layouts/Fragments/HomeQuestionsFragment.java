@@ -198,7 +198,7 @@ public class HomeQuestionsFragment extends Fragment implements SwipeRefreshLayou
                         try {
 
                             JSONObject obj = jsonObjectJSON.getJSONObject(i);
-                            Questions questions = new Questions(obj.getString("id"),obj.getString("created_user"),obj.getString("question"), obj.getString("industryname"), obj.getString("questionUserImgName"), obj.getString("created_uname"), obj.getString("created_by"), obj.getString("imgname"), obj.getString("fname"),obj.getString("companyname"));
+                            Questions questions = new Questions(obj.getString("id"),obj.getString("created_user"),obj.getString("question"), obj.getString("industryname"), obj.getString("questionUserImgName"), obj.getString("created_uname"), obj.getString("created_by"), obj.getString("imgname"), obj.getString("fname"),obj.getString("companyname"),obj.getString("company_id"));
                             // adding movie to blogHomeList array
                             questionsList.add(questions);
 
@@ -317,6 +317,7 @@ public class HomeQuestionsFragment extends Fragment implements SwipeRefreshLayou
                     questionDetails.putExtra("postIndustry", questionsList.get(position).getQuestionsIndustry());
                     questionDetails.putExtra("post_createdid", questionsList.get(position).getQuestionUserId());
                     questionDetails.putExtra("postCompany", questionsList.get(position).getQuestionsCompany());
+                    questionDetails.putExtra("companyId", questionsList.get(position).getCompanyId());
                     startActivity(questionDetails);
                 }
             });

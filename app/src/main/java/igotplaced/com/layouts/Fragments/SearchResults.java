@@ -134,7 +134,7 @@ public class SearchResults extends Fragment {
                             searchResultsModel.setMessage( obj.getString("post"));
                             searchResultsModel.setIndustry(obj.getString("Industry"));
                             searchResultsModel.setCompany(obj.getString("companyname"));
-
+                            searchResultsModel.setCompanyId(obj.getString("company_id"));
 
 
 
@@ -174,7 +174,7 @@ public class SearchResults extends Fragment {
                             searchResultsModel.setMessage( obj.getString("feedback"));
                             searchResultsModel.setIndustry(obj.getString("industryname"));
                             searchResultsModel.setCompany(obj.getString("companyname"));
-
+                            searchResultsModel.setCompanyId(obj.getString("company_id"));
                             searchResultsList.add(searchResultsModel);
 
                             list.add(1);
@@ -257,7 +257,7 @@ public class SearchResults extends Fragment {
                             searchResultsModel.setMessage( obj.getString("question"));
                             searchResultsModel.setIndustry(obj.getString("industryname"));
                             searchResultsModel.setCompany(obj.getString("companyname"));
-
+                            searchResultsModel.setCompanyId(obj.getString("company_id"));
 
                             searchResultsList.add(searchResultsModel);
                             list.add(3);

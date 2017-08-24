@@ -49,7 +49,7 @@ import static igotplaced.com.layouts.Utils.Utils.Name;
 public class ProfilePostDetailsActivity extends AppCompatActivity implements View.OnClickListener {
 
 
-    private String id = null, name = null, time = null, post = null, image = null, industry = null, postUserId = null,Company=null;
+    private String id = null, name = null, time = null,companyId, post = null, image = null, industry = null, postUserId = null,Company=null;
 
     private NetworkImageView postImage;
     private TextView profileName, profileTime, postMessage, postIndustry,postCompany;
@@ -209,6 +209,7 @@ public class ProfilePostDetailsActivity extends AppCompatActivity implements Vie
         industry = intent.getStringExtra("postIndustry");
         postUserId = intent.getStringExtra("post_createdid");
         Company = intent.getStringExtra("postCompany");
+        companyId = intent.getStringExtra("companyId");
     }
 
     @Override
@@ -238,6 +239,7 @@ public class ProfilePostDetailsActivity extends AppCompatActivity implements Vie
 
                 Intent companyDetails=new Intent(getApplicationContext(),CompanyDetailsActivity.class);
                 companyDetails.putExtra("postCompany", Company);
+                companyDetails.putExtra("companyId", companyId);
                 startActivity(companyDetails);
                 break;
 
