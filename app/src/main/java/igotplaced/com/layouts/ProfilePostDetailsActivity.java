@@ -91,8 +91,13 @@ public class ProfilePostDetailsActivity extends AppCompatActivity implements Vie
         profileName.setText(name);
         profileTime.setText(time);
         postMessage.setText(post);
-        postIndustry.setText(industry);
-        postCompany.setText(Company);
+        postIndustry.setText("#"+industry);
+        if (Company.equals("")){
+            postCompany.setText(Company);
+        }else{
+            postCompany.setText("#"+Company);
+        }
+
 
         postRecyclerView();
 

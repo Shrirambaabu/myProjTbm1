@@ -181,7 +181,7 @@
                 android:padding="@dimen/margin_2"
                 android:text="IT INDUSTRY"
                 android:textAllCaps="true"
-                android:textColor="@color/industry_company"
+                android:textColor="@color/link_color"
                 android:textSize="16sp"
                 android:textStyle="italic|bold" />
             <TextView
@@ -200,7 +200,7 @@
                 android:padding="@dimen/margin_2"
                 android:text="INFOSYS"
                 android:textAllCaps="true"
-                android:textColor="@color/industry_company"
+                android:textColor="@color/link_color"
                 android:textSize="16sp"
                 android:textStyle="italic|bold" />
 

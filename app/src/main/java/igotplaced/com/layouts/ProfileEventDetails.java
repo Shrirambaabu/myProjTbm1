@@ -96,8 +96,13 @@ public class ProfileEventDetails extends AppCompatActivity implements View.OnCli
         eventRegistered.setText(registered);
         eventStatus.setText(status);
         eventMessage.setText(event);
-        eventIndustry.setText(industry);
-        eventCompany.setText("");
+        eventIndustry.setText("#"+industry);
+        if (company.equals("")|| company.equals("Select Company")){
+            eventCompany.setText("");
+        }else{
+            eventCompany.setText("#"+company);
+        }
+
 
         postRecyclerView();
     }
@@ -223,6 +228,7 @@ public class ProfileEventDetails extends AppCompatActivity implements View.OnCli
         event = intent.getStringExtra("eEvnt");
         industry = intent.getStringExtra("eIndustry");
         postedUserId = intent.getStringExtra("eUserId");
+        company = intent.getStringExtra("postCompany");
 
     }
 

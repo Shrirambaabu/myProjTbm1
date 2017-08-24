@@ -295,10 +295,15 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
             postId = post.getPostId();
             postedUserId = post.getPostedUserId();
             holder.post.setText(post.getPost());
-            holder.postIndustry.setText(post.getPostIndustry());
+            holder.postIndustry.setText("#"+post.getPostIndustry());
             holder.postProfileName.setText(post.getPostProfileName());
             holder.postTime.setText(post.getPostTime());
-            holder.postCompany.setText(post.getPostCompany());
+            if (post.getPostCompany().equals("")){
+                holder.postCompany.setText(post.getPostCompany());
+            }else{
+                holder.postCompany.setText("#"+post.getPostCompany());
+            }
+
             //  holder.userImage.setImageUrl(Utils.BaseImageUri + post.getUserImage(), NetworkController.getInstance(context).getImageLoader());
             holder.postImage.setImageUrl(Utils.BaseImageUri + post.getPostImage(), NetworkController.getInstance(context).getImageLoader());
 

@@ -11,4 +11,5 @@
     <color name="transparent">#00000000</color>
     <color name="text_main">#212121</color>
     <color name="industry_company">#424242</color>
+    <color name="link_color">#5C6BC0</color>
 </resources>

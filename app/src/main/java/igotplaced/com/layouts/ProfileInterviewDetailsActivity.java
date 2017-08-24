@@ -89,8 +89,14 @@ public class ProfileInterviewDetailsActivity extends AppCompatActivity implement
         profileName.setText(name);
         profileTime.setText(time);
         interviewMessage.setText(interview);
-        interviewIndustry.setText(industry);
-        interviewCompany.setText(company);
+        interviewIndustry.setText("#"+industry);
+
+        if (company.equals("")){
+            interviewCompany.setText(company);
+        }else{
+            interviewCompany.setText("#"+company);
+        }
+
 
         postRecyclerView();
 

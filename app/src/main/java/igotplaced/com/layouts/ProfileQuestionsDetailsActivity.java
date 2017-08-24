@@ -89,11 +89,11 @@ public class ProfileQuestionsDetailsActivity extends AppCompatActivity implement
         profileName.setText(name);
         profileTime.setText(time);
         questionMessage.setText(message);
-        questionIndustry.setText(industry);
-        if (company.equals("Select Company")){
+        questionIndustry.setText("#"+industry);
+        if (company.equals("Select Company")||company.equals("")){
             questionsCompany.setText("");
         }else {
-            questionsCompany.setText(company);
+            questionsCompany.setText("#"+company);
         }
         postRecyclerView();
 

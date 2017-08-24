@@ -74,7 +74,7 @@
                 android:layout_below="@+id/company_profile_name"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/margin_10"
-                android:textColor="#fff"
+                android:textColor="@color/link_color"
                 android:textSize="18sp" />
 
 

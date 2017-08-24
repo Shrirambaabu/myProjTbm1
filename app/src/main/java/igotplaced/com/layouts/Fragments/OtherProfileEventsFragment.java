@@ -167,10 +167,14 @@ public class OtherProfileEventsFragment extends Fragment {
             holder.eventVenue.setText(events.getEventVenue());
             holder.eventDate.setText(events.getEventDate());
             holder.eventRegistered.setText(events.getEventRegistered());
-            holder.eventCompany.setText(events.getEventCompany());
+            if (events.getEventCompany().equals("")||events.getEventCompany().equals("Select Company")){
+                holder.eventCompany.setText("");
+            }else {
+                holder.eventCompany.setText("#"+events.getEventCompany());
+            }
             holder.eventStatus.setText(events.getEventStatus());
             holder.event.setText(events.getEvent());
-            holder.event_industry.setText(events.getEventIndustry());
+            holder.event_industry.setText("#"+events.getEventIndustry());
             holder.event_profile_name.setText(events.getEventProfileName());
 
             holder.event_time.setText(events.getEventTime());

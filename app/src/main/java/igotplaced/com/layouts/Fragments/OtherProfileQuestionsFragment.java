@@ -160,8 +160,12 @@ public class OtherProfileQuestionsFragment extends Fragment {
 
             //Pass the values of feeds object to Views
             holder.questions.setText(questions.getQuestions());
-            holder.questionsCompany.setText(questions.getQuestionsCompany());
-            holder.questionsIndustry.setText(questions.getQuestionsIndustry());
+            if(questions.getQuestionsCompany().equals("")){
+                holder.questionsCompany.setText(questions.getQuestionsCompany());
+            }else {
+                holder.questionsCompany.setText("#"+questions.getQuestionsCompany());
+            }
+            holder.questionsIndustry.setText("#"+questions.getQuestionsIndustry());
             holder.questionsProfileName.setText(questions.getQuestionsProfileName());
             holder.questionsTime.setText(questions.getQuestionsTime());
             //      holder.comment_profile_img.setImageUrl(Utils.BaseImageUri + questions.getCommentProfileImage(), NetworkController.getInstance(context).getImageLoader());
