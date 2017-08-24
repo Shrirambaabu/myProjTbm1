@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import igotplaced.com.layouts.Fragments.CompanyAboutFragment;
+import igotplaced.com.layouts.Fragments.CompanyEventFragment;
 import igotplaced.com.layouts.Fragments.CompanyInterviewFragment;
 import igotplaced.com.layouts.Fragments.CompanyPostFragment;
 import igotplaced.com.layouts.Fragments.CompanyQuestionFragment;
@@ -178,6 +179,11 @@ public class CompanyDetailsActivity extends AppCompatActivity {
         bundleInterview.putString("otherId", companyId);
         companyInterviewFragment.setArguments(bundleInterview);
 
+        CompanyEventFragment companyEventFragment=new CompanyEventFragment();
+        Bundle bundleEvents = new Bundle();
+        bundleEvents.putString("otherId", companyId);
+        companyEventFragment.setArguments(bundleEvents);
+
         CompanyQuestionFragment companyQuestionFragment=new CompanyQuestionFragment();
         Bundle bundleQuestion = new Bundle();
         bundleQuestion.putString("otherId", companyId);
@@ -191,7 +197,7 @@ public class CompanyDetailsActivity extends AppCompatActivity {
 
         adapter.addFragment(companyPostFragment);
         adapter.addFragment(companyInterviewFragment);
-        adapter.addFragment(new OtherProfilePostFragment());
+        adapter.addFragment(companyEventFragment);
         adapter.addFragment(companyQuestionFragment);
         adapter.addFragment(companyAboutFragment);
         viewPager.setAdapter(adapter);

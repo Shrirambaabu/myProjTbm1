@@ -163,6 +163,7 @@ public class RecyclerAdapterSearchDetails extends RecyclerView.Adapter<RecyclerV
                 ((EventsViewHolder) holder).eventRegistered.setText(searchResultsModel.getEventCount());
                 ((EventsViewHolder) holder).eventStatus.setText(searchResultsModel.getEventStatus());
                 ((EventsViewHolder) holder).event.setText(searchResultsModel.getMessage());
+                ((EventsViewHolder) holder).eventCompany.setText("");
                 ((EventsViewHolder) holder).event_industry.setText(searchResultsModel.getIndustry() + "  " + searchResultsModel.getCompany());
                 ((EventsViewHolder) holder).event_profile_name.setText(searchResultsModel.getUserName());
                 ((EventsViewHolder) holder).event_time.setText(searchResultsModel.getCreatedDate());
@@ -301,7 +302,7 @@ public class RecyclerAdapterSearchDetails extends RecyclerView.Adapter<RecyclerV
     }
 
     class EventsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private TextView eventCaption, eventDesignation, eventVenue, eventDate, eventRegistered, eventStatus, event, event_industry, event_profile_name, event_time, viewMore;
+        private TextView eventCaption, eventDesignation, eventVenue,eventCompany, eventDate, eventRegistered, eventStatus, event, event_industry, event_profile_name, event_time, viewMore;
         private NetworkImageView event_img, userImage;
         private ItemClickListener itemClickListener;
 
@@ -312,6 +313,7 @@ public class RecyclerAdapterSearchDetails extends RecyclerView.Adapter<RecyclerV
             eventVenue = (TextView) itemView.findViewById(R.id.eventVenue);
             eventDate = (TextView) itemView.findViewById(R.id.eventDate);
             eventRegistered = (TextView) itemView.findViewById(R.id.eventRegistered);
+            eventCompany = (TextView) itemView.findViewById(R.id.event_company);
 
             eventStatus = (TextView) itemView.findViewById(R.id.eventStatus);
             event = (TextView) itemView.findViewById(R.id.event);
