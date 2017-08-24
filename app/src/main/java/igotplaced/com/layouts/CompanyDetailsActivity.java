@@ -28,6 +28,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import igotplaced.com.layouts.Fragments.CompanyAboutFragment;
+import igotplaced.com.layouts.Fragments.CompanyPostFragment;
 import igotplaced.com.layouts.Fragments.OtherProfilePostFragment;
 import igotplaced.com.layouts.Model.Company;
 import igotplaced.com.layouts.Model.Post;
@@ -149,6 +151,7 @@ public class CompanyDetailsActivity extends AppCompatActivity {
         intent = getIntent();
         companyNameIntent= intent.getStringExtra("postCompany");
         companyId= intent.getStringExtra("companyId");
+        Log.e("company",""+companyId);
     }
 
     private void setupTabIcons() {
@@ -163,11 +166,22 @@ public class CompanyDetailsActivity extends AppCompatActivity {
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
+        CompanyPostFragment companyPostFragment=new CompanyPostFragment();
+        Bundle bundlepost = new Bundle();
+        bundlepost.putString("otherId", companyId);
+        companyPostFragment.setArguments(bundlepost);
+
+        CompanyAboutFragment companyAboutFragment=new CompanyAboutFragment();
+        Bundle bundleAbout = new Bundle();
+        bundleAbout.putString("otherId", companyId);
+        companyAboutFragment.setArguments(bundleAbout);
+
+
+        adapter.addFragment(companyPostFragment);
         adapter.addFragment(new OtherProfilePostFragment());
         adapter.addFragment(new OtherProfilePostFragment());
         adapter.addFragment(new OtherProfilePostFragment());
-        adapter.addFragment(new OtherProfilePostFragment());
-        adapter.addFragment(new OtherProfilePostFragment());
+        adapter.addFragment(companyAboutFragment);
         viewPager.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
