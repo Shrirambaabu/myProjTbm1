@@ -29,7 +29,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import igotplaced.com.layouts.Fragments.CompanyAboutFragment;
+import igotplaced.com.layouts.Fragments.CompanyInterviewFragment;
 import igotplaced.com.layouts.Fragments.CompanyPostFragment;
+import igotplaced.com.layouts.Fragments.CompanyQuestionFragment;
 import igotplaced.com.layouts.Fragments.OtherProfilePostFragment;
 import igotplaced.com.layouts.Model.Company;
 import igotplaced.com.layouts.Model.Post;
@@ -167,9 +169,19 @@ public class CompanyDetailsActivity extends AppCompatActivity {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
         CompanyPostFragment companyPostFragment=new CompanyPostFragment();
-        Bundle bundlepost = new Bundle();
-        bundlepost.putString("otherId", companyId);
-        companyPostFragment.setArguments(bundlepost);
+        Bundle bundlePost = new Bundle();
+        bundlePost.putString("otherId", companyId);
+        companyPostFragment.setArguments(bundlePost);
+
+        CompanyInterviewFragment companyInterviewFragment=new CompanyInterviewFragment();
+        Bundle bundleInterview = new Bundle();
+        bundleInterview.putString("otherId", companyId);
+        companyInterviewFragment.setArguments(bundleInterview);
+
+        CompanyQuestionFragment companyQuestionFragment=new CompanyQuestionFragment();
+        Bundle bundleQuestion = new Bundle();
+        bundleQuestion.putString("otherId", companyId);
+        companyQuestionFragment.setArguments(bundleQuestion);
 
         CompanyAboutFragment companyAboutFragment=new CompanyAboutFragment();
         Bundle bundleAbout = new Bundle();
@@ -178,9 +190,9 @@ public class CompanyDetailsActivity extends AppCompatActivity {
 
 
         adapter.addFragment(companyPostFragment);
+        adapter.addFragment(companyInterviewFragment);
         adapter.addFragment(new OtherProfilePostFragment());
-        adapter.addFragment(new OtherProfilePostFragment());
-        adapter.addFragment(new OtherProfilePostFragment());
+        adapter.addFragment(companyQuestionFragment);
         adapter.addFragment(companyAboutFragment);
         viewPager.setAdapter(adapter);
         adapter.notifyDataSetChanged();
