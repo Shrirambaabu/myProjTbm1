@@ -22,6 +22,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -84,7 +85,7 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
 
     private String industrySpinnerOneValue = "", industrySpinnerTwoValue = "", industrySpinnerThreeValue = "";
     private String companySpinnerOneValue = "", companySpinnerTwoValue = "", companySpinnerThreeValue = "";
-
+    private ImageView camera;
     private AppCompatEditText mobileNumberEditText;
     private AppCompatAutoCompleteTextView locationEditText;
     private TextInputLayout inputLayoutMobileNumber, inputLayoutLocation;
@@ -100,7 +101,7 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
 
     private TextView company1TextView, company2TextView, company3TextView;
 
-    private int yearOfPassOutSpinnerPosition = 0, industry1SpinnerPosition = 0, industry2SpinnerPosition = 0, industry3SpinnerPosition = 0,company1SpinnerPosition;
+    private int yearOfPassOutSpinnerPosition = 0, industry1SpinnerPosition = 0, industry2SpinnerPosition = 0, industry3SpinnerPosition = 0, company1SpinnerPosition;
 
     private ProgressDialog pDialog;
     private String URL = BaseUri;
@@ -558,10 +559,10 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
             case R.id.profile_industry_spinner1:
                 if (position != 0) {
                     industrySpinnerOneValue = industrySpinnerOne.getSelectedItem().toString();
-                    Log.e("iS Value",""+industrySpinnerOneValue.replaceAll("\\s+","").substring(0,2));
+                    Log.e("iS Value", "" + industrySpinnerOneValue.replaceAll("\\s+", "").substring(0, 2));
                  /*   company1TextView.setVisibility(View.GONE);
                     companySpinnerOne.setVisibility(View.VISIBLE);*/
-                    networkCompanySpinnerArrayRequest1(industrySpinnerOneValue.replaceAll("\\s+","").substring(0,2));
+                    networkCompanySpinnerArrayRequest1(industrySpinnerOneValue.replaceAll("\\s+", "").substring(0, 2));
                 } else {
                     industrySpinnerOneValue = "";
                 }
@@ -578,7 +579,7 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
                     industrySpinnerTwoValue = industrySpinnerTwo.getSelectedItem().toString();
                /*     company2TextView.setVisibility(View.GONE);
                     companySpinnerTwo.setVisibility(View.VISIBLE);*/
-                    networkCompanySpinnerArrayRequest2(industrySpinnerTwoValue.replaceAll("\\s+","").substring(0,2));
+                    networkCompanySpinnerArrayRequest2(industrySpinnerTwoValue.replaceAll("\\s+", "").substring(0, 2));
                 } else {
                     industrySpinnerTwoValue = "";
                 }
@@ -595,7 +596,7 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
                     industrySpinnerThreeValue = industrySpinnerThree.getSelectedItem().toString();
                  /*   company3TextView.setVisibility(View.GONE);
                     companySpinnerThree.setVisibility(View.VISIBLE);*/
-                    networkCompanySpinnerArrayRequest3(industrySpinnerThreeValue.replaceAll("\\s+","").substring(0,2));
+                    networkCompanySpinnerArrayRequest3(industrySpinnerThreeValue.replaceAll("\\s+", "").substring(0, 2));
                 } else {
                     industrySpinnerThreeValue = "";
                 }
@@ -941,7 +942,7 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
                 parameters.put("interest", String.valueOf((checkBoxIntrestedBoolean) ? 1 : 0));
                 parameters.put("location", locationEditText.getText().toString());
 
-                Log.e("Update",""+parameters);
+                Log.e("Update", "" + parameters);
 
                 return checkParams(parameters);
             }

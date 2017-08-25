@@ -240,9 +240,19 @@ public class MainActivity extends AppCompatActivity {
                 editor.putString(Id, null);
                 editor.putString(Name, null);
                 editor.commit();
-                Intent logOut = new Intent(this, LoginActivity.class);
+                new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_alert).setTitle("Logout")
+                        .setMessage("Are you sure you want to Logout?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent logOut = new Intent(MainActivity.this, LoginActivity.class);
+                                logOut.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(logOut);
+                            }
+                        }).setNegativeButton("No", null).show();
+               /* Intent logOut = new Intent(this, LoginActivity.class);
                 logOut.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(logOut);
+                startActivity(logOut);*/
                 break;
 
 

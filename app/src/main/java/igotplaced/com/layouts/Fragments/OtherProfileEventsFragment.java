@@ -96,6 +96,7 @@ public class OtherProfileEventsFragment extends Fragment {
 
     private void makeJsonArrayRequestEventHome() {
 
+        Log.e("profEvents",""+BaseUri + "/profileService/profileEvent/" + userId);
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, BaseUri + "/profileService/profileEvent/" + userId, null, new Response.Listener<JSONArray>() {
 
 
