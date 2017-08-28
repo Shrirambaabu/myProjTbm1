@@ -4,7 +4,12 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Handler;
+import android.provider.MediaStore;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,6 +20,7 @@ import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatSpinner;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,6 +50,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -102,9 +112,13 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
     private TextView company1TextView, company2TextView, company3TextView;
 
     private int yearOfPassOutSpinnerPosition = 0, industry1SpinnerPosition = 0, industry2SpinnerPosition = 0, industry3SpinnerPosition = 0, company1SpinnerPosition;
+    private Uri uriPath;
+    private String encImage;
+
 
     private ProgressDialog pDialog;
     private String URL = BaseUri;
+    private static final int GALLERY_KITKAT_INTENT_CALLED = 11;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -189,6 +203,7 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
         // checkBoxIntrested.setOnClickListener(this);
 
         submitbtn.setOnClickListener(this);
+        camera.setOnClickListener(this);
     }
 
     @Override
@@ -783,8 +798,111 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
                     checkBoxIntrestedBoolean = checkBoxIntrested.isChecked();
                 }
                 break;
+            case R.id.edit_pic:
+                Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                intent.addCategory(Intent.CATEGORY_OPENABLE);
+                intent.setType("image/*");
+                startActivityForResult(intent, GALLERY_KITKAT_INTENT_CALLED);
+                break;
         }
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == GALLERY_KITKAT_INTENT_CALLED && resultCode == RESULT_OK && data != null && data.getData() != null) {
+
+            uriPath = data.getData();
+
+            final InputStream imageStream;
+            try {
+                imageStream = getContentResolver().openInputStream(uriPath);
+                final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+                String encodedImage = encodeImage(selectedImage);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            getContentResolver().takePersistableUriPermission(uriPath, Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uriPath);
+                bitmap = Bitmap.createScaledBitmap(bitmap, 1080, 512, false);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+
+    private String encodeImage(Bitmap selectedImage) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        selectedImage.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] b = baos.toByteArray();
+        encImage = Base64.encodeToString(b, Base64.DEFAULT);
+
+//decode image
+        byte[] decodedString = Base64.decode(encImage, Base64.DEFAULT);
+        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+
+        profileImage.setImageBitmap(decodedByte);
+
+
+        Log.e("Encoded Image", "" + encImage);
+        Log.e("Decoded Image", "" + decodedByte);
+        makeEncryptedImage();
+        return encImage;
+    }
+
+    private void makeEncryptedImage() {
+
+        Log.e("ImageURl", "" + BaseUri + "/profileService/profileImageUpdate/" + userId);
+
+        StringRequest request = new StringRequest(Request.Method.POST, BaseUri + "/profileService/profileImageUpdate/" + userId, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String s) {
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+
+                /**
+                 *  Returns error message when,
+                 *  server is down,
+                 *  incorrect IP
+                 *  Server not deployed
+                 */
+                Utils.showDialogue(EditProfileActivity.this, "Sorry! Server Error");
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> parameters = new HashMap<String, String>();
+
+                parameters.put("id", userId);
+                parameters.put("encodedImage", "" + encImage);
+                parameters.put("url", "" + uriPath);
+
+
+                return parameters;
+            }
+        };
+
+        int MY_SOCKET_TIMEOUT_MS = 30000;//30 seconds - change to what you want
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                MY_SOCKET_TIMEOUT_MS,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        RequestQueue rQueue = Volley.newRequestQueue(EditProfileActivity.this);
+        rQueue.add(request);
+
+
+    }
+
 
     private void updateDetails() {
 
@@ -1052,6 +1170,7 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
         profileViewDepartment = (TextInputLayout) findViewById(R.id.profileViewDepartment);
 
         profileImage = (NetworkImageView) findViewById(R.id.editProfileImage);
+        camera = (ImageView) findViewById(R.id.edit_pic);
 
         editProfileName = (AppCompatEditText) findViewById(R.id.editProfileName);
         editProfileEmail = (AppCompatEditText) findViewById(R.id.editProfileEmail);
