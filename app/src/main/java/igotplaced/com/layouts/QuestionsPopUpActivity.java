@@ -45,7 +45,7 @@ public class QuestionsPopUpActivity extends AppCompatActivity implements View.On
 
     private Intent intent;
     private String id = null;
-    private  String  company,companyId,postedUserId,name,time,message,industry,image;
+    private  String  company,companyId,postedUserId;
     private Toolbar toolbar;
     private LinearLayoutManager mLayoutManager;
 
@@ -262,8 +262,7 @@ public class QuestionsPopUpActivity extends AppCompatActivity implements View.On
                 Intent companyDetails=new Intent(getApplicationContext(),CompanyDetailsActivity.class);
                 companyDetails.putExtra("postCompany", company);
                 companyDetails.putExtra("companyId", companyId);
-                Log.e("CompanyNotifiy",""+companyId);
-                Log.e("CompanyNotifiy",""+company);
+
 
                 startActivity(companyDetails);
                 break;

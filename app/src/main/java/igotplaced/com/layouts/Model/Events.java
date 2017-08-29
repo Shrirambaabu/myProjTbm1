@@ -17,8 +17,26 @@ public class Events {
     private String eventRegistered;
     private String eventStatus;
     private String event;
+
     private String eventIndustry;
     private String eventImage;
+
+    public Events(String eventId, String eventUserId, String eventCaption, String eventDesignation, String eventVenue, String eventDate, String eventRegistered, String eventStatus, String event, String eventIndustry, String eventImage, String eventProfileName, String eventTime) {
+        this.eventId = eventId;
+        this.eventUserId = eventUserId;
+        this.eventCaption = eventCaption;
+        this.eventDesignation = eventDesignation;
+        this.eventVenue = eventVenue;
+        this.eventDate = eventDate;
+        this.eventRegistered = eventRegistered;
+        this.eventStatus = eventStatus;
+        this.event = event;
+        this.eventIndustry = eventIndustry;
+        this.eventImage = eventImage;
+        this.eventProfileName = eventProfileName;
+        this.eventTime = eventTime;
+    }
+
     private String eventProfileName;
     private String eventTime;
     private String commentProfileImage;
@@ -53,7 +71,7 @@ public class Events {
         this.eventCompany = eventCompany;
     }
 
-    public Events(String eventCaption, String eventDesignation, String eventVenue, String eventDate, String eventRegistered, String eventStatus, String event, String eventIndustry, String eventImage, String eventProfileName, String eventTime, String commentProfileImage, String userComment) {
+    /*public Events(String eventCaption, String eventDesignation, String eventVenue, String eventDate, String eventRegistered, String eventStatus, String event, String eventIndustry, String eventImage, String eventProfileName, String eventTime, String commentProfileImage, String userComment) {
         this.eventCaption = eventCaption;
         this.eventDesignation = eventDesignation;
         this.eventVenue = eventVenue;
@@ -67,7 +85,7 @@ public class Events {
         this.eventTime = eventTime;
         this.commentProfileImage = commentProfileImage;
         this.userComment = userComment;
-    }
+    }*/
 
     public Events(String eventCaption, String eventDesignation, String eventVenue, String eventDate, String eventRegistered, String eventIndustry, String eventImage, String eventProfileName, String eventTime, String commentProfileImage, String userComment) {
         this.eventCaption = eventCaption;

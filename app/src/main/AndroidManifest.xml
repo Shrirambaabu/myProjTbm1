@@ -70,7 +70,8 @@
         <activity android:name=".OtherProfileActivity" />
         <activity android:name=".CompanyDetailsActivity" />
         <activity android:name=".AboutCompanyActivity" />
-        <activity android:name=".QuestionsPopUpActivity"></activity>
+        <activity android:name=".QuestionsPopUpActivity" />
+        <activity android:name=".EventsPopUpActivity"></activity>
     </application>
 
 </manifest>

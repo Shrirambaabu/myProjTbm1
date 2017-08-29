@@ -178,8 +178,6 @@ public class NotificationFragment extends Fragment implements SwipeRefreshLayout
 
 
 
-        Log.e("loaded Notifiy : ", "" + BaseUri + "/notificationService/notification/" + userId + "?start=" + start + "&size=" + size);
-
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, BaseUri + "/notificationService/notification/"+ userId +"?start=" + start + "&size=" + size, null, new Response.Listener<JSONObject>() {
             JSONArray jsonObjectJSON = null;
 

@@ -13,6 +13,7 @@ import com.android.volley.toolbox.NetworkImageView;
 
 import java.util.List;
 
+import igotplaced.com.layouts.EventsPopUpActivity;
 import igotplaced.com.layouts.Fragments.NotificationFragment;
 import igotplaced.com.layouts.Model.NotificationView;
 import igotplaced.com.layouts.QuestionsPopUpActivity;
@@ -23,12 +24,11 @@ import igotplaced.com.layouts.Utils.NetworkController;
 import igotplaced.com.layouts.Utils.Utils;
 
 
-public class RecyclerAdapterNotification  extends RecyclerView.Adapter<RecyclerAdapterNotification.MyViewHolder> {
+public class RecyclerAdapterNotification extends RecyclerView.Adapter<RecyclerAdapterNotification.MyViewHolder> {
 
     private List<NotificationView> notificationViewList;
     private Context context;
     private LayoutInflater inflater;
-
 
 
     public RecyclerAdapterNotification(Context context, List<NotificationView> notificationList) {
@@ -52,20 +52,35 @@ public class RecyclerAdapterNotification  extends RecyclerView.Adapter<RecyclerA
         //Pass the values of feeds object to Views
         holder.createdBy.setText(notifyView.getCreatedBy());
         holder.notificationPost.setText(notifyView.getNotificationPost());
-        holder.notify_img.setImageUrl(Utils.BaseImageUri+notifyView.getImageName(), NetworkController.getInstance(context).getImageLoader());
+        holder.notify_img.setImageUrl(Utils.BaseImageUri + notifyView.getImageName(), NetworkController.getInstance(context).getImageLoader());
 
         holder.setItemClickListener(new ItemClickListener() {
             @Override
             public void onItemClick(View v, int pos) {
                 Log.e("tag", "click" + notificationViewList.get(position).getNotifyId());
-
-                Intent profileDetails=new Intent(context, QuestionsPopUpActivity.class);
-                profileDetails.putExtra("qid", notificationViewList.get(position).getNotifyId());
-
-                profileDetails.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                Log.e("Click Caption", "" + notificationViewList.get(position).getNotifyCaption());
 
 
-                context.startActivity(profileDetails);
+                if (notificationViewList.get(position).getNotifyCaption().equals("question")) {
+                    Intent profileDetails = new Intent(context, QuestionsPopUpActivity.class);
+                    profileDetails.putExtra("qid", notificationViewList.get(position).getNotifyId());
+
+                    profileDetails.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+
+                    context.startActivity(profileDetails);
+                }
+
+                if (notificationViewList.get(position).getNotifyCaption().equals("newevent")){
+                    Intent profileDetails = new Intent(context, EventsPopUpActivity.class);
+                    profileDetails.putExtra("eid", notificationViewList.get(position).getNotifyId());
+
+                    profileDetails.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+
+                    context.startActivity(profileDetails);
+                }
+
             }
         });
     }
@@ -74,7 +89,6 @@ public class RecyclerAdapterNotification  extends RecyclerView.Adapter<RecyclerA
     public int getItemCount() {
         return notificationViewList.size();
     }
-
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
