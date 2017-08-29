@@ -69,7 +69,8 @@
         <activity android:name=".ProfileQuestionsDetailsActivity" />
         <activity android:name=".OtherProfileActivity" />
         <activity android:name=".CompanyDetailsActivity" />
-        <activity android:name=".AboutCompanyActivity"></activity>
+        <activity android:name=".AboutCompanyActivity" />
+        <activity android:name=".QuestionsPopUpActivity"></activity>
     </application>
 
 </manifest>

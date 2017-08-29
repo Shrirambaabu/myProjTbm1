@@ -207,10 +207,14 @@ public class ProfileInterviewExperienceFragment extends Fragment implements Clic
 
             //Pass the values of feeds object to Views
             holder.interview.setText(interview.getInterview());
-            holder.interviewIndustry.setText(interview.getInterviewIndustry());
+            holder.interviewIndustry.setText("#"+interview.getInterviewIndustry());
             holder.interviewProfileName.setText(interview.getInterviewProfileName());
             holder.interviewTime.setText(interview.getInterviewTime());
-            holder.interviewCompany.setText(interview.getInterviewCompany());
+            if (interview.getInterviewCompany().equals("")){
+                holder.interviewCompany.setText(interview.getInterviewCompany());
+            }else{
+                holder.interviewCompany.setText("#"+interview.getInterviewCompany());
+            }
             //  holder.userImage.setImageUrl(Utils.BaseImageUri + interview.getUserImage(), NetworkController.getInstance(context).getImageLoader());
             holder.interviewImage.setImageUrl(Utils.BaseImageUri + interview.getInterviewImage(), NetworkController.getInstance(context).getImageLoader());
 

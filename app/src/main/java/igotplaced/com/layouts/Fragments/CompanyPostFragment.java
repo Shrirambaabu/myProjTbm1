@@ -91,6 +91,7 @@ public class CompanyPostFragment extends Fragment {
 
     private void makeJsonArrayRequestPostHome() {
 
+        Log.e("PostCompany",""+ BaseUri + "/profileService/companyProfilePost/" + userId);
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, BaseUri + "/profileService/companyProfilePost/" + userId, null, new Response.Listener<JSONArray>() {
 
 

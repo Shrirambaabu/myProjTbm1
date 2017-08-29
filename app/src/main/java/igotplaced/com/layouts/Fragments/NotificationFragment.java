@@ -156,8 +156,6 @@ public class NotificationFragment extends Fragment implements SwipeRefreshLayout
             }
         });
 
-        recyclerAdapterNotification.setClickListener(this);
-
 
     }
 
@@ -180,7 +178,7 @@ public class NotificationFragment extends Fragment implements SwipeRefreshLayout
 
 
 
-        Log.d("error", "loaded" + BaseUri + "/notificationService/notification" + userId + "?start=" + start + "&size=" + size);
+        Log.e("loaded Notifiy : ", "" + BaseUri + "/notificationService/notification/" + userId + "?start=" + start + "&size=" + size);
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, BaseUri + "/notificationService/notification/"+ userId +"?start=" + start + "&size=" + size, null, new Response.Listener<JSONObject>() {
             JSONArray jsonObjectJSON = null;
@@ -198,7 +196,7 @@ public class NotificationFragment extends Fragment implements SwipeRefreshLayout
                         try {
 
                             JSONObject obj = jsonObjectJSON.getJSONObject(i);
-                            NotificationView notify = new NotificationView(obj.getString("created_by"), obj.getString("post"), obj.getString("imgname"));
+                            NotificationView notify = new NotificationView(obj.getString("created_by"), obj.getString("post"), obj.getString("imgname"), obj.getString("ids"), obj.getString("Caption"));
 
                             // adding movie to blogHomeList array
                             notificationViewList.add(notify);

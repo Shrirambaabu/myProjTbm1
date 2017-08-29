@@ -210,13 +210,13 @@ public class ProfileQuestionFragment extends Fragment implements ClickListener {
 
             //Pass the values of feeds object to Views
             holder.questions.setText(questions.getQuestions());
-            if (questions.getQuestionsCompany().equals("Select Company")){
+            if (questions.getQuestionsCompany().equals("Select Company")||questions.getQuestionsCompany().equals("")){
                 holder.questionsCompany.setText("");
             }else{
-                holder.questionsCompany.setText(questions.getQuestionsCompany());
+                holder.questionsCompany.setText("#"+questions.getQuestionsCompany());
             }
 
-            holder.questionsIndustry.setText(questions.getQuestionsIndustry());
+            holder.questionsIndustry.setText("#"+questions.getQuestionsIndustry());
             holder.questionsProfileName.setText(questions.getQuestionsProfileName());
             holder.questionsTime.setText(questions.getQuestionsTime());
             //      holder.comment_profile_img.setImageUrl(Utils.BaseImageUri + questions.getCommentProfileImage(), NetworkController.getInstance(context).getImageLoader());

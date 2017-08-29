@@ -192,8 +192,12 @@ public class ProfilePostFragment extends Fragment implements ClickListener {
 
             Post post = postList.get(position);
             holder.post.setText(post.getPost());
-            holder.postIndustry.setText(post.getPostIndustry());
-            holder.postCompany.setText(post.getPostCompany());
+            holder.postIndustry.setText("#"+post.getPostIndustry());
+            if (post.getPostCompany().equals("")){
+                holder.postCompany.setText(post.getPostCompany());
+            }else{
+                holder.postCompany.setText("#"+post.getPostCompany());
+            }
             holder.postProfileName.setText(post.getPostProfileName());
             holder.postTime.setText(post.getPostTime());
             //  holder.userImage.setImageUrl(Utils.BaseImageUri + post.getUserImage(), NetworkController.getInstance(context).getImageLoader());

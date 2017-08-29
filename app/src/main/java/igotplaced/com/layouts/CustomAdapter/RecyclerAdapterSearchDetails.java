@@ -99,10 +99,10 @@ public class RecyclerAdapterSearchDetails extends RecyclerView.Adapter<RecyclerV
             if (integer==0) {
 
                 ((PostViewHolder) holder).post.setText(searchResultsModel.getMessage());
-                ((PostViewHolder) holder).postIndustry.setText(searchResultsModel.getIndustry());
+                ((PostViewHolder) holder).postIndustry.setText("#"+searchResultsModel.getIndustry());
                 ((PostViewHolder) holder).postProfileName.setText(searchResultsModel.getUserName());
                 ((PostViewHolder) holder).postTime.setText(searchResultsModel.getCreatedDate());
-                ((PostViewHolder) holder).postCompany.setText(searchResultsModel.getCompany());
+                ((PostViewHolder) holder).postCompany.setText("#"+searchResultsModel.getCompany());
                 ((PostViewHolder) holder).postImage.setImageUrl(Utils.BaseImageUri + searchResultsModel.getUserImage(), NetworkController.getInstance(context).getImageLoader());
                 ((PostViewHolder) holder).setItemClickListener(new ItemClickListener() {
                     @Override
@@ -126,9 +126,9 @@ public class RecyclerAdapterSearchDetails extends RecyclerView.Adapter<RecyclerV
             } else if (integer==1) {
 
                 ((InterviewViewHolder) holder).interview.setText(searchResultsModel.getMessage());
-                ((InterviewViewHolder) holder).interviewIndustry.setText(searchResultsModel.getIndustry());
+                ((InterviewViewHolder) holder).interviewIndustry.setText("#"+searchResultsModel.getIndustry());
                 ((InterviewViewHolder) holder).interviewProfileName.setText(searchResultsModel.getUserName());
-                ((InterviewViewHolder) holder).interviewCompany.setText(searchResultsModel.getCompany());
+                ((InterviewViewHolder) holder).interviewCompany.setText("#"+searchResultsModel.getCompany());
                 ((InterviewViewHolder) holder).interviewTime.setText(searchResultsModel.getCreatedDate());
                 ((InterviewViewHolder) holder).interviewImage.setImageUrl(Utils.BaseImageUri + searchResultsModel.getUserImage(), NetworkController.getInstance(context).getImageLoader());
 
@@ -163,8 +163,8 @@ public class RecyclerAdapterSearchDetails extends RecyclerView.Adapter<RecyclerV
                 ((EventsViewHolder) holder).eventRegistered.setText(searchResultsModel.getEventCount());
                 ((EventsViewHolder) holder).eventStatus.setText(searchResultsModel.getEventStatus());
                 ((EventsViewHolder) holder).event.setText(searchResultsModel.getMessage());
-                ((EventsViewHolder) holder).eventCompany.setText("");
-                ((EventsViewHolder) holder).event_industry.setText(searchResultsModel.getIndustry() + "  " + searchResultsModel.getCompany());
+                ((EventsViewHolder) holder).eventCompany.setText("#"+searchResultsModel.getCompany());
+                ((EventsViewHolder) holder).event_industry.setText("#"+searchResultsModel.getIndustry());
                 ((EventsViewHolder) holder).event_profile_name.setText(searchResultsModel.getUserName());
                 ((EventsViewHolder) holder).event_time.setText(searchResultsModel.getCreatedDate());
                 ((EventsViewHolder) holder).event_img.setImageUrl(Utils.BaseImageUri + searchResultsModel.getUserImage(), NetworkController.getInstance(context).getImageLoader());
@@ -198,8 +198,8 @@ public class RecyclerAdapterSearchDetails extends RecyclerView.Adapter<RecyclerV
             } else if (integer==3) {
 
                 ((QuestionsViewHolder) holder).questions.setText(searchResultsModel.getMessage());
-                ((QuestionsViewHolder) holder).questionsIndustry.setText(searchResultsModel.getIndustry() );
-                ((QuestionsViewHolder) holder).questionsCompany.setText(searchResultsModel.getCompany() );
+                ((QuestionsViewHolder) holder).questionsIndustry.setText("#"+searchResultsModel.getIndustry() );
+                ((QuestionsViewHolder) holder).questionsCompany.setText("#"+searchResultsModel.getCompany() );
                 ((QuestionsViewHolder) holder).questionsProfileName.setText(searchResultsModel.getUserName());
                 ((QuestionsViewHolder) holder).questionsTime.setText(searchResultsModel.getCreatedDate());
                 ((QuestionsViewHolder) holder).questionsImage.setImageUrl(Utils.BaseImageUri + searchResultsModel.getUserImage(), NetworkController.getInstance(context).getImageLoader());

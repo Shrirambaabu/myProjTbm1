@@ -208,7 +208,7 @@ public class ProfileEventsFragment extends Fragment implements ClickListener {
 
             holder.eventStatus.setText(events.getEventStatus());
             holder.event.setText(events.getEvent());
-            holder.event_industry.setText(events.getEventIndustry());
+            holder.event_industry.setText("#"+events.getEventIndustry());
             holder.event_profile_name.setText(events.getEventProfileName());
             holder.eventCompany.setText("");
             holder.event_time.setText(events.getEventTime());
