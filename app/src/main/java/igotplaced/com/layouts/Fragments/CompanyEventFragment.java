@@ -160,7 +160,7 @@ public class CompanyEventFragment extends Fragment {
             holder.eventCompany.setText(events.getEventCompany());
             holder.eventStatus.setText(events.getEventStatus());
             holder.event.setText(events.getEvent());
-            holder.event_industry.setText(events.getEventIndustry());
+            holder.event_industry.setText("#"+events.getEventIndustry());
             holder.event_profile_name.setText(events.getEventProfileName());
 
             holder.event_time.setText(events.getEventTime());

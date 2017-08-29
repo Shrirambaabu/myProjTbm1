@@ -1,5 +1,6 @@
 package igotplaced.com.layouts;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -62,7 +63,7 @@ public class ProfilePostDetailsActivity extends AppCompatActivity implements Vie
 
     private RequestQueue queue;
     private Intent intent;
-
+    private ProgressDialog pDialog;
     private RecyclerAdapterPostDetails recyclerAdapterPostDetails;
 
     private String userId = null, userName = null;
@@ -85,6 +86,9 @@ public class ProfilePostDetailsActivity extends AppCompatActivity implements Vie
         addressingView();
         addingListeners();
 
+        pDialog = new ProgressDialog(ProfilePostDetailsActivity.this, R.style.MyThemeProgress);
+        pDialog.setProgressStyle(android.R.style.Widget_ProgressBar_Large);
+        pDialog.onBackPressed();
 
 
         postImage.setImageUrl(Utils.BaseImageUri + image, NetworkController.getInstance(getApplicationContext()).getImageLoader());
@@ -151,6 +155,7 @@ public class ProfilePostDetailsActivity extends AppCompatActivity implements Vie
             @Override
             public void onResponse(JSONArray response) {
                 postList.clear();
+                pDialog.dismiss();
                 for (int i = 0; i < response.length(); i++) {
                     Log.d("error", response.toString());
                     try {
@@ -161,7 +166,6 @@ public class ProfilePostDetailsActivity extends AppCompatActivity implements Vie
                         // adding movie to blogHomeList array
                         postList.add(post);
 
-                        Log.e("Comments",""+ obj.getString("comments"));
 
                     } catch (Exception e) {
                         Log.d("error", e.getMessage());
@@ -178,7 +182,7 @@ public class ProfilePostDetailsActivity extends AppCompatActivity implements Vie
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("error", "Error: " + error.getMessage());
-
+                pDialog.dismiss();
             }
         });
 
@@ -226,7 +230,8 @@ public class ProfilePostDetailsActivity extends AppCompatActivity implements Vie
                 } else {
                     userPostedComment = userComment.getText().toString();
                     insertUserComment();
-                    recyclerAdapterPostDetails.notifyDataSetChanged();
+                     recyclerAdapterPostDetails.notifyDataSetChanged();
+                    makePostCommentsRequest();
                     Toast.makeText(getApplicationContext(), "Comment added", Toast.LENGTH_SHORT).show();
                 }
                 userComment.setText("");
@@ -255,7 +260,7 @@ public class ProfilePostDetailsActivity extends AppCompatActivity implements Vie
     }
 
     private void insertUserComment() {
-
+        pDialog.show();
         StringRequest request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
@@ -283,7 +288,7 @@ public class ProfilePostDetailsActivity extends AppCompatActivity implements Vie
                 parameters.put("user_id", userId);
                 parameters.put("comments", userPostedComment);
                 parameters.put("created_uname", userName);
-                Log.e("param", "" + parameters);
+
                 return parameters;
             }
         };

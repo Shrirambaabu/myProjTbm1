@@ -162,8 +162,12 @@ public class CompanyInterviewFragment extends Fragment {
 
             //Pass the values of feeds object to Views
             holder.interview.setText(interview.getInterview());
-            holder.interviewIndustry.setText(interview.getInterviewIndustry());
-            holder.interviewCompany.setText(interview.getInterviewCompany());
+            holder.interviewIndustry.setText("#"+interview.getInterviewIndustry());
+            if (interview.getInterviewCompany().equals("")){
+                holder.interviewCompany.setText(interview.getInterviewCompany());
+            }else{
+                holder.interviewCompany.setText("#"+interview.getInterviewCompany());
+            }
             holder.interviewProfileName.setText(interview.getInterviewProfileName());
             holder.interviewTime.setText(interview.getInterviewTime());
             //  holder.userImage.setImageUrl(Utils.BaseImageUri + interview.getUserImage(), NetworkController.getInstance(context).getImageLoader());
@@ -182,6 +186,7 @@ public class CompanyInterviewFragment extends Fragment {
                     profileInterview.putExtra("interviewIndustry", interviewList.get(position).getInterviewIndustry());
                     profileInterview.putExtra("interview_createdid", interviewList.get(position).getInterviewUserId());
                     profileInterview.putExtra("companyId", interviewList.get(position).getCompanyId());
+                    profileInterview.putExtra("postCompany", interviewList.get(position).getInterviewCompany());
                     startActivity(profileInterview);
                 }
             });

@@ -185,6 +185,7 @@ public class OtherProfileInterviewFragment extends Fragment {
                     profileInterview.putExtra("interviewIndustry", interviewList.get(position).getInterviewIndustry());
                     profileInterview.putExtra("interview_createdid", interviewList.get(position).getInterviewUserId());
                     profileInterview.putExtra("companyId", interviewList.get(position).getCompanyId());
+                    profileInterview.putExtra("postCompany", interviewList.get(position).getInterviewCompany());
                     startActivity(profileInterview);
                 }
             });
