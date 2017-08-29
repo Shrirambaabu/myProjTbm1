@@ -16,6 +16,7 @@ import java.util.List;
 import igotplaced.com.layouts.EventsPopUpActivity;
 import igotplaced.com.layouts.Fragments.NotificationFragment;
 import igotplaced.com.layouts.Model.NotificationView;
+import igotplaced.com.layouts.PostPopUpActivity;
 import igotplaced.com.layouts.QuestionsPopUpActivity;
 import igotplaced.com.layouts.R;
 import igotplaced.com.layouts.Utils.ClickListener;
@@ -64,6 +65,16 @@ public class RecyclerAdapterNotification extends RecyclerView.Adapter<RecyclerAd
                 if (notificationViewList.get(position).getNotifyCaption().equals("question")) {
                     Intent profileDetails = new Intent(context, QuestionsPopUpActivity.class);
                     profileDetails.putExtra("qid", notificationViewList.get(position).getNotifyId());
+
+                    profileDetails.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+
+                    context.startActivity(profileDetails);
+                }
+
+                if (notificationViewList.get(position).getNotifyCaption().equals("post")){
+                    Intent profileDetails = new Intent(context, PostPopUpActivity.class);
+                    profileDetails.putExtra("pid", notificationViewList.get(position).getNotifyId());
 
                     profileDetails.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 

@@ -71,7 +71,8 @@
         <activity android:name=".CompanyDetailsActivity" />
         <activity android:name=".AboutCompanyActivity" />
         <activity android:name=".QuestionsPopUpActivity" />
-        <activity android:name=".EventsPopUpActivity"></activity>
+        <activity android:name=".EventsPopUpActivity" />
+        <activity android:name=".PostPopUpActivity"></activity>
     </application>
 
 </manifest>

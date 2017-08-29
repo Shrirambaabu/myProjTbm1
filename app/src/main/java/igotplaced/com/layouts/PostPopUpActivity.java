@@ -1,6 +1,8 @@
 package igotplaced.com.layouts;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,7 +10,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -34,131 +35,98 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import igotplaced.com.layouts.CustomAdapter.RecyclerAdapterQuestionDetails;
+import igotplaced.com.layouts.CustomAdapter.RecyclerAdapterPostDetails;
+import igotplaced.com.layouts.Model.Post;
 import igotplaced.com.layouts.Model.Questions;
 import igotplaced.com.layouts.Utils.NetworkController;
 import igotplaced.com.layouts.Utils.Utils;
 
 import static igotplaced.com.layouts.Utils.Utils.BaseUri;
+import static igotplaced.com.layouts.Utils.Utils.Id;
+import static igotplaced.com.layouts.Utils.Utils.MyPREFERENCES;
+import static igotplaced.com.layouts.Utils.Utils.Name;
 
-public class QuestionsPopUpActivity extends AppCompatActivity implements View.OnClickListener {
+public class PostPopUpActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private Intent intent;
-    private String id = null;
-    private  String  company,companyId,postedUserId;
-    private Toolbar toolbar;
+    private NetworkImageView postImage;
+    private TextView profileName, profileTime, postMessage, postIndustry,postCompany;
+
+    private EditText userComment;
+    private ImageView sendComment;
+
+    private List<Post> postList = new ArrayList<Post>();
     private LinearLayoutManager mLayoutManager;
 
     private RequestQueue queue;
-    private List<Questions> questionsList = new ArrayList<Questions>();
+    private Intent intent;
+    private String id = null,company,companyId,postedUserId;
+    private RecyclerAdapterPostDetails recyclerAdapterPostDetails;
 
-    private NetworkImageView questionImage;
-    private TextView profileName, profileTime, questionMessage, questionIndustry,questionsCompany;
+    private String userId = null, userName = null;
+    private String URL = BaseUri + "/home/postComments";
     private String userPostedComment;
-    private String URL = BaseUri + "/home/questionsComments";
+    private Toolbar toolbar;
 
-    private RecyclerAdapterQuestionDetails recyclerAdapterQuestionDetails;
-    private EditText userComment;
-    private ImageView sendComment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_questions_pop_up);
+        SharedPreferences sharedpreferences = getApplicationContext().getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+        userName = sharedpreferences.getString(Name, null);
+        userId = sharedpreferences.getString(Id, null);
+
+        setContentView(R.layout.activity_post_pop_up);
+
         initialization();
         setupToolbar();
         addressingView();
         //Getting Instance of Volley Request Queue
         queue = NetworkController.getInstance(getApplicationContext()).getRequestQueue();
-        makeJsonQuestionRequest();
-
+        makeJsonPostRequest();
         postRecyclerView();
         addingListeners();
 
+
     }
 
-    private void makeJsonQuestionRequest() {
-
-
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(BaseUri + "/notificationService/questionPopUp/" + id, new Response.Listener<JSONArray>() {
-
-            @Override
-            public void onResponse(JSONArray response) {
-
-
-                for (int i = 0; i < response.length(); i++) {
-                    Log.d("error", response.toString());
-                    try {
-                        JSONObject obj = response.getJSONObject(i);
-
-
-                        Questions questions = new Questions(obj.getString("qid"),obj.getString("Cuser_id"),obj.getString("question"), obj.getString("industryname"), obj.getString("imgname"), obj.getString("Ccreated_uname"), obj.getString("Ccreated_by"), obj.getString("imgname"), obj.getString("created_uname"),obj.getString("companyname"),obj.getString("company_id"));
-
-
-                        profileName.setText(questions.getQuestionsProfileName());
-                        profileTime.setText(questions.getQuestionsTime());
-                        questionMessage.setText(questions.getQuestions());
-                        questionIndustry.setText("#"+questions.getQuestionsIndustry());
-                        questionsCompany.setText("#"+questions.getQuestionsCompany());
-                        companyId=questions.getCompanyId();
-                        postedUserId=questions.getQuestionUserId();
-                       company=questions.getQuestionsCompany();
-
-                          questionImage.setImageUrl(Utils.BaseImageUri + questions.getQuestionsImage(), NetworkController.getInstance(getApplicationContext()).getImageLoader());
-
-                    } catch (Exception e) {
-                        Log.d("error", e.getMessage());
-                    }
-                }
-            }
-
-        }, new Response.ErrorListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("error", "Error: " + error.getMessage());
-            }
-        });
-
-        queue.add(jsonArrayRequest);
-
-
+    private void addingListeners() {
+        sendComment.setOnClickListener(this);
+        profileName.setOnClickListener(this);
+        postCompany.setOnClickListener(this);
     }
 
     private void postRecyclerView() {
-
-        RecyclerView postRecycler = (RecyclerView) findViewById(R.id.comments_question_recycler);
-        recyclerAdapterQuestionDetails = new RecyclerAdapterQuestionDetails(getApplicationContext(), questionsList);
+        RecyclerView postRecycler = (RecyclerView) findViewById(R.id.comments_post_recycler);
+        recyclerAdapterPostDetails = new RecyclerAdapterPostDetails(getApplicationContext(), postList);
         //setting fixed size
         postRecycler.setHasFixedSize(true);
         //setting horizontal layout
         postRecycler.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
         mLayoutManager = (LinearLayoutManager) postRecycler.getLayoutManager();
         //setting RecyclerView adapter
-        postRecycler.setAdapter(recyclerAdapterQuestionDetails);
+        postRecycler.setAdapter(recyclerAdapterPostDetails);
+
 
         makePostCommentsRequest();
     }
 
     private void makePostCommentsRequest() {
 
-
-
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, BaseUri + "/home/questionsCommentList/" + id, null,  new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, BaseUri + "/home/postCommentList/" + id, null,  new Response.Listener<JSONArray>() {
 
 
             @Override
             public void onResponse(JSONArray response) {
-                questionsList.clear();
+                postList.clear();
                 for (int i = 0; i < response.length(); i++) {
                     Log.d("error", response.toString());
                     try {
 
 
                         JSONObject obj = response.getJSONObject(i);
-                        Questions questions = new Questions(obj.getString("commentedUserImage"), obj.getString("comments"));
+                        Post post = new Post(obj.getString("commentedUserImage"), obj.getString("comments"));
                         // adding movie to blogHomeList array
-                        questionsList.add(questions);
+                        postList.add(post);
 
                         Log.e("Comments",""+ obj.getString("comments"));
 
@@ -167,7 +135,7 @@ public class QuestionsPopUpActivity extends AppCompatActivity implements View.On
                         System.out.println(e.getMessage());
                     } finally {
                         //Notify adapter about data changes
-                        recyclerAdapterQuestionDetails.notifyDataSetChanged();
+                        recyclerAdapterPostDetails.notifyDataSetChanged();
                     }
                 }
             }
@@ -184,39 +152,65 @@ public class QuestionsPopUpActivity extends AppCompatActivity implements View.On
         queue.add(jsonArrayRequest);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                break;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-        return true;
-    }
-    private void addingListeners() {
+    private void makeJsonPostRequest() {
 
-        sendComment.setOnClickListener(this);
-        profileName.setOnClickListener(this);
-        questionsCompany.setOnClickListener(this);
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(BaseUri + "/notificationService/postPopUp/" + id, new Response.Listener<JSONArray>() {
+
+            @Override
+            public void onResponse(JSONArray response) {
+
+
+                for (int i = 0; i < response.length(); i++) {
+                    Log.d("error", response.toString());
+                    try {
+                        JSONObject obj = response.getJSONObject(i);
+
+
+                        Questions questions = new Questions(obj.getString("pid"),obj.getString("Cuser_id"),obj.getString("post"), obj.getString("Industry"), obj.getString("imgname"), obj.getString("created_uname"), obj.getString("created_by"), obj.getString("imgname"), obj.getString("created_uname"),obj.getString("companyname"),obj.getString("company_id"));
+
+
+                        profileName.setText(questions.getQuestionsProfileName());
+                        profileTime.setText(questions.getQuestionsTime());
+                        postMessage.setText(questions.getQuestions());
+                        postIndustry.setText("#"+questions.getQuestionsIndustry());
+                        postCompany.setText("#"+questions.getQuestionsCompany());
+                        companyId=questions.getCompanyId();
+                        postedUserId=questions.getQuestionUserId();
+                        company=questions.getQuestionsCompany();
+
+                        postImage.setImageUrl(Utils.BaseImageUri + questions.getQuestionsImage(), NetworkController.getInstance(getApplicationContext()).getImageLoader());
+
+                    } catch (Exception e) {
+                        Log.d("error", e.getMessage());
+                    }
+                }
+            }
+
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("error", "Error: " + error.getMessage());
+            }
+        });
+
+        queue.add(jsonArrayRequest);
 
     }
 
     private void addressingView() {
 
-        questionImage = (NetworkImageView) findViewById(R.id.questions_img);
-        profileName = (TextView) findViewById(R.id.questions_profile_name);
-        profileTime = (TextView) findViewById(R.id.questions_time);
-        questionMessage = (TextView) findViewById(R.id.questions);
-        questionIndustry = (TextView) findViewById(R.id.questions_industry);
-        questionsCompany = (TextView) findViewById(R.id.questions_company);
+        postImage = (NetworkImageView) findViewById(R.id.post_img);
+        profileName = (TextView) findViewById(R.id.post_profile_name);
+        profileTime = (TextView) findViewById(R.id.post_time);
+        postMessage = (TextView) findViewById(R.id.post);
+        postIndustry = (TextView) findViewById(R.id.post_industry);
+        postCompany = (TextView) findViewById(R.id.post_company);
         userComment = (EditText) findViewById(R.id.user_comment);
         sendComment = (ImageView) findViewById(R.id.send_comment);
     }
 
     private void setupToolbar() {
-
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         setSupportActionBar(toolbar);
@@ -224,14 +218,15 @@ public class QuestionsPopUpActivity extends AppCompatActivity implements View.On
         if (actionBar != null) {
             actionBar.setHomeButtonEnabled(true);
             actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setTitle("Questions");
+            actionBar.setTitle("Posts");
         }
+
     }
 
     private void initialization() {
         intent = getIntent();
-        id = intent.getStringExtra("qid");
-
+        //getting value from intent
+        id = intent.getStringExtra("pid");
     }
 
     @Override
@@ -243,12 +238,12 @@ public class QuestionsPopUpActivity extends AppCompatActivity implements View.On
                 } else {
                     userPostedComment = userComment.getText().toString();
                     insertUserComment();
-                    recyclerAdapterQuestionDetails.notifyDataSetChanged();
+                    recyclerAdapterPostDetails.notifyDataSetChanged();
                     Toast.makeText(getApplicationContext(), "Comment added", Toast.LENGTH_SHORT).show();
                 }
                 userComment.setText("");
                 break;
-            case R.id.questions_profile_name:
+            case R.id.post_profile_name:
 
                 Intent otherProfileDetails=new Intent(getApplicationContext(), OtherProfileActivity.class);
 
@@ -256,16 +251,18 @@ public class QuestionsPopUpActivity extends AppCompatActivity implements View.On
                 otherProfileDetails.putExtra("created_uname", profileName.getText().toString());
                 startActivity(otherProfileDetails);
                 break;
-            case R.id.questions_company:
+
+            case R.id.post_company:
 
                 Intent companyDetails=new Intent(getApplicationContext(),CompanyDetailsActivity.class);
                 companyDetails.putExtra("postCompany", company);
                 companyDetails.putExtra("companyId", companyId);
-
-
                 startActivity(companyDetails);
                 break;
+
+
         }
+
     }
 
     private void insertUserComment() {
@@ -286,19 +283,18 @@ public class QuestionsPopUpActivity extends AppCompatActivity implements View.On
                  *  incorrect IP
                  *  Server not deployed
                  */
-                Utils.showDialogue(QuestionsPopUpActivity.this, "Sorry! Server Error");
+                Utils.showDialogue(PostPopUpActivity.this, "Sorry! Server Error");
             }
         }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> parameters = new HashMap<String, String>();
-                parameters.put("qid", id);
-                parameters.put("ques_createrid", postedUserId);
-                parameters.put("user_id", postedUserId);
+                parameters.put("pid", id);
+                parameters.put("post_createdid", postedUserId);
+                parameters.put("user_id", userId);
                 parameters.put("comments", userPostedComment);
-                parameters.put("created_uname", profileName.getText().toString());
-
-                Log.e("Passs",""+parameters);
+                parameters.put("created_uname", userName);
+                Log.e("param", "" + parameters);
                 return parameters;
             }
         };
@@ -309,8 +305,7 @@ public class QuestionsPopUpActivity extends AppCompatActivity implements View.On
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
-        RequestQueue rQueue = Volley.newRequestQueue(QuestionsPopUpActivity.this);
+        RequestQueue rQueue = Volley.newRequestQueue(PostPopUpActivity.this);
         rQueue.add(request);
-
     }
 }
