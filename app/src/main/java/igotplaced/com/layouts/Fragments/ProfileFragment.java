@@ -338,12 +338,12 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 parameters.put("question", questionsNew);
                 parameters.put("created_user", userId);
                 parameters.put("industryname", industryQuestion);
-                parameters.put("companyname", companyQuestion);
+                parameters.put("companyname", companyQuestion.replaceAll(",$", ""));
                 parameters.put("created_uname", userProfileName.getText().toString());
 
 
 
-                Log.e("value to storeQuest", "" + parameters);
+                Log.e("QuesAdd", "" + companyQuestion.replaceAll(",$", ""));
                 return parameters;
             }
         };
@@ -385,12 +385,12 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 parameters.put("feedback", interviewNew);
                 parameters.put("user_id", userId);
                 parameters.put("industryname", industryPlaced);
-                parameters.put("companyname", companyPlaced);
+                parameters.put("companyname", companyPlaced.replaceAll(",$", ""));
                 parameters.put("username", userProfileName.getText().toString());
                 parameters.put("interview_status",String.valueOf((Boolean.parseBoolean(placedData)) ? 1 : 0));
 
 
-                Log.e("value to store", "" + parameters);
+                Log.e("InterAdded", "" + companyPlaced.replaceAll(",$", ""));
                 return parameters;
             }
         };
@@ -433,7 +433,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 parameters.put("post", postNew);
                 parameters.put("Industry", industryNew);
                 parameters.put("created_user", userId);
-                parameters.put("company1", companyNew);
+                parameters.put("company1", companyNew.replaceAll(",$", ""));
                 parameters.put("created_uname", userProfileName.getText().toString());
 
 

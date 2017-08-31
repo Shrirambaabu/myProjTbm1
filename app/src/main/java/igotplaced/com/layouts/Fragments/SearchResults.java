@@ -104,9 +104,9 @@ public class SearchResults extends Fragment {
     private void makeSearchResultsRequest() {
 
 
-        Log.e("loaded", "" + BaseUri + "/autocompleteService/searchResult/" + Query.replaceAll("\\s", ""));
+        Log.e("loaded", "" + BaseUri + "/autocompleteService/searchResult/" + Query.replaceAll("\\s", "").substring(0,3));
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, BaseUri + "/autocompleteService/searchResult/" + Query.replaceAll("\\s", ""), null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, BaseUri + "/autocompleteService/searchResult/" + Query.replaceAll("\\s", "").substring(0,3), null, new Response.Listener<JSONObject>() {
             JSONArray jsonObjectJSON = null;
 
             @Override
