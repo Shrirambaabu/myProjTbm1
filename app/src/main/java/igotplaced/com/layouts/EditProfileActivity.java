@@ -1037,26 +1037,6 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
                 parameters.put("company1", companySpinnerOneValue);
                 parameters.put("company2", companySpinnerTwoValue);
                 parameters.put("company3", companySpinnerThreeValue);
-
-
-              /*  if (company1TextView.getVisibility() == View.VISIBLE) {
-                    parameters.put("company1", company1TextView.getText().toString());
-                } else {
-                    parameters.put("company1", companySpinnerOneValue);
-                }
-
-                if (company2TextView.getVisibility() == View.VISIBLE) {
-                    parameters.put("company2", company2TextView.getText().toString());
-                } else {
-                    parameters.put("company2", companySpinnerTwoValue);
-                }
-
-                if (company3TextView.getVisibility() == View.VISIBLE) {
-                    parameters.put("company3", company3TextView.getText().toString());
-                } else {
-                    parameters.put("company3", companySpinnerThreeValue);
-                }*/
-
                 parameters.put("phone", mobileNumberEditText.getText().toString());
                 parameters.put("interest", String.valueOf((checkBoxIntrestedBoolean) ? 1 : 0));
                 parameters.put("location", locationEditText.getText().toString());
@@ -1095,11 +1075,7 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
     private MultiSpinner.MultiSpinnerListener onSelectedListener1 = new MultiSpinner.MultiSpinnerListener() {
         public void onItemsSelected(boolean[] selected) {
             // Do something here with the selected items
-
-            company1TextView.setVisibility(View.GONE);
-            companySpinnerOne.setVisibility(View.VISIBLE);
-
-            StringBuilder builder = new StringBuilder();
+             StringBuilder builder = new StringBuilder();
 
             for (int i = 0; i < selected.length; i++) {
                 if (selected[i]) {
@@ -1118,9 +1094,7 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
 
     private MultiSpinner.MultiSpinnerListener onSelectedListener2 = new MultiSpinner.MultiSpinnerListener() {
         public void onItemsSelected(boolean[] selected) {
-            company2TextView.setVisibility(View.GONE);
-            companySpinnerTwo.setVisibility(View.VISIBLE);
-            // Do something here with the selected items
+           // Do something here with the selected items
             StringBuilder builder = new StringBuilder();
 
             for (int i = 0; i < selected.length; i++) {

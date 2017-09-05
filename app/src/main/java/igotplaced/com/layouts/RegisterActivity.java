@@ -202,7 +202,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
 
     private void networkDepartmentAutoCompleteRequest(String keyword) {
 
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(BaseUri + "/autocompleteService/searchDepartment/"+keyword, new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(BaseUri + "/autocompleteService/searchDepartment/"+keyword.replaceAll("\\s", ""), new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
 
@@ -243,7 +243,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
     private void networkCollegeAutoCompleteRequest(String keyword) {
 
 
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(BaseUri + "/autocompleteService/searchCollege/"+keyword, new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(BaseUri + "/autocompleteService/searchCollege/"+keyword.replaceAll("\\s", ""), new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
 
