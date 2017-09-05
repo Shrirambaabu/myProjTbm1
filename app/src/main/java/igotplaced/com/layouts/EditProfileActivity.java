@@ -211,11 +211,13 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
         if (isChecked) {
             mobileNumberEditText.setEnabled(true);
             locationEditText.setEnabled(true);
+            checkBoxIntrestedBoolean=true;
         } else {
             mobileNumberEditText.setEnabled(false);
             locationEditText.setEnabled(false);
             mobileNumberEditText.setText("");
             locationEditText.setText("");
+            checkBoxIntrestedBoolean=false;
         }
     }
 
@@ -419,7 +421,7 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
     private void networkCollegeAutoCompleteRequest(String keyword) {
 
 
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(BaseUri + "/autocompleteService/searchCollege/" + keyword, new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(BaseUri + "/autocompleteService/searchCollege/" + keyword.replaceAll("\\s", ""), new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
 
@@ -459,7 +461,7 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
 
     private void networkDepartmentAutoCompleteRequest(String keyword) {
 
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(BaseUri + "/autocompleteService/searchDepartment/" + keyword, new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(BaseUri + "/autocompleteService/searchDepartment/" + keyword.replaceAll("\\s", ""), new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
 
@@ -793,11 +795,7 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
             case R.id.profile_submit:
                 updateDetails();
                 break;
-            case R.id.checkBox:
-                if (checkBoxIntrested.isChecked()) {
-                    checkBoxIntrestedBoolean = checkBoxIntrested.isChecked();
-                }
-                break;
+
             case R.id.edit_pic:
                 Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
                 intent.addCategory(Intent.CATEGORY_OPENABLE);
@@ -1036,9 +1034,12 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
                 parameters.put("industry1", industrySpinnerOneValue);
                 parameters.put("industry2", industrySpinnerTwoValue);
                 parameters.put("industry3", industrySpinnerThreeValue);
+                parameters.put("company1", companySpinnerOneValue);
+                parameters.put("company2", companySpinnerTwoValue);
+                parameters.put("company3", companySpinnerThreeValue);
 
-                Log.e("Chenge Clg", "" + parameters.put("colg", editProfileCollegeName.getText().toString()));
-                if (company1TextView.getVisibility() == View.VISIBLE) {
+
+              /*  if (company1TextView.getVisibility() == View.VISIBLE) {
                     parameters.put("company1", company1TextView.getText().toString());
                 } else {
                     parameters.put("company1", companySpinnerOneValue);
@@ -1054,7 +1055,7 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
                     parameters.put("company3", company3TextView.getText().toString());
                 } else {
                     parameters.put("company3", companySpinnerThreeValue);
-                }
+                }*/
 
                 parameters.put("phone", mobileNumberEditText.getText().toString());
                 parameters.put("interest", String.valueOf((checkBoxIntrestedBoolean) ? 1 : 0));
@@ -1226,10 +1227,36 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
                                 obj.getString("industry3"), obj.getString("company1"), obj.getString("company2"), obj.getString("company3"));
 
 
+                        if (profile.getCompany1().isEmpty()) {
+                            companySpinnerOne.setText("");
+                            companySpinnerOneValue = "";
+                        } else {
+                            companySpinnerOne.setText(profile.getCompany1());
+                            companySpinnerOneValue = profile.getCompany1();
+                        }
+
+                        if (profile.getCompany2().isEmpty()) {
+                            companySpinnerTwo.setText("");
+                            companySpinnerTwoValue = "";
+                        } else {
+                            companySpinnerTwo.setText(profile.getCompany2());
+                            companySpinnerTwoValue = profile.getCompany2();
+                        }
+                        if (profile.getCompany3().isEmpty()) {
+                            companySpinnerThree.setText("");
+                            companySpinnerThreeValue = "";
+                        } else {
+                            companySpinnerThree.setText(profile.getCompany3());
+                            companySpinnerThreeValue = profile.getCompany3();
+                        }
+
                         editProfileName.setText(profile.getProfileName());
                         editProfileEmail.setText(profile.getEmail());
                         //  editProfileCollegeName.setText(profile.getCollegeName());
-
+                        editProfileCollegeName.setText(profile.getCollegeName());
+                        college = profile.getCollegeName();
+                        editProfileDepartment.setText(profile.getDepartmentName());
+                        department = profile.getDepartmentName();
                         if (profile.getInterest().equals("1")) {
                             checkBoxIntrested.setChecked(true);
                         } else {
