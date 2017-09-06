@@ -158,7 +158,7 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
 */
 
                     if (!loading) {
-                        loadMoreData(totalItemCount);
+                        loadMoreData(totalItemCount + 1);
                         loading = true;
                     }
 
@@ -191,7 +191,7 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
                     jsonObjectJSON = jsonObject.getJSONArray("");
 
                     //clearing blogList
-                   postList.clear();
+                   //postList.clear();
 
                     for (int i = 0; i < jsonObjectJSON.length(); i++) {
                      /*   Log.d("error", jsonObjectJSON.toString());*/

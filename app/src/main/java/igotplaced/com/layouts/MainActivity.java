@@ -437,7 +437,7 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
                     getSupportFragmentManager()
                             .beginTransaction()
                             .replace(R.id.frame, searchResults, "tag")
-                            .addToBackStack("tag").commit();
+                            .commit();
                     searchView.setQuery("",false); //clear the text
                     searchView.clearFocus();//this closes the keyboard but does not remove focus
                     searchView.getSuggestionsAdapter().changeCursor(null);
@@ -478,7 +478,7 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
                 getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.frame, searchResults, "tag")
-                        .addToBackStack("tag").commit();
+                       .commit();
                 searchView.setQuery("",false); //clear the text
                 searchView.clearFocus();//this closes the keyboard but does not remove focus
 
