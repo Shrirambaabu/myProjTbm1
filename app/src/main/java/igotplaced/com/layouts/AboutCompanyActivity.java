@@ -8,7 +8,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-public class AboutCompanyActivity extends AppCompatActivity {
+import igotplaced.com.layouts.Utils.ConnectivityReceiver;
+import igotplaced.com.layouts.Utils.MyApplication;
+import igotplaced.com.layouts.Utils.Utils;
+
+public class AboutCompanyActivity extends AppCompatActivity implements ConnectivityReceiver.ConnectivityReceiverListener {
     private Intent intent;
     private String aboutCompany;
     private TextView companyDetails;
@@ -24,6 +28,21 @@ public class AboutCompanyActivity extends AppCompatActivity {
         companyDetails=(TextView) findViewById(R.id.company_details);
         companyDetails.setText(aboutCompany);
 
+    }
+
+    @Override
+    public void onNetworkConnectionChanged(boolean isConnected) {
+        if (!isConnected){
+            Utils.showDialogue(AboutCompanyActivity.this, "Sorry! Not connected to internet");
+        }
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // register connection status listener
+        MyApplication.getInstance().setConnectivityListener(AboutCompanyActivity.this);
     }
 
     private void setupToolbar() {

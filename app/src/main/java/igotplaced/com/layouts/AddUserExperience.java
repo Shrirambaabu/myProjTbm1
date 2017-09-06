@@ -29,11 +29,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import igotplaced.com.layouts.Utils.ConnectivityReceiver;
+import igotplaced.com.layouts.Utils.MyApplication;
 import igotplaced.com.layouts.Utils.Utils;
 
 import static igotplaced.com.layouts.Utils.Utils.BaseUri;
 
-public class AddUserExperience extends Activity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
+public class AddUserExperience extends Activity implements View.OnClickListener, AdapterView.OnItemSelectedListener, ConnectivityReceiver.ConnectivityReceiverListener {
 
     private AppCompatEditText addUserData;
     private Button addBtn, cancelBtn;
@@ -61,6 +63,21 @@ public class AddUserExperience extends Activity implements View.OnClickListener,
         //Setting company spinner value
         settingCompanySpinner();
 
+    }
+
+    @Override
+    public void onNetworkConnectionChanged(boolean isConnected) {
+        if (!isConnected){
+            Utils.showDialogue(AddUserExperience.this, "Sorry! Not connected to internet");
+        }
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // register connection status listener
+        MyApplication.getInstance().setConnectivityListener(AddUserExperience.this);
     }
 
     private void settingCompanySpinner() {

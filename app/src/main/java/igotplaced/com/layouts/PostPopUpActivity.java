@@ -38,6 +38,8 @@ import java.util.Map;
 import igotplaced.com.layouts.CustomAdapter.RecyclerAdapterPostDetails;
 import igotplaced.com.layouts.Model.Post;
 import igotplaced.com.layouts.Model.Questions;
+import igotplaced.com.layouts.Utils.ConnectivityReceiver;
+import igotplaced.com.layouts.Utils.MyApplication;
 import igotplaced.com.layouts.Utils.NetworkController;
 import igotplaced.com.layouts.Utils.Utils;
 
@@ -46,7 +48,7 @@ import static igotplaced.com.layouts.Utils.Utils.Id;
 import static igotplaced.com.layouts.Utils.Utils.MyPREFERENCES;
 import static igotplaced.com.layouts.Utils.Utils.Name;
 
-public class PostPopUpActivity extends AppCompatActivity implements View.OnClickListener {
+public class PostPopUpActivity extends AppCompatActivity implements View.OnClickListener, ConnectivityReceiver.ConnectivityReceiverListener {
 
     private NetworkImageView postImage;
     private TextView profileName, profileTime, postMessage, postIndustry,postCompany;
@@ -88,6 +90,22 @@ public class PostPopUpActivity extends AppCompatActivity implements View.OnClick
 
 
     }
+
+    @Override
+    public void onNetworkConnectionChanged(boolean isConnected) {
+        if (!isConnected){
+            Utils.showDialogue(PostPopUpActivity.this, "Sorry! Not connected to internet");
+        }
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // register connection status listener
+        MyApplication.getInstance().setConnectivityListener(PostPopUpActivity.this);
+    }
+
 
     private void addingListeners() {
         sendComment.setOnClickListener(this);

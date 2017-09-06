@@ -38,6 +38,8 @@ import java.util.Map;
 
 import igotplaced.com.layouts.CustomAdapter.RecyclerAdapterEventDetails;
 import igotplaced.com.layouts.Model.Events;
+import igotplaced.com.layouts.Utils.ConnectivityReceiver;
+import igotplaced.com.layouts.Utils.MyApplication;
 import igotplaced.com.layouts.Utils.NetworkController;
 import igotplaced.com.layouts.Utils.Utils;
 
@@ -46,7 +48,7 @@ import static igotplaced.com.layouts.Utils.Utils.Id;
 import static igotplaced.com.layouts.Utils.Utils.MyPREFERENCES;
 import static igotplaced.com.layouts.Utils.Utils.Name;
 
-public class EventsPopUpActivity extends AppCompatActivity implements View.OnClickListener {
+public class EventsPopUpActivity extends AppCompatActivity implements View.OnClickListener, ConnectivityReceiver.ConnectivityReceiverListener {
 
     private Intent intent;
     private String id = null;
@@ -87,7 +89,20 @@ public class EventsPopUpActivity extends AppCompatActivity implements View.OnCli
         makePostCommentsRequest();
 
     }
+    @Override
+    public void onNetworkConnectionChanged(boolean isConnected) {
+        if (!isConnected){
+            Utils.showDialogue(EventsPopUpActivity.this, "Sorry! Not connected to internet");
+        }
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // register connection status listener
+        MyApplication.getInstance().setConnectivityListener(EventsPopUpActivity.this);
+    }
     private void addingListeners() {
         sendComment.setOnClickListener(this);
         eventName.setOnClickListener(this);

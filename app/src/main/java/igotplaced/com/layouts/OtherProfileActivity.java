@@ -36,12 +36,14 @@ import igotplaced.com.layouts.Fragments.ProfileInterviewExperienceFragment;
 import igotplaced.com.layouts.Fragments.ProfilePostFragment;
 import igotplaced.com.layouts.Fragments.ProfileQuestionFragment;
 import igotplaced.com.layouts.Model.ProfileHome;
+import igotplaced.com.layouts.Utils.ConnectivityReceiver;
+import igotplaced.com.layouts.Utils.MyApplication;
 import igotplaced.com.layouts.Utils.NetworkController;
 import igotplaced.com.layouts.Utils.Utils;
 
 import static igotplaced.com.layouts.Utils.Utils.BaseUri;
 
-public class OtherProfileActivity extends AppCompatActivity {
+public class OtherProfileActivity extends AppCompatActivity implements ConnectivityReceiver.ConnectivityReceiverListener {
 
 
     private Context context;
@@ -97,6 +99,20 @@ public class OtherProfileActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setTitle(otherProfileName);
         }
+    }
+    @Override
+    public void onNetworkConnectionChanged(boolean isConnected) {
+        if (!isConnected){
+            Utils.showDialogue(OtherProfileActivity.this, "Sorry! Not connected to internet");
+        }
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // register connection status listener
+        MyApplication.getInstance().setConnectivityListener(OtherProfileActivity.this);
     }
 
     @Override

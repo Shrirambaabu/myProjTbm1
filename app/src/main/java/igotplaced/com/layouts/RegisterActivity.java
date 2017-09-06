@@ -89,8 +89,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
 
     @Override
     public void onNetworkConnectionChanged(boolean isConnected) {
+        if (!isConnected){
+            Utils.showDialogue(RegisterActivity.this, "Sorry! Not connected to internet");
+        }
 
-        Utils.showDialogue(RegisterActivity.this, "Sorry! Not connected to internet");
     }
 
     @Override

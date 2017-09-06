@@ -39,6 +39,8 @@ import java.util.Map;
 
 import igotplaced.com.layouts.CustomAdapter.RecyclerAdapterQuestionDetails;
 import igotplaced.com.layouts.Model.Questions;
+import igotplaced.com.layouts.Utils.ConnectivityReceiver;
+import igotplaced.com.layouts.Utils.MyApplication;
 import igotplaced.com.layouts.Utils.NetworkController;
 import igotplaced.com.layouts.Utils.Utils;
 
@@ -47,7 +49,7 @@ import static igotplaced.com.layouts.Utils.Utils.Id;
 import static igotplaced.com.layouts.Utils.Utils.MyPREFERENCES;
 import static igotplaced.com.layouts.Utils.Utils.Name;
 
-public class ProfileQuestionsDetailsActivity extends AppCompatActivity implements View.OnClickListener {
+public class ProfileQuestionsDetailsActivity extends AppCompatActivity implements View.OnClickListener, ConnectivityReceiver.ConnectivityReceiverListener {
 
 
     private String id = null,name=null,time=null,image=null,companyId=null,message=null,industry=null,postedUserId=null,company=null;
@@ -98,6 +100,22 @@ public class ProfileQuestionsDetailsActivity extends AppCompatActivity implement
         postRecyclerView();
 
     }
+
+    @Override
+    public void onNetworkConnectionChanged(boolean isConnected) {
+        if (!isConnected){
+            Utils.showDialogue(ProfileQuestionsDetailsActivity.this, "Sorry! Not connected to internet");
+        }
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // register connection status listener
+        MyApplication.getInstance().setConnectivityListener(ProfileQuestionsDetailsActivity.this);
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

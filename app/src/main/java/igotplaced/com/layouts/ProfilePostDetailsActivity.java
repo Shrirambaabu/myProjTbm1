@@ -39,6 +39,8 @@ import java.util.Map;
 
 import igotplaced.com.layouts.CustomAdapter.RecyclerAdapterPostDetails;
 import igotplaced.com.layouts.Model.Post;
+import igotplaced.com.layouts.Utils.ConnectivityReceiver;
+import igotplaced.com.layouts.Utils.MyApplication;
 import igotplaced.com.layouts.Utils.NetworkController;
 import igotplaced.com.layouts.Utils.Utils;
 
@@ -47,7 +49,7 @@ import static igotplaced.com.layouts.Utils.Utils.Id;
 import static igotplaced.com.layouts.Utils.Utils.MyPREFERENCES;
 import static igotplaced.com.layouts.Utils.Utils.Name;
 
-public class ProfilePostDetailsActivity extends AppCompatActivity implements View.OnClickListener {
+public class ProfilePostDetailsActivity extends AppCompatActivity implements View.OnClickListener, ConnectivityReceiver.ConnectivityReceiverListener {
 
 
     private String id = null, name = null, time = null,companyId, post = null, image = null, industry = null, postUserId = null,Company=null;
@@ -105,6 +107,21 @@ public class ProfilePostDetailsActivity extends AppCompatActivity implements Vie
 
         postRecyclerView();
 
+    }
+
+    @Override
+    public void onNetworkConnectionChanged(boolean isConnected) {
+        if (!isConnected){
+            Utils.showDialogue(ProfilePostDetailsActivity.this, "Sorry! Not connected to internet");
+        }
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // register connection status listener
+        MyApplication.getInstance().setConnectivityListener(ProfilePostDetailsActivity.this);
     }
 
     @Override

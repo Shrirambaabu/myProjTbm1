@@ -28,11 +28,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import igotplaced.com.layouts.Utils.ConnectivityReceiver;
+import igotplaced.com.layouts.Utils.MyApplication;
 import igotplaced.com.layouts.Utils.Utils;
 
 import static igotplaced.com.layouts.Utils.Utils.BaseUri;
 
-public class AddUserQuestions extends Activity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
+public class AddUserQuestions extends Activity implements View.OnClickListener, AdapterView.OnItemSelectedListener, ConnectivityReceiver.ConnectivityReceiverListener {
 
 
     private AppCompatEditText addUserData;
@@ -61,6 +63,23 @@ public class AddUserQuestions extends Activity implements View.OnClickListener, 
         settingCompanySpinner();
 
     }
+
+
+    @Override
+    public void onNetworkConnectionChanged(boolean isConnected) {
+        if (!isConnected){
+            Utils.showDialogue(AddUserQuestions.this, "Sorry! Not connected to internet");
+        }
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // register connection status listener
+        MyApplication.getInstance().setConnectivityListener(AddUserQuestions.this);
+    }
+
 
     private void settingCompanySpinner() {
 

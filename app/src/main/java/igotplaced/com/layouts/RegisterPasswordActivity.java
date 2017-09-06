@@ -106,8 +106,10 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
 
     @Override
     public void onNetworkConnectionChanged(boolean isConnected) {
+        if (!isConnected){
+            Utils.showDialogue(RegisterPasswordActivity.this, "Sorry! Not connected to internet");
+        }
 
-        Utils.showDialogue(RegisterPasswordActivity.this, "Sorry! Not connected to internet");
     }
 
     @Override

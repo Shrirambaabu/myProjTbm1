@@ -20,12 +20,14 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import igotplaced.com.layouts.Model.BlogHome;
+import igotplaced.com.layouts.Utils.ConnectivityReceiver;
+import igotplaced.com.layouts.Utils.MyApplication;
 import igotplaced.com.layouts.Utils.NetworkController;
 import igotplaced.com.layouts.Utils.Utils;
 
 import static igotplaced.com.layouts.Utils.Utils.BaseUri;
 
-public class BlogDetailsActivity extends AppCompatActivity {
+public class BlogDetailsActivity extends AppCompatActivity implements ConnectivityReceiver.ConnectivityReceiverListener {
 
     private RequestQueue queue;
     private Intent intent;
@@ -55,6 +57,23 @@ public class BlogDetailsActivity extends AppCompatActivity {
 
 
     }
+
+
+    @Override
+    public void onNetworkConnectionChanged(boolean isConnected) {
+        if (!isConnected){
+            Utils.showDialogue(BlogDetailsActivity.this, "Sorry! Not connected to internet");
+        }
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // register connection status listener
+        MyApplication.getInstance().setConnectivityListener(BlogDetailsActivity.this);
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

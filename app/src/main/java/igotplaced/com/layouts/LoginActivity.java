@@ -86,7 +86,10 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
      */
     @Override
     public void onNetworkConnectionChanged(boolean isConnected) {
-        Utils.showDialogue(LoginActivity.this, "Sorry! Not connected to internet");
+        if (!isConnected){
+            Utils.showDialogue(LoginActivity.this, "Sorry! Not connected to internet");
+        }
+
     }
 
     @Override

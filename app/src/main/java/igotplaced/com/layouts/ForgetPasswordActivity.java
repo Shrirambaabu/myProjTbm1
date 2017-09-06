@@ -62,10 +62,13 @@ public class ForgetPasswordActivity extends AppCompatActivity implements View.On
 
     }
 
+
     @Override
     public void onNetworkConnectionChanged(boolean isConnected) {
+        if (!isConnected){
+            Utils.showDialogue(ForgetPasswordActivity.this, "Sorry! Not connected to internet");
+        }
 
-        Utils.showDialogue(ForgetPasswordActivity.this, "Sorry! Not connected to internet");
     }
 
     @Override
@@ -74,6 +77,7 @@ public class ForgetPasswordActivity extends AppCompatActivity implements View.On
         // register connection status listener
         MyApplication.getInstance().setConnectivityListener(ForgetPasswordActivity.this);
     }
+
 
 
     private void addingListener() {

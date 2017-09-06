@@ -36,12 +36,14 @@ import igotplaced.com.layouts.Fragments.CompanyQuestionFragment;
 import igotplaced.com.layouts.Fragments.OtherProfilePostFragment;
 import igotplaced.com.layouts.Model.Company;
 import igotplaced.com.layouts.Model.Post;
+import igotplaced.com.layouts.Utils.ConnectivityReceiver;
+import igotplaced.com.layouts.Utils.MyApplication;
 import igotplaced.com.layouts.Utils.NetworkController;
 import igotplaced.com.layouts.Utils.Utils;
 
 import static igotplaced.com.layouts.Utils.Utils.BaseUri;
 
-public class CompanyDetailsActivity extends AppCompatActivity {
+public class CompanyDetailsActivity extends AppCompatActivity implements ConnectivityReceiver.ConnectivityReceiverListener {
 
     private Context context;
     private RequestQueue queue;
@@ -97,7 +99,20 @@ public class CompanyDetailsActivity extends AppCompatActivity {
         }
         makeJsonArrayRequestCompany();
     }
+    @Override
+    public void onNetworkConnectionChanged(boolean isConnected) {
+        if (!isConnected){
+            Utils.showDialogue(CompanyDetailsActivity.this, "Sorry! Not connected to internet");
+        }
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // register connection status listener
+        MyApplication.getInstance().setConnectivityListener(CompanyDetailsActivity.this);
+    }
     private void makeJsonArrayRequestCompany() {
 
         Log.e("Company URL",""+ BaseUri + "/profileService/companyDetails/" + companyId);
