@@ -23,8 +23,8 @@ import igotplaced.com.layouts.R;
  */
 
 public class Utils {
-    public static String Base = "http://192.168.0.100:8080";
-  //  public static String Base = "http://192.168.43.29:8080";
+    public static String Base = "http://192.168.0.101:8080";
+   // public static String Base = "http://49.207.183.11:8080";
 
     public static String BaseUri = Base + "/IgotplacedRestWebService/webapi";
     public static String BaseImageUri = "http://igotplaced.com";
@@ -33,6 +33,7 @@ public class Utils {
     public static final String Name = "nameKey";
     public static final String Id = "idKey";
     public static final String Email = "emailKey";
+    public static final String UserImage = "imageKey";
 
     public static void setSpinnerError(Spinner spinner, String error, Activity activity) {
         View selectedView = spinner.getSelectedView();

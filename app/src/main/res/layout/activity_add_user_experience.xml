@@ -8,15 +8,16 @@
     tools:context="igotplaced.com.layouts.AddUserExperience">
 
 
-    <android.support.v7.widget.AppCompatEditText
+    <EditText
         android:id="@+id/getUserData"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/shape"
-        android:layout_margin="@dimen/margin_4"
+        android:background="@color/white"
+        android:layout_margin="@dimen/margin_16"
         android:textColorHint="@color/text_main"
+        android:padding="@dimen/margin_8"
         android:hint=" What’s On Your Mind Related To Placements"
-        android:textColor="@color/white"
+        android:textColor="@color/colorPrimaryDark"
         android:textSize="18sp" />
 
     <LinearLayout
@@ -74,7 +75,7 @@
         android:layout_weight="1"
         app:backgroundTint="@color/white" />
 
-    <com.thomashaertel.widget.MultiSpinner
+    <android.support.v7.widget.AppCompatSpinner
         android:id="@+id/company_spinner1"
         style="@style/Platform.Widget.AppCompat.Spinner"
         android:layout_width="match_parent"

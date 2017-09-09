@@ -166,7 +166,10 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        LoginActivity.super.onBackPressed();
+                        Intent intent = new Intent(Intent.ACTION_MAIN);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        intent.addCategory(Intent.CATEGORY_HOME);
+                        startActivity(intent);
                     }
                 }).setNegativeButton("No", null).show();
 

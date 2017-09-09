@@ -8,6 +8,8 @@ import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatSpinner;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -37,11 +39,11 @@ import static igotplaced.com.layouts.Utils.Utils.BaseUri;
 
 public class AddUserExperience extends Activity implements View.OnClickListener, AdapterView.OnItemSelectedListener, ConnectivityReceiver.ConnectivityReceiverListener {
 
-    private AppCompatEditText addUserData;
+    private EditText addUserData;
     private Button addBtn, cancelBtn;
     private String industrySpinnerOneValue = "", companySpinnerOneValue = "";
     private AppCompatSpinner industrySpinnerOne = null;
-    private MultiSpinner companySpinnerOne = null;
+    private AppCompatSpinner companySpinnerOne = null;
     private ArrayAdapter<String> spinnerArrayAdapter, companyArrayAdapter1;
     private List<String> industrySpinnerArrayList;
 
@@ -49,6 +51,7 @@ public class AddUserExperience extends Activity implements View.OnClickListener,
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_add_user_experience);
 
 
@@ -67,7 +70,7 @@ public class AddUserExperience extends Activity implements View.OnClickListener,
 
     @Override
     public void onNetworkConnectionChanged(boolean isConnected) {
-        if (!isConnected){
+        if (!isConnected) {
             Utils.showDialogue(AddUserExperience.this, "Sorry! Not connected to internet");
         }
 
@@ -82,7 +85,7 @@ public class AddUserExperience extends Activity implements View.OnClickListener,
 
     private void settingCompanySpinner() {
         companyArrayAdapter1 = new ArrayAdapter<String>(this, R.layout.spinner_item_custom);
-        companySpinnerOne.setAdapter(companyArrayAdapter1, false, onSelectedListener1);
+        companySpinnerOne.setAdapter(companyArrayAdapter1);
     }
 
     private void settingIndustrySpinner() {
@@ -125,12 +128,13 @@ public class AddUserExperience extends Activity implements View.OnClickListener,
     }
 
     private void mapping() {
-        addUserData = (AppCompatEditText) findViewById(R.id.getUserData);
+        addUserData = (EditText) findViewById(R.id.getUserData);
         addBtn = (Button) findViewById(R.id.add);
         cancelBtn = (Button) findViewById(R.id.cancel);
         industrySpinnerOne = (AppCompatSpinner) findViewById(R.id.industry_spinner1);
-        companySpinnerOne = (MultiSpinner) findViewById(R.id.company_spinner1);
-
+        companySpinnerOne = (AppCompatSpinner) findViewById(R.id.company_spinner1);
+        addUserData.requestFocus();
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
     }
 
 
@@ -139,6 +143,7 @@ public class AddUserExperience extends Activity implements View.OnClickListener,
         addBtn.setOnClickListener(this);
         cancelBtn.setOnClickListener(this);
         industrySpinnerOne.setOnItemSelectedListener(this);
+        companySpinnerOne.setOnItemSelectedListener(this);
     }
 
     @Override
@@ -146,17 +151,16 @@ public class AddUserExperience extends Activity implements View.OnClickListener,
         switch (v.getId()) {
             case R.id.add:
 
-                    if (Objects.equals(industrySpinnerOneValue, "")) {
-                        industrySpinnerOne.setFocusable(true);
-                        industrySpinnerOne.setFocusableInTouchMode(true);
-                        industrySpinnerOne.requestFocus();
-                        Utils.setSpinnerError(industrySpinnerOne, "Field can't be empty", AddUserExperience.this);
-                        return;
-                    }
-                 else if (addUserData.getText().toString().equals("")) {
+                if (Objects.equals(industrySpinnerOneValue, "")) {
+                    industrySpinnerOne.setFocusable(true);
+                    industrySpinnerOne.setFocusableInTouchMode(true);
+                    industrySpinnerOne.requestFocus();
+                    Utils.setSpinnerError(industrySpinnerOne, "Field can't be empty", AddUserExperience.this);
+                    return;
+                } else if (addUserData.getText().toString().equals("")) {
                     addUserData.requestFocus();
-                        addUserData.setFocusable(true);
-                        addUserData.setFocusableInTouchMode(true);
+                    addUserData.setFocusable(true);
+                    addUserData.setFocusableInTouchMode(true);
                 }
                 if (!addUserData.getText().toString().equals("")) {
                     Intent intent = new Intent();
@@ -167,7 +171,7 @@ public class AddUserExperience extends Activity implements View.OnClickListener,
 
                 }
 
-                Log.e("Edit data",""+addUserData.getText().toString());
+                Log.e("Edit data", "" + addUserData.getText().toString());
                 finish();
                 break;
             case R.id.cancel:
@@ -182,12 +186,22 @@ public class AddUserExperience extends Activity implements View.OnClickListener,
             case R.id.industry_spinner1:
                 if (position != 0) {
                     industrySpinnerOneValue = industrySpinnerOne.getSelectedItem().toString();
-                    networkCompanySpinnerArrayRequest1(industrySpinnerOneValue);
+                    networkCompanySpinnerArrayRequest1(industrySpinnerOneValue.replaceAll("\\s+", "").substring(0, 2));
                 } else {
                     industrySpinnerOneValue = "";
                 }
                 break;
+            case R.id.company_spinner1:
+                if (position != 0) {
+                    companySpinnerOneValue = companySpinnerOne.getSelectedItem().toString();
+
+                } else {
+                    companySpinnerOneValue = "";
+                }
+                break;
         }
+
+
     }
 
 

@@ -48,12 +48,13 @@ import static igotplaced.com.layouts.Utils.Utils.BaseUri;
 import static igotplaced.com.layouts.Utils.Utils.Id;
 import static igotplaced.com.layouts.Utils.Utils.MyPREFERENCES;
 import static igotplaced.com.layouts.Utils.Utils.Name;
+import static igotplaced.com.layouts.Utils.Utils.UserImage;
 
 public class ProfileQuestionsDetailsActivity extends AppCompatActivity implements View.OnClickListener, ConnectivityReceiver.ConnectivityReceiverListener {
 
 
     private String id = null,name=null,time=null,image=null,companyId=null,message=null,industry=null,postedUserId=null,company=null;
-    private String userId = null, userName = null;
+    private String userId = null, userName = null, userImage = null;
     private NetworkImageView questionImage;
     private TextView profileName, profileTime, questionMessage, questionIndustry,questionsCompany;
     private String userPostedComment;
@@ -78,7 +79,7 @@ public class ProfileQuestionsDetailsActivity extends AppCompatActivity implement
         SharedPreferences sharedpreferences = getApplicationContext().getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         userName = sharedpreferences.getString(Name, null);
         userId = sharedpreferences.getString(Id, null);
-
+        userImage = sharedpreferences.getString(UserImage, null);
         setContentView(R.layout.activity_profile_questions_details);
 
         initialization();
@@ -240,6 +241,9 @@ public class ProfileQuestionsDetailsActivity extends AppCompatActivity implement
                 } else {
                     userPostedComment = userComment.getText().toString();
                     insertUserComment();
+                    Questions questions = new Questions(userImage, userPostedComment);
+                    // adding movie to blogHomeList array
+                    questionsList.add(questions);
                     recyclerAdapterQuestionDetails.notifyDataSetChanged();
                     Toast.makeText(getApplicationContext(), "Comment added", Toast.LENGTH_SHORT).show();
                 }

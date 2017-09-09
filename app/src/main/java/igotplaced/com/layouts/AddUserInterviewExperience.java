@@ -9,6 +9,7 @@ import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatSpinner;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -41,7 +42,7 @@ import static igotplaced.com.layouts.Utils.Utils.BaseUri;
 public class AddUserInterviewExperience extends Activity implements View.OnClickListener, AdapterView.OnItemSelectedListener, ConnectivityReceiver.ConnectivityReceiverListener {
 
 
-    private AppCompatEditText addUserData;
+    private EditText addUserData;
     private Button addBtn, cancelBtn;
     private CheckBox gotPlaced;
     private boolean checkBoxIntrestedBoolean = false;
@@ -50,12 +51,13 @@ public class AddUserInterviewExperience extends Activity implements View.OnClick
 
     private String industrySpinnerTwoValue = "", companySpinnerTwoValue = "";
     private AppCompatSpinner industrySpinnerTwo = null;
-    private MultiSpinner companySpinnerTwo = null;
+    private AppCompatSpinner companySpinnerTwo = null;
     private List<String> industrySpinnerArrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_add_user_interview_experience);
 
 
@@ -88,7 +90,7 @@ public class AddUserInterviewExperience extends Activity implements View.OnClick
     private void settingCompanySpinner() {
 
         companyArrayAdapter2 = new ArrayAdapter<String>(this, R.layout.spinner_item_custom);
-        companySpinnerTwo.setAdapter(companyArrayAdapter2, false, onSelectedListener2);
+        companySpinnerTwo.setAdapter(companyArrayAdapter2);
     }
 
     private void settingIndustrySpinner() {
@@ -131,12 +133,12 @@ public class AddUserInterviewExperience extends Activity implements View.OnClick
     }
 
     private void mapping() {
-        addUserData = (AppCompatEditText) findViewById(R.id.getUserInterviewData);
+        addUserData = (EditText) findViewById(R.id.getUserInterviewData);
         addBtn = (Button) findViewById(R.id.add);
         cancelBtn = (Button) findViewById(R.id.cancel);
         gotPlaced = (CheckBox) findViewById(R.id.checkBoxPlaced);
         industrySpinnerTwo = (AppCompatSpinner) findViewById(R.id.industry_spinner2);
-        companySpinnerTwo = (MultiSpinner) findViewById(R.id.company_spinner2);
+        companySpinnerTwo = (AppCompatSpinner) findViewById(R.id.company_spinner2);
     }
 
     private void settingListeners() {
@@ -155,6 +157,7 @@ public class AddUserInterviewExperience extends Activity implements View.OnClick
             }
         });
         industrySpinnerTwo.setOnItemSelectedListener(this);
+        companySpinnerTwo.setOnItemSelectedListener(this);
     }
 
     @Override
@@ -197,9 +200,17 @@ public class AddUserInterviewExperience extends Activity implements View.OnClick
             case R.id.industry_spinner2:
                 if (position != 0) {
                     industrySpinnerTwoValue = industrySpinnerTwo.getSelectedItem().toString();
-                    networkCompanySpinnerArrayRequest2(industrySpinnerTwoValue);
+                    networkCompanySpinnerArrayRequest2(industrySpinnerTwoValue.replaceAll("\\s+", "").substring(0, 2));
                 } else {
                     industrySpinnerTwoValue = "";
+                }
+                break;
+            case R.id.company_spinner2:
+                if (position != 0) {
+                    companySpinnerTwoValue = companySpinnerTwo.getSelectedItem().toString();
+
+                } else {
+                    companySpinnerTwoValue = "";
                 }
                 break;
         }

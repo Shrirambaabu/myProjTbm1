@@ -47,12 +47,13 @@ import static igotplaced.com.layouts.Utils.Utils.BaseUri;
 import static igotplaced.com.layouts.Utils.Utils.Id;
 import static igotplaced.com.layouts.Utils.Utils.MyPREFERENCES;
 import static igotplaced.com.layouts.Utils.Utils.Name;
+import static igotplaced.com.layouts.Utils.Utils.UserImage;
 
 public class ProfileEventDetails extends AppCompatActivity implements View.OnClickListener, ConnectivityReceiver.ConnectivityReceiverListener {
 
     private String id = null, image = null, name = null, time = null, caption = null, company=null,designation = null, venue = null, date = null, registered = null, status = null, event = null, industry = null, postedUserId = null;
 
-    private String userId = null, userName = null;
+    private String userId = null, userName = null, userImage = null;
     private String userPostedComment;
     private String URL = BaseUri + "/home/eventsComments";
 
@@ -79,7 +80,7 @@ public class ProfileEventDetails extends AppCompatActivity implements View.OnCli
         SharedPreferences sharedpreferences = getApplicationContext().getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         userName = sharedpreferences.getString(Name, null);
         userId = sharedpreferences.getString(Id, null);
-
+        userImage = sharedpreferences.getString(UserImage, null);
         setContentView(R.layout.activity_profile_event_details);
         //initial value from intent
         initialization();
@@ -260,6 +261,9 @@ public class ProfileEventDetails extends AppCompatActivity implements View.OnCli
                 } else {
                     userPostedComment = userComment.getText().toString();
                     insertUserComment();
+                    Events events = new Events(userImage, userPostedComment);
+                    // adding movie to blogHomeList array
+                    eventList.add(events);
                     recyclerAdapterEventDetails.notifyDataSetChanged();
                     Toast.makeText(getApplicationContext(), "Comment added", Toast.LENGTH_SHORT).show();
                 }

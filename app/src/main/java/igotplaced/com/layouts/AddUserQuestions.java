@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatSpinner;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -37,11 +38,11 @@ import static igotplaced.com.layouts.Utils.Utils.BaseUri;
 public class AddUserQuestions extends Activity implements View.OnClickListener, AdapterView.OnItemSelectedListener, ConnectivityReceiver.ConnectivityReceiverListener {
 
 
-    private AppCompatEditText addUserData;
+    private EditText addUserData;
     private Button addBtn, cancelBtn;
     private String industrySpinnerThreeValue = "", companySpinnerThreeValue = "";
     private AppCompatSpinner industrySpinnerThree = null;
-    private MultiSpinner companySpinnerThree = null;
+    private AppCompatSpinner companySpinnerThree = null;
     private ArrayAdapter<String> spinnerArrayAdapter, companyArrayAdapter3;
     private List<String> industrySpinnerArrayList;
 
@@ -49,6 +50,7 @@ public class AddUserQuestions extends Activity implements View.OnClickListener, 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_add_user_questions);
 
         //mapping to view object
@@ -84,7 +86,7 @@ public class AddUserQuestions extends Activity implements View.OnClickListener, 
     private void settingCompanySpinner() {
 
         companyArrayAdapter3 = new ArrayAdapter<String>(this, R.layout.spinner_item_custom);
-        companySpinnerThree.setAdapter(companyArrayAdapter3, false, onSelectedListener3);
+        companySpinnerThree.setAdapter(companyArrayAdapter3);
     }
 
     private void settingIndustrySpinner() {
@@ -145,11 +147,11 @@ public class AddUserQuestions extends Activity implements View.OnClickListener, 
     };
 
     private void mapping() {
-        addUserData = (AppCompatEditText) findViewById(R.id.getUserQuestionsData);
+        addUserData = (EditText) findViewById(R.id.getUserQuestionsData);
         addBtn = (Button) findViewById(R.id.add);
         cancelBtn = (Button) findViewById(R.id.cancel);
         industrySpinnerThree = (AppCompatSpinner) findViewById(R.id.industry_spinner3);
-        companySpinnerThree = (MultiSpinner) findViewById(R.id.company_spinner3);
+        companySpinnerThree = (AppCompatSpinner) findViewById(R.id.company_spinner3);
     }
 
     private void settingListeners() {
@@ -157,6 +159,7 @@ public class AddUserQuestions extends Activity implements View.OnClickListener, 
         addBtn.setOnClickListener(this);
         cancelBtn.setOnClickListener(this);
         industrySpinnerThree.setOnItemSelectedListener(this);
+        companySpinnerThree.setOnItemSelectedListener(this);
     }
 
     @Override
@@ -195,9 +198,17 @@ public class AddUserQuestions extends Activity implements View.OnClickListener, 
             case R.id.industry_spinner3:
                 if (position != 0) {
                     industrySpinnerThreeValue = industrySpinnerThree.getSelectedItem().toString();
-                    networkCompanySpinnerArrayRequest3(industrySpinnerThreeValue);
+                    networkCompanySpinnerArrayRequest3(industrySpinnerThreeValue.replaceAll("\\s+", "").substring(0, 2));
                 } else {
                     industrySpinnerThreeValue = "";
+                }
+                break;
+            case R.id.company_spinner3:
+                if (position != 0) {
+                    companySpinnerThreeValue = companySpinnerThree.getSelectedItem().toString();
+
+                } else {
+                    companySpinnerThreeValue = "";
                 }
                 break;
         }

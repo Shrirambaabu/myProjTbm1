@@ -66,6 +66,7 @@ import igotplaced.com.layouts.Model.Profile;
 import igotplaced.com.layouts.Model.ProfileHome;
 import igotplaced.com.layouts.Utils.ConnectivityReceiver;
 import igotplaced.com.layouts.Utils.CustomAutoCompleteView;
+import igotplaced.com.layouts.Utils.MultiSpinnerMark;
 import igotplaced.com.layouts.Utils.MyApplication;
 import igotplaced.com.layouts.Utils.NetworkController;
 import igotplaced.com.layouts.Utils.Utils;
@@ -597,6 +598,10 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
                  /*   company1TextView.setVisibility(View.GONE);
                     companySpinnerOne.setVisibility(View.VISIBLE);*/
                     networkCompanySpinnerArrayRequest1(industrySpinnerOneValue.replaceAll("\\s+", "").substring(0, 2));
+
+
+
+
                 } else {
                     industrySpinnerOneValue = "";
                 }
@@ -671,7 +676,6 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
                             e.printStackTrace();
                         }
                     }
-
                 }
                 companyOneCount = companyArrayAdapter1.getCount();
                 Log.e("Company1Count", "" + companyOneCount);
@@ -1218,7 +1222,7 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
                         Profile profile = new Profile(obj.getString("imgname"), obj.getString("fname"), obj.getString("department"),
                                 obj.getString("college"), obj.getString("email"), obj.getString("passout"), obj.getString("interest"),
                                 obj.getString("phone"), obj.getString("location"), obj.getString("industry1"), obj.getString("industry2"),
-                                obj.getString("industry3"), obj.getString("company1"), obj.getString("company2"), obj.getString("company3"));
+                                obj.getString("industry3"), obj.getString("company1"), obj.getString("company2"), obj.getString("company3"),obj.getString("companyArrayOne"),obj.getString("companyArrayOne"),obj.getString("companyArrayOne"));
 
 
                         editProfileName.setText(profile.getProfileName());
@@ -1263,32 +1267,45 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
                             companySpinnerOne.setText("");
                             companySpinnerOneValue = "";
                         } else {
+
                             List<String> items = Arrays.asList(profile.getCompany1().split("\\s*,\\s*"));
-                            Log.e("ItemArray", "" + items);
-                            companyArrayAdapter1.notifyDataSetChanged();
+                            Log.e("ItemArraySelected", "" + items);
+                            List<String> itemsCompanyOne = Arrays.asList(profile.getCompanyAdapterOne().split("\\s*,\\s*"));
+                            companyArrayAdapter1.addAll(itemsCompanyOne);
+
+                            Log.e("ItemCompamy",""+itemsCompanyOne);
+                            Log.e("ItemCount",""+itemsCompanyOne.size());
+                         //   companyArrayAdapter1.add(String.valueOf(itemsCompanyOne));
+
                             // set initial selection
                             boolean[] selectedItems = new boolean[companyArrayAdapter1.getCount()];
 
-                            Log.e("tsg", "ssssCC " + companyArrayAdapter1.getCount());
+                            Log.e("CompanyArrayCount", "ssssCC " + companyArrayAdapter1.getCount());
 
                             List<String> companyItems = new ArrayList<>();
                             for (int iq = 0; iq < companyArrayAdapter1.getCount(); iq++) {
                                 companyItems.add(companyArrayAdapter1.getItem(iq));
-                                Log.e("tsg", "ssss " + companyArrayAdapter1.getItem(iq));
+                                Log.e("tsg", "ssssGetItem " + companyArrayAdapter1.getItem(iq));
                             }
 
                             for (int l = 0; l < items.size(); l++) {
-                                Log.e("tsg", "ssss " + items.get(l) + "  g " + companyItems.indexOf(items.get(l)));
+                                Log.e("tsg","Value&Pos " + items.get(l) + "  g " + companyItems.indexOf(items.get(l)));
                                 if (companyItems.indexOf(items.get(l)) != -1) {
                                     selectedItems[companyItems.indexOf(items.get(l))] = true;
-                                    Log.e("tsg", "ssss");
+                                    Log.e("tsg", "ssssCheck "+selectedItems[i]);
                                 }
                             }
 
+                            for (int l = 0; l < selectedItems.length; l++) {
+                                Log.e("tsg", "TotalArray " + selectedItems[i] );
+                            }
+
                             companySpinnerOne.setSelected(selectedItems);
+                            companyArrayAdapter1.notifyDataSetChanged();
 
                             companySpinnerOne.setText(profile.getCompany1());
                             companySpinnerOneValue = profile.getCompany1();
+
                         }
 
                         if (profile.getCompany2().isEmpty()) {

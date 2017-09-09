@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -47,25 +48,26 @@ import static igotplaced.com.layouts.Utils.Utils.BaseUri;
 import static igotplaced.com.layouts.Utils.Utils.Id;
 import static igotplaced.com.layouts.Utils.Utils.MyPREFERENCES;
 import static igotplaced.com.layouts.Utils.Utils.Name;
+import static igotplaced.com.layouts.Utils.Utils.UserImage;
 
 public class ProfileInterviewDetailsActivity extends AppCompatActivity implements View.OnClickListener, ConnectivityReceiver.ConnectivityReceiverListener {
 
-    private String id = null, name = null, time = null,companyId=null, interview = null, image = null, industry = null, interviewUserId = null,company=null;
+    private String id = null, name = null, time = null, companyId = null, interview = null, image = null, industry = null, interviewUserId = null, company = null;
 
     private NetworkImageView interviewImage;
-    private TextView profileName, profileTime, interviewMessage, interviewIndustry,interviewCompany;
+    private TextView profileName, profileTime, interviewMessage, interviewIndustry, interviewCompany;
 
     private EditText userComment;
     private ImageView sendComment;
     private LinearLayoutManager mLayoutManager;
-
+    private RecyclerView postRecycler;
     private RecyclerAdapterInterviewDetails recyclerAdapterInterviewDetails;
     private RequestQueue queue;
     private Intent intent;
     private Toolbar toolbar;
     private List<Interview> interviewList = new ArrayList<Interview>();
 
-    private String userId = null, userName = null;
+    private String userId = null, userName = null, userImage = null;
     private String URL = BaseUri + "/home/interviewComments";
     private String userPostedComment;
 
@@ -76,7 +78,7 @@ public class ProfileInterviewDetailsActivity extends AppCompatActivity implement
         SharedPreferences sharedpreferences = getApplicationContext().getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         userName = sharedpreferences.getString(Name, null);
         userId = sharedpreferences.getString(Id, null);
-
+        userImage = sharedpreferences.getString(UserImage, null);
 
         setContentView(R.layout.activity_profile_interview_details);
 
@@ -85,18 +87,19 @@ public class ProfileInterviewDetailsActivity extends AppCompatActivity implement
         setupToolbar();
         addressingView();
         addingListeners();
-
+        getWindow().setSoftInputMode(
+                WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         interviewImage.setImageUrl(Utils.BaseImageUri + image, NetworkController.getInstance(getApplicationContext()).getImageLoader());
         profileName.setText(name);
         profileTime.setText(time);
         interviewMessage.setText(interview);
-        interviewIndustry.setText("#"+industry);
+        interviewIndustry.setText("#" + industry);
 
-        if (company.equals("")){
+        if (company.equals("")) {
             interviewCompany.setText(company);
-        }else{
-            interviewCompany.setText("#"+company);
+        } else {
+            interviewCompany.setText("#" + company);
         }
 
 
@@ -109,7 +112,7 @@ public class ProfileInterviewDetailsActivity extends AppCompatActivity implement
 
     @Override
     public void onNetworkConnectionChanged(boolean isConnected) {
-        if (!isConnected){
+        if (!isConnected) {
             Utils.showDialogue(ProfileInterviewDetailsActivity.this, "Sorry! Not connected to internet");
         }
 
@@ -134,6 +137,7 @@ public class ProfileInterviewDetailsActivity extends AppCompatActivity implement
         }
         return true;
     }
+
     private void setupToolbar() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
@@ -189,7 +193,7 @@ public class ProfileInterviewDetailsActivity extends AppCompatActivity implement
 
     private void postRecyclerView() {
 
-        RecyclerView postRecycler = (RecyclerView) findViewById(R.id.comments_interview_recycler);
+        postRecycler = (RecyclerView) findViewById(R.id.comments_interview_recycler);
         recyclerAdapterInterviewDetails = new RecyclerAdapterInterviewDetails(getApplicationContext(), interviewList);
         //setting fixed size
         postRecycler.setHasFixedSize(true);
@@ -237,13 +241,16 @@ public class ProfileInterviewDetailsActivity extends AppCompatActivity implement
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.send_comment:
                 if (userComment.getText().toString().isEmpty()) {
                     Toast.makeText(getApplicationContext(), "Enter the Comment", Toast.LENGTH_SHORT).show();
                 } else {
                     userPostedComment = userComment.getText().toString();
                     insertUserComment();
+                    Interview interview = new Interview(userImage, userPostedComment);
+                    // adding movie to blogHomeList array
+                    interviewList.add(interview);
                     recyclerAdapterInterviewDetails.notifyDataSetChanged();
                     Toast.makeText(getApplicationContext(), "Comment added", Toast.LENGTH_SHORT).show();
                 }
@@ -251,7 +258,7 @@ public class ProfileInterviewDetailsActivity extends AppCompatActivity implement
                 break;
             case R.id.interview_profile_name:
 
-                Intent otherProfileDetails=new Intent(getApplicationContext(), OtherProfileActivity.class);
+                Intent otherProfileDetails = new Intent(getApplicationContext(), OtherProfileActivity.class);
 
                 otherProfileDetails.putExtra("post_createdid", interviewUserId);
                 otherProfileDetails.putExtra("created_uname", name);
@@ -259,7 +266,7 @@ public class ProfileInterviewDetailsActivity extends AppCompatActivity implement
                 break;
 
             case R.id.interview_company:
-                Intent companyDetails=new Intent(getApplicationContext(),CompanyDetailsActivity.class);
+                Intent companyDetails = new Intent(getApplicationContext(), CompanyDetailsActivity.class);
                 companyDetails.putExtra("postCompany", company);
                 companyDetails.putExtra("companyId", companyId);
                 startActivity(companyDetails);

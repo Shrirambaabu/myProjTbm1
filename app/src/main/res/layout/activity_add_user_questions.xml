@@ -8,15 +8,15 @@
     tools:context="igotplaced.com.layouts.AddUserExperience">
 
 
-    <android.support.v7.widget.AppCompatEditText
+    <EditText
         android:id="@+id/getUserQuestionsData"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/white"
-        android:background="@drawable/shape"
-        android:textColorHint="@color/text_main"
-        android:padding="@dimen/margin_2"
-        android:layout_margin="@dimen/margin_4"
+        android:textColor="@color/colorPrimaryDark"
+        android:background="@color/white"
+        android:textColorHint="@color/colorPrimaryDark"
+        android:padding="@dimen/margin_8"
+        android:layout_margin="@dimen/margin_16"
         android:hint=" Have An Aptitude Question Or An Interview Question Share And Discuss Here!"
         android:textSize="18sp" />
 
@@ -74,7 +74,7 @@
             android:layout_weight="1"
             app:backgroundTint="@color/white" />
 
-        <com.thomashaertel.widget.MultiSpinner
+        <android.support.v7.widget.AppCompatSpinner
             android:id="@+id/company_spinner3"
             android:layout_width="match_parent"
             style="@style/Platform.Widget.AppCompat.Spinner"

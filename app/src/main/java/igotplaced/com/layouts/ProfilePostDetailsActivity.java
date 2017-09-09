@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -48,27 +49,28 @@ import static igotplaced.com.layouts.Utils.Utils.BaseUri;
 import static igotplaced.com.layouts.Utils.Utils.Id;
 import static igotplaced.com.layouts.Utils.Utils.MyPREFERENCES;
 import static igotplaced.com.layouts.Utils.Utils.Name;
+import static igotplaced.com.layouts.Utils.Utils.UserImage;
 
 public class ProfilePostDetailsActivity extends AppCompatActivity implements View.OnClickListener, ConnectivityReceiver.ConnectivityReceiverListener {
 
 
-    private String id = null, name = null, time = null,companyId, post = null, image = null, industry = null, postUserId = null,Company=null;
+    private String id = null, name = null, time = null, companyId, post = null, image = null, industry = null, postUserId = null, Company = null;
 
     private NetworkImageView postImage;
-    private TextView profileName, profileTime, postMessage, postIndustry,postCompany;
+    private TextView profileName, profileTime, postMessage, postIndustry, postCompany;
 
     private EditText userComment;
     private ImageView sendComment;
 
     private List<Post> postList = new ArrayList<Post>();
     private LinearLayoutManager mLayoutManager;
-
+private RecyclerView postRecycler;
     private RequestQueue queue;
     private Intent intent;
     private ProgressDialog pDialog;
     private RecyclerAdapterPostDetails recyclerAdapterPostDetails;
 
-    private String userId = null, userName = null;
+    private String userId = null, userName = null, userImage = null;
     private String URL = BaseUri + "/home/postComments";
     private String userPostedComment;
     private Toolbar toolbar;
@@ -80,6 +82,7 @@ public class ProfilePostDetailsActivity extends AppCompatActivity implements Vie
         SharedPreferences sharedpreferences = getApplicationContext().getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         userName = sharedpreferences.getString(Name, null);
         userId = sharedpreferences.getString(Id, null);
+        userImage = sharedpreferences.getString(UserImage, null);
 
         setContentView(R.layout.activity_profile_post_details);
         //initial value from intent
@@ -91,17 +94,18 @@ public class ProfilePostDetailsActivity extends AppCompatActivity implements Vie
         pDialog = new ProgressDialog(ProfilePostDetailsActivity.this, R.style.MyThemeProgress);
         pDialog.setProgressStyle(android.R.style.Widget_ProgressBar_Large);
         pDialog.onBackPressed();
-
+        getWindow().setSoftInputMode(
+                WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         postImage.setImageUrl(Utils.BaseImageUri + image, NetworkController.getInstance(getApplicationContext()).getImageLoader());
         profileName.setText(name);
         profileTime.setText(time);
         postMessage.setText(post);
-        postIndustry.setText("#"+industry);
-        if (Company.equals("")){
+        postIndustry.setText("#" + industry);
+        if (Company.equals("")) {
             postCompany.setText(Company);
-        }else{
-            postCompany.setText("#"+Company);
+        } else {
+            postCompany.setText("#" + Company);
         }
 
 
@@ -111,7 +115,7 @@ public class ProfilePostDetailsActivity extends AppCompatActivity implements Vie
 
     @Override
     public void onNetworkConnectionChanged(boolean isConnected) {
-        if (!isConnected){
+        if (!isConnected) {
             Utils.showDialogue(ProfilePostDetailsActivity.this, "Sorry! Not connected to internet");
         }
 
@@ -149,7 +153,7 @@ public class ProfilePostDetailsActivity extends AppCompatActivity implements Vie
     }
 
     private void postRecyclerView() {
-        RecyclerView postRecycler = (RecyclerView) findViewById(R.id.comments_post_recycler);
+         postRecycler = (RecyclerView) findViewById(R.id.comments_post_recycler);
         recyclerAdapterPostDetails = new RecyclerAdapterPostDetails(getApplicationContext(), postList);
         //setting fixed size
         postRecycler.setHasFixedSize(true);
@@ -162,17 +166,18 @@ public class ProfilePostDetailsActivity extends AppCompatActivity implements Vie
         queue = NetworkController.getInstance(getApplicationContext()).getRequestQueue();
 
         makePostCommentsRequest();
+
     }
 
     private void makePostCommentsRequest() {
 
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, BaseUri + "/home/postCommentList/" + id, null,  new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, BaseUri + "/home/postCommentList/" + id, null, new Response.Listener<JSONArray>() {
 
 
             @Override
             public void onResponse(JSONArray response) {
                 postList.clear();
-                pDialog.dismiss();
+
                 for (int i = 0; i < response.length(); i++) {
                     Log.d("error", response.toString());
                     try {
@@ -183,15 +188,16 @@ public class ProfilePostDetailsActivity extends AppCompatActivity implements Vie
                         // adding movie to blogHomeList array
                         postList.add(post);
 
-
                     } catch (Exception e) {
                         Log.d("error", e.getMessage());
                         System.out.println(e.getMessage());
                     } finally {
                         //Notify adapter about data changes
                         recyclerAdapterPostDetails.notifyDataSetChanged();
+
                     }
                 }
+
             }
 
         }, new Response.ErrorListener() {
@@ -199,7 +205,7 @@ public class ProfilePostDetailsActivity extends AppCompatActivity implements Vie
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("error", "Error: " + error.getMessage());
-                pDialog.dismiss();
+
             }
         });
 
@@ -240,22 +246,24 @@ public class ProfilePostDetailsActivity extends AppCompatActivity implements Vie
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.send_comment:
                 if (userComment.getText().toString().isEmpty()) {
                     Toast.makeText(getApplicationContext(), "Enter the Comment", Toast.LENGTH_SHORT).show();
                 } else {
                     userPostedComment = userComment.getText().toString();
                     insertUserComment();
-                     recyclerAdapterPostDetails.notifyDataSetChanged();
-                    makePostCommentsRequest();
+                    Post post = new Post(userImage, userPostedComment);
+                    // adding movie to blogHomeList array
+                    postList.add(post);
+                    recyclerAdapterPostDetails.notifyDataSetChanged();
                     Toast.makeText(getApplicationContext(), "Comment added", Toast.LENGTH_SHORT).show();
                 }
                 userComment.setText("");
                 break;
             case R.id.post_profile_name:
 
-                Intent otherProfileDetails=new Intent(getApplicationContext(), OtherProfileActivity.class);
+                Intent otherProfileDetails = new Intent(getApplicationContext(), OtherProfileActivity.class);
 
                 otherProfileDetails.putExtra("post_createdid", postUserId);
                 otherProfileDetails.putExtra("created_uname", name);
@@ -264,7 +272,7 @@ public class ProfilePostDetailsActivity extends AppCompatActivity implements Vie
 
             case R.id.post_company:
 
-                Intent companyDetails=new Intent(getApplicationContext(),CompanyDetailsActivity.class);
+                Intent companyDetails = new Intent(getApplicationContext(), CompanyDetailsActivity.class);
                 companyDetails.putExtra("postCompany", Company);
                 companyDetails.putExtra("companyId", companyId);
                 startActivity(companyDetails);
@@ -277,7 +285,7 @@ public class ProfilePostDetailsActivity extends AppCompatActivity implements Vie
     }
 
     private void insertUserComment() {
-        pDialog.show();
+
         StringRequest request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {

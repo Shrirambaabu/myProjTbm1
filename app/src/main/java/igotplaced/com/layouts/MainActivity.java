@@ -63,6 +63,7 @@ import static igotplaced.com.layouts.Utils.Utils.Email;
 import static igotplaced.com.layouts.Utils.Utils.Id;
 import static igotplaced.com.layouts.Utils.Utils.MyPREFERENCES;
 import static igotplaced.com.layouts.Utils.Utils.Name;
+import static igotplaced.com.layouts.Utils.Utils.UserImage;
 
 public class MainActivity extends AppCompatActivity implements ConnectivityReceiver.ConnectivityReceiverListener {
 
@@ -77,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
     private Toolbar toolbar;
     private Context context;
     private RequestQueue queue;
-
+private  NavigationView navigationView;
     private TextView nameHeader, emailHeader;
     private NetworkImageView profile_img;
 
@@ -156,7 +157,10 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
                         Log.d("error", "Error: " + Utils.BaseImageUri + profileHome.getImageName());
                         profile_img.setImageUrl(Utils.BaseImageUri + profileHome.getImageName(), NetworkController.getInstance(context).getImageLoader());
 
+                        SharedPreferences.Editor editor = sharedpreferences.edit();
 
+                        editor.putString(UserImage, profileHome.getImageName());
+                        editor.commit();
                     } catch (Exception e) {
                         Log.d("error", e.getMessage());
                     }
@@ -178,7 +182,7 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
     private void navigation() {
 
         //Initializing NavigationView
-        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
+         navigationView = (NavigationView) findViewById(R.id.navigation_view);
         navigationView.setCheckedItem(R.id.home);
         View header = navigationView.getHeaderView(0);
 
@@ -221,7 +225,7 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
                 isMain = true;
                 selectedPosition = 0;
                 fragment = new HomeFragment();
-
+                navigationView.getMenu().findItem(R.id.home).setChecked(true);
                 Log.e("SharedValue ;", "");
                 break;
             case R.id.profile:
