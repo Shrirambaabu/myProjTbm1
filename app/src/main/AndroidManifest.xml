@@ -63,15 +63,22 @@
 
         <activity android:name=".BlogDetailsActivity" />
         <activity android:name=".EditProfileActivity" />
-        <activity android:name=".ProfilePostDetailsActivity" />
-        <activity android:name=".ProfileInterviewDetailsActivity" />
-        <activity android:name=".ProfileEventDetails" />
-        <activity android:name=".ProfileQuestionsDetailsActivity" />
+        <activity
+            android:name=".ProfilePostDetailsActivity"
+            android:theme="@style/Theme.MyDialog" />
+        <activity android:name=".ProfileInterviewDetailsActivity"
+            android:theme="@style/Theme.MyDialog"/>
+        <activity android:name=".ProfileEventDetails"
+            android:theme="@style/Theme.MyDialog"/>
+        <activity android:name=".ProfileQuestionsDetailsActivity"
+            android:theme="@style/Theme.MyDialog"/>
         <activity android:name=".OtherProfileActivity" />
         <activity android:name=".CompanyDetailsActivity" />
         <activity android:name=".AboutCompanyActivity" />
-        <activity android:name=".QuestionsPopUpActivity" />
-        <activity android:name=".EventsPopUpActivity" />
+        <activity android:name=".QuestionsPopUpActivity"
+            android:theme="@style/Theme.MyDialog" />
+        <activity android:name=".EventsPopUpActivity"
+            android:theme="@style/Theme.MyDialog" />
         <activity android:name=".PostPopUpActivity"></activity>
     </application>
 

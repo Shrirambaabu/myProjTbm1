@@ -422,7 +422,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
                 pDialog.dismiss();
 
                 if (Integer.parseInt(s) != 0) {
-                    Toast.makeText(RegisterActivity.this, "Registration Successful"+s, Toast.LENGTH_LONG).show();
+                    Toast.makeText(RegisterActivity.this, "Registration Successful", Toast.LENGTH_LONG).show();
                     Intent registrationCompleteIntent = new Intent(RegisterActivity.this, RegisterPasswordActivity.class);
                     registrationCompleteIntent.putExtra("id",s);
                     registrationCompleteIntent.putExtra("interest",String.valueOf(checkBoxIntrestedBoolean));

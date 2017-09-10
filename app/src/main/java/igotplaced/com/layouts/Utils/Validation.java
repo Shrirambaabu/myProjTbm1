@@ -137,7 +137,7 @@ public class Validation {
             requestFocus(inputLayoutConfirmPassword, activity);
             return false;
         } else {
-            inputLayoutConfirmPassword.setEnabled(false);
+            inputLayoutConfirmPassword.setEnabled(true);
         }
         return true;
     }

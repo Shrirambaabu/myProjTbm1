@@ -112,7 +112,6 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
     private SharedPreferences sharedpreferences;
     private String userName = null, userId = null, userEmail = null;
 
-    private TextView company1TextView, company2TextView, company3TextView;
 
     private int yearOfPassOutSpinnerPosition = 0, industry1SpinnerPosition = 0, industry2SpinnerPosition = 0, industry3SpinnerPosition = 0, company1SpinnerPosition;
     private Uri uriPath;
@@ -1138,7 +1137,7 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
     private MultiSpinner.MultiSpinnerListener onSelectedListener3 = new MultiSpinner.MultiSpinnerListener() {
         public void onItemsSelected(boolean[] selected) {
             // Do something here with the selected items
-            company3TextView.setVisibility(View.GONE);
+
             companySpinnerThree.setVisibility(View.VISIBLE);
             StringBuilder builder = new StringBuilder();
 
@@ -1158,10 +1157,6 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
 
 
     private void addressingView() {
-
-        company1TextView = (TextView) findViewById(R.id.profile_company_spinner1_text);
-        company2TextView = (TextView) findViewById(R.id.profile_company_spinner2_text);
-        company3TextView = (TextView) findViewById(R.id.profile_company_spinner3_text);
 
         profileName = (TextInputLayout) findViewById(R.id.profileName);
         profileEmailAddress = (TextInputLayout) findViewById(R.id.profileEmailAddress);

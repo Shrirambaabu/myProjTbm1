@@ -292,16 +292,7 @@
                     android:layout_weight="1"
                     app:backgroundTint="@color/white" />
 
-                <TextView
-                    android:id="@+id/profile_company_spinner1_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="48dp"
-                    android:layout_marginEnd="@dimen/margin_16"
-                    android:layout_marginStart="@dimen/margin_16"
-                    android:layout_weight="1"
-                    android:maxLines="1"
-                    android:textColor="@color/white"
-                    android:textSize="16sp" />
+
 
                 <com.thomashaertel.widget.MultiSpinner
                     android:id="@+id/profile_company_spinner1"
@@ -334,16 +325,6 @@
                     android:layout_weight="1"
                     app:backgroundTint="@color/white" />
 
-                <TextView
-                    android:id="@+id/profile_company_spinner2_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="48dp"
-                    android:layout_marginEnd="@dimen/margin_16"
-                    android:layout_marginStart="@dimen/margin_16"
-                    android:layout_weight="1"
-                    android:maxLines="1"
-                    android:textColor="@color/white"
-                    android:textSize="16sp" />
 
 
                 <com.thomashaertel.widget.MultiSpinner
@@ -377,16 +358,7 @@
                     android:layout_weight="1"
                     app:backgroundTint="@color/white" />
 
-                <TextView
-                    android:id="@+id/profile_company_spinner3_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="48dp"
-                    android:layout_marginEnd="@dimen/margin_16"
-                    android:layout_marginStart="@dimen/margin_16"
-                    android:layout_weight="1"
-                    android:maxLines="1"
-                    android:textColor="@color/white"
-                    android:textSize="16sp" />
+
 
                 <com.thomashaertel.widget.MultiSpinner
                     android:id="@+id/profile_company_spinner3"
