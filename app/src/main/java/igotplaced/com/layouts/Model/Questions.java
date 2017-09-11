@@ -54,6 +54,13 @@ public class Questions {
         this.userQuestionComments=userQuestionComments;
     }
 
+    public Questions(String commentUserImage, String commentUserMessage,String questionId,String questionUserId) {
+        this.commentUserImage = commentUserImage;
+        this.commentUserMessage = commentUserMessage;
+        this.questionId = questionId;
+        this.questionUserId = questionUserId;
+    }
+
     public Questions(String commentUserImage, String commentUserMessage) {
         this.commentUserImage = commentUserImage;
         this.commentUserMessage = commentUserMessage;

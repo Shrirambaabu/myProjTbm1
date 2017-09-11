@@ -23,6 +23,13 @@ public class Post {
         return companyId;
     }
 
+
+    public Post(String comenteduserImage, String commentedMessage,String postId,String postedUserId) {
+        this.comentedUserImage = comenteduserImage;
+        this.commentedMessage = commentedMessage;
+        this.postId = postId;
+        this.postedUserId = postedUserId;
+    }
     public Post(String comenteduserImage, String commentedMessage) {
         this.comentedUserImage = comenteduserImage;
         this.commentedMessage = commentedMessage;

@@ -118,7 +118,7 @@ public class PostDetailsFragment extends Fragment implements View.OnClickListene
     private void postRecyclerView(View view) {
 
         RecyclerView postRecycler = (RecyclerView) view.findViewById(R.id.comments_post_recycler);
-        recyclerAdapterPostDetails = new RecyclerAdapterPostDetails(getContext(), postList);
+        recyclerAdapterPostDetails = new RecyclerAdapterPostDetails(getActivity(), postList);
         //setting fixed size
         postRecycler.setHasFixedSize(true);
         //setting horizontal layout

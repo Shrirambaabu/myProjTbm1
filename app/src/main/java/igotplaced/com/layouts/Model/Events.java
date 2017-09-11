@@ -51,6 +51,12 @@ public class Events {
         this.eventCommentImage = eventCommentImage;
         this.eventCommentMessage = eventCommentMessage;
     }
+    public Events(String eventCommentImage, String eventCommentMessage,String eventId,String eventUserId) {
+        this.eventCommentImage = eventCommentImage;
+        this.eventCommentMessage = eventCommentMessage;
+        this.eventId = eventId;
+        this.eventUserId = eventUserId;
+    }
 
     public Events(String eventId, String eventUserId, String eventCaption, String eventDesignation, String eventVenue, String eventDate, String eventRegistered, String eventStatus, String event, String eventIndustry, String eventImage, String eventProfileName, String eventTime, String commentProfileImage, String userComment,String eventCompany) {
         this.eventId = eventId;

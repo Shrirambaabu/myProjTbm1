@@ -54,7 +54,7 @@ public class ProfileQuestionsDetailsActivity extends AppCompatActivity implement
 
 
     private String id = null,name=null,time=null,image=null,companyId=null,message=null,industry=null,postedUserId=null,company=null;
-    private String userId = null, userName = null, userImage = null;
+    private String userId = null, userName = null, userImage = null,commentedId;
     private NetworkImageView questionImage;
     private TextView profileName, profileTime, questionMessage, questionIndustry,questionsCompany;
     private String userPostedComment;
@@ -143,7 +143,7 @@ public class ProfileQuestionsDetailsActivity extends AppCompatActivity implement
 
     private void postRecyclerView() {
         RecyclerView postRecycler = (RecyclerView) findViewById(R.id.comments_question_recycler);
-        recyclerAdapterQuestionDetails = new RecyclerAdapterQuestionDetails(getApplicationContext(), questionsList);
+        recyclerAdapterQuestionDetails = new RecyclerAdapterQuestionDetails(ProfileQuestionsDetailsActivity.this, questionsList);
         //setting fixed size
         postRecycler.setHasFixedSize(true);
         //setting horizontal layout
@@ -171,7 +171,7 @@ public class ProfileQuestionsDetailsActivity extends AppCompatActivity implement
 
 
                         JSONObject obj = response.getJSONObject(i);
-                        Questions questions = new Questions(obj.getString("commentedUserImage"), obj.getString("comments"));
+                        Questions questions = new Questions(obj.getString("commentedUserImage"), obj.getString("comments"),obj.getString("id"),obj.getString("user_id"));
                         // adding movie to blogHomeList array
                         questionsList.add(questions);
 
@@ -241,10 +241,7 @@ public class ProfileQuestionsDetailsActivity extends AppCompatActivity implement
                 } else {
                     userPostedComment = userComment.getText().toString();
                     insertUserComment();
-                    Questions questions = new Questions(userImage, userPostedComment);
-                    // adding movie to blogHomeList array
-                    questionsList.add(questions);
-                    recyclerAdapterQuestionDetails.notifyDataSetChanged();
+
                     Toast.makeText(getApplicationContext(), "Comment added", Toast.LENGTH_SHORT).show();
                 }
                 userComment.setText("");
@@ -273,6 +270,14 @@ public class ProfileQuestionsDetailsActivity extends AppCompatActivity implement
         StringRequest request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
+
+                Log.e("InserString",""+s);
+                commentedId=s;
+
+                Questions questions = new Questions(userImage, userPostedComment,commentedId,userId);
+                // adding movie to blogHomeList array
+                questionsList.add(questions);
+                recyclerAdapterQuestionDetails.notifyDataSetChanged();
 
             }
         }, new Response.ErrorListener() {

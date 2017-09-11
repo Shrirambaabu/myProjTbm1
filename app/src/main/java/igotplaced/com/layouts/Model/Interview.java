@@ -30,6 +30,13 @@ private String companyId;
     public Interview() {
     }
 
+    public Interview(String comentUserImage, String commentMessage,String interviewId,String interviewUserId) {
+        this.comentUserImage = comentUserImage;
+        this.commentMessage = commentMessage;
+        this.interviewId = interviewId;
+        this.interviewUserId = interviewUserId;
+    }
+
     public Interview(String comentUserImage, String commentMessage) {
         this.comentUserImage = comentUserImage;
         this.commentMessage = commentMessage;

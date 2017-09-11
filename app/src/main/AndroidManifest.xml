@@ -79,7 +79,10 @@
             android:theme="@style/Theme.MyDialog" />
         <activity android:name=".EventsPopUpActivity"
             android:theme="@style/Theme.MyDialog" />
-        <activity android:name=".PostPopUpActivity"></activity>
+        <activity android:name=".PostPopUpActivity"
+            android:theme="@style/Theme.MyDialog">
+
+        </activity>
     </application>
 
 </manifest>

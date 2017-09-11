@@ -1,6 +1,8 @@
 package igotplaced.com.layouts;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -42,12 +44,16 @@ import igotplaced.com.layouts.Utils.NetworkController;
 import igotplaced.com.layouts.Utils.Utils;
 
 import static igotplaced.com.layouts.Utils.Utils.BaseUri;
+import static igotplaced.com.layouts.Utils.Utils.Id;
+import static igotplaced.com.layouts.Utils.Utils.MyPREFERENCES;
+import static igotplaced.com.layouts.Utils.Utils.Name;
+import static igotplaced.com.layouts.Utils.Utils.UserImage;
 
 public class QuestionsPopUpActivity extends AppCompatActivity implements View.OnClickListener, ConnectivityReceiver.ConnectivityReceiverListener {
 
     private Intent intent;
-    private String id = null;
-    private  String  company,companyId,postedUserId;
+    private String id = null,userImage = null,commentedId;
+    private  String  company,companyId,postedUserId,userId;
     private Toolbar toolbar;
     private LinearLayoutManager mLayoutManager;
 
@@ -66,6 +72,9 @@ public class QuestionsPopUpActivity extends AppCompatActivity implements View.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SharedPreferences sharedpreferences = getApplicationContext().getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+        userId = sharedpreferences.getString(Id, null);
+        userImage = sharedpreferences.getString(UserImage, null);
         setContentView(R.layout.activity_questions_pop_up);
         initialization();
         setupToolbar();
@@ -143,7 +152,7 @@ public class QuestionsPopUpActivity extends AppCompatActivity implements View.On
     private void postRecyclerView() {
 
         RecyclerView postRecycler = (RecyclerView) findViewById(R.id.comments_question_recycler);
-        recyclerAdapterQuestionDetails = new RecyclerAdapterQuestionDetails(getApplicationContext(), questionsList);
+        recyclerAdapterQuestionDetails = new RecyclerAdapterQuestionDetails(QuestionsPopUpActivity.this, questionsList);
         //setting fixed size
         postRecycler.setHasFixedSize(true);
         //setting horizontal layout
@@ -171,7 +180,7 @@ public class QuestionsPopUpActivity extends AppCompatActivity implements View.On
 
 
                         JSONObject obj = response.getJSONObject(i);
-                        Questions questions = new Questions(obj.getString("commentedUserImage"), obj.getString("comments"));
+                        Questions questions = new Questions(obj.getString("commentedUserImage"), obj.getString("comments"),obj.getString("id"),obj.getString("user_id"));
                         // adding movie to blogHomeList array
                         questionsList.add(questions);
 
@@ -258,7 +267,7 @@ public class QuestionsPopUpActivity extends AppCompatActivity implements View.On
                 } else {
                     userPostedComment = userComment.getText().toString();
                     insertUserComment();
-                    recyclerAdapterQuestionDetails.notifyDataSetChanged();
+
                     Toast.makeText(getApplicationContext(), "Comment added", Toast.LENGTH_SHORT).show();
                 }
                 userComment.setText("");
@@ -288,6 +297,12 @@ public class QuestionsPopUpActivity extends AppCompatActivity implements View.On
         StringRequest request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
+                commentedId=s;
+
+                Questions questions = new Questions(userImage, userPostedComment,commentedId,userId);
+                // adding movie to blogHomeList array
+                questionsList.add(questions);
+                recyclerAdapterQuestionDetails.notifyDataSetChanged();
 
             }
         }, new Response.ErrorListener() {
@@ -309,7 +324,7 @@ public class QuestionsPopUpActivity extends AppCompatActivity implements View.On
                 Map<String, String> parameters = new HashMap<String, String>();
                 parameters.put("qid", id);
                 parameters.put("ques_createrid", postedUserId);
-                parameters.put("user_id", postedUserId);
+                parameters.put("user_id", userId);
                 parameters.put("comments", userPostedComment);
                 parameters.put("created_uname", profileName.getText().toString());
 

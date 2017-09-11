@@ -10,13 +10,27 @@
         android:layout_height="24dp"
         android:layout_margin="@dimen/margin_8" />
 
+    <ImageView
+        android:id="@+id/delete"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:visibility="gone"
+        android:layout_marginTop="@dimen/margin_8"
+        android:layout_marginEnd="@dimen/margin_16"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/ic_delete_black_24dp"
+        />
+
     <TextView
         android:id="@+id/commented_post"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_8"
         android:textSize="14sp"
-        android:maxLines="2"
+        android:layout_marginEnd="8dp"
         android:textColor="@color/text_main"
-        android:layout_toEndOf="@+id/post_img" />
+        android:layout_toEndOf="@+id/post_img"
+        android:layout_toStartOf="@+id/delete"/>
+
+
 </RelativeLayout>

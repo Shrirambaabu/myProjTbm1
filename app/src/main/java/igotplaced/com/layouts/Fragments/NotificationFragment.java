@@ -102,7 +102,7 @@ public class NotificationFragment extends Fragment implements SwipeRefreshLayout
     }
 
     private void loadData() {
-        int loadLimit = 4;
+        int loadLimit = 5;
 
         //Volley's inbuilt class to make Json array request
         makeJsonArrayRequestNotification(0, loadLimit);
@@ -148,7 +148,7 @@ public class NotificationFragment extends Fragment implements SwipeRefreshLayout
 */
 
                     if (!loading) {
-                        loadMoreData(totalItemCount);
+                        loadMoreData(totalItemCount + 1);
                         loading = true;
                     }
 
@@ -163,7 +163,7 @@ public class NotificationFragment extends Fragment implements SwipeRefreshLayout
 
         // I have not used current page for showing demo, if u use a webservice
         // then it is useful for every call request
-        makeJsonArrayRequestNotification(totalItemCount, totalItemCount + 3);
+        makeJsonArrayRequestNotification(totalItemCount, totalItemCount + 5);
 
         recyclerAdapterNotification.notifyDataSetChanged();
 
@@ -176,9 +176,7 @@ public class NotificationFragment extends Fragment implements SwipeRefreshLayout
         }
 
 
-
-
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, BaseUri + "/notificationService/notification/"+ userId +"?start=" + start + "&size=" + size, null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, BaseUri + "/notificationService/notification/" + userId + "?start=" + start + "&size=" + size, null, new Response.Listener<JSONObject>() {
             JSONArray jsonObjectJSON = null;
 
             @Override
@@ -187,7 +185,7 @@ public class NotificationFragment extends Fragment implements SwipeRefreshLayout
                 Log.d("error", jsonObject.toString());*/
                 try {
                     jsonObjectJSON = jsonObject.getJSONArray("");
-                    notificationViewList.clear();
+                  //  notificationViewList.clear();
 
                     for (int i = 0; i < jsonObjectJSON.length(); i++) {
                      /*   Log.d("error", jsonObjectJSON.toString());*/

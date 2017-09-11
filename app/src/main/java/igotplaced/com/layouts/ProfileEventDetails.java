@@ -53,7 +53,7 @@ public class ProfileEventDetails extends AppCompatActivity implements View.OnCli
 
     private String id = null, image = null, name = null, time = null, caption = null, company=null,designation = null, venue = null, date = null, registered = null, status = null, event = null, industry = null, postedUserId = null;
 
-    private String userId = null, userName = null, userImage = null;
+    private String userId = null, userName = null, userImage = null,eventComentId;
     private String userPostedComment;
     private String URL = BaseUri + "/home/eventsComments";
 
@@ -152,7 +152,7 @@ public class ProfileEventDetails extends AppCompatActivity implements View.OnCli
     private void postRecyclerView() {
 
         RecyclerView eventRecycler = (RecyclerView) findViewById(R.id.comments_events_recycler);
-        recyclerAdapterEventDetails = new RecyclerAdapterEventDetails(getApplicationContext(), eventList);
+        recyclerAdapterEventDetails = new RecyclerAdapterEventDetails(ProfileEventDetails.this, eventList);
         //setting fixed size
         eventRecycler.setHasFixedSize(true);
         //setting horizontal layout
@@ -181,7 +181,7 @@ public class ProfileEventDetails extends AppCompatActivity implements View.OnCli
 
 
                         JSONObject obj = response.getJSONObject(i);
-                        Events events = new Events(obj.getString("commentedUserImage"), obj.getString("comments"));
+                        Events events = new Events(obj.getString("commentedUserImage"), obj.getString("comments"),obj.getString("id"),obj.getString("user_id"));
                         // adding movie to blogHomeList array
                         eventList.add(events);
 
@@ -261,10 +261,7 @@ public class ProfileEventDetails extends AppCompatActivity implements View.OnCli
                 } else {
                     userPostedComment = userComment.getText().toString();
                     insertUserComment();
-                    Events events = new Events(userImage, userPostedComment);
-                    // adding movie to blogHomeList array
-                    eventList.add(events);
-                    recyclerAdapterEventDetails.notifyDataSetChanged();
+
                     Toast.makeText(getApplicationContext(), "Comment added", Toast.LENGTH_SHORT).show();
                 }
                 userComment.setText("");
@@ -286,6 +283,12 @@ public class ProfileEventDetails extends AppCompatActivity implements View.OnCli
             @Override
             public void onResponse(String s) {
 
+                eventComentId=s;
+
+                Events events = new Events(userImage, userPostedComment,eventComentId,userId);
+                // adding movie to blogHomeList array
+                eventList.add(events);
+                recyclerAdapterEventDetails.notifyDataSetChanged();
             }
         }, new Response.ErrorListener() {
 

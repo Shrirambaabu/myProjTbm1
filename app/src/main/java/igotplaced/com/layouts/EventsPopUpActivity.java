@@ -47,6 +47,7 @@ import static igotplaced.com.layouts.Utils.Utils.BaseUri;
 import static igotplaced.com.layouts.Utils.Utils.Id;
 import static igotplaced.com.layouts.Utils.Utils.MyPREFERENCES;
 import static igotplaced.com.layouts.Utils.Utils.Name;
+import static igotplaced.com.layouts.Utils.Utils.UserImage;
 
 public class EventsPopUpActivity extends AppCompatActivity implements View.OnClickListener, ConnectivityReceiver.ConnectivityReceiverListener {
 
@@ -59,7 +60,7 @@ public class EventsPopUpActivity extends AppCompatActivity implements View.OnCli
     private RequestQueue queue;
     private NetworkImageView eventImage;
     private TextView eventName, eventTime,eventCompany, eventCaption, eventDesignation, eventVenue, eventDate, eventRegistered, eventStatus, eventMessage, eventIndustry;
-    private String userId = null,userName=null;
+    private String userId = null,userName=null,userImage = null,eventComentId;
     private EditText userComment;
     private ImageView sendComment;
     private String URL = BaseUri + "/home/eventsComments";
@@ -74,7 +75,7 @@ public class EventsPopUpActivity extends AppCompatActivity implements View.OnCli
         SharedPreferences sharedpreferences = getApplicationContext().getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         userName = sharedpreferences.getString(Name, null);
         userId = sharedpreferences.getString(Id, null);
-
+        userImage = sharedpreferences.getString(UserImage, null);
         setContentView(R.layout.activity_events_pop_up);
         //initial value from intent
         initialization();
@@ -123,7 +124,7 @@ public class EventsPopUpActivity extends AppCompatActivity implements View.OnCli
 
 
                         JSONObject obj = response.getJSONObject(i);
-                        Events events = new Events(obj.getString("commentedUserImage"), obj.getString("comments"));
+                        Events events = new Events(obj.getString("commentedUserImage"), obj.getString("comments"),obj.getString("id"),obj.getString("user_id"));
                         // adding movie to blogHomeList array
                         eventList.add(events);
 
@@ -152,7 +153,7 @@ public class EventsPopUpActivity extends AppCompatActivity implements View.OnCli
     private void postRecyclerView() {
 
         RecyclerView eventRecycler = (RecyclerView) findViewById(R.id.comments_events_recycler);
-        recyclerAdapterEventDetails = new RecyclerAdapterEventDetails(getApplicationContext(), eventList);
+        recyclerAdapterEventDetails = new RecyclerAdapterEventDetails(EventsPopUpActivity.this, eventList);
         //setting fixed size
         eventRecycler.setHasFixedSize(true);
         //setting horizontal layout
@@ -267,7 +268,7 @@ public class EventsPopUpActivity extends AppCompatActivity implements View.OnCli
                 } else {
                     userPostedComment = userComment.getText().toString();
                     insertUserComment();
-                    recyclerAdapterEventDetails.notifyDataSetChanged();
+
                     Toast.makeText(getApplicationContext(), "Comment added", Toast.LENGTH_SHORT).show();
                 }
                 userComment.setText("");
@@ -288,6 +289,13 @@ public class EventsPopUpActivity extends AppCompatActivity implements View.OnCli
         StringRequest request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
+
+                eventComentId=s;
+
+                Events events = new Events(userImage, userPostedComment,eventComentId,userId);
+                // adding movie to blogHomeList array
+                eventList.add(events);
+                recyclerAdapterEventDetails.notifyDataSetChanged();
 
             }
         }, new Response.ErrorListener() {

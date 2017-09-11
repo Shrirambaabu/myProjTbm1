@@ -70,7 +70,7 @@ private RecyclerView postRecycler;
     private ProgressDialog pDialog;
     private RecyclerAdapterPostDetails recyclerAdapterPostDetails;
 
-    private String userId = null, userName = null, userImage = null;
+    private String userId = null, userName = null, userImage = null,postId;
     private String URL = BaseUri + "/home/postComments";
     private String userPostedComment;
     private Toolbar toolbar;
@@ -154,7 +154,7 @@ private RecyclerView postRecycler;
 
     private void postRecyclerView() {
          postRecycler = (RecyclerView) findViewById(R.id.comments_post_recycler);
-        recyclerAdapterPostDetails = new RecyclerAdapterPostDetails(getApplicationContext(), postList);
+        recyclerAdapterPostDetails = new RecyclerAdapterPostDetails(ProfilePostDetailsActivity.this, postList);
         //setting fixed size
         postRecycler.setHasFixedSize(true);
         //setting horizontal layout
@@ -184,7 +184,7 @@ private RecyclerView postRecycler;
 
 
                         JSONObject obj = response.getJSONObject(i);
-                        Post post = new Post(obj.getString("commentedUserImage"), obj.getString("comments"));
+                        Post post = new Post(obj.getString("commentedUserImage"), obj.getString("comments"),obj.getString("id"),obj.getString("user_id"));
                         // adding movie to blogHomeList array
                         postList.add(post);
 
@@ -253,10 +253,8 @@ private RecyclerView postRecycler;
                 } else {
                     userPostedComment = userComment.getText().toString();
                     insertUserComment();
-                    Post post = new Post(userImage, userPostedComment);
-                    // adding movie to blogHomeList array
-                    postList.add(post);
-                    recyclerAdapterPostDetails.notifyDataSetChanged();
+
+
                     Toast.makeText(getApplicationContext(), "Comment added", Toast.LENGTH_SHORT).show();
                 }
                 userComment.setText("");
@@ -290,6 +288,12 @@ private RecyclerView postRecycler;
             @Override
             public void onResponse(String s) {
 
+                Log.e("InserString",""+s);
+                postId=s;
+                Post post = new Post(userImage, userPostedComment,postId,userId);
+                // adding movie to blogHomeList array
+                postList.add(post);
+                recyclerAdapterPostDetails.notifyDataSetChanged();
             }
         }, new Response.ErrorListener() {
 

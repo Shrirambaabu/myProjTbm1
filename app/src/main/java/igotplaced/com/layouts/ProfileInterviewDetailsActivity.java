@@ -67,7 +67,7 @@ public class ProfileInterviewDetailsActivity extends AppCompatActivity implement
     private Toolbar toolbar;
     private List<Interview> interviewList = new ArrayList<Interview>();
 
-    private String userId = null, userName = null, userImage = null;
+    private String userId = null, userName = null, userImage = null,interviewId;
     private String URL = BaseUri + "/home/interviewComments";
     private String userPostedComment;
 
@@ -163,7 +163,7 @@ public class ProfileInterviewDetailsActivity extends AppCompatActivity implement
 
 
                         JSONObject obj = response.getJSONObject(i);
-                        Interview interview = new Interview(obj.getString("commentedUserImage"), obj.getString("comments"));
+                        Interview interview = new Interview(obj.getString("commentedUserImage"), obj.getString("comments"),obj.getString("id"),obj.getString("user_id"));
                         // adding movie to blogHomeList array
                         interviewList.add(interview);
 
@@ -194,7 +194,7 @@ public class ProfileInterviewDetailsActivity extends AppCompatActivity implement
     private void postRecyclerView() {
 
         postRecycler = (RecyclerView) findViewById(R.id.comments_interview_recycler);
-        recyclerAdapterInterviewDetails = new RecyclerAdapterInterviewDetails(getApplicationContext(), interviewList);
+        recyclerAdapterInterviewDetails = new RecyclerAdapterInterviewDetails(ProfileInterviewDetailsActivity.this, interviewList);
         //setting fixed size
         postRecycler.setHasFixedSize(true);
         //setting horizontal layout
@@ -248,10 +248,7 @@ public class ProfileInterviewDetailsActivity extends AppCompatActivity implement
                 } else {
                     userPostedComment = userComment.getText().toString();
                     insertUserComment();
-                    Interview interview = new Interview(userImage, userPostedComment);
-                    // adding movie to blogHomeList array
-                    interviewList.add(interview);
-                    recyclerAdapterInterviewDetails.notifyDataSetChanged();
+
                     Toast.makeText(getApplicationContext(), "Comment added", Toast.LENGTH_SHORT).show();
                 }
                 userComment.setText("");
@@ -281,6 +278,12 @@ public class ProfileInterviewDetailsActivity extends AppCompatActivity implement
             @Override
             public void onResponse(String s) {
 
+                Log.e("InserString",""+s);
+                interviewId=s;
+                Interview interview = new Interview(userImage, userPostedComment,interviewId,userId);
+                // adding movie to blogHomeList array
+                interviewList.add(interview);
+                recyclerAdapterInterviewDetails.notifyDataSetChanged();
             }
         }, new Response.ErrorListener() {
 

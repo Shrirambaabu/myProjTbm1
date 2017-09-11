@@ -47,6 +47,7 @@ import static igotplaced.com.layouts.Utils.Utils.BaseUri;
 import static igotplaced.com.layouts.Utils.Utils.Id;
 import static igotplaced.com.layouts.Utils.Utils.MyPREFERENCES;
 import static igotplaced.com.layouts.Utils.Utils.Name;
+import static igotplaced.com.layouts.Utils.Utils.UserImage;
 
 public class PostPopUpActivity extends AppCompatActivity implements View.OnClickListener, ConnectivityReceiver.ConnectivityReceiverListener {
 
@@ -64,7 +65,7 @@ public class PostPopUpActivity extends AppCompatActivity implements View.OnClick
     private String id = null,company,companyId,postedUserId;
     private RecyclerAdapterPostDetails recyclerAdapterPostDetails;
 
-    private String userId = null, userName = null;
+    private String userId = null, userName = null,userImage = null,postId;
     private String URL = BaseUri + "/home/postComments";
     private String userPostedComment;
     private Toolbar toolbar;
@@ -76,7 +77,7 @@ public class PostPopUpActivity extends AppCompatActivity implements View.OnClick
         SharedPreferences sharedpreferences = getApplicationContext().getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         userName = sharedpreferences.getString(Name, null);
         userId = sharedpreferences.getString(Id, null);
-
+        userImage = sharedpreferences.getString(UserImage, null);
         setContentView(R.layout.activity_post_pop_up);
 
         initialization();
@@ -115,7 +116,7 @@ public class PostPopUpActivity extends AppCompatActivity implements View.OnClick
 
     private void postRecyclerView() {
         RecyclerView postRecycler = (RecyclerView) findViewById(R.id.comments_post_recycler);
-        recyclerAdapterPostDetails = new RecyclerAdapterPostDetails(getApplicationContext(), postList);
+        recyclerAdapterPostDetails = new RecyclerAdapterPostDetails(PostPopUpActivity.this, postList);
         //setting fixed size
         postRecycler.setHasFixedSize(true);
         //setting horizontal layout
@@ -142,7 +143,7 @@ public class PostPopUpActivity extends AppCompatActivity implements View.OnClick
 
 
                         JSONObject obj = response.getJSONObject(i);
-                        Post post = new Post(obj.getString("commentedUserImage"), obj.getString("comments"));
+                        Post post = new Post(obj.getString("commentedUserImage"), obj.getString("comments"),obj.getString("id"),obj.getString("user_id"));
                         // adding movie to blogHomeList array
                         postList.add(post);
 
@@ -256,7 +257,7 @@ public class PostPopUpActivity extends AppCompatActivity implements View.OnClick
                 } else {
                     userPostedComment = userComment.getText().toString();
                     insertUserComment();
-                    recyclerAdapterPostDetails.notifyDataSetChanged();
+
                     Toast.makeText(getApplicationContext(), "Comment added", Toast.LENGTH_SHORT).show();
                 }
                 userComment.setText("");
@@ -288,6 +289,12 @@ public class PostPopUpActivity extends AppCompatActivity implements View.OnClick
         StringRequest request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
+
+                postId=s;
+                Post post = new Post(userImage, userPostedComment,postId,userId);
+                // adding movie to blogHomeList array
+                postList.add(post);
+                recyclerAdapterPostDetails.notifyDataSetChanged();
 
             }
         }, new Response.ErrorListener() {
