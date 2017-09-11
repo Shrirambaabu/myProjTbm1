@@ -2,6 +2,7 @@ package igotplaced.com.layouts;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,8 +12,10 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.util.Linkify;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -98,6 +101,9 @@ public class CompanyDetailsActivity extends AppCompatActivity implements Connect
             actionBar.setTitle(companyNameIntent);
         }
         makeJsonArrayRequestCompany();
+
+
+
     }
     @Override
     public void onNetworkConnectionChanged(boolean isConnected) {
@@ -132,9 +138,21 @@ public class CompanyDetailsActivity extends AppCompatActivity implements Connect
                         Company company = new Company(obj.getString("id"),obj.getString("companyname"),obj.getString("companywebsite"),obj.getString("companyImage"),obj.getString("aboutus"));
 
                         companyName.setText(company.getCompanyName());
-                        companyWebsite.setText(company.getCompanyWebsite());
+
+                        final String companyWebsiteName=company.getCompanyWebsite().replaceFirst("^(http://www\\.|http://|www\\.)","");
+                        Log.e("Site",""+companyWebsiteName);
+
+                        companyWebsite.setText(companyWebsiteName);
                         profile_img.setImageUrl(Utils.BaseImageUri +company.getCompanyImage() , NetworkController.getInstance(context).getImageLoader());
 
+                        companyWebsite.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Uri uri = Uri.parse("https://www."+companyWebsiteName);
+                                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                                startActivity(intent);
+                            }
+                        });
 
                     } catch (Exception e) {
                         Log.d("error", e.getMessage());

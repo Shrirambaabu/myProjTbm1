@@ -44,6 +44,7 @@ import java.util.Map;
 
 import igotplaced.com.layouts.Model.Events;
 import igotplaced.com.layouts.Model.Post;
+import igotplaced.com.layouts.OtherProfileActivity;
 import igotplaced.com.layouts.ProfileEventDetails;
 import igotplaced.com.layouts.R;
 import igotplaced.com.layouts.Utils.ClickListener;
@@ -297,17 +298,17 @@ public class HomeEventFragment extends Fragment implements SwipeRefreshLayout.On
             eventsId = events.getEventId();
             postedEventsUserId = events.getEventUserId();
 
-            holder.event_industry.setText("#"+events.getEventIndustry());
+            holder.event_industry.setText("#" + events.getEventIndustry());
             //Pass the values of feeds object to Views
             holder.eventCaption.setText(events.getEventCaption());
             holder.eventDesignation.setText(events.getEventDesignation());
             holder.eventVenue.setText(events.getEventVenue());
             holder.eventDate.setText(events.getEventDate());
             holder.eventRegistered.setText(events.getEventRegistered());
-            if (events.getEventCompany().equals("")||events.getEventCompany().equals("Select Company")){
+            if (events.getEventCompany().equals("") || events.getEventCompany().equals("Select Company")) {
                 holder.eventCompany.setText("");
-            }else {
-                holder.eventCompany.setText("#"+events.getEventCompany());
+            } else {
+                holder.eventCompany.setText("#" + events.getEventCompany());
             }
 
             holder.eventStatus.setText(events.getEventStatus());
@@ -319,10 +320,19 @@ public class HomeEventFragment extends Fragment implements SwipeRefreshLayout.On
             //  holder.userImage.setImageUrl(Utils.BaseImageUri + events.getCommentProfileImage(), NetworkController.getInstance(context).getImageLoader());
             holder.event_img.setImageUrl(Utils.BaseImageUri + events.getEventImage(), NetworkController.getInstance(context).getImageLoader());
 
-
-            holder.setItemClickListener(new ItemClickListener() {
+            holder.event_profile_name.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onItemClick(View v, int pos) {
+                public void onClick(View v) {
+                    Intent otherProfileDetails=new Intent(context, OtherProfileActivity.class);
+
+                    otherProfileDetails.putExtra("post_createdid",  eventsList.get(position).getEventUserId());
+                    otherProfileDetails.putExtra("created_uname", eventsList.get(position).getEventProfileName());
+                    startActivity(otherProfileDetails);
+                }
+            });
+            holder.viewMore.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
                     Intent profileEventDetails = new Intent(getContext(), ProfileEventDetails.class);
 
 
@@ -354,11 +364,10 @@ public class HomeEventFragment extends Fragment implements SwipeRefreshLayout.On
             return eventsList.size();
         }
 
-        public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        public class MyViewHolder extends RecyclerView.ViewHolder {
             private TextView eventCaption, eventDesignation, eventVenue, eventCompany, eventDate, eventRegistered, eventStatus, event, event_industry, event_profile_name, event_time, viewMore;
             private NetworkImageView event_img, userImage;
 
-            private ItemClickListener itemClickListener;
 
             public MyViewHolder(View itemView) {
                 super(itemView);
@@ -382,17 +391,10 @@ public class HomeEventFragment extends Fragment implements SwipeRefreshLayout.On
                 event_img = (NetworkImageView) itemView.findViewById(R.id.event_img);
                 // userImage = (NetworkImageView) itemView.findViewById(R.id.comment_profile_img);
 
-                itemView.setOnClickListener(this);
+
             }
 
-            @Override
-            public void onClick(View v) {
-                this.itemClickListener.onItemClick(v, getLayoutPosition());
-            }
 
-            void setItemClickListener(ItemClickListener ic) {
-                this.itemClickListener = ic;
-            }
         }
     }
 

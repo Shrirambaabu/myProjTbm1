@@ -41,7 +41,9 @@ import java.util.List;
 import java.util.Map;
 
 
+import igotplaced.com.layouts.CompanyDetailsActivity;
 import igotplaced.com.layouts.Model.Post;
+import igotplaced.com.layouts.OtherProfileActivity;
 import igotplaced.com.layouts.ProfilePostDetailsActivity;
 import igotplaced.com.layouts.R;
 import igotplaced.com.layouts.Utils.ClickListener;
@@ -307,9 +309,31 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
             //  holder.userImage.setImageUrl(Utils.BaseImageUri + post.getUserImage(), NetworkController.getInstance(context).getImageLoader());
             holder.postImage.setImageUrl(Utils.BaseImageUri + post.getPostImage(), NetworkController.getInstance(context).getImageLoader());
 
-            holder.setItemClickListener(new ItemClickListener() {
+            holder.postCompany.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onItemClick(View v, int pos) {
+                public void onClick(View v) {
+                    Intent companyDetails = new Intent(context, CompanyDetailsActivity.class);
+                    companyDetails.putExtra("postCompany", postList.get(position).getPostCompany());
+                    companyDetails.putExtra("companyId",  postList.get(position).getCompanyId());
+                    startActivity(companyDetails);
+                }
+            });
+
+            holder.postProfileName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent otherProfileDetails = new Intent(context, OtherProfileActivity.class);
+
+                    otherProfileDetails.putExtra("post_createdid", postList.get(position).getPostedUserId());
+                    otherProfileDetails.putExtra("created_uname", postList.get(position).getPostProfileName());
+                    startActivity(otherProfileDetails);
+                }
+            });
+
+
+            holder.viewMore.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
                     Log.e("tag", "click" + postList.get(position).getPostId());
 
                     Intent profileDetails=new Intent(getContext(), ProfilePostDetailsActivity.class);
@@ -328,6 +352,7 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
                 }
             });
 
+
         }
 
 
@@ -336,7 +361,7 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
             return postList.size();
         }
 
-        public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        public class MyViewHolder extends RecyclerView.ViewHolder {
             private TextView post, postIndustry, postProfileName, postTime,postCompany,viewMore;
 
             private NetworkImageView postImage, userImage;
@@ -360,16 +385,9 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
 
                 // userImage = (NetworkImageView) itemView.findViewById(R.id.comment_profile_img);
 
-                itemView.setOnClickListener(this);
             }
 
-            @Override
-            public void onClick(View v) {
-                this.itemClickListener.onItemClick(v, getLayoutPosition());
-            }
-            void setItemClickListener(ItemClickListener ic) {
-                this.itemClickListener = ic;
-            }
+
         }
 
 

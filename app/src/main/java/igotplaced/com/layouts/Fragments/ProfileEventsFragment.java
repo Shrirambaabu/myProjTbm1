@@ -32,6 +32,7 @@ import java.util.List;
 
 import igotplaced.com.layouts.Model.Events;
 import igotplaced.com.layouts.Model.Post;
+import igotplaced.com.layouts.OtherProfileActivity;
 import igotplaced.com.layouts.ProfileEventDetails;
 import igotplaced.com.layouts.R;
 import igotplaced.com.layouts.Utils.ClickListener;
@@ -217,11 +218,19 @@ public class ProfileEventsFragment extends Fragment implements ClickListener {
             holder.event_img.setImageUrl(Utils.BaseImageUri + events.getEventImage(), NetworkController.getInstance(context).getImageLoader());
 
 
-            holder.setItemClickListener(new ItemClickListener() {
+            holder.event_profile_name.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onItemClick(View v, int pos) {
+                public void onClick(View v) {
+                    Intent otherProfileDetails=new Intent(context, OtherProfileActivity.class);
 
-
+                    otherProfileDetails.putExtra("post_createdid",  eventsList.get(position).getEventUserId());
+                    otherProfileDetails.putExtra("created_uname", eventsList.get(position).getEventProfileName());
+                    startActivity(otherProfileDetails);
+                }
+            });
+            holder.viewMore.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
                     Intent profileEventDetails = new Intent(getContext(), ProfileEventDetails.class);
 
 
@@ -238,11 +247,12 @@ public class ProfileEventsFragment extends Fragment implements ClickListener {
                     profileEventDetails.putExtra("eIndustry", eventsList.get(position).getEventIndustry());
                     profileEventDetails.putExtra("eImage", eventsList.get(position).getEventImage());
                     profileEventDetails.putExtra("eUserId", eventsList.get(position).getEventUserId());
-
+                    profileEventDetails.putExtra("postCompany", eventsList.get(position).getEventCompany());
 
                     startActivity(profileEventDetails);
                 }
             });
+
 
         }
 
@@ -251,11 +261,11 @@ public class ProfileEventsFragment extends Fragment implements ClickListener {
             return eventsList.size();
         }
 
-        public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        public class MyViewHolder extends RecyclerView.ViewHolder  {
 
-            private TextView eventCaption, eventDesignation, eventVenue, eventCompany, eventDate, eventRegistered, eventStatus, event, event_industry, event_profile_name, event_time;
+            private TextView eventCaption, eventDesignation, eventVenue, eventCompany, eventDate, eventRegistered, eventStatus, event, event_industry, event_profile_name, event_time,viewMore;
             private NetworkImageView event_img, userImage;
-            private ItemClickListener itemClickListener;
+
 
             public MyViewHolder(View itemView) {
                 super(itemView);
@@ -270,23 +280,17 @@ public class ProfileEventsFragment extends Fragment implements ClickListener {
 
                 eventStatus = (TextView) itemView.findViewById(R.id.eventStatus);
                 event = (TextView) itemView.findViewById(R.id.event);
+                viewMore = (TextView) itemView.findViewById(R.id.view_more);
                 event_industry = (TextView) itemView.findViewById(R.id.event_industry);
                 event_profile_name = (TextView) itemView.findViewById(R.id.event_profile_name);
                 event_time = (TextView) itemView.findViewById(R.id.event_time);
                 // Volley's NetworkImageView which will load Image from URL
                 event_img = (NetworkImageView) itemView.findViewById(R.id.event_img);
-                itemView.setOnClickListener(this);
+
 
             }
 
-            @Override
-            public void onClick(View v) {
-                this.itemClickListener.onItemClick(v, getLayoutPosition());
-            }
 
-            void setItemClickListener(ItemClickListener ic) {
-                this.itemClickListener = ic;
-            }
 
         }
     }
