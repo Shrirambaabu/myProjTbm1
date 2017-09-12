@@ -66,23 +66,30 @@
         <activity
             android:name=".ProfilePostDetailsActivity"
             android:theme="@style/Theme.MyDialog" />
-        <activity android:name=".ProfileInterviewDetailsActivity"
-            android:theme="@style/Theme.MyDialog"/>
-        <activity android:name=".ProfileEventDetails"
-            android:theme="@style/Theme.MyDialog"/>
-        <activity android:name=".ProfileQuestionsDetailsActivity"
-            android:theme="@style/Theme.MyDialog"/>
+        <activity
+            android:name=".ProfileInterviewDetailsActivity"
+            android:theme="@style/Theme.MyDialog" />
+        <activity
+            android:name=".ProfileEventDetails"
+            android:theme="@style/Theme.MyDialog" />
+        <activity
+            android:name=".ProfileQuestionsDetailsActivity"
+            android:theme="@style/Theme.MyDialog" />
         <activity android:name=".OtherProfileActivity" />
         <activity android:name=".CompanyDetailsActivity" />
         <activity android:name=".AboutCompanyActivity" />
-        <activity android:name=".QuestionsPopUpActivity"
+        <activity
+            android:name=".QuestionsPopUpActivity"
             android:theme="@style/Theme.MyDialog" />
-        <activity android:name=".EventsPopUpActivity"
+        <activity
+            android:name=".EventsPopUpActivity"
             android:theme="@style/Theme.MyDialog" />
-        <activity android:name=".PostPopUpActivity"
-            android:theme="@style/Theme.MyDialog">
-
-        </activity>
+        <activity
+            android:name=".PostPopUpActivity"
+            android:theme="@style/Theme.MyDialog" />
+        <activity android:name=".AboutUs" />
+        <activity android:name=".SettingsActivity" />
+        <activity android:name=".TermsAndConditions"></activity>
     </application>
 
 </manifest>

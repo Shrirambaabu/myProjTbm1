@@ -42,7 +42,10 @@
     <string name="year_prompt">
         <item>Year Of Passout </item>
     </string>
-
+    <string name="packageName">"igotplaced.com.layouts"</string>
+    <string name="editClass">"igotplaced.com.layouts.EditProfileActivity"</string>
+    <string name="termsAndConditions">"igotplaced.com.layouts.TermsAndConditions"</string>
+    <string name="aboutUsFragment">"igotplaced.com.layouts.AboutUs"</string>
     <string name="select_the_year_of_pass_out">Select the year of PassOut</string>
     <string name="err_msg_name">Enter Your Full Name</string>
     <string name="err_msg_email">Enter valid email address</string>
@@ -85,6 +88,14 @@
     <string name="areaOfInterest">AREA OF INTEREST</string>
     <string name="upload">Upload</string>
     <string name="title_activity_add_user_experience">AddUserExperience</string>
+    <string name="termsDemo">\n\t 1.The content of the pages of this Application is for your general information and use only. It is subject to change without notice.\n
+\n\t 2.Neither we nor any third parties provide any warranty or guarantee as to the accuracy, timeliness, performance, completeness or suitability of the information and materials found or offered on this Application for any particular purpose. You acknowledge that such information and materials may contain inaccuracies or errors and we expressly exclude liability for any such inaccuracies or errors to the fullest extent permitted by law.\n
+\n\t 3.Your use of any information or materials on this Application is entirely at your own risk, for which we shall not be liable. It shall be your own responsibility to ensure that any products, services or information available through this Application meet your specific requirements.\n
+\n\t 4.This Application contains material which is owned by or licensed to us. This material includes, but is not limited to, the design, layout, look, appearance and graphics. Reproduction is prohibited other than in accordance with the copyright notice, which forms part of these terms and conditions.\n
+\n\t 5.All trade marks reproduced in this Application which are not the property of, or licensed to, the operator are acknowledged on the Application.\n
+\n\t 6.Unauthorised use of this Application may give rise to a claim for damages and/or be a criminal offence.\n
+\n\t 7.From time to time this Application may also include links to other Applications. These links are provided for your convenience to provide further information. They do not signify that we endorse the Application(s). We have no responsibility for the content of the linked Application(s).
+</string>
 
 
 </resources>

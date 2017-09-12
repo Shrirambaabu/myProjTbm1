@@ -68,7 +68,7 @@ public class AboutUsFragment extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.emailAddress:
                 emailAddress.setText("");
-                Toast.makeText(getContext(), "Thank you for your Subcription", Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), "Thank you for your Subscription", Toast.LENGTH_LONG).show();
                 break;
             case R.id.whatsApp11:
                 String phone = phoneNumber.getText().toString();

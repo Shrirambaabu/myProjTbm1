@@ -1,5 +1,6 @@
 package igotplaced.com.layouts;
 
+import android.app.FragmentManager;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -50,6 +51,7 @@ import igotplaced.com.layouts.Fragments.HomeFragment;
 import igotplaced.com.layouts.Fragments.NotificationFragment;
 import igotplaced.com.layouts.Fragments.ProfileFragment;
 import igotplaced.com.layouts.Fragments.SearchResults;
+import igotplaced.com.layouts.Fragments.SettingsFragment;
 import igotplaced.com.layouts.Model.Profile;
 import igotplaced.com.layouts.Utils.ConnectivityReceiver;
 import igotplaced.com.layouts.Utils.CustomAutoCompleteView;
@@ -64,6 +66,7 @@ import static igotplaced.com.layouts.Utils.Utils.Id;
 import static igotplaced.com.layouts.Utils.Utils.MyPREFERENCES;
 import static igotplaced.com.layouts.Utils.Utils.Name;
 import static igotplaced.com.layouts.Utils.Utils.UserImage;
+import static igotplaced.com.layouts.Utils.Utils.pushFragment;
 
 public class MainActivity extends AppCompatActivity implements ConnectivityReceiver.ConnectivityReceiverListener {
 
@@ -78,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
     private Toolbar toolbar;
     private Context context;
     private RequestQueue queue;
-private  NavigationView navigationView;
+    private NavigationView navigationView;
     private TextView nameHeader, emailHeader;
     private NetworkImageView profile_img;
 
@@ -122,9 +125,10 @@ private  NavigationView navigationView;
         displaySelectedScreen(R.id.home);
 
     }
+
     @Override
     public void onNetworkConnectionChanged(boolean isConnected) {
-        if (!isConnected){
+        if (!isConnected) {
             Utils.showDialogue(MainActivity.this, "Sorry! Not connected to internet");
         }
     }
@@ -132,9 +136,11 @@ private  NavigationView navigationView;
     @Override
     protected void onResume() {
         super.onResume();
+        displaySelectedScreen(R.id.home);
         // register connection status listener
         MyApplication.getInstance().setConnectivityListener(MainActivity.this);
     }
+
     private void makeJsonArrayRequestProfile() {
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(BaseUri + "/profileService/profileEdit/" + userId, new Response.Listener<JSONArray>() {
 
@@ -182,7 +188,7 @@ private  NavigationView navigationView;
     private void navigation() {
 
         //Initializing NavigationView
-         navigationView = (NavigationView) findViewById(R.id.navigation_view);
+        navigationView = (NavigationView) findViewById(R.id.navigation_view);
         navigationView.setCheckedItem(R.id.home);
         View header = navigationView.getHeaderView(0);
 
@@ -226,7 +232,7 @@ private  NavigationView navigationView;
                 selectedPosition = 0;
                 fragment = new HomeFragment();
                 navigationView.getMenu().findItem(R.id.home).setChecked(true);
-                Log.e("SharedValue ;", "");
+
                 break;
             case R.id.profile:
                 isMain = false;
@@ -247,22 +253,23 @@ private  NavigationView navigationView;
                 fragment = new BlogFragment();
                 break;
 
-            case R.id.about_us:
+            /*case R.id.about_us:
                 selectedPosition = 4;
                 fragment = new AboutUsFragment();
-                break;
+                break;*/
 
             case R.id.log_out:
-                editor = sharedpreferences.edit();
-                editor.putString(Email, null);
-                editor.putString(Id, null);
-                editor.putString(Name, null);
-                editor.commit();
+
                 new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_alert).setTitle("Logout")
                         .setMessage("Are you sure you want to Logout?")
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                editor = sharedpreferences.edit();
+                                editor.putString(Email, null);
+                                editor.putString(Id, null);
+                                editor.putString(Name, null);
+                                editor.commit();
                                 Intent logOut = new Intent(MainActivity.this, LoginActivity.class);
                                 logOut.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 startActivity(logOut);
@@ -274,15 +281,23 @@ private  NavigationView navigationView;
                 break;
 
 
- /*                      case R.id.settings:
+            case R.id.settings:
+                selectedPosition = 5;
+                navigationView.getMenu().findItem(R.id.settings).setChecked(false);
+                Intent i = new Intent(this, SettingsActivity.class);
+                startActivity(i);
+               /* fragment=new SettingsFragment();
 
-                        HomeFragment homeFragment = new HomeFragment();
-                        android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                        fragmentTransaction.replace(R.id.frame, homeFragment);
-                        fragmentTransaction.commit();
-                        return true;
+                FragmentManager mFragmentManager = getFragmentManager();
 
-                    case R.id.privacy_policy:
+                android.app.FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
+                SettingsFragment settingsFragment = new SettingsFragment();
+                mFragmentTransaction.replace(R.id.frame, settingsFragment);
+                mFragmentTransaction.commit();*/
+
+                break;
+
+                  /*   case R.id.privacy_policy:
 
 
                         HomeFragment homeFragment = new HomeFragment();
@@ -442,7 +457,7 @@ private  NavigationView navigationView;
                             .beginTransaction()
                             .replace(R.id.frame, searchResults, "tag")
                             .commit();
-                    searchView.setQuery("",false); //clear the text
+                    searchView.setQuery("", false); //clear the text
                     searchView.clearFocus();//this closes the keyboard but does not remove focus
                     searchView.getSuggestionsAdapter().changeCursor(null);
                 }
@@ -482,8 +497,8 @@ private  NavigationView navigationView;
                 getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.frame, searchResults, "tag")
-                       .commit();
-                searchView.setQuery("",false); //clear the text
+                        .commit();
+                searchView.setQuery("", false); //clear the text
                 searchView.clearFocus();//this closes the keyboard but does not remove focus
 
 /*
