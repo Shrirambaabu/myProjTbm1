@@ -26,7 +26,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import igotplaced.com.layouts.CompanyDetailsActivity;
 import igotplaced.com.layouts.Model.Post;
+import igotplaced.com.layouts.OtherProfileActivity;
 import igotplaced.com.layouts.ProfilePostDetailsActivity;
 import igotplaced.com.layouts.R;
 import igotplaced.com.layouts.Utils.ItemClickListener;
@@ -169,10 +171,34 @@ public class CompanyPostFragment extends Fragment {
             //  holder.userImage.setImageUrl(Utils.BaseImageUri + post.getUserImage(), NetworkController.getInstance(context).getImageLoader());
             holder.postImage.setImageUrl(Utils.BaseImageUri + post.getPostImage(), NetworkController.getInstance(context).getImageLoader());
 
-            holder.setItemClickListener(new ItemClickListener() {
+            holder.postCompany.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onItemClick(View v, int pos) {
-                    Intent profileDetails = new Intent(getContext(), ProfilePostDetailsActivity.class);
+                public void onClick(View v) {
+                    Intent companyDetails = new Intent(context, CompanyDetailsActivity.class);
+                    companyDetails.putExtra("postCompany", postList.get(position).getPostCompany());
+                    companyDetails.putExtra("companyId",  postList.get(position).getCompanyId());
+                    startActivity(companyDetails);
+                }
+            });
+
+            holder.postProfileName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent otherProfileDetails = new Intent(context, OtherProfileActivity.class);
+
+                    otherProfileDetails.putExtra("post_createdid", postList.get(position).getPostedUserId());
+                    otherProfileDetails.putExtra("created_uname", postList.get(position).getPostProfileName());
+                    startActivity(otherProfileDetails);
+                }
+            });
+
+
+            holder.viewMore.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.e("tag", "click" + postList.get(position).getPostId());
+
+                    Intent profileDetails=new Intent(getContext(), ProfilePostDetailsActivity.class);
 
                     profileDetails.putExtra("pid", postList.get(position).getPostId());
                     profileDetails.putExtra("created_uname", postList.get(position).getPostProfileName());
@@ -183,9 +209,11 @@ public class CompanyPostFragment extends Fragment {
                     profileDetails.putExtra("post_createdid", postList.get(position).getPostedUserId());
                     profileDetails.putExtra("postCompany", postList.get(position).getPostCompany());
                     profileDetails.putExtra("companyId", postList.get(position).getCompanyId());
+
                     startActivity(profileDetails);
                 }
             });
+
         }
 
         @Override
@@ -193,10 +221,10 @@ public class CompanyPostFragment extends Fragment {
             return postList.size();
         }
 
-        public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-            private TextView post, postIndustry, postProfileName, postTime,postCompany;
+        public class MyViewHolder extends RecyclerView.ViewHolder {
+            private TextView post, postIndustry, postProfileName, postTime,postCompany,viewMore;
             private NetworkImageView postImage;
-            private ItemClickListener itemClickListener;
+
 
 
             public MyViewHolder(View itemView) {
@@ -207,19 +235,13 @@ public class CompanyPostFragment extends Fragment {
                 postCompany = (TextView) itemView.findViewById(R.id.post_company);
                 postProfileName = (TextView) itemView.findViewById(R.id.post_profile_name);
                 postTime = (TextView) itemView.findViewById(R.id.post_time);
+                viewMore = (TextView) itemView.findViewById(R.id.view_more);
                 // Volley's NetworkImageView which will load Image from URL
                 postImage = (NetworkImageView) itemView.findViewById(R.id.post_img);
-                itemView.setOnClickListener(this);
+
 
             }
 
-            @Override
-            public void onClick(View v) {
-                this.itemClickListener.onItemClick(v, getLayoutPosition());
-            }
-            void setItemClickListener(ItemClickListener ic) {
-                this.itemClickListener = ic;
-            }
 
         }
     }

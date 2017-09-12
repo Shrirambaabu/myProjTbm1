@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import igotplaced.com.layouts.Model.Events;
+import igotplaced.com.layouts.OtherProfileActivity;
 import igotplaced.com.layouts.ProfileEventDetails;
 import igotplaced.com.layouts.R;
 import igotplaced.com.layouts.Utils.ItemClickListener;
@@ -169,9 +170,19 @@ public class CompanyEventFragment extends Fragment {
             holder.event_img.setImageUrl(Utils.BaseImageUri + events.getEventImage(), NetworkController.getInstance(context).getImageLoader());
 
 
-            holder.setItemClickListener(new ItemClickListener() {
+            holder.event_profile_name.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onItemClick(View v, int pos) {
+                public void onClick(View v) {
+                    Intent otherProfileDetails=new Intent(context, OtherProfileActivity.class);
+
+                    otherProfileDetails.putExtra("post_createdid",  eventsList.get(position).getEventUserId());
+                    otherProfileDetails.putExtra("created_uname", eventsList.get(position).getEventProfileName());
+                    startActivity(otherProfileDetails);
+                }
+            });
+            holder.viewMore.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
                     Intent profileEventDetails = new Intent(getContext(), ProfileEventDetails.class);
 
 
@@ -193,6 +204,7 @@ public class CompanyEventFragment extends Fragment {
                     startActivity(profileEventDetails);
                 }
             });
+
         }
 
         @Override
@@ -200,11 +212,11 @@ public class CompanyEventFragment extends Fragment {
             return eventsList.size();
         }
 
-        public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        public class MyViewHolder extends RecyclerView.ViewHolder  {
 
-            private TextView eventCaption, eventDesignation, eventVenue, eventCompany, eventDate, eventRegistered, eventStatus, event, event_industry, event_profile_name, event_time;
+            private TextView eventCaption, eventDesignation, eventVenue, viewMore,eventCompany, eventDate, eventRegistered, eventStatus, event, event_industry, event_profile_name, event_time;
             private NetworkImageView event_img, userImage;
-            private ItemClickListener itemClickListener;
+
 
             public MyViewHolder(View itemView) {
                 super(itemView);
@@ -215,7 +227,7 @@ public class CompanyEventFragment extends Fragment {
                 eventDate = (TextView) itemView.findViewById(R.id.eventDate);
                 eventRegistered = (TextView) itemView.findViewById(R.id.eventRegistered);
                 eventCompany = (TextView) itemView.findViewById(R.id.event_company);
-
+                viewMore = (TextView) itemView.findViewById(R.id.view_more);
                 eventStatus = (TextView) itemView.findViewById(R.id.eventStatus);
                 event = (TextView) itemView.findViewById(R.id.event);
                 event_industry = (TextView) itemView.findViewById(R.id.event_industry);
@@ -224,16 +236,10 @@ public class CompanyEventFragment extends Fragment {
                 // Volley's NetworkImageView which will load Image from URL
                 event_img = (NetworkImageView) itemView.findViewById(R.id.event_img);
 
-                itemView.setOnClickListener(this);
+
             }
 
-            @Override
-            public void onClick(View v) {
-                this.itemClickListener.onItemClick(v, getLayoutPosition());
-            }
-            void setItemClickListener(ItemClickListener ic) {
-                this.itemClickListener = ic;
-            }
+
 
         }
     }

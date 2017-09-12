@@ -26,7 +26,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import igotplaced.com.layouts.CompanyDetailsActivity;
 import igotplaced.com.layouts.Model.Interview;
+import igotplaced.com.layouts.OtherProfileActivity;
 import igotplaced.com.layouts.ProfileInterviewDetailsActivity;
 import igotplaced.com.layouts.R;
 import igotplaced.com.layouts.Utils.ItemClickListener;
@@ -172,10 +174,33 @@ public class OtherProfileInterviewFragment extends Fragment {
             //  holder.userImage.setImageUrl(Utils.BaseImageUri + interview.getUserImage(), NetworkController.getInstance(context).getImageLoader());
             holder.interviewImage.setImageUrl(Utils.BaseImageUri + interview.getInterviewImage(), NetworkController.getInstance(context).getImageLoader());
 
-            holder.setItemClickListener(new ItemClickListener() {
+            holder.interviewProfileName.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onItemClick(View v, int pos) {
-                    Intent profileInterview = new Intent(getContext(), ProfileInterviewDetailsActivity.class);
+                public void onClick(View v) {
+                    Intent otherProfileDetails = new Intent(context, OtherProfileActivity.class);
+
+                    otherProfileDetails.putExtra("post_createdid", interviewList.get(position).getInterviewUserId());
+                    otherProfileDetails.putExtra("created_uname", interviewList.get(position).getInterviewProfileName());
+                    startActivity(otherProfileDetails);
+                }
+            });
+
+            holder.interviewCompany.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent companyDetails = new Intent(context, CompanyDetailsActivity.class);
+                    companyDetails.putExtra("postCompany",  interviewList.get(position).getInterviewCompany());
+                    companyDetails.putExtra("companyId",  interviewList.get(position).getCompanyId());
+                    startActivity(companyDetails);
+                }
+            });
+
+
+
+            holder.viewMore.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent profileInterview=new Intent(getContext(), ProfileInterviewDetailsActivity.class);
 
                     profileInterview.putExtra("iid", interviewList.get(position).getInterviewId());
                     profileInterview.putExtra("created_uname", interviewList.get(position).getInterviewProfileName());
@@ -184,8 +209,8 @@ public class OtherProfileInterviewFragment extends Fragment {
                     profileInterview.putExtra("interviewImage", interviewList.get(position).getInterviewImage());
                     profileInterview.putExtra("interviewIndustry", interviewList.get(position).getInterviewIndustry());
                     profileInterview.putExtra("interview_createdid", interviewList.get(position).getInterviewUserId());
-                    profileInterview.putExtra("companyId", interviewList.get(position).getCompanyId());
                     profileInterview.putExtra("postCompany", interviewList.get(position).getInterviewCompany());
+                    profileInterview.putExtra("companyId", interviewList.get(position).getCompanyId());
                     startActivity(profileInterview);
                 }
             });
@@ -196,7 +221,7 @@ public class OtherProfileInterviewFragment extends Fragment {
             return interviewList.size();
         }
 
-        public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        public class MyViewHolder extends RecyclerView.ViewHolder  {
             private TextView interview, interviewIndustry, interviewProfileName, interviewTime,interviewCompany, viewMore;
             private NetworkImageView interviewImage, userImage;
             private ItemClickListener itemClickListener;
@@ -215,17 +240,10 @@ public class OtherProfileInterviewFragment extends Fragment {
                 // Volley's NetworkImageView which will load Image from URL
                 interviewImage = (NetworkImageView) itemView.findViewById(R.id.interview_img);
 
-                itemView.setOnClickListener(this);
+
             }
 
-            @Override
-            public void onClick(View v) {
-                this.itemClickListener.onItemClick(v, getLayoutPosition());
-            }
 
-            void setItemClickListener(ItemClickListener ic) {
-                this.itemClickListener = ic;
-            }
         }
     }
 }

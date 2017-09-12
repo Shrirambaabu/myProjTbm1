@@ -26,7 +26,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import igotplaced.com.layouts.CompanyDetailsActivity;
 import igotplaced.com.layouts.Model.Questions;
+import igotplaced.com.layouts.OtherProfileActivity;
 import igotplaced.com.layouts.ProfileQuestionsDetailsActivity;
 import igotplaced.com.layouts.R;
 import igotplaced.com.layouts.Utils.ItemClickListener;
@@ -171,11 +173,31 @@ public class OtherProfileQuestionsFragment extends Fragment {
             //      holder.comment_profile_img.setImageUrl(Utils.BaseImageUri + questions.getCommentProfileImage(), NetworkController.getInstance(context).getImageLoader());
             holder.questionsImage.setImageUrl(Utils.BaseImageUri + questions.getQuestionsImage(), NetworkController.getInstance(context).getImageLoader());
 
-            holder.setItemClickListener(new ItemClickListener() {
+            holder.questionsCompany.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onItemClick(View v, int pos) {
+                public void onClick(View v) {
+                    Intent companyDetails=new Intent(context,CompanyDetailsActivity.class);
+                    companyDetails.putExtra("postCompany", questionsList.get(position).getQuestionsCompany());
+                    companyDetails.putExtra("companyId", questionsList.get(position).getCompanyId());
+                    startActivity(companyDetails);
+                }
+            });
 
-                    Intent questionDetails = new Intent(getContext(), ProfileQuestionsDetailsActivity.class);
+            holder.questionsProfileName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent otherProfileDetails=new Intent(context, OtherProfileActivity.class);
+
+                    otherProfileDetails.putExtra("post_createdid", questionsList.get(position).getQuestionUserId());
+                    otherProfileDetails.putExtra("created_uname", questionsList.get(position).getQuestionsProfileName());
+                    startActivity(otherProfileDetails);
+                }
+            });
+
+            holder.viewMore.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent questionDetails=new Intent(getContext(), ProfileQuestionsDetailsActivity.class);
 
                     questionDetails.putExtra("qid", questionsList.get(position).getQuestionId());
                     questionDetails.putExtra("created_uname", questionsList.get(position).getQuestionsProfileName());
@@ -187,7 +209,6 @@ public class OtherProfileQuestionsFragment extends Fragment {
                     questionDetails.putExtra("postCompany", questionsList.get(position).getQuestionsCompany());
                     questionDetails.putExtra("companyId", questionsList.get(position).getCompanyId());
                     startActivity(questionDetails);
-
                 }
             });
         }
@@ -197,10 +218,10 @@ public class OtherProfileQuestionsFragment extends Fragment {
             return questionsList.size();
         }
 
-        public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        public class MyViewHolder extends RecyclerView.ViewHolder {
             private TextView questions, questionsIndustry, questionsProfileName, questionsTime,questionsCompany, viewMore;
             private NetworkImageView questionsImage;
-            private ItemClickListener itemClickListener;
+
 
             public MyViewHolder(View itemView) {
                 super(itemView);
@@ -215,17 +236,10 @@ public class OtherProfileQuestionsFragment extends Fragment {
                 // Volley's NetworkImageView which will load Image from URL
                 questionsImage = (NetworkImageView) itemView.findViewById(R.id.questions_img);
 
-                itemView.setOnClickListener(this);
+
             }
 
-            @Override
-            public void onClick(View v) {
-                this.itemClickListener.onItemClick(v, getLayoutPosition());
-            }
 
-            void setItemClickListener(ItemClickListener ic) {
-                this.itemClickListener = ic;
-            }
 
         }
     }
