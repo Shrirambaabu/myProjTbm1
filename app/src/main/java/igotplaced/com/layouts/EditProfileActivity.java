@@ -1321,8 +1321,8 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
                                 Log.e("tsg", "TotalArray " + selectedItems[i] );
                             }
 
-                            companySpinnerOne.setSelected(selectedItems);
-                            companyArrayAdapter1.notifyDataSetChanged();
+                           // companySpinnerOne.setSelected(selectedItems);
+                           // companyArrayAdapter1.notifyDataSetChanged();
 
                             companySpinnerOne.setText(profile.getCompany1());
                             companySpinnerOneValue = profile.getCompany1();

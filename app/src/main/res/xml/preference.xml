@@ -9,12 +9,6 @@
             android:targetPackage="@string/packageName" />
     </PreferenceScreen>
 
-    <PreferenceScreen
-        android:title="Terms and Conditions">
-        <intent
-            android:targetPackage="@string/packageName"
-            android:targetClass="@string/termsAndConditions"/>
-    </PreferenceScreen>
 
     <PreferenceScreen
         android:title="About us">

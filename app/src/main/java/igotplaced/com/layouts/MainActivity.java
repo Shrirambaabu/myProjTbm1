@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
     @Override
     protected void onResume() {
         super.onResume();
-        displaySelectedScreen(R.id.home);
+
         // register connection status listener
         MyApplication.getInstance().setConnectivityListener(MainActivity.this);
     }

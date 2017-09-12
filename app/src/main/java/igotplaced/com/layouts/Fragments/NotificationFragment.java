@@ -102,7 +102,7 @@ public class NotificationFragment extends Fragment implements SwipeRefreshLayout
     }
 
     private void loadData() {
-        int loadLimit = 5;
+        int loadLimit = 8;
 
         //Volley's inbuilt class to make Json array request
         makeJsonArrayRequestNotification(0, loadLimit);
@@ -118,6 +118,7 @@ public class NotificationFragment extends Fragment implements SwipeRefreshLayout
         notification_view.setHasFixedSize(true);
         //setting horizontal layout
         notification_view.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
+        mLayoutManager = (LinearLayoutManager) notification_view.getLayoutManager();
         //setting RecyclerView adapter
         notification_view.setAdapter(recyclerAdapterNotification);
         //Getting Instance of Volley Request Queue
@@ -125,8 +126,7 @@ public class NotificationFragment extends Fragment implements SwipeRefreshLayout
 
 
         // show loader and fetch messages
-        swipeRefreshLayout.post(
-                new Runnable() {
+        swipeRefreshLayout.post(new Runnable() {
                     @Override
                     public void run() {
                         //Volley's inbuilt class to make Json array request
@@ -165,7 +165,7 @@ public class NotificationFragment extends Fragment implements SwipeRefreshLayout
         // then it is useful for every call request
         makeJsonArrayRequestNotification(totalItemCount, totalItemCount + 5);
 
-        recyclerAdapterNotification.notifyDataSetChanged();
+       // recyclerAdapterNotification.notifyDataSetChanged();
 
     }
 

@@ -23,7 +23,7 @@ import igotplaced.com.layouts.R;
  */
 
 public class Utils {
-   // public static String Base = "http://192.168.0.100:8080";
+    //public static String Base = "http://192.168.0.100:8080";
     //public static String Base = "http://49.207.183.11:8080";
     public static String Base = "http://servicetier.jvmhost.net";
 
