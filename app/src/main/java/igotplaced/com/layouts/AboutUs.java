@@ -69,7 +69,7 @@ public class AboutUs extends AppCompatActivity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.emailAddress:
+            case R.id.subscribeButton:
                 emailAddress.setText("");
                 Toast.makeText(AboutUs.this, "Thank you for your Subscription", Toast.LENGTH_LONG).show();
                 break;
