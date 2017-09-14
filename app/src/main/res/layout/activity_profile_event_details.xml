@@ -53,7 +53,6 @@
                 android:maxLines="1"
                 android:layout_toStartOf="@+id/events_icon"
                 android:ellipsize="end"
-                android:text="Mentor "
                 android:textColor="@color/colorBackground"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -67,7 +66,6 @@
                 android:layout_toEndOf="@+id/event_img"
                 android:gravity="center|start"
                 android:maxLines="1"
-                android:text="20/05/2017 18:36 "
                 android:textColor="@color/colorBackground"
                 android:textSize="14sp" />
 
@@ -81,7 +79,6 @@
                 android:gravity="start"
                 android:paddingBottom="@dimen/margin_4"
                 android:paddingEnd="@dimen/margin_16"
-                android:text="Openings in DECATHLON"
                 android:textColor="@color/text_main"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -96,7 +93,6 @@
                 android:gravity="start"
                 android:paddingBottom="@dimen/margin_4"
                 android:paddingEnd="@dimen/margin_16"
-                android:text="JOB POST"
                 android:textColor="@color/text_main"
                 android:textSize="14sp" />
 
@@ -110,7 +106,6 @@
                 android:gravity="start"
                 android:paddingBottom="@dimen/margin_4"
                 android:paddingEnd="@dimen/margin_16"
-                android:text="VENUE: VARIOUS CITIES"
                 android:textColor="@color/text_main"
                 android:textSize="14sp" />
 
@@ -124,7 +119,6 @@
                 android:gravity="start"
                 android:paddingBottom="@dimen/margin_4"
                 android:paddingEnd="@dimen/margin_16"
-                android:text="20/05/2017 18:36"
                 android:textColor="@color/text_main"
                 android:textSize="14sp" />
 
@@ -139,7 +133,6 @@
                 android:maxLines="1"
                 android:paddingBottom="@dimen/margin_4"
                 android:paddingEnd="32dp"
-                android:text="1 PEOPLES REGISTERED"
                 android:textColor="@color/text_main"
                 android:textSize="14sp" />
 
@@ -153,7 +146,6 @@
                 android:layout_toEndOf="@+id/eventRegistered"
                 android:gravity="end"
                 android:maxLines="1"
-                android:text="closed"
                 android:textColor="@color/text_main"
                 android:textSize="14sp" />
 
@@ -166,7 +158,6 @@
                 android:layout_marginStart="@dimen/margin_16"
                 android:gravity="start"
                 android:paddingTop="@dimen/margin_8"
-                android:text="I am trained engineefd r in dfdsf dfgdgdf sfdsadasdasd  ds  dsds  dsja.."
                 android:textColor="@color/text_main"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -181,7 +172,6 @@
                 android:gravity="center"
                 android:maxLines="1"
                 android:padding="@dimen/margin_2"
-                android:text="IT INDUSTRY"
                 android:textAllCaps="true"
                 android:textColor="@color/link_color"
                 android:textSize="14sp"
@@ -199,7 +189,6 @@
                 android:gravity="center"
                 android:maxLength="18"
                 android:maxLines="1"
-                android:text="INFOSYS"
                 android:textAllCaps="true"
                 android:textColor="@color/link_color"
                 android:textSize="14sp"

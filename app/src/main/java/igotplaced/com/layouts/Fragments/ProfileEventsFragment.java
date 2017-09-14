@@ -218,16 +218,7 @@ public class ProfileEventsFragment extends Fragment implements ClickListener {
             holder.event_img.setImageUrl(Utils.BaseImageUri + events.getEventImage(), NetworkController.getInstance(context).getImageLoader());
 
 
-            holder.event_profile_name.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent otherProfileDetails=new Intent(context, OtherProfileActivity.class);
 
-                    otherProfileDetails.putExtra("post_createdid",  eventsList.get(position).getEventUserId());
-                    otherProfileDetails.putExtra("created_uname", eventsList.get(position).getEventProfileName());
-                    startActivity(otherProfileDetails);
-                }
-            });
             holder.viewMore.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

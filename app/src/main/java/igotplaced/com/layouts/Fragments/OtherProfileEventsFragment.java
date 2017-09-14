@@ -183,17 +183,18 @@ public class OtherProfileEventsFragment extends Fragment {
 
             //  holder.userImage.setImageUrl(Utils.BaseImageUri + events.getCommentProfileImage(), NetworkController.getInstance(context).getImageLoader());
             holder.event_img.setImageUrl(Utils.BaseImageUri + events.getEventImage(), NetworkController.getInstance(context).getImageLoader());
+            if (!eventsList.get(position).getEventUserId().equals(userId)) {
+                holder.event_profile_name.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent otherProfileDetails = new Intent(context, OtherProfileActivity.class);
 
-            holder.event_profile_name.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent otherProfileDetails=new Intent(context, OtherProfileActivity.class);
-
-                    otherProfileDetails.putExtra("post_createdid",  eventsList.get(position).getEventUserId());
-                    otherProfileDetails.putExtra("created_uname", eventsList.get(position).getEventProfileName());
-                    startActivity(otherProfileDetails);
-                }
-            });
+                        otherProfileDetails.putExtra("post_createdid", eventsList.get(position).getEventUserId());
+                        otherProfileDetails.putExtra("created_uname", eventsList.get(position).getEventProfileName());
+                        startActivity(otherProfileDetails);
+                    }
+                });
+            }
             holder.viewMore.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

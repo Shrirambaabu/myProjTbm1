@@ -182,18 +182,19 @@ public class OtherProfileQuestionsFragment extends Fragment {
                     startActivity(companyDetails);
                 }
             });
+            if (!questionsList.get(position).getQuestionUserId().equals(userId)) {
 
-            holder.questionsProfileName.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent otherProfileDetails=new Intent(context, OtherProfileActivity.class);
+                holder.questionsProfileName.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent otherProfileDetails = new Intent(context, OtherProfileActivity.class);
 
-                    otherProfileDetails.putExtra("post_createdid", questionsList.get(position).getQuestionUserId());
-                    otherProfileDetails.putExtra("created_uname", questionsList.get(position).getQuestionsProfileName());
-                    startActivity(otherProfileDetails);
-                }
-            });
-
+                        otherProfileDetails.putExtra("post_createdid", questionsList.get(position).getQuestionUserId());
+                        otherProfileDetails.putExtra("created_uname", questionsList.get(position).getQuestionsProfileName());
+                        startActivity(otherProfileDetails);
+                    }
+                });
+            }
             holder.viewMore.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

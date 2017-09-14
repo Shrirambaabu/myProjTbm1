@@ -170,7 +170,10 @@ public class OtherProfilePostFragment extends Fragment {
             }else{
                 holder.postCompany.setText("#"+post.getPostCompany());
             }
+
+
             holder.postProfileName.setText(post.getPostProfileName());
+
             holder.postTime.setText(post.getPostTime());
             //  holder.userImage.setImageUrl(Utils.BaseImageUri + post.getUserImage(), NetworkController.getInstance(context).getImageLoader());
             holder.postImage.setImageUrl(Utils.BaseImageUri + post.getPostImage(), NetworkController.getInstance(context).getImageLoader());
@@ -185,17 +188,18 @@ public class OtherProfilePostFragment extends Fragment {
                 }
             });
 
-            holder.postProfileName.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent otherProfileDetails = new Intent(context, OtherProfileActivity.class);
-
-                    otherProfileDetails.putExtra("post_createdid", postList.get(position).getPostedUserId());
-                    otherProfileDetails.putExtra("created_uname", postList.get(position).getPostProfileName());
-                    startActivity(otherProfileDetails);
-                }
-            });
-
+            if (!postList.get(position).getPostedUserId().equals(userId)) {
+                holder.postProfileName.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent otherProfileDetails = new Intent(context, OtherProfileActivity.class);
+Log.e("Tag","DiffUser");
+                        otherProfileDetails.putExtra("post_createdid", postList.get(position).getPostedUserId());
+                        otherProfileDetails.putExtra("created_uname", postList.get(position).getPostProfileName());
+                        startActivity(otherProfileDetails);
+                    }
+                });
+            }
 
             holder.viewMore.setOnClickListener(new View.OnClickListener() {
                 @Override

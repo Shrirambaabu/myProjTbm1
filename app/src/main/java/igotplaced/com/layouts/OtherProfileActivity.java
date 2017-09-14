@@ -68,7 +68,7 @@ public class OtherProfileActivity extends AppCompatActivity implements Connectiv
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_other_profile);
         initialization();
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+
 
         viewPager = (ViewPager) findViewById(R.id.pager);
         setupViewPager(viewPager);
@@ -92,13 +92,7 @@ public class OtherProfileActivity extends AppCompatActivity implements Connectiv
         });
         makeJsonArrayRequestProfile();
 
-        setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setHomeButtonEnabled(true);
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setTitle(otherProfileName);
-        }
+
     }
     @Override
     public void onNetworkConnectionChanged(boolean isConnected) {

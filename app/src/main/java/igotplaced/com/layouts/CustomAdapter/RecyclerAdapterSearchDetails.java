@@ -14,7 +14,9 @@ import com.android.volley.toolbox.NetworkImageView;
 import java.util.ArrayList;
 import java.util.List;
 
+import igotplaced.com.layouts.CompanyDetailsActivity;
 import igotplaced.com.layouts.Model.SearchResultsModel;
+import igotplaced.com.layouts.OtherProfileActivity;
 import igotplaced.com.layouts.ProfileEventDetails;
 import igotplaced.com.layouts.ProfileInterviewDetailsActivity;
 import igotplaced.com.layouts.ProfilePostDetailsActivity;
@@ -104,9 +106,30 @@ public class RecyclerAdapterSearchDetails extends RecyclerView.Adapter<RecyclerV
                 ((PostViewHolder) holder).postTime.setText(searchResultsModel.getCreatedDate());
                 ((PostViewHolder) holder).postCompany.setText("#"+searchResultsModel.getCompany());
                 ((PostViewHolder) holder).postImage.setImageUrl(Utils.BaseImageUri + searchResultsModel.getUserImage(), NetworkController.getInstance(context).getImageLoader());
-                ((PostViewHolder) holder).setItemClickListener(new ItemClickListener() {
+
+                ((PostViewHolder) holder).postCompany.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onItemClick(View v, int pos) {
+                    public void onClick(View v) {
+                        Intent companyDetails = new Intent(context, CompanyDetailsActivity.class);
+                        companyDetails.putExtra("postCompany", searchResultsModelList.get(position).getCompany());
+                        companyDetails.putExtra("companyId",  searchResultsModelList.get(position).getCompanyId());
+                        context.startActivity(companyDetails);
+                    }
+                });
+
+                ((PostViewHolder) holder).postProfileName.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent otherProfileDetails = new Intent(context, OtherProfileActivity.class);
+
+                        otherProfileDetails.putExtra("post_createdid", searchResultsModelList.get(position).getUserId());
+                        otherProfileDetails.putExtra("created_uname", searchResultsModelList.get(position).getUserImage());
+                        context.startActivity(otherProfileDetails);
+                    }
+                });
+                ((PostViewHolder) holder).viewMore.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
                         Log.e("Item Click post", "" + searchResultsModelList.get(position).getId());
                         Intent profileDetails=new Intent(context, ProfilePostDetailsActivity.class);
 
@@ -131,10 +154,29 @@ public class RecyclerAdapterSearchDetails extends RecyclerView.Adapter<RecyclerV
                 ((InterviewViewHolder) holder).interviewCompany.setText("#"+searchResultsModel.getCompany());
                 ((InterviewViewHolder) holder).interviewTime.setText(searchResultsModel.getCreatedDate());
                 ((InterviewViewHolder) holder).interviewImage.setImageUrl(Utils.BaseImageUri + searchResultsModel.getUserImage(), NetworkController.getInstance(context).getImageLoader());
-
-                ((InterviewViewHolder) holder).setItemClickListener(new ItemClickListener() {
+                ((InterviewViewHolder) holder).interviewCompany.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onItemClick(View v, int pos) {
+                    public void onClick(View v) {
+                        Intent companyDetails = new Intent(context, CompanyDetailsActivity.class);
+                        companyDetails.putExtra("postCompany", searchResultsModelList.get(position).getCompany());
+                        companyDetails.putExtra("companyId",  searchResultsModelList.get(position).getCompanyId());
+                        context.startActivity(companyDetails);
+                    }
+                });
+                ((InterviewViewHolder) holder).interviewProfileName.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent otherProfileDetails = new Intent(context, OtherProfileActivity.class);
+
+                        otherProfileDetails.putExtra("post_createdid",searchResultsModelList.get(position).getUserId());
+                        otherProfileDetails.putExtra("created_uname", searchResultsModelList.get(position).getUserName());
+                        context.startActivity(otherProfileDetails);
+                    }
+                });
+
+                ((InterviewViewHolder) holder).viewMore.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
                         Log.e("Item Click Interview", "" + searchResultsModelList.get(position).getId());
 
                         Intent profileInterview=new Intent(context, ProfileInterviewDetailsActivity.class);
@@ -149,7 +191,6 @@ public class RecyclerAdapterSearchDetails extends RecyclerView.Adapter<RecyclerV
                         profileInterview.putExtra("postCompany",searchResultsModelList.get(position).getCompany());
                         profileInterview.putExtra("companyId", searchResultsModelList.get(position).getCompanyId());
                         context.startActivity(profileInterview);
-
                     }
                 });
 
@@ -169,9 +210,23 @@ public class RecyclerAdapterSearchDetails extends RecyclerView.Adapter<RecyclerV
                 ((EventsViewHolder) holder).event_time.setText(searchResultsModel.getCreatedDate());
                 ((EventsViewHolder) holder).event_img.setImageUrl(Utils.BaseImageUri + searchResultsModel.getUserImage(), NetworkController.getInstance(context).getImageLoader());
 
-                ((EventsViewHolder) holder).setItemClickListener(new ItemClickListener() {
+
+                ((EventsViewHolder) holder).event_profile_name.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onItemClick(View v, int pos) {
+                    public void onClick(View v) {
+                        Intent otherProfileDetails=new Intent(context, OtherProfileActivity.class);
+
+                        otherProfileDetails.putExtra("post_createdid", searchResultsModelList.get(position).getUserId());
+                        otherProfileDetails.putExtra("created_uname",searchResultsModelList.get(position).getUserName());
+                        context.startActivity(otherProfileDetails);
+                    }
+                });
+
+
+
+                ((EventsViewHolder) holder).viewMore.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
                         Log.e("Item Click Event", "" + searchResultsModelList.get(position).getId());
                         Intent profileEventDetails =new Intent(context,ProfileEventDetails.class);
 
@@ -194,7 +249,6 @@ public class RecyclerAdapterSearchDetails extends RecyclerView.Adapter<RecyclerV
                     }
                 });
 
-
             } else if (integer==3) {
 
                 ((QuestionsViewHolder) holder).questions.setText(searchResultsModel.getMessage());
@@ -204,9 +258,30 @@ public class RecyclerAdapterSearchDetails extends RecyclerView.Adapter<RecyclerV
                 ((QuestionsViewHolder) holder).questionsTime.setText(searchResultsModel.getCreatedDate());
                 ((QuestionsViewHolder) holder).questionsImage.setImageUrl(Utils.BaseImageUri + searchResultsModel.getUserImage(), NetworkController.getInstance(context).getImageLoader());
 
-                ((QuestionsViewHolder) holder).setItemClickListener(new ItemClickListener() {
+
+                ((QuestionsViewHolder) holder).questionsCompany.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onItemClick(View v, int pos) {
+                    public void onClick(View v) {
+                        Intent companyDetails = new Intent(context, CompanyDetailsActivity.class);
+                        companyDetails.putExtra("postCompany", searchResultsModelList.get(position).getCompany());
+                        companyDetails.putExtra("companyId",  searchResultsModelList.get(position).getCompanyId());
+                        context.startActivity(companyDetails);
+                    }
+                });
+                ((QuestionsViewHolder) holder).questionsProfileName.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent otherProfileDetails = new Intent(context, OtherProfileActivity.class);
+
+                        otherProfileDetails.putExtra("post_createdid",searchResultsModelList.get(position).getUserId());
+                        otherProfileDetails.putExtra("created_uname", searchResultsModelList.get(position).getUserName());
+                        context.startActivity(otherProfileDetails);
+                    }
+                });
+
+                ((QuestionsViewHolder) holder).viewMore.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
                         Log.e("Item Click question", "" + searchResultsModelList.get(position).getId());
 
                         Intent questionDetails=new Intent(context, ProfileQuestionsDetailsActivity.class);
@@ -223,6 +298,7 @@ public class RecyclerAdapterSearchDetails extends RecyclerView.Adapter<RecyclerV
                         context.startActivity(questionDetails);
                     }
                 });
+
             }
         }
     }
@@ -239,7 +315,7 @@ public class RecyclerAdapterSearchDetails extends RecyclerView.Adapter<RecyclerV
         }
     }
 
-    class PostViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class PostViewHolder extends RecyclerView.ViewHolder {
         private TextView post, postIndustry, postProfileName, postTime, postCompany,viewMore;
 
         private NetworkImageView postImage, userImage;
@@ -258,20 +334,13 @@ public class RecyclerAdapterSearchDetails extends RecyclerView.Adapter<RecyclerV
             // postTime = (TextView) itemView.findViewById(R.id.post_time);
             // Volley's NetworkImageView which will load Image from URL
             postImage = (NetworkImageView) itemView.findViewById(R.id.post_img);
-            itemView.setOnClickListener(this);
+
         }
 
-        @Override
-        public void onClick(View v) {
-            this.itemClickListener.onItemClick(v, getLayoutPosition());
-        }
 
-        void setItemClickListener(ItemClickListener ic) {
-            this.itemClickListener = ic;
-        }
     }
 
-    class InterviewViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class InterviewViewHolder extends RecyclerView.ViewHolder {
         private TextView interview, interviewIndustry, interviewProfileName, interviewTime,interviewCompany, viewMore;
         private NetworkImageView interviewImage, userImage;
         private ItemClickListener itemClickListener;
@@ -288,20 +357,13 @@ public class RecyclerAdapterSearchDetails extends RecyclerView.Adapter<RecyclerV
             interviewCompany = (TextView) itemView.findViewById(R.id.interview_company);
             // Volley's NetworkImageView which will load Image from URL
             interviewImage = (NetworkImageView) itemView.findViewById(R.id.interview_img);
-            itemView.setOnClickListener(this);
+
         }
 
-        @Override
-        public void onClick(View v) {
-            this.itemClickListener.onItemClick(v, getLayoutPosition());
-        }
 
-        void setItemClickListener(ItemClickListener ic) {
-            this.itemClickListener = ic;
-        }
     }
 
-    class EventsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class EventsViewHolder extends RecyclerView.ViewHolder {
         private TextView eventCaption, eventDesignation, eventVenue,eventCompany, eventDate, eventRegistered, eventStatus, event, event_industry, event_profile_name, event_time, viewMore;
         private NetworkImageView event_img, userImage;
         private ItemClickListener itemClickListener;
@@ -325,21 +387,14 @@ public class RecyclerAdapterSearchDetails extends RecyclerView.Adapter<RecyclerV
             // Volley's NetworkImageView which will load Image from URL
             event_img = (NetworkImageView) itemView.findViewById(R.id.event_img);
 
-            itemView.setOnClickListener(this);
+
         }
 
-        @Override
-        public void onClick(View v) {
-            this.itemClickListener.onItemClick(v, getLayoutPosition());
-        }
 
-        void setItemClickListener(ItemClickListener ic) {
-            this.itemClickListener = ic;
-        }
     }
 
 
-    class QuestionsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class QuestionsViewHolder extends RecyclerView.ViewHolder {
 
         private TextView questions, questionsIndustry, questionsProfileName, questionsTime,questionsCompany, viewMore;
         private NetworkImageView questionsImage, comment_profile_img;
@@ -357,18 +412,11 @@ public class RecyclerAdapterSearchDetails extends RecyclerView.Adapter<RecyclerV
             questionsCompany = (TextView) itemView.findViewById(R.id.questions_company);
             // Volley's NetworkImageView which will load Image from URL
             questionsImage = (NetworkImageView) itemView.findViewById(R.id.questions_img);
-            itemView.setOnClickListener(this);
+
 
         }
 
-        @Override
-        public void onClick(View v) {
-            this.itemClickListener.onItemClick(v, getLayoutPosition());
-        }
 
-        void setItemClickListener(ItemClickListener ic) {
-            this.itemClickListener = ic;
-        }
     }
 
 

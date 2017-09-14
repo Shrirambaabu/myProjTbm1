@@ -234,16 +234,7 @@ public class ProfileQuestionFragment extends Fragment implements ClickListener {
                 }
             });
 
-            holder.questionsProfileName.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent otherProfileDetails=new Intent(context, OtherProfileActivity.class);
 
-                    otherProfileDetails.putExtra("post_createdid", questionsList.get(position).getQuestionUserId());
-                    otherProfileDetails.putExtra("created_uname", questionsList.get(position).getQuestionsProfileName());
-                    startActivity(otherProfileDetails);
-                }
-            });
 
             holder.viewMore.setOnClickListener(new View.OnClickListener() {
                 @Override

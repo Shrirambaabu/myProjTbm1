@@ -51,7 +51,6 @@
                 android:ellipsize="end"
                 android:gravity="center|start"
                 android:maxLines="1"
-                android:text="THARUsfbsfbaNBHARAvd"
                 android:textColor="@color/colorBackground"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -65,7 +64,6 @@
                 android:layout_toEndOf="@+id/post_img"
                 android:gravity="center|start"
                 android:maxLines="1"
-                android:text="20/05/2017 18:36 "
                 android:textColor="@color/colorBackground"
                 android:textSize="14sp" />
 
@@ -79,7 +77,6 @@
                 android:ellipsize="end"
                 android:gravity="start"
                 android:maxLines="2"
-                android:text="I am trained engineefd r in dfdsf dfgdgdf sfdsadasdasd  ds  dsds  dsja..."
                 android:textColor="@color/text_main"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -93,7 +90,6 @@
                 android:layout_marginTop="@dimen/margin_8"
                 android:gravity="center"
                 android:maxLines="1"
-                android:text="IT INDUSTRY"
                 android:maxLength="18"
                 android:ellipsize="end"
                 android:textAllCaps="true"
@@ -113,7 +109,6 @@
                 android:layout_toEndOf="@+id/post_industry"
                 android:maxLines="1"
                 android:maxLength="18"
-                android:text="INFOSYS"
                 android:textAllCaps="true"
                 android:textColor="@color/link_color"
                 android:textSize="14sp"
