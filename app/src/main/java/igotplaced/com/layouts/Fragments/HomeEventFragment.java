@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -56,6 +57,7 @@ import static igotplaced.com.layouts.Utils.Utils.BaseUri;
 import static igotplaced.com.layouts.Utils.Utils.Id;
 import static igotplaced.com.layouts.Utils.Utils.MyPREFERENCES;
 import static igotplaced.com.layouts.Utils.Utils.Name;
+import static igotplaced.com.layouts.Utils.Utils.screenSize;
 
 public class HomeEventFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, ClickListener {
 
@@ -69,7 +71,7 @@ public class HomeEventFragment extends Fragment implements SwipeRefreshLayout.On
     private RecyclerAdapterEventHome recyclerAdapterEventHome;
 
     int lastVisiblesItems, visibleItemCount, totalItemCount;
-
+    int loadLimit;
     private LinearLayoutManager mLayoutManager;
     private boolean loading, swipe = false;
 
@@ -91,7 +93,7 @@ public class HomeEventFragment extends Fragment implements SwipeRefreshLayout.On
         //mapping web view
         mapping(view);
 
-        mLayoutManager = new LinearLayoutManager(context);
+     //   mLayoutManager = new LinearLayoutManager(context);
 
         SharedPreferences sharedpreferences = context.getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         String userName = sharedpreferences.getString(Name, null);
@@ -106,6 +108,19 @@ public class HomeEventFragment extends Fragment implements SwipeRefreshLayout.On
         return view;
 
     }
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.e("LoaDScreen",""+screenSize(getActivity()));
+        if (screenSize(getActivity()) < 6.5) {
+            loadLimit = 5;
+
+        } else {
+
+            loadLimit = 15;
+        }
+
+    }
 
     private void eventRecyclerView(View view) {
         //mapping RecyclerView
@@ -114,11 +129,15 @@ public class HomeEventFragment extends Fragment implements SwipeRefreshLayout.On
         recyclerAdapterEventHome = new RecyclerAdapterEventHome(context, eventList);
 
         //setting fixed size
+        Log.e("ScreenSizeReecyvlr", "" + screenSize(getActivity()));
+        if (screenSize(getActivity()) < 6.5)
+            mLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+        else {
+            mLayoutManager = new GridLayoutManager(context, 2);
+        }
         event_view.setHasFixedSize(true);
         //setting horizontal layout
-        event_view.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
-        mLayoutManager = (LinearLayoutManager) event_view.getLayoutManager();
-        //setting RecyclerView adapter
+        event_view.setLayoutManager(mLayoutManager);
         event_view.setAdapter(recyclerAdapterEventHome);
         //Getting Instance of Volley Request Queue
         queue = NetworkController.getInstance(context).getRequestQueue();
@@ -193,7 +212,7 @@ public class HomeEventFragment extends Fragment implements SwipeRefreshLayout.On
 
         // I have not used current page for showing demo, if u use a webservice
         // then it is useful for every call request
-        int loadLimit = 5;
+
         makeJsonObjectRequestEventHome(0, loadLimit);
 
     }

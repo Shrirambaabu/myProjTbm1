@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -36,6 +37,7 @@ import igotplaced.com.layouts.Utils.NetworkController;
 import igotplaced.com.layouts.Utils.Utils;
 
 import static igotplaced.com.layouts.Utils.Utils.BaseUri;
+import static igotplaced.com.layouts.Utils.Utils.screenSize;
 
 
 public class CompanyInterviewFragment extends Fragment {
@@ -60,7 +62,7 @@ public class CompanyInterviewFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_other_profile_interview, container, false);
         context = getActivity().getApplicationContext();
 
-        mLayoutManager = new LinearLayoutManager(context);
+     //   mLayoutManager = new LinearLayoutManager(context);
         Bundle bundle = this.getArguments();
 
         if (bundle != null) {
@@ -81,11 +83,15 @@ public class CompanyInterviewFragment extends Fragment {
         recyclerCompanyInterview = new RecyclerCompanyInterview(context, interviewList);
 
         //setting fixed size
+        Log.e("ScreenSizeReecyvlr", "" + screenSize(getActivity()));
+        if (screenSize(getActivity()) < 6.5)
+            mLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+        else {
+            mLayoutManager = new GridLayoutManager(context, 2);
+        }
         interview_view.setHasFixedSize(true);
         //setting horizontal layout
-        interview_view.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
-        mLayoutManager = (LinearLayoutManager) interview_view.getLayoutManager();
-        //setting RecyclerView adapter
+        interview_view.setLayoutManager(mLayoutManager);
         interview_view.setAdapter(recyclerCompanyInterview);
         //Getting Instance of Volley Request Queue
         queue = NetworkController.getInstance(context).getRequestQueue();

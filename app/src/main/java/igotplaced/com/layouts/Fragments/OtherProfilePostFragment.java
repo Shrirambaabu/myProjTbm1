@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -36,6 +37,7 @@ import igotplaced.com.layouts.Utils.NetworkController;
 import igotplaced.com.layouts.Utils.Utils;
 
 import static igotplaced.com.layouts.Utils.Utils.BaseUri;
+import static igotplaced.com.layouts.Utils.Utils.screenSize;
 
 public class OtherProfilePostFragment extends Fragment {
 
@@ -64,7 +66,7 @@ public class OtherProfilePostFragment extends Fragment {
         if (bundle != null) {
             userId = bundle.getString("otherId");
         }
-        mLayoutManager = new LinearLayoutManager(context);
+     //   mLayoutManager = new LinearLayoutManager(context);
 
         postRecyclerView(view);
         return view;
@@ -76,13 +78,16 @@ public class OtherProfilePostFragment extends Fragment {
         RecyclerView post_view = (RecyclerView) view.findViewById(R.id.recycler_view_profile_post);
         //feeding values to RecyclerView using custom RecyclerView adapter
         recyclerAdapterOtherProfilePost = new RecyclerAdapterOtherProfilePost(context, postList);
-
-        //setting fixed size
+//setting fixed size
+        Log.e("ScreenSizeReecyvlr", "" + screenSize(getActivity()));
+        if (screenSize(getActivity()) < 6.5)
+            mLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+        else {
+            mLayoutManager = new GridLayoutManager(context, 2);
+        }
         post_view.setHasFixedSize(true);
         //setting horizontal layout
-        post_view.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
-        mLayoutManager = (LinearLayoutManager) post_view.getLayoutManager();
-        //setting RecyclerView adapter
+        post_view.setLayoutManager(mLayoutManager);
         post_view.setAdapter(recyclerAdapterOtherProfilePost);
 
         //Getting Instance of Volley Request Queue

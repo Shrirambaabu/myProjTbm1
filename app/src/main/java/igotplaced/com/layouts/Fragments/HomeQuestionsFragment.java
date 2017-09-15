@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -54,6 +55,7 @@ import static igotplaced.com.layouts.Utils.Utils.BaseUri;
 import static igotplaced.com.layouts.Utils.Utils.Id;
 import static igotplaced.com.layouts.Utils.Utils.MyPREFERENCES;
 import static igotplaced.com.layouts.Utils.Utils.Name;
+import static igotplaced.com.layouts.Utils.Utils.screenSize;
 
 
 public class HomeQuestionsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, ClickListener {
@@ -68,7 +70,7 @@ public class HomeQuestionsFragment extends Fragment implements SwipeRefreshLayou
     private RecyclerAdapterQuestionsHome recyclerAdapterQuestionsHome;
 
     int lastVisiblesItems, visibleItemCount, totalItemCount;
-
+    int loadLimit ;
     private LinearLayoutManager mLayoutManager;
     private boolean loading, swipe = false;
 
@@ -76,7 +78,19 @@ public class HomeQuestionsFragment extends Fragment implements SwipeRefreshLayou
         // Required empty public constructor
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.e("LoaDScreen",""+screenSize(getActivity()));
+        if (screenSize(getActivity()) < 6.5) {
+            loadLimit = 5;
 
+        } else {
+
+            loadLimit = 15;
+        }
+
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -90,7 +104,7 @@ public class HomeQuestionsFragment extends Fragment implements SwipeRefreshLayou
         //mapping web view
         mapping(view);
 
-        mLayoutManager = new LinearLayoutManager(context);
+      //  mLayoutManager = new LinearLayoutManager(context);
 
         SharedPreferences sharedpreferences = context.getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         String userName = sharedpreferences.getString(Name, null);
@@ -127,11 +141,15 @@ public class HomeQuestionsFragment extends Fragment implements SwipeRefreshLayou
         recyclerAdapterQuestionsHome = new RecyclerAdapterQuestionsHome(context, questionsList);
 
         //setting fixed size
+        Log.e("ScreenSizeReecyvlr", "" + screenSize(getActivity()));
+        if (screenSize(getActivity()) < 6.5)
+            mLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+        else {
+            mLayoutManager = new GridLayoutManager(context, 2);
+        }
         questions_view.setHasFixedSize(true);
         //setting horizontal layout
-        questions_view.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
-        mLayoutManager = (LinearLayoutManager) questions_view.getLayoutManager();
-        //setting RecyclerView adapter
+        questions_view.setLayoutManager(mLayoutManager);
         questions_view.setAdapter(recyclerAdapterQuestionsHome);
         //Getting Instance of Volley Request Queue
         queue = NetworkController.getInstance(context).getRequestQueue();
@@ -236,7 +254,7 @@ public class HomeQuestionsFragment extends Fragment implements SwipeRefreshLayou
     private void loadData() {
         // I have not used current page for showing demo, if u use a webservice
         // then it is useful for every call request
-        int loadLimit = 5;
+
         makeJsonObjectRequestQuestionsHome(0, loadLimit);
 
     }

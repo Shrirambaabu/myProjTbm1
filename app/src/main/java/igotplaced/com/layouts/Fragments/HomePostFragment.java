@@ -150,8 +150,7 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
         post_view.setHasFixedSize(true);
         //setting horizontal layout
         post_view.setLayoutManager(mLayoutManager);
-        //    mLayoutManager = (LinearLayoutManager) post_view.getLayoutManager();
-        //setting RecyclerView adapter
+
         post_view.setAdapter(recyclerAdapterPostHome);
         //Getting Instance of Volley Request Queue
         queue = NetworkController.getInstance(context).getRequestQueue();

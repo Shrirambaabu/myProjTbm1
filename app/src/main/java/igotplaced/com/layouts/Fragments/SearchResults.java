@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -32,6 +33,7 @@ import igotplaced.com.layouts.R;
 import igotplaced.com.layouts.Utils.NetworkController;
 
 import static igotplaced.com.layouts.Utils.Utils.BaseUri;
+import static igotplaced.com.layouts.Utils.Utils.screenSize;
 
 
 public class SearchResults extends Fragment {
@@ -83,11 +85,15 @@ public class SearchResults extends Fragment {
 
         Log.e("ListCall", "" + searchResultsList.size());
         //setting fixed size
+        Log.e("ScreenSizeReecyvlr", "" + screenSize(getActivity()));
+        if (screenSize(getActivity()) < 6.5)
+            mLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+        else {
+            mLayoutManager = new GridLayoutManager(context, 2);
+        }
         searchRecycler.setHasFixedSize(true);
         //setting horizontal layout
-        searchRecycler.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        mLayoutManager = (LinearLayoutManager) searchRecycler.getLayoutManager();
-        //setting RecyclerView adapter
+        searchRecycler.setLayoutManager(mLayoutManager);
         searchRecycler.setAdapter(recyclerAdapterSearchDetails);
         //Getting Instance of Volley Request Queue
         queue = NetworkController.getInstance(getContext()).getRequestQueue();

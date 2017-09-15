@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -45,6 +46,7 @@ import static igotplaced.com.layouts.Utils.Utils.BaseUri;
 import static igotplaced.com.layouts.Utils.Utils.Id;
 import static igotplaced.com.layouts.Utils.Utils.MyPREFERENCES;
 import static igotplaced.com.layouts.Utils.Utils.Name;
+import static igotplaced.com.layouts.Utils.Utils.screenSize;
 
 
 public class ProfileInterviewExperienceFragment extends Fragment implements ClickListener {
@@ -72,7 +74,7 @@ public class ProfileInterviewExperienceFragment extends Fragment implements Clic
         View view = inflater.inflate(R.layout.fragment_profile_interview_question, container, false);
         context = getActivity().getApplicationContext();
 
-        mLayoutManager = new LinearLayoutManager(context);
+      //  mLayoutManager = new LinearLayoutManager(context);
 
         SharedPreferences sharedpreferences = context.getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         String userName = sharedpreferences.getString(Name, null);
@@ -95,12 +97,16 @@ public class ProfileInterviewExperienceFragment extends Fragment implements Clic
         //feeding values to RecyclerView using custom RecyclerView adapter
         recyclerAdapterProfileInterview = new RecyclerAdapterProfileInterview(context, interviewList);
 
-        //setting fixed size
+         //setting fixed size
+        Log.e("ScreenSizeReecyvlr", "" + screenSize(getActivity()));
+        if (screenSize(getActivity()) < 6.5)
+            mLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+        else {
+            mLayoutManager = new GridLayoutManager(context, 2);
+        }
         interview_view.setHasFixedSize(true);
         //setting horizontal layout
-        interview_view.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
-        mLayoutManager = (LinearLayoutManager) interview_view.getLayoutManager();
-        //setting RecyclerView adapter
+        interview_view.setLayoutManager(mLayoutManager);
         interview_view.setAdapter(recyclerAdapterProfileInterview);
         //Getting Instance of Volley Request Queue
         queue = NetworkController.getInstance(context).getRequestQueue();

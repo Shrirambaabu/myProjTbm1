@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -45,6 +46,7 @@ import static igotplaced.com.layouts.Utils.Utils.BaseUri;
 import static igotplaced.com.layouts.Utils.Utils.Id;
 import static igotplaced.com.layouts.Utils.Utils.MyPREFERENCES;
 import static igotplaced.com.layouts.Utils.Utils.Name;
+import static igotplaced.com.layouts.Utils.Utils.screenSize;
 
 public class ProfilePostFragment extends Fragment implements ClickListener {
 
@@ -89,11 +91,18 @@ public class ProfilePostFragment extends Fragment implements ClickListener {
         //feeding values to RecyclerView using custom RecyclerView adapter
         recyclerAdapterProfilePost = new RecyclerAdapterProfilePost(context, postList);
 
+
+        Log.e("ScreenSizeReecyvlr", "" + screenSize(getActivity()));
+        if (screenSize(getActivity()) < 6.5)
+            mLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+        else {
+            mLayoutManager = new GridLayoutManager(context, 2);
+        }
         //setting fixed size
         post_view.setHasFixedSize(true);
-        //setting horizontal layout
-        post_view.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
-        mLayoutManager = (LinearLayoutManager) post_view.getLayoutManager();
+
+        post_view.setLayoutManager(mLayoutManager);
+      //  mLayoutManager = (LinearLayoutManager) post_view.getLayoutManager();
         //setting RecyclerView adapter
         post_view.setAdapter(recyclerAdapterProfilePost);
 

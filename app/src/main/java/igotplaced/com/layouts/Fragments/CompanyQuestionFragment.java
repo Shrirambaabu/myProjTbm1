@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -36,6 +37,7 @@ import igotplaced.com.layouts.Utils.NetworkController;
 import igotplaced.com.layouts.Utils.Utils;
 
 import static igotplaced.com.layouts.Utils.Utils.BaseUri;
+import static igotplaced.com.layouts.Utils.Utils.screenSize;
 
 
 public class CompanyQuestionFragment extends Fragment {
@@ -62,7 +64,7 @@ public class CompanyQuestionFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_company_question, container, false);
         context = getActivity().getApplicationContext();
 
-        mLayoutManager = new LinearLayoutManager(context);
+       // mLayoutManager = new LinearLayoutManager(context);
 
         Bundle bundle = this.getArguments();
         if (bundle != null) {
@@ -82,11 +84,15 @@ public class CompanyQuestionFragment extends Fragment {
         recyclerQuestionCompany = new RecyclerQuestionCompany(context, questionsList);
 
         //setting fixed size
+        Log.e("ScreenSizeReecyvlr", "" + screenSize(getActivity()));
+        if (screenSize(getActivity()) < 6.5)
+            mLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+        else {
+            mLayoutManager = new GridLayoutManager(context, 2);
+        }
         post_view.setHasFixedSize(true);
         //setting horizontal layout
-        post_view.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
-        mLayoutManager = (LinearLayoutManager) post_view.getLayoutManager();
-        //setting RecyclerView adapter
+        post_view.setLayoutManager(mLayoutManager);
         post_view.setAdapter(recyclerQuestionCompany);
         //Getting Instance of Volley Request Queue
         queue = NetworkController.getInstance(context).getRequestQueue();
