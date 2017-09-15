@@ -2,6 +2,7 @@ package igotplaced.com.layouts;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatEditText;
@@ -36,6 +37,7 @@ import igotplaced.com.layouts.Utils.MyApplication;
 import igotplaced.com.layouts.Utils.Utils;
 
 import static igotplaced.com.layouts.Utils.Utils.BaseUri;
+import static igotplaced.com.layouts.Utils.Utils.screenSize;
 
 public class AddUserExperience extends Activity implements View.OnClickListener, AdapterView.OnItemSelectedListener, ConnectivityReceiver.ConnectivityReceiverListener {
 
@@ -83,6 +85,10 @@ public class AddUserExperience extends Activity implements View.OnClickListener,
         super.onResume();
         // register connection status listener
         MyApplication.getInstance().setConnectivityListener(AddUserExperience.this);
+
+        if (screenSize(AddUserExperience.this) > 8.5) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
     }
 
     private void settingCompanySpinner() {

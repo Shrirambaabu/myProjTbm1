@@ -1,6 +1,7 @@
 package igotplaced.com.layouts;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -26,6 +27,7 @@ import igotplaced.com.layouts.Utils.NetworkController;
 import igotplaced.com.layouts.Utils.Utils;
 
 import static igotplaced.com.layouts.Utils.Utils.BaseUri;
+import static igotplaced.com.layouts.Utils.Utils.screenSize;
 
 public class BlogDetailsActivity extends AppCompatActivity implements ConnectivityReceiver.ConnectivityReceiverListener {
 
@@ -72,6 +74,10 @@ public class BlogDetailsActivity extends AppCompatActivity implements Connectivi
         super.onResume();
         // register connection status listener
         MyApplication.getInstance().setConnectivityListener(BlogDetailsActivity.this);
+
+        if (screenSize(BlogDetailsActivity.this) > 8.5) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
     }
 
     @Override

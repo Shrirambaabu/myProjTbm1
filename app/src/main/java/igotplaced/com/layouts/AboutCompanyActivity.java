@@ -1,6 +1,7 @@
 package igotplaced.com.layouts;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,6 +12,8 @@ import android.widget.TextView;
 import igotplaced.com.layouts.Utils.ConnectivityReceiver;
 import igotplaced.com.layouts.Utils.MyApplication;
 import igotplaced.com.layouts.Utils.Utils;
+
+import static igotplaced.com.layouts.Utils.Utils.screenSize;
 
 public class AboutCompanyActivity extends AppCompatActivity implements ConnectivityReceiver.ConnectivityReceiverListener {
     private Intent intent;
@@ -43,6 +46,10 @@ public class AboutCompanyActivity extends AppCompatActivity implements Connectiv
         super.onResume();
         // register connection status listener
         MyApplication.getInstance().setConnectivityListener(AboutCompanyActivity.this);
+
+        if (screenSize(AboutCompanyActivity.this) > 8.5) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
     }
 
     private void setupToolbar() {

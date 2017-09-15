@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.os.Bundle;
@@ -67,6 +68,7 @@ import static igotplaced.com.layouts.Utils.Utils.MyPREFERENCES;
 import static igotplaced.com.layouts.Utils.Utils.Name;
 import static igotplaced.com.layouts.Utils.Utils.UserImage;
 import static igotplaced.com.layouts.Utils.Utils.pushFragment;
+import static igotplaced.com.layouts.Utils.Utils.screenSize;
 
 public class MainActivity extends AppCompatActivity implements ConnectivityReceiver.ConnectivityReceiverListener {
 
@@ -126,6 +128,7 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
 
     }
 
+
     @Override
     public void onNetworkConnectionChanged(boolean isConnected) {
         if (!isConnected) {
@@ -139,6 +142,11 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
 
         // register connection status listener
         MyApplication.getInstance().setConnectivityListener(MainActivity.this);
+
+
+        if (screenSize(MainActivity.this) > 6.5) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
     }
 
     private void makeJsonArrayRequestProfile() {

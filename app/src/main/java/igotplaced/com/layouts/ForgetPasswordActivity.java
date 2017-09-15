@@ -1,6 +1,7 @@
 package igotplaced.com.layouts;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -29,6 +30,7 @@ import igotplaced.com.layouts.Utils.Utils;
 import igotplaced.com.layouts.Utils.Validation;
 
 import static igotplaced.com.layouts.Utils.Utils.BaseUri;
+import static igotplaced.com.layouts.Utils.Utils.screenSize;
 
 /**
  * Created by Ashith VL on 5/2/2017.
@@ -76,6 +78,10 @@ public class ForgetPasswordActivity extends AppCompatActivity implements View.On
         super.onResume();
         // register connection status listener
         MyApplication.getInstance().setConnectivityListener(ForgetPasswordActivity.this);
+
+        if (screenSize(ForgetPasswordActivity.this) > 8.5) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
     }
 
 

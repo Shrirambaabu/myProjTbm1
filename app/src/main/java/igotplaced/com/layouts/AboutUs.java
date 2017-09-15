@@ -1,6 +1,7 @@
 package igotplaced.com.layouts;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import igotplaced.com.layouts.Utils.MyApplication;
+
+import static igotplaced.com.layouts.Utils.Utils.screenSize;
 
 public class AboutUs extends AppCompatActivity implements View.OnClickListener {
 
@@ -27,6 +32,15 @@ public class AboutUs extends AppCompatActivity implements View.OnClickListener {
         settingToolbar();
        addressingView();
         addingListeners();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (screenSize(AboutUs.this) > 8.5) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
     }
 
     private void addingListeners() {

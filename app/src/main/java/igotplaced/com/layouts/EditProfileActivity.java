@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -80,6 +81,7 @@ import static igotplaced.com.layouts.Utils.Utils.Email;
 import static igotplaced.com.layouts.Utils.Utils.Id;
 import static igotplaced.com.layouts.Utils.Utils.MyPREFERENCES;
 import static igotplaced.com.layouts.Utils.Utils.Name;
+import static igotplaced.com.layouts.Utils.Utils.screenSize;
 
 public class EditProfileActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener, CompoundButton.OnCheckedChangeListener, ConnectivityReceiver.ConnectivityReceiverListener {
 
@@ -198,6 +200,10 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
         super.onResume();
         // register connection status listener
         MyApplication.getInstance().setConnectivityListener(EditProfileActivity.this);
+
+        if (screenSize(EditProfileActivity.this) > 8.5) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
     }
 
     private void settingCheckBoxValue() {

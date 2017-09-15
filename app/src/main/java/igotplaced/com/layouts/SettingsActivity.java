@@ -1,5 +1,6 @@
 package igotplaced.com.layouts;
 
+import android.content.pm.ActivityInfo;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import igotplaced.com.layouts.Fragments.SettingsFragment;
+import igotplaced.com.layouts.Utils.MyApplication;
+
+import static igotplaced.com.layouts.Utils.Utils.screenSize;
 
 public class SettingsActivity extends AppCompatActivity {
     Toolbar toolbar;
@@ -21,6 +25,14 @@ public class SettingsActivity extends AppCompatActivity {
 
         getFragmentManager().beginTransaction().replace(R.id.fragment_container, new SettingsFragment()).commit();
 
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (screenSize(SettingsActivity.this) > 6.5) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
     }
 
     private void setupToolbar() {

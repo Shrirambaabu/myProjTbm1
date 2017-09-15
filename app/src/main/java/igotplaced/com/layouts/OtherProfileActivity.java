@@ -2,6 +2,7 @@ package igotplaced.com.layouts;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -42,6 +43,7 @@ import igotplaced.com.layouts.Utils.NetworkController;
 import igotplaced.com.layouts.Utils.Utils;
 
 import static igotplaced.com.layouts.Utils.Utils.BaseUri;
+import static igotplaced.com.layouts.Utils.Utils.screenSize;
 
 public class OtherProfileActivity extends AppCompatActivity implements ConnectivityReceiver.ConnectivityReceiverListener {
 
@@ -107,6 +109,9 @@ public class OtherProfileActivity extends AppCompatActivity implements Connectiv
         super.onResume();
         // register connection status listener
         MyApplication.getInstance().setConnectivityListener(OtherProfileActivity.this);
+        if (screenSize(OtherProfileActivity.this) > 8.5) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
     }
 
     @Override

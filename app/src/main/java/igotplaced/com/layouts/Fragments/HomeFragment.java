@@ -3,9 +3,12 @@ package igotplaced.com.layouts.Fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.internal.BottomNavigationItemView;
+import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,12 +17,14 @@ import android.view.ViewGroup;
 
 import com.android.volley.RequestQueue;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
 import igotplaced.com.layouts.CustomAdapter.RecyclerAdapterRecentFeedsHome;
 import igotplaced.com.layouts.Model.RecentFeedsHome;
 import igotplaced.com.layouts.R;
+import igotplaced.com.layouts.Utils.BottomNavigationViewHelper;
 
 import static igotplaced.com.layouts.Utils.Utils.pushFragment;
 
@@ -51,6 +56,7 @@ public class HomeFragment extends Fragment {
 
     private void setupNavigationView(View view) {
         BottomNavigationView bottomNavigationView = (BottomNavigationView) view.findViewById(R.id.bottom_navigation);
+        BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
         if (bottomNavigationView != null) {
 
             // Select first menu item by default and show Fragment accordingly.

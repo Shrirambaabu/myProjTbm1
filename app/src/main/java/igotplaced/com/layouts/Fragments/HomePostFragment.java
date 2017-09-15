@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -55,6 +56,7 @@ import static igotplaced.com.layouts.Utils.Utils.BaseUri;
 import static igotplaced.com.layouts.Utils.Utils.Id;
 import static igotplaced.com.layouts.Utils.Utils.MyPREFERENCES;
 import static igotplaced.com.layouts.Utils.Utils.Name;
+import static igotplaced.com.layouts.Utils.Utils.screenSize;
 
 public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, ClickListener {
 
@@ -68,7 +70,7 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
     private RecyclerAdapterPostHome recyclerAdapterPostHome;
 
     int lastVisiblesItems, visibleItemCount, totalItemCount;
-
+    int loadLimit;
     private LinearLayoutManager mLayoutManager;
     private boolean loading, swipe = false;
 
@@ -90,7 +92,6 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
         //mapping web view
         mapping(view);
 
-        mLayoutManager = new LinearLayoutManager(context);
 
         SharedPreferences sharedpreferences = context.getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         String userName = sharedpreferences.getString(Name, null);
@@ -103,6 +104,20 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
         postRecyclerView(view);
 
         return view;
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.e("LoaDScreen",""+screenSize(getActivity()));
+        if (screenSize(getActivity()) < 6.5) {
+            loadLimit = 5;
+
+        } else {
+
+            loadLimit = 15;
+        }
 
     }
 
@@ -125,12 +140,17 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
         RecyclerView post_view = (RecyclerView) view.findViewById(R.id.recycler_view_post);
         //feeding values to RecyclerView using custom RecyclerView adapter
         recyclerAdapterPostHome = new RecyclerAdapterPostHome(context, postList);
-
         //setting fixed size
+        Log.e("ScreenSizeReecyvlr", "" + screenSize(getActivity()));
+        if (screenSize(getActivity()) < 6.5)
+            mLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+        else {
+            mLayoutManager = new GridLayoutManager(context, 2);
+        }
         post_view.setHasFixedSize(true);
         //setting horizontal layout
-        post_view.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
-        mLayoutManager = (LinearLayoutManager) post_view.getLayoutManager();
+        post_view.setLayoutManager(mLayoutManager);
+        //    mLayoutManager = (LinearLayoutManager) post_view.getLayoutManager();
         //setting RecyclerView adapter
         post_view.setAdapter(recyclerAdapterPostHome);
         //Getting Instance of Volley Request Queue
@@ -141,6 +161,8 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
         swipeRefreshLayout.post(new Runnable() {
             @Override
             public void run() {
+
+                Log.e("ScreenRUn","SwipeRefresh");
                 loadData();
 
             }
@@ -168,7 +190,7 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
             }
         });
 
-       // recyclerAdapterPostHome.setClickListener(this);
+        // recyclerAdapterPostHome.setClickListener(this);
 
     }
 
@@ -193,14 +215,14 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
                     jsonObjectJSON = jsonObject.getJSONArray("");
 
                     //clearing blogList
-                   //postList.clear();
+                    //postList.clear();
 
                     for (int i = 0; i < jsonObjectJSON.length(); i++) {
                      /*   Log.d("error", jsonObjectJSON.toString());*/
                         try {
 
                             JSONObject obj = jsonObjectJSON.getJSONObject(i);
-                            Post post = new Post(obj.getString("pid"),obj.getString("created_user"),obj.getString("post"), obj.getString("Industry"), obj.getString("postuserimgname"), obj.getString("created_uname"), obj.getString("created_by"), obj.getString("imgname"), obj.getString("fname"),obj.getString("companyname"),obj.getString("company_id"));
+                            Post post = new Post(obj.getString("pid"), obj.getString("created_user"), obj.getString("post"), obj.getString("Industry"), obj.getString("postuserimgname"), obj.getString("created_uname"), obj.getString("created_by"), obj.getString("imgname"), obj.getString("fname"), obj.getString("companyname"), obj.getString("company_id"));
                             // adding movie to blogHomeList array
                             postList.add(post);
 
@@ -237,7 +259,9 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
     private void loadData() {
         // I have not used current page for showing demo, if u use a webservice
         // then it is useful for every call request
-        int loadLimit = 5;
+
+        Log.e("ScreenRUn","Load!1");
+
         makeJsonObjectRequestPostHome(0, loadLimit);
 
     }
@@ -263,7 +287,7 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
     }
 
 
-    class RecyclerAdapterPostHome extends RecyclerView.Adapter<RecyclerAdapterPostHome.MyViewHolder>{
+    class RecyclerAdapterPostHome extends RecyclerView.Adapter<RecyclerAdapterPostHome.MyViewHolder> {
 
         private String userId = null, userName = null;
         private String URL = BaseUri + "/home/postComments";
@@ -297,13 +321,13 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
             postId = post.getPostId();
             postedUserId = post.getPostedUserId();
             holder.post.setText(post.getPost());
-            holder.postIndustry.setText("#"+post.getPostIndustry());
+            holder.postIndustry.setText("#" + post.getPostIndustry());
             holder.postProfileName.setText(post.getPostProfileName());
             holder.postTime.setText(post.getPostTime());
-            if (post.getPostCompany().equals("")){
+            if (post.getPostCompany().equals("")) {
                 holder.postCompany.setText(post.getPostCompany());
-            }else{
-                holder.postCompany.setText("#"+post.getPostCompany());
+            } else {
+                holder.postCompany.setText("#" + post.getPostCompany());
             }
 
             //  holder.userImage.setImageUrl(Utils.BaseImageUri + post.getUserImage(), NetworkController.getInstance(context).getImageLoader());
@@ -314,7 +338,7 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
                 public void onClick(View v) {
                     Intent companyDetails = new Intent(context, CompanyDetailsActivity.class);
                     companyDetails.putExtra("postCompany", postList.get(position).getPostCompany());
-                    companyDetails.putExtra("companyId",  postList.get(position).getCompanyId());
+                    companyDetails.putExtra("companyId", postList.get(position).getCompanyId());
                     startActivity(companyDetails);
                 }
             });
@@ -336,7 +360,7 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
                 public void onClick(View v) {
                     Log.e("tag", "click" + postList.get(position).getPostId());
 
-                    Intent profileDetails=new Intent(getContext(), ProfilePostDetailsActivity.class);
+                    Intent profileDetails = new Intent(getContext(), ProfilePostDetailsActivity.class);
 
                     profileDetails.putExtra("pid", postList.get(position).getPostId());
                     profileDetails.putExtra("created_uname", postList.get(position).getPostProfileName());
@@ -362,7 +386,7 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
         }
 
         public class MyViewHolder extends RecyclerView.ViewHolder {
-            private TextView post, postIndustry, postProfileName, postTime,postCompany,viewMore;
+            private TextView post, postIndustry, postProfileName, postTime, postCompany, viewMore;
 
             private NetworkImageView postImage, userImage;
             private ItemClickListener itemClickListener;
@@ -378,7 +402,6 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
                 postCompany = (TextView) itemView.findViewById(R.id.post_company);
 
 
-
                 // postTime = (TextView) itemView.findViewById(R.id.post_time);
                 // Volley's NetworkImageView which will load Image from URL
                 postImage = (NetworkImageView) itemView.findViewById(R.id.post_img);
@@ -391,12 +414,7 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
         }
 
 
-
     }
-
-
-
-
 
 
 }

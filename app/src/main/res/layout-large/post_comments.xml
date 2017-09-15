@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.android.volley.toolbox.NetworkImageView
+        android:id="@+id/post_img"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_margin="@dimen/margin_8" />
+
+    <ImageView
+        android:id="@+id/delete"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:visibility="gone"
+        android:layout_marginTop="@dimen/margin_8"
+        android:layout_marginEnd="@dimen/margin_16"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/ic_delete_black_24dp"
+        />
+
+    <TextView
+        android:id="@+id/commented_post"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_8"
+        android:textSize="20sp"
+        android:layout_marginEnd="8dp"
+        android:textColor="@color/text_main"
+        android:layout_toEndOf="@+id/post_img"
+        android:layout_toStartOf="@+id/delete"/>
+
+
+</RelativeLayout>

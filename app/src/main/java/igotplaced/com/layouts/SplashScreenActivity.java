@@ -3,6 +3,7 @@ package igotplaced.com.layouts;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +12,7 @@ import static igotplaced.com.layouts.Utils.Utils.Email;
 import static igotplaced.com.layouts.Utils.Utils.Id;
 import static igotplaced.com.layouts.Utils.Utils.MyPREFERENCES;
 import static igotplaced.com.layouts.Utils.Utils.Name;
+import static igotplaced.com.layouts.Utils.Utils.screenSize;
 
 /**
  * Created by Admin on 5/2/2017.
@@ -59,5 +61,12 @@ public class SplashScreenActivity extends AppCompatActivity {
             }
         }, SPLASH_TIME_OUT);
     }
+    @Override
+    protected void onResume() {
+        super.onResume();
 
+        if (screenSize(SplashScreenActivity.this) > 6.5) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
+    }
 }

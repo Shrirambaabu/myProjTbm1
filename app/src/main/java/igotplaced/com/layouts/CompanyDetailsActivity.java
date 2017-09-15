@@ -2,6 +2,7 @@ package igotplaced.com.layouts;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -61,6 +62,7 @@ import igotplaced.com.layouts.Utils.Utils;
 
 import static igotplaced.com.layouts.Utils.Utils.BaseUri;
 import static igotplaced.com.layouts.Utils.Utils.isColorDark;
+import static igotplaced.com.layouts.Utils.Utils.screenSize;
 
 public class CompanyDetailsActivity extends AppCompatActivity implements ConnectivityReceiver.ConnectivityReceiverListener {
 
@@ -179,6 +181,10 @@ public class CompanyDetailsActivity extends AppCompatActivity implements Connect
         super.onResume();
         // register connection status listener
         MyApplication.getInstance().setConnectivityListener(CompanyDetailsActivity.this);
+
+        if (screenSize(CompanyDetailsActivity.this) > 8.5) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
     }
 
     private void makeJsonArrayRequestCompany() {

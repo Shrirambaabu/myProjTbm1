@@ -3,6 +3,7 @@ package igotplaced.com.layouts;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -48,6 +49,7 @@ import static igotplaced.com.layouts.Utils.Utils.Id;
 import static igotplaced.com.layouts.Utils.Utils.MyPREFERENCES;
 import static igotplaced.com.layouts.Utils.Utils.Name;
 import static igotplaced.com.layouts.Utils.Utils.UserImage;
+import static igotplaced.com.layouts.Utils.Utils.screenSize;
 
 public class QuestionsPopUpActivity extends AppCompatActivity implements View.OnClickListener, ConnectivityReceiver.ConnectivityReceiverListener {
 
@@ -100,6 +102,9 @@ public class QuestionsPopUpActivity extends AppCompatActivity implements View.On
         super.onResume();
         // register connection status listener
         MyApplication.getInstance().setConnectivityListener(QuestionsPopUpActivity.this);
+        if (screenSize(QuestionsPopUpActivity.this) > 8.5) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
     }
     private void makeJsonQuestionRequest() {
 

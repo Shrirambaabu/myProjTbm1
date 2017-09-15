@@ -2,6 +2,7 @@ package igotplaced.com.layouts;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -49,6 +50,7 @@ import igotplaced.com.layouts.Utils.Utils;
 import igotplaced.com.layouts.Utils.Validation;
 
 import static igotplaced.com.layouts.Utils.Utils.BaseUri;
+import static igotplaced.com.layouts.Utils.Utils.screenSize;
 
 public class RegisterPasswordActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, ConnectivityReceiver.ConnectivityReceiverListener, View.OnTouchListener, View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
@@ -117,6 +119,9 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
         super.onResume();
         // register connection status listener
         MyApplication.getInstance().setConnectivityListener(RegisterPasswordActivity.this);
+        if (screenSize(RegisterPasswordActivity.this) > 8.5) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
     }
 
 
