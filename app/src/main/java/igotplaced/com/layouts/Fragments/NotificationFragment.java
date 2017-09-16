@@ -102,7 +102,7 @@ public class NotificationFragment extends Fragment implements SwipeRefreshLayout
     }
 
     private void loadData() {
-        int loadLimit = 8;
+        int loadLimit = 10;
 
         //Volley's inbuilt class to make Json array request
         makeJsonArrayRequestNotification(0, loadLimit);
@@ -142,12 +142,14 @@ public class NotificationFragment extends Fragment implements SwipeRefreshLayout
                     visibleItemCount = mLayoutManager.getChildCount();
                     totalItemCount = mLayoutManager.getItemCount();
                     lastVisiblesItems = mLayoutManager.findFirstVisibleItemPosition();
+                    Log.e("Notigy",""+mLayoutManager.getItemCount());
 /*
 
                     Log.d("error", ""+visibleItemCount+totalItemCount+lastVisiblesItems);
 */
 
                     if (!loading) {
+                        Log.e("Tag","Scroll");
                         loadMoreData(totalItemCount + 1);
                         loading = true;
                     }
@@ -163,7 +165,7 @@ public class NotificationFragment extends Fragment implements SwipeRefreshLayout
 
         // I have not used current page for showing demo, if u use a webservice
         // then it is useful for every call request
-        makeJsonArrayRequestNotification(totalItemCount, totalItemCount + 5);
+        makeJsonArrayRequestNotification(totalItemCount, totalItemCount + 8);
 
        // recyclerAdapterNotification.notifyDataSetChanged();
 

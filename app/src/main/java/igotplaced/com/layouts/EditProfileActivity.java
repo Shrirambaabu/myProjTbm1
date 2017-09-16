@@ -147,6 +147,8 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
         pDialog = new ProgressDialog(EditProfileActivity.this, R.style.MyThemeProgress);
         pDialog.setProgressStyle(android.R.style.Widget_ProgressBar_Large);
         pDialog.onBackPressed();
+        pDialog.setCancelable(false);
+        pDialog.setCanceledOnTouchOutside(false);
         pDialog.show();
 
         networkSettingSpinnerAndAutoComplete();

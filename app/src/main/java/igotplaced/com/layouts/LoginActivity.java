@@ -188,6 +188,8 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
         pDialog = new ProgressDialog(LoginActivity.this, R.style.MyThemeProgress);
         pDialog.setProgressStyle(android.R.style.Widget_ProgressBar_Large);
         pDialog.onBackPressed();
+        pDialog.setCancelable(false);
+        pDialog.setCanceledOnTouchOutside(false);
         pDialog.show();
 
         //Requests the data from webservice using volley
