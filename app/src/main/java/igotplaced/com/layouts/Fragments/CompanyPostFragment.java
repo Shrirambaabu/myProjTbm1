@@ -2,6 +2,7 @@ package igotplaced.com.layouts.Fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -37,6 +38,10 @@ import igotplaced.com.layouts.Utils.NetworkController;
 import igotplaced.com.layouts.Utils.Utils;
 
 import static igotplaced.com.layouts.Utils.Utils.BaseUri;
+import static igotplaced.com.layouts.Utils.Utils.Email;
+import static igotplaced.com.layouts.Utils.Utils.Id;
+import static igotplaced.com.layouts.Utils.Utils.MyPREFERENCES;
+import static igotplaced.com.layouts.Utils.Utils.Name;
 import static igotplaced.com.layouts.Utils.Utils.screenSize;
 
 public class CompanyPostFragment extends Fragment {
@@ -53,7 +58,6 @@ public class CompanyPostFragment extends Fragment {
     }
 
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -67,7 +71,7 @@ public class CompanyPostFragment extends Fragment {
         if (bundle != null) {
             userId = bundle.getString("otherId");
         }
-     //   mLayoutManager = new LinearLayoutManager(context);
+        //   mLayoutManager = new LinearLayoutManager(context);
         postRecyclerView(view);
         return view;
     }
@@ -99,7 +103,7 @@ public class CompanyPostFragment extends Fragment {
 
     private void makeJsonArrayRequestPostHome() {
 
-        Log.e("PostCompany",""+ BaseUri + "/profileService/companyProfilePost/" + userId);
+        Log.e("PostCompany", "" + BaseUri + "/profileService/companyProfilePost/" + userId);
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, BaseUri + "/profileService/companyProfilePost/" + userId, null, new Response.Listener<JSONArray>() {
 
 
@@ -113,7 +117,7 @@ public class CompanyPostFragment extends Fragment {
 
                         JSONObject obj = response.getJSONObject(i);
 
-                        Post post = new Post(obj.getString("pid"), obj.getString("created_user"), obj.getString("post"), obj.getString("industry"), obj.getString("companyPostImage"), obj.getString("created_uname"), obj.getString("created_by"), obj.getString("companyPostImage"), obj.getString("created_uname"),obj.getString("companyname"),obj.getString("company_id"));
+                        Post post = new Post(obj.getString("pid"), obj.getString("created_user"), obj.getString("post"), obj.getString("industry"), obj.getString("companyPostImage"), obj.getString("created_uname"), obj.getString("created_by"), obj.getString("companyPostImage"), obj.getString("created_uname"), obj.getString("companyname"), obj.getString("company_id"));
 
                         postList.add(post);
 
@@ -141,17 +145,21 @@ public class CompanyPostFragment extends Fragment {
         queue.add(jsonArrayRequest);
     }
 
-    private class RecyclerCompanyPost extends RecyclerView.Adapter<RecyclerCompanyPost.MyViewHolder>{
+    private class RecyclerCompanyPost extends RecyclerView.Adapter<RecyclerCompanyPost.MyViewHolder> {
 
         private List<Post> postList;
         private Context context;
         private LayoutInflater inflater;
-
+        private SharedPreferences sharedpreferences;
+        private String id;
 
         public RecyclerCompanyPost(Context context, List<Post> postList) {
 
             this.context = context;
             this.postList = postList;
+            sharedpreferences = context.getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+            id = sharedpreferences.getString(Id, null);
+
             inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
 
@@ -166,36 +174,35 @@ public class CompanyPostFragment extends Fragment {
 
             Post post = postList.get(position);
             holder.post.setText(post.getPost());
-            holder.postIndustry.setText("#"+post.getPostIndustry());
-            if (post.getPostCompany().equals("")){
+            holder.postIndustry.setText("#" + post.getPostIndustry());
+            if (post.getPostCompany().equals("")) {
                 holder.postCompany.setText(post.getPostCompany());
-            }else{
-                holder.postCompany.setText("#"+post.getPostCompany());
+            } else {
+                holder.postCompany.setText("#" + post.getPostCompany());
             }
             holder.postProfileName.setText(post.getPostProfileName());
             holder.postTime.setText(post.getPostTime());
             //  holder.userImage.setImageUrl(Utils.BaseImageUri + post.getUserImage(), NetworkController.getInstance(context).getImageLoader());
             holder.postImage.setImageUrl(Utils.BaseImageUri + post.getPostImage(), NetworkController.getInstance(context).getImageLoader());
 
-
-            holder.postProfileName.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent otherProfileDetails = new Intent(context, OtherProfileActivity.class);
-
-                    otherProfileDetails.putExtra("post_createdid", postList.get(position).getPostedUserId());
-                    otherProfileDetails.putExtra("created_uname", postList.get(position).getPostProfileName());
-                    startActivity(otherProfileDetails);
-                }
-            });
-
+            if (!id.equals(postList.get(position).getPostedUserId())) {
+                holder.postProfileName.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent otherProfileDetails = new Intent(context, OtherProfileActivity.class);
+                        otherProfileDetails.putExtra("post_createdid", postList.get(position).getPostedUserId());
+                        otherProfileDetails.putExtra("created_uname", postList.get(position).getPostProfileName());
+                        startActivity(otherProfileDetails);
+                    }
+                });
+            }
 
             holder.viewMore.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Log.e("tag", "click" + postList.get(position).getPostId());
 
-                    Intent profileDetails=new Intent(getContext(), ProfilePostDetailsActivity.class);
+                    Intent profileDetails = new Intent(getContext(), ProfilePostDetailsActivity.class);
 
                     profileDetails.putExtra("pid", postList.get(position).getPostId());
                     profileDetails.putExtra("created_uname", postList.get(position).getPostProfileName());
@@ -219,9 +226,8 @@ public class CompanyPostFragment extends Fragment {
         }
 
         public class MyViewHolder extends RecyclerView.ViewHolder {
-            private TextView post, postIndustry, postProfileName, postTime,postCompany,viewMore;
+            private TextView post, postIndustry, postProfileName, postTime, postCompany, viewMore;
             private NetworkImageView postImage;
-
 
 
             public MyViewHolder(View itemView) {

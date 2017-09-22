@@ -2,6 +2,7 @@ package igotplaced.com.layouts.Fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -37,6 +38,8 @@ import igotplaced.com.layouts.Utils.NetworkController;
 import igotplaced.com.layouts.Utils.Utils;
 
 import static igotplaced.com.layouts.Utils.Utils.BaseUri;
+import static igotplaced.com.layouts.Utils.Utils.Id;
+import static igotplaced.com.layouts.Utils.Utils.MyPREFERENCES;
 import static igotplaced.com.layouts.Utils.Utils.screenSize;
 
 
@@ -64,7 +67,7 @@ public class CompanyQuestionFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_company_question, container, false);
         context = getActivity().getApplicationContext();
 
-       // mLayoutManager = new LinearLayoutManager(context);
+        // mLayoutManager = new LinearLayoutManager(context);
 
         Bundle bundle = this.getArguments();
         if (bundle != null) {
@@ -103,7 +106,7 @@ public class CompanyQuestionFragment extends Fragment {
 
     private void makeJsonArrayRequestQuestionsHome() {
 
-        Log.e("QuesURL",""+ BaseUri + "/profileService/companyProfileQuestions/" + userId);
+        Log.e("QuesURL", "" + BaseUri + "/profileService/companyProfileQuestions/" + userId);
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, BaseUri + "/profileService/companyProfileQuestions/" + userId, null, new Response.Listener<JSONArray>() {
 
@@ -116,7 +119,7 @@ public class CompanyQuestionFragment extends Fragment {
                     try {
 
                         JSONObject obj = response.getJSONObject(i);
-                        Questions questions = new Questions(obj.getString("id"), obj.getString("created_user"), obj.getString("question"), obj.getString("industryname"), obj.getString("companyQuestionsImage"), obj.getString("created_uname"), obj.getString("created_by"), obj.getString("companyQuestionsImage"), obj.getString("created_uname"),obj.getString("companyname"),obj.getString("company_id"));
+                        Questions questions = new Questions(obj.getString("id"), obj.getString("created_user"), obj.getString("question"), obj.getString("industryname"), obj.getString("companyQuestionsImage"), obj.getString("created_uname"), obj.getString("created_by"), obj.getString("companyQuestionsImage"), obj.getString("created_uname"), obj.getString("companyname"), obj.getString("company_id"));
                         // adding movie to blogHomeList array
                         questionsList.add(questions);
 
@@ -143,17 +146,21 @@ public class CompanyQuestionFragment extends Fragment {
         queue.add(jsonArrayRequest);
     }
 
-    private class RecyclerQuestionCompany extends RecyclerView.Adapter<RecyclerQuestionCompany.MyViewHolder>{
+    private class RecyclerQuestionCompany extends RecyclerView.Adapter<RecyclerQuestionCompany.MyViewHolder> {
 
         private List<Questions> questionsList;
         private Context context;
         private LayoutInflater inflater;
+        private String id;
+        private SharedPreferences sharedpreferences;
 
         public RecyclerQuestionCompany(Context context, List<Questions> questionsList) {
 
 
             this.context = context;
             this.questionsList = questionsList;
+            sharedpreferences = context.getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+            id = sharedpreferences.getString(Id, null);
             inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
 
@@ -170,34 +177,33 @@ public class CompanyQuestionFragment extends Fragment {
 
             //Pass the values of feeds object to Views
             holder.questions.setText(questions.getQuestions());
-            if(questions.getQuestionsCompany().equals("")){
+            if (questions.getQuestionsCompany().equals("")) {
                 holder.questionsCompany.setText(questions.getQuestionsCompany());
-            }else {
-                holder.questionsCompany.setText("#"+questions.getQuestionsCompany());
+            } else {
+                holder.questionsCompany.setText("#" + questions.getQuestionsCompany());
             }
-            holder.questionsIndustry.setText("#"+questions.getQuestionsIndustry());
+            holder.questionsIndustry.setText("#" + questions.getQuestionsIndustry());
             holder.questionsProfileName.setText(questions.getQuestionsProfileName());
             holder.questionsTime.setText(questions.getQuestionsTime());
             //      holder.comment_profile_img.setImageUrl(Utils.BaseImageUri + questions.getCommentProfileImage(), NetworkController.getInstance(context).getImageLoader());
             holder.questionsImage.setImageUrl(Utils.BaseImageUri + questions.getQuestionsImage(), NetworkController.getInstance(context).getImageLoader());
 
 
-
-            holder.questionsProfileName.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent otherProfileDetails=new Intent(context, OtherProfileActivity.class);
-
-                    otherProfileDetails.putExtra("post_createdid", questionsList.get(position).getQuestionUserId());
-                    otherProfileDetails.putExtra("created_uname", questionsList.get(position).getQuestionsProfileName());
-                    startActivity(otherProfileDetails);
-                }
-            });
-
+            if (!id.equals(questionsList.get(position).getQuestionUserId())) {
+                holder.questionsProfileName.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent otherProfileDetails = new Intent(context, OtherProfileActivity.class);
+                        otherProfileDetails.putExtra("post_createdid", questionsList.get(position).getQuestionUserId());
+                        otherProfileDetails.putExtra("created_uname", questionsList.get(position).getQuestionsProfileName());
+                        startActivity(otherProfileDetails);
+                    }
+                });
+            }
             holder.viewMore.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent questionDetails=new Intent(getContext(), ProfileQuestionsDetailsActivity.class);
+                    Intent questionDetails = new Intent(getContext(), ProfileQuestionsDetailsActivity.class);
 
                     questionDetails.putExtra("qid", questionsList.get(position).getQuestionId());
                     questionDetails.putExtra("created_uname", questionsList.get(position).getQuestionsProfileName());
@@ -220,7 +226,7 @@ public class CompanyQuestionFragment extends Fragment {
 
         public class MyViewHolder extends RecyclerView.ViewHolder {
 
-            private TextView questions, questionsIndustry, questionsProfileName, questionsTime,questionsCompany, viewMore;
+            private TextView questions, questionsIndustry, questionsProfileName, questionsTime, questionsCompany, viewMore;
             private NetworkImageView questionsImage;
             private ItemClickListener itemClickListener;
 
@@ -238,9 +244,7 @@ public class CompanyQuestionFragment extends Fragment {
                 questionsImage = (NetworkImageView) itemView.findViewById(R.id.questions_img);
 
 
-
             }
-
 
 
         }

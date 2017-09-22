@@ -2,6 +2,7 @@ package igotplaced.com.layouts.Fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -37,6 +38,8 @@ import igotplaced.com.layouts.Utils.NetworkController;
 import igotplaced.com.layouts.Utils.Utils;
 
 import static igotplaced.com.layouts.Utils.Utils.BaseUri;
+import static igotplaced.com.layouts.Utils.Utils.Id;
+import static igotplaced.com.layouts.Utils.Utils.MyPREFERENCES;
 import static igotplaced.com.layouts.Utils.Utils.screenSize;
 
 
@@ -62,7 +65,7 @@ public class CompanyInterviewFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_other_profile_interview, container, false);
         context = getActivity().getApplicationContext();
 
-     //   mLayoutManager = new LinearLayoutManager(context);
+        //   mLayoutManager = new LinearLayoutManager(context);
         Bundle bundle = this.getArguments();
 
         if (bundle != null) {
@@ -102,8 +105,8 @@ public class CompanyInterviewFragment extends Fragment {
 
     private void makeJsonArrayRequestInterviewHome() {
 
-        Log.e("URL Interview",""+BaseUri + "/profileService/companyProfileInterview/" + userId);
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, BaseUri + "/profileService/companyProfileInterview/" + userId, null,  new Response.Listener<JSONArray>() {
+        Log.e("URL Interview", "" + BaseUri + "/profileService/companyProfileInterview/" + userId);
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, BaseUri + "/profileService/companyProfileInterview/" + userId, null, new Response.Listener<JSONArray>() {
 
 
             @Override
@@ -114,7 +117,7 @@ public class CompanyInterviewFragment extends Fragment {
                     try {
 
                         JSONObject obj = response.getJSONObject(i);
-                        Interview interview = new Interview(obj.getString("id"), obj.getString("user_id"), obj.getString("feedback"), obj.getString("industryname"), obj.getString("companyInterviewImage"), obj.getString("username"), obj.getString("created_by"), obj.getString("companyInterviewImage"), obj.getString("username"),obj.getString("companyname"),obj.getString("company_id"));
+                        Interview interview = new Interview(obj.getString("id"), obj.getString("user_id"), obj.getString("feedback"), obj.getString("industryname"), obj.getString("companyInterviewImage"), obj.getString("username"), obj.getString("created_by"), obj.getString("companyInterviewImage"), obj.getString("username"), obj.getString("companyname"), obj.getString("company_id"));
                         // adding movie to blogHomeList array
                         interviewList.add(interview);
 
@@ -143,19 +146,22 @@ public class CompanyInterviewFragment extends Fragment {
     }
 
 
-    private class RecyclerCompanyInterview extends RecyclerView.Adapter<RecyclerCompanyInterview.MyViewHolder>  {
+    private class RecyclerCompanyInterview extends RecyclerView.Adapter<RecyclerCompanyInterview.MyViewHolder> {
 
         private List<Interview> interviewList;
         private Context context;
         private LayoutInflater inflater;
+        private String id;
+        private SharedPreferences sharedpreferences;
 
         public RecyclerCompanyInterview(Context context, List<Interview> interviewList) {
 
             this.context = context;
             this.interviewList = interviewList;
+            sharedpreferences = context.getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+            id = sharedpreferences.getString(Id, null);
             inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
-
 
 
         @Override
@@ -170,33 +176,33 @@ public class CompanyInterviewFragment extends Fragment {
 
             //Pass the values of feeds object to Views
             holder.interview.setText(interview.getInterview());
-            holder.interviewIndustry.setText("#"+interview.getInterviewIndustry());
-            if (interview.getInterviewCompany().equals("")){
+            holder.interviewIndustry.setText("#" + interview.getInterviewIndustry());
+            if (interview.getInterviewCompany().equals("")) {
                 holder.interviewCompany.setText(interview.getInterviewCompany());
-            }else{
-                holder.interviewCompany.setText("#"+interview.getInterviewCompany());
+            } else {
+                holder.interviewCompany.setText("#" + interview.getInterviewCompany());
             }
             holder.interviewProfileName.setText(interview.getInterviewProfileName());
             holder.interviewTime.setText(interview.getInterviewTime());
             //  holder.userImage.setImageUrl(Utils.BaseImageUri + interview.getUserImage(), NetworkController.getInstance(context).getImageLoader());
             holder.interviewImage.setImageUrl(Utils.BaseImageUri + interview.getInterviewImage(), NetworkController.getInstance(context).getImageLoader());
+            if (!id.equals(interviewList.get(position).getInterviewUserId())) {
+                holder.interviewProfileName.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent otherProfileDetails = new Intent(context, OtherProfileActivity.class);
 
-            holder.interviewProfileName.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent otherProfileDetails = new Intent(context, OtherProfileActivity.class);
-
-                    otherProfileDetails.putExtra("post_createdid", interviewList.get(position).getInterviewUserId());
-                    otherProfileDetails.putExtra("created_uname", interviewList.get(position).getInterviewProfileName());
-                    startActivity(otherProfileDetails);
-                }
-            });
-
+                        otherProfileDetails.putExtra("post_createdid", interviewList.get(position).getInterviewUserId());
+                        otherProfileDetails.putExtra("created_uname", interviewList.get(position).getInterviewProfileName());
+                        startActivity(otherProfileDetails);
+                    }
+                });
+            }
 
             holder.viewMore.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent profileInterview=new Intent(getContext(), ProfileInterviewDetailsActivity.class);
+                    Intent profileInterview = new Intent(getContext(), ProfileInterviewDetailsActivity.class);
 
                     profileInterview.putExtra("iid", interviewList.get(position).getInterviewId());
                     profileInterview.putExtra("created_uname", interviewList.get(position).getInterviewProfileName());
@@ -217,8 +223,8 @@ public class CompanyInterviewFragment extends Fragment {
             return interviewList.size();
         }
 
-        public class MyViewHolder extends RecyclerView.ViewHolder  {
-            private TextView interview, interviewIndustry, interviewProfileName, interviewTime,interviewCompany, viewMore;
+        public class MyViewHolder extends RecyclerView.ViewHolder {
+            private TextView interview, interviewIndustry, interviewProfileName, interviewTime, interviewCompany, viewMore;
             private NetworkImageView interviewImage, userImage;
 
 
@@ -237,9 +243,7 @@ public class CompanyInterviewFragment extends Fragment {
                 interviewImage = (NetworkImageView) itemView.findViewById(R.id.interview_img);
 
 
-
             }
-
 
 
         }

@@ -2,6 +2,7 @@ package igotplaced.com.layouts.Fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -36,6 +37,8 @@ import igotplaced.com.layouts.Utils.NetworkController;
 import igotplaced.com.layouts.Utils.Utils;
 
 import static igotplaced.com.layouts.Utils.Utils.BaseUri;
+import static igotplaced.com.layouts.Utils.Utils.Id;
+import static igotplaced.com.layouts.Utils.Utils.MyPREFERENCES;
 import static igotplaced.com.layouts.Utils.Utils.screenSize;
 
 
@@ -60,7 +63,7 @@ public class CompanyEventFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_company_event, container, false);
 
         context = getActivity().getApplicationContext();
-      //  mLayoutManager = new LinearLayoutManager(context);
+        //  mLayoutManager = new LinearLayoutManager(context);
 
         Bundle bundle = this.getArguments();
 
@@ -134,17 +137,20 @@ public class CompanyEventFragment extends Fragment {
         queue.add(jsonArrayRequest);
     }
 
-    private class RecyclerCompanyEvents extends RecyclerView.Adapter<RecyclerCompanyEvents.MyViewHolder>{
+    private class RecyclerCompanyEvents extends RecyclerView.Adapter<RecyclerCompanyEvents.MyViewHolder> {
 
         private List<Events> eventsList;
         private Context context;
         private LayoutInflater inflater;
-
+        private String id;
+        private SharedPreferences sharedpreferences;
 
         public RecyclerCompanyEvents(Context context, List<Events> eventsList) {
 
             this.context = context;
             this.eventsList = eventsList;
+            sharedpreferences = context.getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+            id = sharedpreferences.getString(Id, null);
             inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
 
@@ -167,7 +173,7 @@ public class CompanyEventFragment extends Fragment {
             holder.eventCompany.setText(events.getEventCompany());
             holder.eventStatus.setText(events.getEventStatus());
             holder.event.setText(events.getEvent());
-            holder.event_industry.setText("#"+events.getEventIndustry());
+            holder.event_industry.setText("#" + events.getEventIndustry());
             holder.event_profile_name.setText(events.getEventProfileName());
 
             holder.event_time.setText(events.getEventTime());
@@ -175,17 +181,18 @@ public class CompanyEventFragment extends Fragment {
             //  holder.userImage.setImageUrl(Utils.BaseImageUri + events.getCommentProfileImage(), NetworkController.getInstance(context).getImageLoader());
             holder.event_img.setImageUrl(Utils.BaseImageUri + events.getEventImage(), NetworkController.getInstance(context).getImageLoader());
 
+            if (!id.equals(eventsList.get(position).getEventUserId())) {
+                holder.event_profile_name.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent otherProfileDetails = new Intent(context, OtherProfileActivity.class);
 
-            holder.event_profile_name.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent otherProfileDetails=new Intent(context, OtherProfileActivity.class);
-
-                    otherProfileDetails.putExtra("post_createdid",  eventsList.get(position).getEventUserId());
-                    otherProfileDetails.putExtra("created_uname", eventsList.get(position).getEventProfileName());
-                    startActivity(otherProfileDetails);
-                }
-            });
+                        otherProfileDetails.putExtra("post_createdid", eventsList.get(position).getEventUserId());
+                        otherProfileDetails.putExtra("created_uname", eventsList.get(position).getEventProfileName());
+                        startActivity(otherProfileDetails);
+                    }
+                });
+            }
             holder.viewMore.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -218,9 +225,9 @@ public class CompanyEventFragment extends Fragment {
             return eventsList.size();
         }
 
-        public class MyViewHolder extends RecyclerView.ViewHolder  {
+        public class MyViewHolder extends RecyclerView.ViewHolder {
 
-            private TextView eventCaption, eventDesignation, eventVenue, viewMore,eventCompany, eventDate, eventRegistered, eventStatus, event, event_industry, event_profile_name, event_time;
+            private TextView eventCaption, eventDesignation, eventVenue, viewMore, eventCompany, eventDate, eventRegistered, eventStatus, event, event_industry, event_profile_name, event_time;
             private NetworkImageView event_img, userImage;
 
 
@@ -244,7 +251,6 @@ public class CompanyEventFragment extends Fragment {
 
 
             }
-
 
 
         }
