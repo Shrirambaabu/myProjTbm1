@@ -181,15 +181,7 @@ public class CompanyQuestionFragment extends Fragment {
             //      holder.comment_profile_img.setImageUrl(Utils.BaseImageUri + questions.getCommentProfileImage(), NetworkController.getInstance(context).getImageLoader());
             holder.questionsImage.setImageUrl(Utils.BaseImageUri + questions.getQuestionsImage(), NetworkController.getInstance(context).getImageLoader());
 
-            holder.questionsCompany.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent companyDetails=new Intent(context,CompanyDetailsActivity.class);
-                    companyDetails.putExtra("postCompany", questionsList.get(position).getQuestionsCompany());
-                    companyDetails.putExtra("companyId", questionsList.get(position).getCompanyId());
-                    startActivity(companyDetails);
-                }
-            });
+
 
             holder.questionsProfileName.setOnClickListener(new View.OnClickListener() {
                 @Override

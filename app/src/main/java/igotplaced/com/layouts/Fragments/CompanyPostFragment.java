@@ -177,15 +177,6 @@ public class CompanyPostFragment extends Fragment {
             //  holder.userImage.setImageUrl(Utils.BaseImageUri + post.getUserImage(), NetworkController.getInstance(context).getImageLoader());
             holder.postImage.setImageUrl(Utils.BaseImageUri + post.getPostImage(), NetworkController.getInstance(context).getImageLoader());
 
-            holder.postCompany.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent companyDetails = new Intent(context, CompanyDetailsActivity.class);
-                    companyDetails.putExtra("postCompany", postList.get(position).getPostCompany());
-                    companyDetails.putExtra("companyId",  postList.get(position).getCompanyId());
-                    startActivity(companyDetails);
-                }
-            });
 
             holder.postProfileName.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -192,17 +192,6 @@ public class CompanyInterviewFragment extends Fragment {
                 }
             });
 
-            holder.interviewCompany.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent companyDetails = new Intent(context, CompanyDetailsActivity.class);
-                    companyDetails.putExtra("postCompany",  interviewList.get(position).getInterviewCompany());
-                    companyDetails.putExtra("companyId",  interviewList.get(position).getCompanyId());
-                    startActivity(companyDetails);
-                }
-            });
-
-
 
             holder.viewMore.setOnClickListener(new View.OnClickListener() {
                 @Override
