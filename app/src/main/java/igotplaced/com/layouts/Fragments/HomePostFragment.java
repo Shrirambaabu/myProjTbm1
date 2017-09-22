@@ -110,7 +110,7 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
     @Override
     public void onResume() {
         super.onResume();
-        Log.e("LoaDScreen",""+screenSize(getActivity()));
+        Log.e("LoaDScreen", "" + screenSize(getActivity()));
         if (screenSize(getActivity()) < 6.5) {
             loadLimit = 5;
 
@@ -161,7 +161,7 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
             @Override
             public void run() {
 
-                Log.e("ScreenRUn","SwipeRefresh");
+                Log.e("ScreenRUn", "SwipeRefresh");
                 loadData();
 
             }
@@ -259,7 +259,7 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
         // I have not used current page for showing demo, if u use a webservice
         // then it is useful for every call request
 
-        Log.e("ScreenRUn","Load!1");
+        Log.e("ScreenRUn", "Load!1");
 
         makeJsonObjectRequestPostHome(0, loadLimit);
 
@@ -341,19 +341,19 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
                     startActivity(companyDetails);
                 }
             });
+            if (!userId.equals(postedUserId)) {
+                holder.postProfileName.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent otherProfileDetails = new Intent(context, OtherProfileActivity.class);
 
-            holder.postProfileName.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent otherProfileDetails = new Intent(context, OtherProfileActivity.class);
+                        otherProfileDetails.putExtra("post_createdid", postList.get(position).getPostedUserId());
+                        otherProfileDetails.putExtra("created_uname", postList.get(position).getPostProfileName());
+                        startActivity(otherProfileDetails);
+                    }
+                });
 
-                    otherProfileDetails.putExtra("post_createdid", postList.get(position).getPostedUserId());
-                    otherProfileDetails.putExtra("created_uname", postList.get(position).getPostProfileName());
-                    startActivity(otherProfileDetails);
-                }
-            });
-
-
+            }
             holder.viewMore.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

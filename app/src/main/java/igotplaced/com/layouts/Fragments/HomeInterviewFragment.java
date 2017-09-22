@@ -73,7 +73,7 @@ public class HomeInterviewFragment extends Fragment implements SwipeRefreshLayou
     private RecyclerAdapterInterviewHome recyclerAdapterInterviewHome;
 
     int lastVisiblesItems, visibleItemCount, totalItemCount;
-    int loadLimit ;
+    int loadLimit;
     private LinearLayoutManager mLayoutManager;
     private boolean loading, swipe = false;
 
@@ -95,7 +95,7 @@ public class HomeInterviewFragment extends Fragment implements SwipeRefreshLayou
         //mapping web view
         mapping(view);
 
-     //   mLayoutManager = new LinearLayoutManager(context);
+        //   mLayoutManager = new LinearLayoutManager(context);
 
         SharedPreferences sharedpreferences = context.getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         String userName = sharedpreferences.getString(Name, null);
@@ -110,10 +110,11 @@ public class HomeInterviewFragment extends Fragment implements SwipeRefreshLayou
         return view;
 
     }
+
     @Override
     public void onResume() {
         super.onResume();
-        Log.e("LoaDScreen",""+screenSize(getActivity()));
+        Log.e("LoaDScreen", "" + screenSize(getActivity()));
         if (screenSize(getActivity()) < 6.5) {
             loadLimit = 5;
 
@@ -123,6 +124,7 @@ public class HomeInterviewFragment extends Fragment implements SwipeRefreshLayou
         }
 
     }
+
     private void mapping(View view) {
 
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_layout);
@@ -221,7 +223,7 @@ public class HomeInterviewFragment extends Fragment implements SwipeRefreshLayou
                         try {
 
                             JSONObject obj = jsonObjectJSON.getJSONObject(i);
-                            Interview interview = new Interview(obj.getString("id"), obj.getString("user_id"), obj.getString("feedback"), obj.getString("industryname"), obj.getString("interviewUserImgName"), obj.getString("username"), obj.getString("created_by"), obj.getString("imgname"), obj.getString("fname"),obj.getString("companyname"),obj.getString("company_id"));
+                            Interview interview = new Interview(obj.getString("id"), obj.getString("user_id"), obj.getString("feedback"), obj.getString("industryname"), obj.getString("interviewUserImgName"), obj.getString("username"), obj.getString("created_by"), obj.getString("imgname"), obj.getString("fname"), obj.getString("companyname"), obj.getString("company_id"));
                             // adding movie to blogHomeList array
                             interviewList.add(interview);
 
@@ -322,47 +324,46 @@ public class HomeInterviewFragment extends Fragment implements SwipeRefreshLayou
 
             //Pass the values of feeds object to Views
             holder.interview.setText(interview.getInterview());
-            holder.interviewIndustry.setText("#"+interview.getInterviewIndustry());
+            holder.interviewIndustry.setText("#" + interview.getInterviewIndustry());
             holder.interviewProfileName.setText(interview.getInterviewProfileName());
             holder.interviewTime.setText(interview.getInterviewTime());
 
-            if (interview.getInterviewCompany().equals("")){
+            if (interview.getInterviewCompany().equals("")) {
                 holder.interviewCompany.setText(interview.getInterviewCompany());
-            }else{
-                holder.interviewCompany.setText("#"+interview.getInterviewCompany());
+            } else {
+                holder.interviewCompany.setText("#" + interview.getInterviewCompany());
             }
 
 
             //  holder.userImage.setImageUrl(Utils.BaseImageUri + interview.getUserImage(), NetworkController.getInstance(context).getImageLoader());
             holder.interviewImage.setImageUrl(Utils.BaseImageUri + interview.getInterviewImage(), NetworkController.getInstance(context).getImageLoader());
+            if (!userId.equals(postedinterviewId)) {
+                holder.interviewProfileName.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent otherProfileDetails = new Intent(context, OtherProfileActivity.class);
 
-            holder.interviewProfileName.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent otherProfileDetails = new Intent(context, OtherProfileActivity.class);
-
-                    otherProfileDetails.putExtra("post_createdid", interviewList.get(position).getInterviewUserId());
-                    otherProfileDetails.putExtra("created_uname", interviewList.get(position).getInterviewProfileName());
-                    startActivity(otherProfileDetails);
-                }
-            });
-
+                        otherProfileDetails.putExtra("post_createdid", interviewList.get(position).getInterviewUserId());
+                        otherProfileDetails.putExtra("created_uname", interviewList.get(position).getInterviewProfileName());
+                        startActivity(otherProfileDetails);
+                    }
+                });
+            }
             holder.interviewCompany.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent companyDetails = new Intent(context, CompanyDetailsActivity.class);
-                    companyDetails.putExtra("postCompany",  interviewList.get(position).getInterviewCompany());
-                    companyDetails.putExtra("companyId",  interviewList.get(position).getCompanyId());
+                    companyDetails.putExtra("postCompany", interviewList.get(position).getInterviewCompany());
+                    companyDetails.putExtra("companyId", interviewList.get(position).getCompanyId());
                     startActivity(companyDetails);
                 }
             });
 
 
-
             holder.viewMore.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent profileInterview=new Intent(getContext(), ProfileInterviewDetailsActivity.class);
+                    Intent profileInterview = new Intent(getContext(), ProfileInterviewDetailsActivity.class);
 
                     profileInterview.putExtra("iid", interviewList.get(position).getInterviewId());
                     profileInterview.putExtra("created_uname", interviewList.get(position).getInterviewProfileName());
@@ -378,7 +379,6 @@ public class HomeInterviewFragment extends Fragment implements SwipeRefreshLayou
             });
 
 
-
         }
 
 
@@ -390,9 +390,8 @@ public class HomeInterviewFragment extends Fragment implements SwipeRefreshLayou
 
         public class MyViewHolder extends RecyclerView.ViewHolder {
 
-            private TextView interview, interviewIndustry, interviewProfileName, interviewTime,interviewCompany,viewMore;
+            private TextView interview, interviewIndustry, interviewProfileName, interviewTime, interviewCompany, viewMore;
             private NetworkImageView interviewImage, userImage;
-
 
 
             public MyViewHolder(View itemView) {
@@ -408,7 +407,6 @@ public class HomeInterviewFragment extends Fragment implements SwipeRefreshLayou
                 // Volley's NetworkImageView which will load Image from URL
                 interviewImage = (NetworkImageView) itemView.findViewById(R.id.interview_img);
                 //  userImage = (NetworkImageView) itemView.findViewById(R.id.comment_profile_img);
-
 
 
             }

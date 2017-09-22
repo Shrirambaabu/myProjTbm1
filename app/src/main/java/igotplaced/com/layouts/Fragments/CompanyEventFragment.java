@@ -197,8 +197,6 @@ public class CompanyEventFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     Intent profileEventDetails = new Intent(getContext(), ProfileEventDetails.class);
-
-
                     profileEventDetails.putExtra("eid", eventsList.get(position).getEventId());
                     profileEventDetails.putExtra("ename", eventsList.get(position).getEventProfileName());
                     profileEventDetails.putExtra("eTime", eventsList.get(position).getEventTime());

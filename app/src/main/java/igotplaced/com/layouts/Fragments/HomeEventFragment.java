@@ -93,7 +93,7 @@ public class HomeEventFragment extends Fragment implements SwipeRefreshLayout.On
         //mapping web view
         mapping(view);
 
-     //   mLayoutManager = new LinearLayoutManager(context);
+        //   mLayoutManager = new LinearLayoutManager(context);
 
         SharedPreferences sharedpreferences = context.getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         String userName = sharedpreferences.getString(Name, null);
@@ -108,10 +108,11 @@ public class HomeEventFragment extends Fragment implements SwipeRefreshLayout.On
         return view;
 
     }
+
     @Override
     public void onResume() {
         super.onResume();
-        Log.e("LoaDScreen",""+screenSize(getActivity()));
+        Log.e("LoaDScreen", "" + screenSize(getActivity()));
         if (screenSize(getActivity()) < 6.5) {
             loadLimit = 5;
 
@@ -338,17 +339,18 @@ public class HomeEventFragment extends Fragment implements SwipeRefreshLayout.On
 
             //  holder.userImage.setImageUrl(Utils.BaseImageUri + events.getCommentProfileImage(), NetworkController.getInstance(context).getImageLoader());
             holder.event_img.setImageUrl(Utils.BaseImageUri + events.getEventImage(), NetworkController.getInstance(context).getImageLoader());
+            if (!userId.equals(postedEventsUserId)) {
+                holder.event_profile_name.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent otherProfileDetails = new Intent(context, OtherProfileActivity.class);
 
-            holder.event_profile_name.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent otherProfileDetails=new Intent(context, OtherProfileActivity.class);
-
-                    otherProfileDetails.putExtra("post_createdid",  eventsList.get(position).getEventUserId());
-                    otherProfileDetails.putExtra("created_uname", eventsList.get(position).getEventProfileName());
-                    startActivity(otherProfileDetails);
-                }
-            });
+                        otherProfileDetails.putExtra("post_createdid", eventsList.get(position).getEventUserId());
+                        otherProfileDetails.putExtra("created_uname", eventsList.get(position).getEventProfileName());
+                        startActivity(otherProfileDetails);
+                    }
+                });
+            }
             holder.viewMore.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

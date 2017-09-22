@@ -70,7 +70,7 @@ public class HomeQuestionsFragment extends Fragment implements SwipeRefreshLayou
     private RecyclerAdapterQuestionsHome recyclerAdapterQuestionsHome;
 
     int lastVisiblesItems, visibleItemCount, totalItemCount;
-    int loadLimit ;
+    int loadLimit;
     private LinearLayoutManager mLayoutManager;
     private boolean loading, swipe = false;
 
@@ -81,7 +81,7 @@ public class HomeQuestionsFragment extends Fragment implements SwipeRefreshLayou
     @Override
     public void onResume() {
         super.onResume();
-        Log.e("LoaDScreen",""+screenSize(getActivity()));
+        Log.e("LoaDScreen", "" + screenSize(getActivity()));
         if (screenSize(getActivity()) < 6.5) {
             loadLimit = 5;
 
@@ -91,6 +91,7 @@ public class HomeQuestionsFragment extends Fragment implements SwipeRefreshLayou
         }
 
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -104,7 +105,7 @@ public class HomeQuestionsFragment extends Fragment implements SwipeRefreshLayou
         //mapping web view
         mapping(view);
 
-      //  mLayoutManager = new LinearLayoutManager(context);
+        //  mLayoutManager = new LinearLayoutManager(context);
 
         SharedPreferences sharedpreferences = context.getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         String userName = sharedpreferences.getString(Name, null);
@@ -186,7 +187,7 @@ public class HomeQuestionsFragment extends Fragment implements SwipeRefreshLayou
             }
         });
 
-      //  recyclerAdapterQuestionsHome.setClickListener(this);
+        //  recyclerAdapterQuestionsHome.setClickListener(this);
 
     }
 
@@ -218,7 +219,7 @@ public class HomeQuestionsFragment extends Fragment implements SwipeRefreshLayou
                         try {
 
                             JSONObject obj = jsonObjectJSON.getJSONObject(i);
-                            Questions questions = new Questions(obj.getString("id"),obj.getString("created_user"),obj.getString("question"), obj.getString("industryname"), obj.getString("questionUserImgName"), obj.getString("created_uname"), obj.getString("created_by"), obj.getString("imgname"), obj.getString("fname"),obj.getString("companyname"),obj.getString("company_id"));
+                            Questions questions = new Questions(obj.getString("id"), obj.getString("created_user"), obj.getString("question"), obj.getString("industryname"), obj.getString("questionUserImgName"), obj.getString("created_uname"), obj.getString("created_by"), obj.getString("imgname"), obj.getString("fname"), obj.getString("companyname"), obj.getString("company_id"));
                             // adding movie to blogHomeList array
                             questionsList.add(questions);
 
@@ -280,7 +281,7 @@ public class HomeQuestionsFragment extends Fragment implements SwipeRefreshLayou
     }
 
 
-    class RecyclerAdapterQuestionsHome extends RecyclerView.Adapter<RecyclerAdapterQuestionsHome.MyViewHolder>{
+    class RecyclerAdapterQuestionsHome extends RecyclerView.Adapter<RecyclerAdapterQuestionsHome.MyViewHolder> {
 
         private String userId = null, userName = null;
         private String URL = BaseUri + "/home/questionsComments";
@@ -300,8 +301,6 @@ public class HomeQuestionsFragment extends Fragment implements SwipeRefreshLayou
         }
 
 
-
-
         @Override
         public RecyclerAdapterQuestionsHome.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View rootView = inflater.inflate(R.layout.card_view_questions, parent, false);
@@ -315,13 +314,13 @@ public class HomeQuestionsFragment extends Fragment implements SwipeRefreshLayou
             postedQuestionUserId = questions.getQuestionUserId();
             //Pass the values of feeds object to Views
             holder.questions.setText(questions.getQuestions());
-            if(questions.getQuestionsCompany().equals("")){
+            if (questions.getQuestionsCompany().equals("")) {
                 holder.questionsCompany.setText(questions.getQuestionsCompany());
-            }else {
-                holder.questionsCompany.setText("#"+questions.getQuestionsCompany());
+            } else {
+                holder.questionsCompany.setText("#" + questions.getQuestionsCompany());
             }
 
-            holder.questionsIndustry.setText("#"+questions.getQuestionsIndustry());
+            holder.questionsIndustry.setText("#" + questions.getQuestionsIndustry());
             holder.questionsProfileName.setText(questions.getQuestionsProfileName());
             holder.questionsTime.setText(questions.getQuestionsTime());
             //      holder.comment_profile_img.setImageUrl(Utils.BaseImageUri + questions.getCommentProfileImage(), NetworkController.getInstance(context).getImageLoader());
@@ -331,28 +330,28 @@ public class HomeQuestionsFragment extends Fragment implements SwipeRefreshLayou
             holder.questionsCompany.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent companyDetails=new Intent(context,CompanyDetailsActivity.class);
+                    Intent companyDetails = new Intent(context, CompanyDetailsActivity.class);
                     companyDetails.putExtra("postCompany", questionsList.get(position).getQuestionsCompany());
                     companyDetails.putExtra("companyId", questionsList.get(position).getCompanyId());
                     startActivity(companyDetails);
                 }
             });
+            if (!userId.equals(postedQuestionUserId)) {
+                holder.questionsProfileName.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent otherProfileDetails = new Intent(context, OtherProfileActivity.class);
 
-            holder.questionsProfileName.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent otherProfileDetails=new Intent(context, OtherProfileActivity.class);
-
-                    otherProfileDetails.putExtra("post_createdid", questionsList.get(position).getQuestionUserId());
-                    otherProfileDetails.putExtra("created_uname", questionsList.get(position).getQuestionsProfileName());
-                    startActivity(otherProfileDetails);
-                }
-            });
-
+                        otherProfileDetails.putExtra("post_createdid", questionsList.get(position).getQuestionUserId());
+                        otherProfileDetails.putExtra("created_uname", questionsList.get(position).getQuestionsProfileName());
+                        startActivity(otherProfileDetails);
+                    }
+                });
+            }
             holder.viewMore.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent questionDetails=new Intent(getContext(), ProfileQuestionsDetailsActivity.class);
+                    Intent questionDetails = new Intent(getContext(), ProfileQuestionsDetailsActivity.class);
 
                     questionDetails.putExtra("qid", questionsList.get(position).getQuestionId());
                     questionDetails.putExtra("created_uname", questionsList.get(position).getQuestionsProfileName());
@@ -376,11 +375,10 @@ public class HomeQuestionsFragment extends Fragment implements SwipeRefreshLayou
             return questionsList.size();
         }
 
-        public class MyViewHolder extends RecyclerView.ViewHolder  {
+        public class MyViewHolder extends RecyclerView.ViewHolder {
 
-            private TextView questions, questionsIndustry, questionsProfileName,questionsCompany, questionsTime,viewMore;
+            private TextView questions, questionsIndustry, questionsProfileName, questionsCompany, questionsTime, viewMore;
             private NetworkImageView questionsImage, comment_profile_img;
-
 
 
             public MyViewHolder(View itemView) {
@@ -405,8 +403,6 @@ public class HomeQuestionsFragment extends Fragment implements SwipeRefreshLayou
     }
 
 
-
-
-    }
+}
 
 
