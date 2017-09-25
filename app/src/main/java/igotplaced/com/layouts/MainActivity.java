@@ -89,13 +89,12 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
 
     private ArrayAdapter<String> searchAutoCompleteAdapter;
     SearchView searchView;
-    /* private CustomAutoCompleteView searchEditText;
-     private TextInputLayout inputLayoutSearch;*/
+
     private DrawerLayout drawerLayout;
-    private boolean isMain = false;
+
     private SharedPreferences sharedpreferences;
     SharedPreferences.Editor editor;
-    private String userName, userEmail, userId = null;
+    private String  userId = null;
     int selectedPosition = 0;
 
     @Override
@@ -111,8 +110,6 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
         context = getApplicationContext();
 
         sharedpreferences = context.getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
-        userName = sharedpreferences.getString(Name, null);
-        userEmail = sharedpreferences.getString(Email, null);
         userId = sharedpreferences.getString(Id, null);
 
 
@@ -213,8 +210,7 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
                 //Checking if the item is in checked state or not, if not make it in checked state
-                if (menuItem.isChecked()) menuItem.setChecked(false);
-                else menuItem.setChecked(true);
+                menuItem.setChecked(true);
 
                 //Closing drawer on item click
                 drawerLayout.closeDrawers();
@@ -236,27 +232,27 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
 
             //Replacing the main content with ContentFragment Which is our Inbox View;
             case R.id.home:
-                isMain = true;
+
                 selectedPosition = 0;
                 fragment = new HomeFragment();
                 navigationView.getMenu().findItem(R.id.home).setChecked(true);
 
                 break;
             case R.id.profile:
-                isMain = false;
+
                 selectedPosition = 1;
                 fragment = new ProfileFragment();
                 break;
 
             case R.id.notification:
-                isMain = false;
+
                 selectedPosition = 2;
                 fragment = new NotificationFragment();
                 break;
 
 
             case R.id.blog:
-                isMain = false;
+
                 selectedPosition = 3;
                 fragment = new BlogFragment();
                 break;
@@ -323,7 +319,7 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
                         return true;*/
 
             default:
-                isMain = true;
+
                 selectedPosition = 0;
                 fragment = new HomeFragment();
                 break;

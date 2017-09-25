@@ -2,20 +2,36 @@ package igotplaced.com.layouts.Utils;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.net.wifi.WifiManager;
+import android.provider.Settings;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.SwitchCompat;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.widget.CompoundButton;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import igotplaced.com.layouts.R;
 
@@ -113,13 +129,105 @@ public class Utils {
 
     public static void showDialogue(final Activity activity, String message) {
 
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(activity);
-        alertDialogBuilder.setMessage(message);
-        alertDialogBuilder.setTitle("OOPS!!! Error");
-        AlertDialog alertDialog = alertDialogBuilder.create();
-        alertDialog.show();
+        if (message.equals("Sorry! Not connected to internet")) {
+
+            final Dialog alertDialogBuilder = new Dialog(activity);
+            alertDialogBuilder.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            alertDialogBuilder.setContentView(R.layout.main_dialog);
+
+
+            TextView textMain = (TextView) alertDialogBuilder.findViewById(R.id.main_message);
+            final SwitchCompat switchCompat = (SwitchCompat) alertDialogBuilder.findViewById(R.id.toggle_button);
+            final SwitchCompat switchMobile = (SwitchCompat) alertDialogBuilder.findViewById(R.id.toggle_button2);
+
+
+            textMain.setText(message);
+
+            final WifiManager wifiManager = (WifiManager) activity.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+
+
+            switchCompat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    switch (buttonView.getId()) {
+
+                        case R.id.toggle_button:
+                            if (isChecked) {
+                                wifiManager.setWifiEnabled(true);
+                                alertDialogBuilder.dismiss();
+                            } else {
+                                wifiManager.setWifiEnabled(false);
+                            }
+                            break;
+                    }
+
+
+                }
+            });
+
+            switchMobile.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    switch (buttonView.getId()) {
+                        case R.id.toggle_button2:
+                            if (isChecked) {
+                                activity.startActivityForResult(new Intent(android.provider.Settings.ACTION_SETTINGS), 0);
+                                alertDialogBuilder.dismiss();
+                            }
+                    }
+                }
+            });
+
+            alertDialogBuilder.show();
+        } else {
+            final Dialog alertDialogBuilder = new Dialog(activity);
+            alertDialogBuilder.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            alertDialogBuilder.setContentView(R.layout.other_dialog);
+            TextView textMain = (TextView) alertDialogBuilder.findViewById(R.id.main_message);
+            TextView close = (TextView) alertDialogBuilder.findViewById(R.id.close);
+            textMain.setText(message);
+            close.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    alertDialogBuilder.dismiss();
+                }
+            });
+            alertDialogBuilder.show();
+        }
+
     }
 
+
+    public static boolean isNetworkAvailable(Context context) {
+        try {
+            ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+
+            if (activeNetwork != null && activeNetwork.isConnected() && connectGoogle()) {
+                Log.e("error", "no Internet");
+                return true;
+            }
+
+        } catch (Exception e) {
+            return false;
+        }
+        return false;
+    }
+
+    //To Test whether the Internet Connection is fast enough
+    private static boolean connectGoogle() {
+        try {
+            HttpURLConnection urlc = (HttpURLConnection) (new URL("http://www.google.com").openConnection());
+            urlc.setRequestProperty("User-Agent", "Test");
+            urlc.setRequestProperty("Connection", "close");
+            urlc.setConnectTimeout(10000);
+            urlc.connect();
+            return (urlc.getResponseCode() == 200);
+        } catch (IOException e) {
+            Log.e("error", "no Google");
+            return false;
+        }
+    }
 
     public static void pushFragment(Fragment fragment, FragmentManager fragmentManager) {
         if (fragment == null)
@@ -133,12 +241,12 @@ public class Utils {
         }
     }
 
-    public static double screenSize(Activity activity){
+    public static double screenSize(Activity activity) {
         DisplayMetrics dm = new DisplayMetrics();
         activity.getWindowManager().getDefaultDisplay().getMetrics(dm);
-        double x = Math.pow(dm.widthPixels/dm.xdpi,2);
-        double y = Math.pow(dm.heightPixels/dm.ydpi,2);
-        double screenInches = Math.sqrt(x+y);
+        double x = Math.pow(dm.widthPixels / dm.xdpi, 2);
+        double y = Math.pow(dm.heightPixels / dm.ydpi, 2);
+        double screenInches = Math.sqrt(x + y);
         return screenInches;
     }
 

@@ -77,4 +77,9 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+
+    <style name="my_toogle">
+        <item name="colorControlActivated">@color/colorAccent</item>
+        <item name="colorSwitchThumbNormal">@color/colorPrimary</item>
+    </style>
 </resources>

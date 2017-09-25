@@ -15,9 +15,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatEditText;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -48,11 +50,12 @@ import static igotplaced.com.layouts.Utils.Utils.screenSize;
  * Created by Admin on 5/2/2017.
  */
 
-public class LoginActivity extends AppCompatActivity implements ConnectivityReceiver.ConnectivityReceiverListener {
+public class LoginActivity extends AppCompatActivity implements ConnectivityReceiver.ConnectivityReceiverListener, View.OnClickListener {
 
     private ProgressDialog pDialog;
     private AppCompatEditText passwordEditText, emailEditText;
     private Button loginBtn;
+    private TextView register;
     private TextInputLayout inputLayoutEmail;
     private String URL = BaseUri + "/loginService/login"; // Login URL
 
@@ -63,9 +66,7 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        /**
-         *Hides the Action bar
-         **/
+
         if (getSupportActionBar() != null)
             getSupportActionBar().hide();
 
@@ -89,6 +90,7 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
     @Override
     public void onNetworkConnectionChanged(boolean isConnected) {
         if (!isConnected){
+            Log.e("Conn","Change");
             Utils.showDialogue(LoginActivity.this, "Sorry! Not connected to internet");
         }
 
@@ -110,6 +112,7 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
         passwordEditText = (AppCompatEditText) findViewById(R.id.editTextPassword);
         inputLayoutEmail = (TextInputLayout) findViewById(R.id.viewEmail);
         loginBtn = (Button) findViewById(R.id.signInButton);
+        register = (TextView) findViewById(R.id.button);
 
         sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
 
@@ -118,16 +121,25 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
     private void addingListener() {
         emailEditText.addTextChangedListener(new CustomWatcher(emailEditText));
 
-        loginBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Steps for Login
-                submitLoginDetails();
-
-            }
-        });
+        loginBtn.setOnClickListener(this);
+        register.setOnClickListener(this);
 
     }
+
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.signInButton:
+
+                submitLoginDetails();
+                break;
+            case R.id.button:
+                register();
+        }
+
+    }
+
 
     /**
      * Redirects to new activity when
@@ -144,13 +156,6 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
 
 
     private void submitLoginDetails() {
-
-/*
-
-        Intent loginIntent = new Intent(LoginActivity.this, MainActivity.class);
-        startActivity(loginIntent);
-*/
-
 
         if (!Validation.validateEmail(emailEditText, inputLayoutEmail, LoginActivity.this)) {
             return;
@@ -172,7 +177,7 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Intent intent = new Intent(Intent.ACTION_MAIN);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         intent.addCategory(Intent.CATEGORY_HOME);
                         startActivity(intent);
                     }
@@ -252,7 +257,7 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
 
     }
 
-    public void register(View view) {
+    public void register() {
         if (Utils.checkConnection(loginBtn, LoginActivity.this)) {
             Intent registrationIntent = new Intent(LoginActivity.this, RegisterActivity.class);
             startActivity(registrationIntent);

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/daialog_style">
+
+
+    <TextView
+        android:id="@+id/main_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_4"
+        android:layout_marginTop="@dimen/margin_8"
+        android:padding="@dimen/margin_8"
+        android:text="OOps"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/enable_connection"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/main_message"
+        android:layout_marginStart="@dimen/margin_4"
+        android:layout_marginTop="@dimen/margin_4"
+        android:padding="@dimen/margin_8"
+        android:text="Please Enable Your Network Connection"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/enable_connection"
+        android:layout_marginTop="@dimen/margin_8">
+
+        <ImageView
+            android:id="@+id/wifi"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginStart="48dp"
+            android:layout_marginTop="@dimen/margin_8"
+            android:src="@drawable/ic_wifi_white_24dp" />
+
+        <android.support.v7.widget.SwitchCompat
+            android:id="@+id/toggle_button"
+            android:layout_width="48dp"
+            android:layout_height="24dp"
+            app:thumbTint="@color/colorAccent"
+            app:trackTint="@color/white"
+            android:layout_below="@+id/wifi"
+            android:layout_marginStart="48dp"
+            android:layout_marginTop="@dimen/margin_8"
+            android:checked="false" />
+
+        <View
+            android:id="@+id/seperator"
+            android:layout_width="1dp"
+            android:layout_height="72dp"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="@dimen/margin_16"
+            android:layout_marginTop="@dimen/margin_4"
+            android:background="@color/white" />
+
+        <ImageView
+            android:id="@+id/mobile_data"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginStart="48dp"
+            android:layout_marginTop="@dimen/margin_8"
+            android:layout_toEndOf="@+id/seperator"
+            android:src="@drawable/ic_signal_cellular_connected_no_internet_4_bar_white_24dp" />
+
+        <android.support.v7.widget.SwitchCompat
+            android:id="@+id/toggle_button2"
+            android:layout_width="48dp"
+            android:layout_height="24dp"
+            app:thumbTint="@color/colorAccent"
+            app:trackTint="@color/white"
+            android:layout_below="@+id/mobile_data"
+            android:layout_marginStart="48dp"
+            android:layout_marginTop="@dimen/margin_8"
+            android:layout_toEndOf="@+id/seperator"
+            android:checked="false" />
+
+    </RelativeLayout>
+</RelativeLayout>

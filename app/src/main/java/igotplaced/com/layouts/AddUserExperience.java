@@ -124,7 +124,7 @@ public class AddUserExperience extends Activity implements View.OnClickListener,
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(AddUserExperience.this, error.toString(), Toast.LENGTH_LONG).show();
+                //Toast.makeText(AddUserExperience.this, error.toString(), Toast.LENGTH_LONG).show();
 
             }
         });

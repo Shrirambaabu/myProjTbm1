@@ -139,26 +139,23 @@
                 android:id="@+id/not_member"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_18"
+                android:layout_marginStart="60dp"
                 android:text="@string/not_a_member"
-                android:textColor="@color/colorAccent"
+                android:layout_marginBottom="@dimen/margin_4"
+                android:textColor="@color/white"
                 android:textSize="18sp" />
 
-            <Button
+            <TextView
                 android:id="@+id/button"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/not_member"
-                android:layout_centerHorizontal="true"
-                android:background="@drawable/button_style"
-                android:onClick="register"
+                android:layout_toEndOf="@+id/not_member"
                 android:text="@string/register"
-                android:layout_marginTop="@dimen/margin_8"
-                android:layout_marginEnd="72dp"
-                android:layout_marginStart="72dp"
-                android:layout_marginBottom="@dimen/margin_8"
-                android:textColor="@color/colorAccent"
-                android:textSize="16sp" />
+                android:layout_marginBottom="@dimen/margin_4"
+                android:layout_marginStart="@dimen/margin_8"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="18sp" />
 
         </RelativeLayout>
 

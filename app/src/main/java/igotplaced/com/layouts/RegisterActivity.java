@@ -418,6 +418,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
         pDialog = new ProgressDialog(RegisterActivity.this,R.style.MyThemeProgress);
         pDialog.setProgressStyle(android.R.style.Widget_ProgressBar_Large);
         pDialog.onBackPressed();
+        pDialog.setCancelable(false);
+        pDialog.setCanceledOnTouchOutside(false);
         pDialog.show();
 
         StringRequest request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {

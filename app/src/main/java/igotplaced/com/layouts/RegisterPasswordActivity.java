@@ -407,9 +407,7 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
         industrySpinnerOne.setOnItemSelectedListener(this);
         industrySpinnerTwo.setOnItemSelectedListener(this);
         industrySpinnerThree.setOnItemSelectedListener(this);
-      /*  companySpinnerOne.setOnItemSelectedListener(this);
-        companySpinnerTwo.setOnItemSelectedListener(this);
-        companySpinnerThree.setOnItemSelectedListener(this);*/
+
 
     }
 
@@ -442,21 +440,6 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
         }
 
 
-       /* Log.e("IS1 ValueOutside", "" + industrySpinnerOneValue.isEmpty());
-        Log.e("IS1 ValueOutsideField", "" + industrySpinnerOneValue.equals("-- Select --"));
-        if (industrySpinnerOneValue.isEmpty()||industrySpinnerOneValue.equals("-- Select --")) {
-            Log.e("IS1 ValueInside", "" + industrySpinnerOneValue.isEmpty());
-            Log.e("IS1 ValueInsideField", "" + industrySpinnerOneValue.equals("-- Select --"));
-            industrySpinnerOne.setFocusable(true);
-            industrySpinnerOne.setFocusableInTouchMode(true);
-            industrySpinnerOne.requestFocus();
-            Utils.setSpinnerError(industrySpinnerOne, "Field can't be empty", RegisterPasswordActivity.this);
-            industrySpinnerOneValue=industrySpinnerOne.getSelectedItem().toString();
-            Log.e("IS1 ValueInsideDeep",""+ industrySpinnerOneValue);
-            return;
-        }*/
-
-
         if (checkBoxPassword.isChecked()) {
 
             if (!Validation.validateMobileNumber(mobileNumberEditText, inputLayoutMobileNumber, RegisterPasswordActivity.this)) {
@@ -468,13 +451,11 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
         }
         if (Utils.checkConnection(regBtn, RegisterPasswordActivity.this)) {
             register();
-           // Toast.makeText(getApplicationContext(), "Registration Successfully", Toast.LENGTH_SHORT).show();
+
         } else {
             Utils.showDialogue(RegisterPasswordActivity.this, "Sorry! Not connected to internet");
         }
 
-
-        /*Toast.makeText(getApplicationContext(), "Registration Successfully", Toast.LENGTH_SHORT).show();*/
 
     }
 
@@ -484,6 +465,8 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
         pDialog = new ProgressDialog(RegisterPasswordActivity.this, R.style.MyThemeProgress);
         pDialog.setProgressStyle(android.R.style.Widget_ProgressBar_Large);
         pDialog.onBackPressed();
+        pDialog.setCancelable(false);
+        pDialog.setCanceledOnTouchOutside(false);
         pDialog.show();
 
 
@@ -498,10 +481,7 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
                     Intent loginIntent = new Intent(new Intent(RegisterPasswordActivity.this, LoginActivity.class));
                     loginIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(loginIntent);
-                   /* Intent registrationCompleteIntent = new Intent(RegisterPasswordActivity.this, RegisterPasswordActivity.class);
-                    registrationCompleteIntent.putExtra("id",Integer.parseInt(s));
-                    registrationCompleteIntent.putExtra("interest",String.valueOf(checkBoxIntrestedBoolean));
-                    startActivity(registrationCompleteIntent);*/
+
                 } else {
                     Utils.showDialogue(RegisterPasswordActivity.this, "Already Updated Your Profile!!!");
                 }
@@ -517,7 +497,7 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
                  *  server is down,
                  *  incorrect IP
                  *  Server not deployed
-                 */Log.d("error", "" + volleyError);
+                 */
                 Utils.showDialogue(RegisterPasswordActivity.this, "Sorry! Server Error");
             }
         }) {
@@ -535,7 +515,7 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
                 parameters.put("phone", mobileNumberEditText.getText().toString());
                 parameters.put("interest", String.valueOf((Boolean.parseBoolean(interest)) ? 1 : 0));
                 parameters.put("location", locationEditText.getText().toString());
-                Log.e("PassReg", "" + parameters);
+
                 return checkParams(parameters);
             }
 
@@ -573,13 +553,7 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
                     industrySpinnerOneValue = "-- Select --";
                 }
                 break;
-            /*case R.id.company_spinner1:
-                if (position != 0) {
-                    companySpinnerOneValue = companySpinnerOne.getSelectedItem().toString();
-                } else {
-                    companySpinnerOneValue = "";
-                }
-                break;*/
+
             case R.id.industry_spinner2:
                 if (position != 0) {
                     industrySpinnerTwoValue = industrySpinnerTwo.getSelectedItem().toString();
@@ -588,13 +562,7 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
                     industrySpinnerTwoValue = "";
                 }
                 break;
-            /*case R.id.company_spinner2:
-                if (position != 0) {
-                    companySpinnerTwoValue = companySpinnerTwo.getSelectedItem().toString();
-                } else {
-                    companySpinnerTwoValue = "";
-                }
-                break;*/
+
             case R.id.industry_spinner3:
                 if (position != 0) {
                     industrySpinnerThreeValue = industrySpinnerThree.getSelectedItem().toString();
@@ -603,13 +571,7 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
                     industrySpinnerThreeValue = "";
                 }
                 break;
-             /*case R.id.company_spinner3:
-               if (position != 0) {
-                    companySpinnerThreeValue = companySpinnerThree.getSelectedItem().toString();
-                } else {
-                    companySpinnerThreeValue = "";
-                }
-                break;*/
+
         }
     }
 
