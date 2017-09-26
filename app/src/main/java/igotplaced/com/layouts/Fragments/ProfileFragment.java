@@ -480,7 +480,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("error", "Error: " + error.getMessage());
-                Utils.showDialogue(getActivity(), "Sorry! Server Error");
+             //   Utils.showDialogue(getActivity(), "Sorry! Server Error");
             }
         });
 

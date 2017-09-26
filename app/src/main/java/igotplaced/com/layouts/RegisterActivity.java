@@ -464,6 +464,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
                             @Override
                             public void onClick(View v) {
                                 Intent continue_loginPage = new Intent(RegisterActivity.this, LoginActivity.class);
+                                continue_loginPage.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 startActivity(continue_loginPage);
                                 alertDialogBuilder.dismiss();
                             }

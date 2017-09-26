@@ -486,6 +486,7 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
                 if (Integer.parseInt(s) != 0) {
                     Toast.makeText(RegisterPasswordActivity.this, "Registration Successful", Toast.LENGTH_LONG).show();
                     Intent loginIntent = new Intent(new Intent(RegisterPasswordActivity.this, LoginActivity.class));
+                    loginIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(loginIntent);
 
                 } else {
