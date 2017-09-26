@@ -151,7 +151,7 @@ public class ProfilePostFragment extends Fragment implements ClickListener {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("error", "Error: " + error.getMessage());
-
+                Utils.showDialogue(getActivity(),"Sorry! Server Error");
             }
         });
 

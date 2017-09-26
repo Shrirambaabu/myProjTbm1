@@ -243,6 +243,7 @@ public class HomeQuestionsFragment extends Fragment implements SwipeRefreshLayou
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("error", "Error: " + error.getMessage());
+                Utils.showDialogue(getActivity(), "Sorry! Server Error");
 
             }
         });

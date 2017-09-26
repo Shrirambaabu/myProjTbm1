@@ -133,7 +133,7 @@ public class OtherProfileInterviewFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("error", "Error: " + error.getMessage());
-
+                Utils.showDialogue(getActivity(),"Sorry! Server Error");
             }
         });
 

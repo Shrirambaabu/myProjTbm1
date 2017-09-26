@@ -160,7 +160,7 @@ public class QuestionsDetailsFragment extends Fragment implements View.OnClickLi
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("error", "Error: " + error.getMessage());
-
+                Utils.showDialogue(getActivity(),"Sorry! Server Error");
             }
         });
 

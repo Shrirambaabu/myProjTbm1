@@ -177,9 +177,11 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Intent intent = new Intent(Intent.ACTION_MAIN);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         intent.addCategory(Intent.CATEGORY_HOME);
                         startActivity(intent);
+                       /* int pid = android.os.Process.myPid();
+                        android.os.Process.killProcess(pid);*/
                     }
                 }).setNegativeButton("No", null).show();
 

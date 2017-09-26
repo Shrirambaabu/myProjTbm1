@@ -166,6 +166,7 @@ public class OtherProfileActivity extends AppCompatActivity implements Connectiv
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("error", "Error: " + error.getMessage());
+                Utils.showDialogue(OtherProfileActivity.this, "Sorry! Server Error");
             }
         });
 

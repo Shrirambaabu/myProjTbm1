@@ -34,6 +34,7 @@ import igotplaced.com.layouts.R;
 import igotplaced.com.layouts.BlogDetailsActivity;
 import igotplaced.com.layouts.Utils.ClickListener;
 import igotplaced.com.layouts.Utils.NetworkController;
+import igotplaced.com.layouts.Utils.Utils;
 
 import static igotplaced.com.layouts.Utils.Utils.BaseUri;
 import static igotplaced.com.layouts.Utils.Utils.Id;
@@ -225,6 +226,7 @@ public class BlogFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("error", "Error: " + error.getMessage());
+                Utils.showDialogue(getActivity(), "Sorry! Not connected to internet");
 
             }
         });

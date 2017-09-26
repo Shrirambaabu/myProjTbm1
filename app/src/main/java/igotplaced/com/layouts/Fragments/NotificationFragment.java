@@ -32,6 +32,7 @@ import igotplaced.com.layouts.Model.NotificationView;
 import igotplaced.com.layouts.R;
 import igotplaced.com.layouts.Utils.ClickListener;
 import igotplaced.com.layouts.Utils.NetworkController;
+import igotplaced.com.layouts.Utils.Utils;
 
 import static igotplaced.com.layouts.Utils.Utils.BaseUri;
 import static igotplaced.com.layouts.Utils.Utils.Id;
@@ -74,7 +75,7 @@ public class NotificationFragment extends Fragment implements SwipeRefreshLayout
         mLayoutManager = new LinearLayoutManager(context);
 
         SharedPreferences sharedpreferences = context.getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
-        String userName = sharedpreferences.getString(Name, null);
+
         userId = sharedpreferences.getString(Id, null);
 
 
@@ -219,6 +220,7 @@ public class NotificationFragment extends Fragment implements SwipeRefreshLayout
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("error", "Error: " + error.getMessage());
+                Utils.showDialogue(getActivity(), "Sorry! Server Error");
 
             }
         });

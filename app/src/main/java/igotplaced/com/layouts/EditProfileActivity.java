@@ -565,7 +565,7 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(EditProfileActivity.this, error.toString(), Toast.LENGTH_LONG).show();
+
 
             }
         });
@@ -1228,7 +1228,6 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
 
                 pDialog.dismiss();
 
-                Log.d("error", "Error: " + error.getMessage());
             }
         });
 

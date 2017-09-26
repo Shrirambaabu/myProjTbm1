@@ -189,7 +189,7 @@ public class ProfileInterviewDetailsActivity extends AppCompatActivity implement
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("error", "Error: " + error.getMessage());
-
+                Utils.showDialogue(ProfileInterviewDetailsActivity.this, "Sorry! Server Error");
             }
         });
 

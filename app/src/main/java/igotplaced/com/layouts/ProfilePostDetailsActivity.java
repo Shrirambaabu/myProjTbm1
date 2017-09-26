@@ -210,7 +210,7 @@ private RecyclerView postRecycler;
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("error", "Error: " + error.getMessage());
-
+                Utils.showDialogue(ProfilePostDetailsActivity.this, "Sorry! Server Error");
             }
         });
 

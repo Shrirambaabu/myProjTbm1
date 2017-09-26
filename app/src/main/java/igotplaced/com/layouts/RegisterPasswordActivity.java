@@ -3,8 +3,10 @@ package igotplaced.com.layouts;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatAutoCompleteTextView;
 import android.support.v7.widget.AppCompatButton;
@@ -71,8 +73,6 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
     private List<String> industrySpinnerArrayList;
 
     private ProgressDialog pDialog;
-
-    private String URL = BaseUri + "/registrationService/registerPassword";
 
     String userId, interest;
 
@@ -381,6 +381,9 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
         companySpinnerTwo = (MultiSpinner) findViewById(R.id.company_spinner2);
         companySpinnerThree = (MultiSpinner) findViewById(R.id.company_spinner3);
 
+        //   companySpinnerOne.setBackgroundTintList(ContextCompat.getColorStateList(RegisterPasswordActivity.this, R.color.white));
+
+
         checkBoxPassword = (AppCompatCheckBox) findViewById(R.id.checkBoxPassword);
         regBtn = (AppCompatButton) findViewById(R.id.register_submit);
 
@@ -473,7 +476,7 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
         pDialog.setCanceledOnTouchOutside(false);
         pDialog.show();
 
-
+        String URL = BaseUri + "/registrationService/registerPassword";
         StringRequest request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {

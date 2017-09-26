@@ -144,7 +144,7 @@ public class BlogDetailsActivity extends AppCompatActivity implements Connectivi
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("error", "Error: " + error.getMessage());
-
+                Utils.showDialogue(BlogDetailsActivity.this, "Sorry! Server Error");
             }
         });
 

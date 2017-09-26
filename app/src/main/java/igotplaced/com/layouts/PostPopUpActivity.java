@@ -169,7 +169,7 @@ public class PostPopUpActivity extends AppCompatActivity implements View.OnClick
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("error", "Error: " + error.getMessage());
-
+                Utils.showDialogue(PostPopUpActivity.this, "Sorry! Server Error");
             }
         });
 

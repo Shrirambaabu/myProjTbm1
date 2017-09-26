@@ -269,6 +269,7 @@ public class HomeEventFragment extends Fragment implements SwipeRefreshLayout.On
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("error", "Error: " + error.getMessage());
+                Utils.showDialogue(getActivity(), "Sorry! Server Error");
 
             }
         });

@@ -273,6 +273,7 @@ public class CompanyDetailsActivity extends AppCompatActivity implements Connect
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("error", "Error: " + error.getMessage());
+                Utils.showDialogue(CompanyDetailsActivity.this, "Sorry! Server Error");
             }
         });
 

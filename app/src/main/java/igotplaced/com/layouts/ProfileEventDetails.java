@@ -207,7 +207,7 @@ public class ProfileEventDetails extends AppCompatActivity implements View.OnCli
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("error", "Error: " + error.getMessage());
-
+                Utils.showDialogue(ProfileEventDetails.this, "Sorry! Server Error");
             }
         });
 

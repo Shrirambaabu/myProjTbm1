@@ -197,7 +197,7 @@ public class ProfileQuestionsDetailsActivity extends AppCompatActivity implement
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("error", "Error: " + error.getMessage());
-
+                Utils.showDialogue(ProfileQuestionsDetailsActivity.this, "Sorry! Server Error");
             }
         });
 

@@ -29,7 +29,7 @@
         android:paddingStart="@dimen/margin_16"
         android:paddingEnd="@dimen/margin_16"
         android:background="@drawable/dialog_button"
-        android:text="Continue"
+        android:text="Okay !"
         android:textColor="@color/white"
         android:textSize="16sp" />
 

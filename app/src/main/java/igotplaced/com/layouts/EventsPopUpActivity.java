@@ -146,7 +146,7 @@ public class EventsPopUpActivity extends AppCompatActivity implements View.OnCli
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("error", "Error: " + error.getMessage());
-
+                Utils.showDialogue(EventsPopUpActivity.this, "Sorry! Server Error");
             }
         });
 

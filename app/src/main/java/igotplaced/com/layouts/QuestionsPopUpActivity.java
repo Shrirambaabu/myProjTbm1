@@ -146,6 +146,7 @@ public class QuestionsPopUpActivity extends AppCompatActivity implements View.On
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("error", "Error: " + error.getMessage());
+                Utils.showDialogue(QuestionsPopUpActivity.this, "Sorry! Server Error");
             }
         });
 

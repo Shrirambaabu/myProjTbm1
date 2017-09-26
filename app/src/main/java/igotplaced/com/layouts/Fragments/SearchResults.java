@@ -31,6 +31,7 @@ import igotplaced.com.layouts.Model.Post;
 import igotplaced.com.layouts.Model.SearchResultsModel;
 import igotplaced.com.layouts.R;
 import igotplaced.com.layouts.Utils.NetworkController;
+import igotplaced.com.layouts.Utils.Utils;
 
 import static igotplaced.com.layouts.Utils.Utils.BaseUri;
 import static igotplaced.com.layouts.Utils.Utils.screenSize;
@@ -291,7 +292,7 @@ public class SearchResults extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("error", "Error: " + error.getMessage());
-
+                Utils.showDialogue(getActivity(),"Sorry! Server Error");
             }
         });
 
