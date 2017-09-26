@@ -149,9 +149,8 @@ public class ProfileInterviewDetailsActivity extends AppCompatActivity implement
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setHomeButtonEnabled(true);
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setTitle("Interview Experience");
+
+            actionBar.setTitle(" Interview Experience");
         }
     }
 

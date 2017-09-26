@@ -252,9 +252,8 @@ public class QuestionsPopUpActivity extends AppCompatActivity implements View.On
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setHomeButtonEnabled(true);
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setTitle("Questions");
+
+            actionBar.setTitle(" Questions");
         }
     }
 

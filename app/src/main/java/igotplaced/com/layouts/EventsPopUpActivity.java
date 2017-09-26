@@ -249,9 +249,8 @@ public class EventsPopUpActivity extends AppCompatActivity implements View.OnCli
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setHomeButtonEnabled(true);
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setTitle("Events");
+
+            actionBar.setTitle(" Events");
         }
     }
 

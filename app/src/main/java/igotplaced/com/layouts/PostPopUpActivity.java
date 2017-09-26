@@ -240,9 +240,8 @@ public class PostPopUpActivity extends AppCompatActivity implements View.OnClick
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setHomeButtonEnabled(true);
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setTitle("Posts");
+
+            actionBar.setTitle(" Posts");
         }
 
     }

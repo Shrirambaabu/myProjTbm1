@@ -140,9 +140,8 @@ public class ProfileQuestionsDetailsActivity extends AppCompatActivity implement
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setHomeButtonEnabled(true);
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setTitle("Questions");
+
+            actionBar.setTitle(" Questions");
         }
     }
 

@@ -151,9 +151,8 @@ private RecyclerView postRecycler;
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setHomeButtonEnabled(true);
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setTitle("Posts");
+
+            actionBar.setTitle(" Posts");
         }
     }
 
