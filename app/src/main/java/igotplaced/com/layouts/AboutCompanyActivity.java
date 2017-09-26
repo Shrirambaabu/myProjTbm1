@@ -16,19 +16,15 @@ import igotplaced.com.layouts.Utils.Utils;
 import static igotplaced.com.layouts.Utils.Utils.screenSize;
 
 public class AboutCompanyActivity extends AppCompatActivity implements ConnectivityReceiver.ConnectivityReceiverListener {
-    private Intent intent;
-    private String aboutCompany;
-    private TextView companyDetails;
-    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_company);
         setupToolbar();
-        intent = getIntent();
-        aboutCompany=intent.getStringExtra("companyDetails");
-        companyDetails=(TextView) findViewById(R.id.company_details);
+        Intent intent = getIntent();
+        String aboutCompany=intent.getStringExtra("companyDetails");
+        TextView companyDetails=(TextView) findViewById(R.id.company_details);
         companyDetails.setText(aboutCompany);
 
     }
@@ -53,7 +49,7 @@ public class AboutCompanyActivity extends AppCompatActivity implements Connectiv
     }
 
     private void setupToolbar() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();

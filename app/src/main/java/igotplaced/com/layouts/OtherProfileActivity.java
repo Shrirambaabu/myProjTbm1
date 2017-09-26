@@ -48,15 +48,15 @@ import static igotplaced.com.layouts.Utils.Utils.screenSize;
 public class OtherProfileActivity extends AppCompatActivity implements ConnectivityReceiver.ConnectivityReceiverListener {
 
 
-    private Context context;
+
     private RequestQueue queue;
     private NetworkImageView profile_img;
     private TextView userProfileName, userProfileDepartment, userProfileCollege;
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    private Toolbar toolbar;
-    private String otherProfileID,otherProfileName;
-    private Intent intent;
+
+    private String otherProfileID;
+
     private int[] tabIcons = {
             R.drawable.ic_mail_outline_white_36dp,
             R.drawable.ic_timeline_white_24dp,
@@ -76,7 +76,7 @@ public class OtherProfileActivity extends AppCompatActivity implements Connectiv
         setupViewPager(viewPager);
 
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
-        queue = NetworkController.getInstance(context).getRequestQueue();
+        queue = NetworkController.getInstance(OtherProfileActivity.this).getRequestQueue();
 
 
 
@@ -127,9 +127,9 @@ public class OtherProfileActivity extends AppCompatActivity implements Connectiv
     }
 
     private void initialization() {
-        intent = getIntent();
+        Intent intent = getIntent();
         otherProfileID = intent.getStringExtra("post_createdid");
-        otherProfileName = intent.getStringExtra("created_uname");
+
     }
 
     private void makeJsonArrayRequestProfile() {
@@ -152,7 +152,7 @@ public class OtherProfileActivity extends AppCompatActivity implements Connectiv
                         userProfileCollege.setText(profileHome.getCollegeName());
 
                         Log.d("error", "Error: " + Utils.BaseImageUri + profileHome.getImageName());
-                        profile_img.setImageUrl(Utils.BaseImageUri + profileHome.getImageName(), NetworkController.getInstance(context).getImageLoader());
+                        profile_img.setImageUrl(Utils.BaseImageUri + profileHome.getImageName(), NetworkController.getInstance(OtherProfileActivity.this).getImageLoader());
 
 
                     } catch (Exception e) {

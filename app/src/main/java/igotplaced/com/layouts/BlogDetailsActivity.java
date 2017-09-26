@@ -32,9 +32,7 @@ import static igotplaced.com.layouts.Utils.Utils.screenSize;
 public class BlogDetailsActivity extends AppCompatActivity implements ConnectivityReceiver.ConnectivityReceiverListener {
 
     private RequestQueue queue;
-    private Intent intent;
-    private String postId;
-    private Toolbar toolbar;
+
 
     private WebView webPost;
     private TextView blogPost, blogPostedBy;
@@ -47,8 +45,9 @@ public class BlogDetailsActivity extends AppCompatActivity implements Connectivi
 
         setupToolbar();
 
-        //initial value from intent
-        initialization();
+        Intent intent = getIntent();
+        //getting value from intent
+        String postId = intent.getStringExtra("postId");
         //mapping web view
         mapping();
 
@@ -94,7 +93,7 @@ public class BlogDetailsActivity extends AppCompatActivity implements Connectivi
 
     private void setupToolbar() {
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar  toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
@@ -153,9 +152,4 @@ public class BlogDetailsActivity extends AppCompatActivity implements Connectivi
 
     }
 
-    private void initialization() {
-        intent = getIntent();
-        //getting value from intent
-        postId = intent.getStringExtra("postId");
-    }
 }

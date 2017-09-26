@@ -65,7 +65,7 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
     private AppCompatSpinner industrySpinnerOne = null, industrySpinnerTwo = null, industrySpinnerThree = null;
     private MultiSpinner companySpinnerOne = null, companySpinnerTwo = null, companySpinnerThree = null;
     private AppCompatCheckBox checkBoxPassword;
-    private boolean checkBoxPasswordBoolean = false;
+
 
     private ArrayAdapter<String> spinnerArrayAdapter, companyArrayAdapter1, companyArrayAdapter2, companyArrayAdapter3;
     private List<String> industrySpinnerArrayList;
@@ -74,7 +74,6 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
 
     private String URL = BaseUri + "/registrationService/registerPassword";
 
-    private Intent intent;
     String userId, interest;
 
 
@@ -124,6 +123,11 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        return;
+
+    }
 
     private void settingCheckBoxValue() {
         // Toast.makeText(RegisterPasswordActivity.this, "" + interest, Toast.LENGTH_LONG).show();
@@ -140,7 +144,7 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
 
     private void initialization() {
 
-        intent = getIntent();
+        Intent intent = getIntent();
 
         userId = intent.getStringExtra("id");
         interest = intent.getStringExtra("interest");
@@ -425,9 +429,9 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
             return;
         }
 
-        if (industrySpinnerOneValue.isEmpty()||industrySpinnerOneValue.equals("-- Select --")) {
+        if (industrySpinnerOneValue.isEmpty() || industrySpinnerOneValue.equals("-- Select --")) {
 
-            if (industrySpinnerOneValue.isEmpty()||industrySpinnerOneValue.equals("-- Select --")) {
+            if (industrySpinnerOneValue.isEmpty() || industrySpinnerOneValue.equals("-- Select --")) {
 
                 industrySpinnerOne.setFocusable(true);
                 industrySpinnerOne.setFocusableInTouchMode(true);
@@ -479,7 +483,6 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
                 if (Integer.parseInt(s) != 0) {
                     Toast.makeText(RegisterPasswordActivity.this, "Registration Successful", Toast.LENGTH_LONG).show();
                     Intent loginIntent = new Intent(new Intent(RegisterPasswordActivity.this, LoginActivity.class));
-                    loginIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(loginIntent);
 
                 } else {

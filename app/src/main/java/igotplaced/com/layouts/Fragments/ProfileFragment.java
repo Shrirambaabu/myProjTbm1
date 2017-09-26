@@ -68,7 +68,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     private Context context;
     private RequestQueue queue;
 
-    private ImageView profViewEditButton;
+
     private NetworkImageView profile_img;
     private TextView userProfileName, userProfileDepartment, userProfileCollege;
 
@@ -147,7 +147,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
         tabLayout = (TabLayout) view.findViewById(R.id.tabLayout);
 
-        profViewEditButton = (ImageView) view.findViewById(R.id.edit_profile);
+
         userProfileName = (TextView) view.findViewById(R.id.user_profile_name);
         userProfileDepartment = (TextView) view.findViewById(R.id.user_profile_department);
         userProfileCollege = (TextView) view.findViewById(R.id.user_profile_college);
@@ -156,13 +156,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         //Volley's inbuilt class to make Json array request
         makeJsonArrayRequestProfile();
 
-        profViewEditButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent prof = new Intent(getActivity(), EditProfileActivity.class);
-                startActivity(prof);
-            }
-        });
 
         tabLayout.post(new Runnable() {
             @Override
@@ -283,7 +276,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 addPostDb();
 
             } else if (resultCode == Activity.RESULT_CANCELED) {
-                Toast.makeText(context, "User Cancelled", Toast.LENGTH_LONG).show();
+               // Toast.makeText(context, "User Cancelled", Toast.LENGTH_LONG).show();
             }
         }
         if (requestCode == INTERVIEW_REQUEST_CODE) {
@@ -296,7 +289,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 addInterviewDb();
 
             } else if (resultCode == Activity.RESULT_CANCELED) {
-                Toast.makeText(context, "User Cancelled", Toast.LENGTH_LONG).show();
+                //Toast.makeText(context, "User Cancelled", Toast.LENGTH_LONG).show();
             }
         }
         if (requestCode == QUESTIONS_REQUEST_CODE) {
@@ -307,7 +300,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 Toast.makeText(getContext(),"Thanks for Sharing",Toast.LENGTH_SHORT).show();
                 addQuestionsDb();
             } else if (resultCode == Activity.RESULT_CANCELED) {
-                Toast.makeText(context, "User Cancelled", Toast.LENGTH_LONG).show();
+               // Toast.makeText(context, "User Cancelled", Toast.LENGTH_LONG).show();
             }
         }
     }

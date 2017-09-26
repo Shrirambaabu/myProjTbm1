@@ -66,12 +66,11 @@ import static igotplaced.com.layouts.Utils.Utils.screenSize;
 
 public class CompanyDetailsActivity extends AppCompatActivity implements ConnectivityReceiver.ConnectivityReceiverListener {
 
-    private Context context;
+
     private RequestQueue queue;
-    private NetworkImageView profile_img;
-    private TextView companyName, companyWebsite;
+
+    private TextView  companyWebsite;
     private TabLayout tabLayout;
-    private ViewPager viewPager;
     private Toolbar toolbar;
     private CollapsingToolbarLayout collapsingToolbarLayout;
     private ImageView companyImage;
@@ -83,7 +82,7 @@ public class CompanyDetailsActivity extends AppCompatActivity implements Connect
             R.drawable.ic_forum_white_24dp,
             R.drawable.ic_info_outline_white_24dp
     };
-    private Intent intent;
+
     private String companyNameIntent;
     private String companyId;
     private Drawable navDrawable,drawable;
@@ -93,7 +92,7 @@ public class CompanyDetailsActivity extends AppCompatActivity implements Connect
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_company_details);
         setTheme(R.style.AppTheme);
-        queue = NetworkController.getInstance(context).getRequestQueue();
+        queue = NetworkController.getInstance(CompanyDetailsActivity.this).getRequestQueue();
 
 
         initialization();
@@ -107,7 +106,7 @@ public class CompanyDetailsActivity extends AppCompatActivity implements Connect
         setupCollapsingToolbar();
 
 
-        viewPager = (ViewPager) findViewById(R.id.pager);
+        final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
         setupViewPager(viewPager);
 
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
@@ -208,7 +207,7 @@ public class CompanyDetailsActivity extends AppCompatActivity implements Connect
                         // companyName.setText(company.getCompanyName());
 
                         final String companyWebsiteName = company.getCompanyWebsite().replaceFirst("^(http://www\\.|http://|www\\.)", "");
-                        Log.e("Site", "" + companyWebsiteName);
+
 
                         collapsingToolbarLayout.setCollapsedTitleTextAppearance(R.style.collapsedappbar);
                         collapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.expandedappbar);
@@ -327,10 +326,10 @@ public class CompanyDetailsActivity extends AppCompatActivity implements Connect
     }
 
     private void initialization() {
-        intent = getIntent();
+        Intent intent = getIntent();
         companyNameIntent = intent.getStringExtra("postCompany");
         companyId = intent.getStringExtra("companyId");
-        Log.e("company", "" + companyId);
+
     }
 
     private void setupTabIcons() {

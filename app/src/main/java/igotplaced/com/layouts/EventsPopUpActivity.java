@@ -53,14 +53,12 @@ import static igotplaced.com.layouts.Utils.Utils.screenSize;
 
 public class EventsPopUpActivity extends AppCompatActivity implements View.OnClickListener, ConnectivityReceiver.ConnectivityReceiverListener {
 
-    private Intent intent;
+
     private String id = null;
-    private  String  company,companyId,postedUserId;
-    private Toolbar toolbar;
-    private LinearLayoutManager mLayoutManager;
+    private  String  postedUserId;
     private String userPostedComment;
     private RequestQueue queue;
-    private NetworkImageView eventImage;
+
     private TextView eventName, eventTime,eventCompany, eventCaption, eventDesignation, eventVenue, eventDate, eventRegistered, eventStatus, eventMessage, eventIndustry;
     private String userId = null,userName=null,userImage = null,eventComentId;
     private EditText userComment;
@@ -163,8 +161,6 @@ public class EventsPopUpActivity extends AppCompatActivity implements View.OnCli
         eventRecycler.setHasFixedSize(true);
         //setting horizontal layout
         eventRecycler.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
-        mLayoutManager = (LinearLayoutManager) eventRecycler.getLayoutManager();
-        //setting RecyclerView adapter
         eventRecycler.setAdapter(recyclerAdapterEventDetails);
     }
 
@@ -200,6 +196,7 @@ public class EventsPopUpActivity extends AppCompatActivity implements View.OnCli
                         eventStatus.setText(events.getEventStatus());
 
                         Log.e("error", "Error: " + Utils.BaseImageUri + events.getEventImage());
+                        NetworkImageView eventImage = (NetworkImageView) findViewById(R.id.event_img);
                         eventImage.setImageUrl(Utils.BaseImageUri + events.getEventImage(), NetworkController.getInstance(getApplicationContext()).getImageLoader());
 
                     } catch (Exception e) {
@@ -220,7 +217,7 @@ public class EventsPopUpActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void addressingView() {
-        eventImage = (NetworkImageView) findViewById(R.id.event_img);
+
         eventName = (TextView) findViewById(R.id.event_profile_name);
         eventTime = (TextView) findViewById(R.id.event_time);
         eventCaption = (TextView) findViewById(R.id.eventCaption);
@@ -247,7 +244,7 @@ public class EventsPopUpActivity extends AppCompatActivity implements View.OnCli
         return true;
     }
     private void setupToolbar() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar  toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
@@ -259,7 +256,7 @@ public class EventsPopUpActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void initialization() {
-        intent = getIntent();
+        Intent intent = getIntent();
 
         id = intent.getStringExtra("eid");
     }

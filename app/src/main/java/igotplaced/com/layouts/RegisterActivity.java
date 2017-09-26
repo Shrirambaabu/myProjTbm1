@@ -1,5 +1,6 @@
 package igotplaced.com.layouts;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -16,10 +17,14 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -65,9 +70,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
     private AppCompatButton registerBtn;
     private AppCompatCheckBox checkBoxIntrested;
     private boolean checkBoxIntrestedBoolean = false;
-    private ArrayAdapter<String> spinnerArrayAdapter,departmentAutoCompleteAdapter, collegeAutoCompleteAdapter;
+    private ArrayAdapter<String> spinnerArrayAdapter, departmentAutoCompleteAdapter, collegeAutoCompleteAdapter;
 
-    private String department,college;
+    private String department, college;
 
     private ProgressDialog pDialog;
     private String URL = BaseUri + "/registrationService/register";
@@ -91,7 +96,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
 
     @Override
     public void onNetworkConnectionChanged(boolean isConnected) {
-        if (!isConnected){
+        if (!isConnected) {
             Utils.showDialogue(RegisterActivity.this, "Sorry! Not connected to internet");
         }
 
@@ -106,7 +111,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
     }
-
 
 
     private void networkSettingSpinnerAndAutoComplete() {
@@ -152,7 +156,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
             @Override
             public void afterTextChanged(Editable s) {
                 if (shouldAutoComplete) {
-                    if(s.toString().length()>2){
+                    if (s.toString().length() > 2) {
                         networkCollegeAutoCompleteRequest(s.toString());
                         collegeEditText.showDropDown();
                     }
@@ -196,7 +200,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
             @Override
             public void afterTextChanged(Editable s) {
                 if (shouldAutoComplete) {
-                    if(s.toString().length()>2){
+                    if (s.toString().length() > 2) {
                         networkDepartmentAutoCompleteRequest(s.toString());
                         departmentEditText.showDropDown();
                     }
@@ -209,7 +213,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
 
     private void networkDepartmentAutoCompleteRequest(String keyword) {
 
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(BaseUri + "/autocompleteService/searchDepartment/"+keyword.replaceAll("\\s", ""), new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(BaseUri + "/autocompleteService/searchDepartment/" + keyword.replaceAll("\\s", ""), new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
 
@@ -250,7 +254,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
     private void networkCollegeAutoCompleteRequest(String keyword) {
 
 
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(BaseUri + "/autocompleteService/searchCollege/"+keyword.replaceAll("\\s", ""), new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(BaseUri + "/autocompleteService/searchCollege/" + keyword.replaceAll("\\s", ""), new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
 
@@ -267,13 +271,13 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-            /**
-             *  Returns error message when,
-             *  server is down,
-             *  incorrect IP
-             *  Server not deployed
-             */
-            Utils.showDialogue(RegisterActivity.this, "Sorry! Server Error");
+                /**
+                 *  Returns error message when,
+                 *  server is down,
+                 *  incorrect IP
+                 *  Server not deployed
+                 */
+                Utils.showDialogue(RegisterActivity.this, "Sorry! Server Error");
             }
         });
 
@@ -371,9 +375,18 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
 
 /*
         passOutYearSpinner.setOnItemSelectedListener(new SpinnerOnItemSelectedListener());*/
-
-        checkBoxIntrested.setOnClickListener(this);
         registerBtn.setOnClickListener(this);
+
+        checkBoxIntrested.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (checkBoxIntrested.isChecked()) {
+                    checkBoxIntrestedBoolean = checkBoxIntrested.isChecked();
+                }else {
+                    checkBoxIntrestedBoolean=false;
+                }
+            }
+        });
 
     }
 
@@ -397,16 +410,16 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
             return;
         }
 
-        if (!Validation.validateCollegeCheck(collegeEditText, college,inputLayoutCollege, RegisterActivity.this)) {
+        if (!Validation.validateCollegeCheck(collegeEditText, college, inputLayoutCollege, RegisterActivity.this)) {
             return;
         }
 
-        if (!Validation.validateDepartmentCheck(departmentEditText, department,inputLayoutDepartment, RegisterActivity.this)) {
+        if (!Validation.validateDepartmentCheck(departmentEditText, department, inputLayoutDepartment, RegisterActivity.this)) {
             return;
         }
         if (Utils.checkConnection(registerBtn, RegisterActivity.this)) {
             register();
-        }else{
+        } else {
             Utils.showDialogue(RegisterActivity.this, "Sorry! Not connected to internet");
         }
 
@@ -415,7 +428,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
 
     private void register() {
 
-        pDialog = new ProgressDialog(RegisterActivity.this,R.style.MyThemeProgress);
+        pDialog = new ProgressDialog(RegisterActivity.this, R.style.MyThemeProgress);
         pDialog.setProgressStyle(android.R.style.Widget_ProgressBar_Large);
         pDialog.onBackPressed();
         pDialog.setCancelable(false);
@@ -428,14 +441,52 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
 
                 pDialog.dismiss();
 
-                if (Integer.parseInt(s) != 0) {
+                Log.e("Ss", "" + s);
+                final String[] tokens = s.split(",", -1);
+
+                Log.e("ID", "" + tokens[0]);
+                Log.e("True", "" + tokens[1]);
+
+                if (tokens[1].equals("TRUE")) {
                     Toast.makeText(RegisterActivity.this, "Registration Successful", Toast.LENGTH_LONG).show();
                     Intent registrationCompleteIntent = new Intent(RegisterActivity.this, RegisterPasswordActivity.class);
-                    registrationCompleteIntent.putExtra("id",s);
-                    registrationCompleteIntent.putExtra("interest",String.valueOf(checkBoxIntrestedBoolean));
+                    registrationCompleteIntent.putExtra("id", tokens[0]);
+                    registrationCompleteIntent.putExtra("interest", String.valueOf(checkBoxIntrestedBoolean));
                     startActivity(registrationCompleteIntent);
                 } else {
-                    Utils.showDialogue(RegisterActivity.this, "Sorry!!! Already Registered with this email id");                }
+                    Log.e("3rd", "" + tokens[2]);
+                    if (tokens[2].equals("No")) {
+                        final Dialog alertDialogBuilder = new Dialog(RegisterActivity.this);
+                        alertDialogBuilder.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                        alertDialogBuilder.setContentView(R.layout.register_dailog);
+                        Button continue_login = (Button) alertDialogBuilder.findViewById(R.id.continue_login);
+                        continue_login.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent continue_loginPage = new Intent(RegisterActivity.this, LoginActivity.class);
+                                startActivity(continue_loginPage);
+                                alertDialogBuilder.dismiss();
+                            }
+                        });
+                        alertDialogBuilder.show();
+                    }else if (tokens[2].equals("Yes")){
+                        final Dialog alertDialogBuilder = new Dialog(RegisterActivity.this);
+                        alertDialogBuilder.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                        alertDialogBuilder.setContentView(R.layout.register_password_dialog);
+                        Button continue_login = (Button) alertDialogBuilder.findViewById(R.id.continue_password);
+                        continue_login.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent registrationCompleteIntent = new Intent(RegisterActivity.this, RegisterPasswordActivity.class);
+                                registrationCompleteIntent.putExtra("id", tokens[0]);
+                                registrationCompleteIntent.putExtra("interest", tokens[3]);
+                                startActivity(registrationCompleteIntent);
+                            }
+                        });
+                        alertDialogBuilder.show();
+                    }
+                    // Utils.showDialogue(RegisterActivity.this, "Sorry!!! Already Registered with this email id");
+                }
             }
         }, new Response.ErrorListener() {
 
@@ -499,11 +550,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnTouchL
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.checkBox:
-                if (checkBoxIntrested.isChecked()) {
-                    checkBoxIntrestedBoolean = checkBoxIntrested.isChecked();
-                }
-                break;
+
             case R.id.register_button:
                 submitRegistrationDetails();
                 break;

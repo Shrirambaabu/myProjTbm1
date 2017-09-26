@@ -108,23 +108,13 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
     private TextInputLayout inputLayoutMobileNumber, inputLayoutLocation;
     private AppCompatSpinner industrySpinnerOne = null, industrySpinnerTwo = null, industrySpinnerThree = null;
     private MultiSpinner companySpinnerOne = null, companySpinnerTwo = null, companySpinnerThree = null;
-
     private ArrayAdapter<String> spinnerYearArrayAdapter, spinnerArrayAdapterI1, spinnerArrayAdapterI2, spinnerArrayAdapterI3, companyArrayAdapter1, companyArrayAdapter2, companyArrayAdapter3;
     private List<String> industrySpinnerArrayList;
-
     private boolean checkBoxIntrestedBoolean = false;
-    private SharedPreferences sharedpreferences;
-    private String userName = null, userId = null, userEmail = null;
-
-
-    private int yearOfPassOutSpinnerPosition = 0, industry1SpinnerPosition = 0, industry2SpinnerPosition = 0, industry3SpinnerPosition = 0, company1SpinnerPosition;
-    private Uri uriPath;
-    private String encImage;
-
+    private String userId = null;
 
     private ProgressDialog pDialog;
-    private String URL = BaseUri;
-    private static final int GALLERY_KITKAT_INTENT_CALLED = 11;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,10 +125,9 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
 
         queue = NetworkController.getInstance(EditProfileActivity.this).getRequestQueue();
 
-        sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
-        userName = sharedpreferences.getString(Name, null);
+        SharedPreferences sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+
         userId = sharedpreferences.getString(Id, null);
-        userEmail = sharedpreferences.getString(Email, null);
 
 
         addingListener();
@@ -174,7 +163,6 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
         handler.postDelayed(runnable, 3000);
 
     }
-
 
 
     @Override
@@ -618,9 +606,7 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
 
                 if (position != 0) {
                     industrySpinnerOneValue = industrySpinnerOne.getSelectedItem().toString();
-                    Log.e("iS Value", "" + industrySpinnerOneValue.replaceAll("\\s+", "").substring(0, 2));
-                 /*   company1TextView.setVisibility(View.GONE);
-                    companySpinnerOne.setVisibility(View.VISIBLE);*/
+
                     networkCompanySpinnerArrayRequest1(industrySpinnerOneValue.replaceAll("\\s+", "").substring(0, 2));
 
 
@@ -629,51 +615,30 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
                 }
 
                 break;
-         /*   case R.id.profile_company_spinner1:
-                if (position != 0) {
-                    companySpinnerOneValue = companySpinnerOne.getSelectedItem().toString();
-                } else {
-                    companySpinnerOneValue = "";
-                }
-                break;*/
+
             case R.id.profile_industry_spinner2:
 
-                    if (position != 0) {
-                        industrySpinnerTwoValue = industrySpinnerTwo.getSelectedItem().toString();
-               /*     company2TextView.setVisibility(View.GONE);
-                    companySpinnerTwo.setVisibility(View.VISIBLE);*/
-                        networkCompanySpinnerArrayRequest2(industrySpinnerTwoValue.replaceAll("\\s+", "").substring(0, 2));
-                    } else {
-                        industrySpinnerTwoValue = "";
-                    }
+                if (position != 0) {
+                    industrySpinnerTwoValue = industrySpinnerTwo.getSelectedItem().toString();
+
+                    networkCompanySpinnerArrayRequest2(industrySpinnerTwoValue.replaceAll("\\s+", "").substring(0, 2));
+                } else {
+                    industrySpinnerTwoValue = "";
+                }
 
                 break;
-            /*case R.id.profile_company_spinner2:
-                if (position != 0) {
-                    companySpinnerTwoValue = companySpinnerTwo.getSelectedItem().toString();
-                } else {
-                    companySpinnerTwoValue = "";
-                }
-                break;*/
+
             case R.id.profile_industry_spinner3:
 
-                    if (position != 0) {
-                        industrySpinnerThreeValue = industrySpinnerThree.getSelectedItem().toString();
-                 /*   company3TextView.setVisibility(View.GONE);
-                    companySpinnerThree.setVisibility(View.VISIBLE);*/
-                        networkCompanySpinnerArrayRequest3(industrySpinnerThreeValue.replaceAll("\\s+", "").substring(0, 2));
-                    } else {
-                        industrySpinnerThreeValue = "";
-                    }
+                if (position != 0) {
+                    industrySpinnerThreeValue = industrySpinnerThree.getSelectedItem().toString();
+
+                    networkCompanySpinnerArrayRequest3(industrySpinnerThreeValue.replaceAll("\\s+", "").substring(0, 2));
+                } else {
+                    industrySpinnerThreeValue = "";
+                }
 
                 break;
-           /* case R.id.profile_company_spinner3:
-                if (position != 0) {
-                    companySpinnerThreeValue = companySpinnerThree.getSelectedItem().toString();
-                } else {
-                    companySpinnerThreeValue = "";
-                }
-                break;*/
 
         }
     }
@@ -906,7 +871,6 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
     }
 
 
-
     private void updateDetails() {
 
         if (!Validation.validateName(editProfileName, profileName, EditProfileActivity.this)) {
@@ -941,37 +905,7 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
                 return;
             }
         }
-      /*  if (Objects.equals(industrySpinnerTwoValue, "") || Objects.equals(companySpinnerTwoValue, "")) {
-            if (Objects.equals(industrySpinnerTwoValue, "") && !Objects.equals(companySpinnerTwoValue, "")) {
-                industrySpinnerTwo.setFocusable(true);
-                industrySpinnerTwo.setFocusableInTouchMode(true);
-                industrySpinnerTwo.requestFocus();
-                Utils.setSpinnerError(industrySpinnerTwo, "Field can't be empty", EditProfileActivity.this);
-                return;
-            } else if (!Objects.equals(industrySpinnerTwoValue, "") && Objects.equals(companySpinnerTwoValue, "")) {
-                companySpinnerTwo.setFocusable(true);
-                companySpinnerTwo.setFocusableInTouchMode(true);
-                companySpinnerTwo.requestFocus();
-                //Utils.setSpinnerError(companySpinnerTwo, "Field can't be empty", EditProfileActivity.this);
-                return;
-            }
-        }
 
-        if (Objects.equals(industrySpinnerThreeValue, "") || Objects.equals(companySpinnerThreeValue, "")) {
-            if (Objects.equals(industrySpinnerThreeValue, "") && !Objects.equals(companySpinnerThreeValue, "")) {
-                industrySpinnerThree.setFocusable(true);
-                industrySpinnerThree.setFocusableInTouchMode(true);
-                industrySpinnerThree.requestFocus();
-                Utils.setSpinnerError(industrySpinnerThree, "Field can't be empty", EditProfileActivity.this);
-                return;
-            } else if (!Objects.equals(industrySpinnerThreeValue, "") && Objects.equals(companySpinnerThreeValue, "")) {
-                companySpinnerThree.setFocusable(true);
-                companySpinnerThree.setFocusableInTouchMode(true);
-                companySpinnerThree.requestFocus();
-               // Utils.setSpinnerError(companySpinnerThree, "Field can't be empty", EditProfileActivity.this);
-                return;
-            }
-        }*/
 
         if (checkBoxIntrested.isChecked()) {
 
@@ -1004,10 +938,7 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
 
                 if (Integer.parseInt(s) != 0) {
                     Toast.makeText(EditProfileActivity.this, "Your profile updated Successfully", Toast.LENGTH_LONG).show();
-                   /* Intent registrationCompleteIntent = new Intent(RegisterPasswordActivity.this, RegisterPasswordActivity.class);
-                    registrationCompleteIntent.putExtra("id",Integer.parseInt(s));
-                    registrationCompleteIntent.putExtra("interest",String.valueOf(checkBoxIntrestedBoolean));
-                    startActivity(registrationCompleteIntent);*/
+
                 } else {
                     Utils.showDialogue(EditProfileActivity.this, "Already Your Profile is upp-to date!!!");
                 }
@@ -1023,8 +954,8 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
                  *  server is down,
                  *  incorrect IP
                  *  Server not deployed
-                 */Log.d("error", "" + volleyError);
-                //  Utils.showDialogue(EditProfileActivity.this, "Sorry! Server Error");
+                 */
+                Utils.showDialogue(EditProfileActivity.this, "Sorry! Server Error");
             }
         }) {
             @Override
@@ -1220,23 +1151,27 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
                         mobileNumberEditText.setText(profile.getMobileNumber());
 
                         if (!profile.getYearOfPassOut().equals(null)) {
+                            int yearOfPassOutSpinnerPosition = 0;
                             yearOfPassOutSpinnerPosition = spinnerYearArrayAdapter.getPosition(profile.getYearOfPassOut());
                             passOutYearSpinner.setSelection(yearOfPassOutSpinnerPosition);
                         }
 
                         if (!profile.getIndustry1().equals(null)) {
+                            int industry1SpinnerPosition = 0;
                             industry1SpinnerPosition = spinnerArrayAdapterI1.getPosition(profile.getIndustry1());
                             industrySpinnerOne.setSelection(industry1SpinnerPosition);
                             industrySpinnerOneValue = profile.getIndustry1();
                         }
 
                         if (!profile.getIndustry2().equals(null)) {
+                            int industry2SpinnerPosition = 0;
                             industry2SpinnerPosition = spinnerArrayAdapterI2.getPosition(profile.getIndustry2());
                             industrySpinnerTwo.setSelection(industry2SpinnerPosition);
                             industrySpinnerTwoValue = profile.getIndustry2();
                         }
 
                         if (!profile.getIndustry3().equals(null)) {
+                            int industry3SpinnerPosition = 0;
                             industry3SpinnerPosition = spinnerArrayAdapterI3.getPosition(profile.getIndustry3());
                             industrySpinnerThree.setSelection(industry3SpinnerPosition);
                             industrySpinnerThreeValue = profile.getIndustry3();
@@ -1250,28 +1185,6 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
 
                             itemsCompanySpinnerOne = Arrays.asList(profile.getCompany1().split("\\s*,\\s*"));
 
-                           /* List<String> itemsCompanyOne = Arrays.asList(profile.getCompanyAdapterOne().split("\\s*,\\s*"));
-                            companyArrayAdapter1.addAll(itemsCompanyOne);
-
-
-                            // set initial selection
-                            boolean[] selectedItems = new boolean[companyArrayAdapter1.getCount()];
-                            List<String> companyItems = new ArrayList<>();
-                            for (int iq = 0; iq < companyArrayAdapter1.getCount(); iq++) {
-                                companyItems.add(companyArrayAdapter1.getItem(iq));
-
-                            }
-
-                            for (int l = 0; l < itemsCompanySpinnerOne.size(); l++) {
-
-                                if (companyItems.indexOf(itemsCompanySpinnerOne.get(l)) != -1) {
-                                    selectedItems[companyItems.indexOf(itemsCompanySpinnerOne.get(l))] = true;
-
-                                }
-                            }
-
-
-                            companySpinnerOne.setSelected(selectedItems);*/
                             companySpinnerOne.setText(profile.getCompany1());
                             companySpinnerOneValue = profile.getCompany1();
 
@@ -1283,26 +1196,7 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
                         } else {
                             itemsCompanySpinnerTwo = Arrays.asList(profile.getCompany2().split("\\s*,\\s*"));
 
-                            /*List<String> itemsCompanyOne = Arrays.asList(profile.getCompanyAdapterTwo().split("\\s*,\\s*"));
-                            companyArrayAdapter2.addAll(itemsCompanyOne);
-// set initial selection
-                            boolean[] selectedItems = new boolean[companyArrayAdapter2.getCount()];
 
-
-                            List<String> companyItems = new ArrayList<>();
-                            for (int iq = 0; iq < companyArrayAdapter2.getCount(); iq++) {
-                                companyItems.add(companyArrayAdapter2.getItem(iq));
-
-                            }
-
-                            for (int l = 0; l < itemsCompanySpinnerTwo.size(); l++) {
-
-                                if (companyItems.indexOf(itemsCompanySpinnerTwo.get(l)) != -1) {
-                                    selectedItems[companyItems.indexOf(itemsCompanySpinnerTwo.get(l))] = true;
-
-                                }
-                            }
-                            companySpinnerTwo.setSelected(selectedItems);*/
                             companySpinnerTwo.setText(profile.getCompany2());
                             companySpinnerTwoValue = profile.getCompany2();
                         }
@@ -1312,48 +1206,12 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
                         } else {
                             itemsCompanySpinnerThree = Arrays.asList(profile.getCompany3().split("\\s*,\\s*"));
 
-                          /*  List<String> itemsCompanyOne = Arrays.asList(profile.getCompanyAdapterThree().split("\\s*,\\s*"));
-                            companyArrayAdapter3.addAll(itemsCompanyOne);
-// set initial selection
-                            boolean[] selectedItems = new boolean[companyArrayAdapter3.getCount()];
-                            List<String> companyItems = new ArrayList<>();
-                            for (int iq = 0; iq < companyArrayAdapter3.getCount(); iq++) {
-                                companyItems.add(companyArrayAdapter3.getItem(iq));
 
-                            }
-
-                            for (int l = 0; l < itemsCompanySpinnerThree.size(); l++) {
-
-                                if (companyItems.indexOf(itemsCompanySpinnerThree.get(l)) != -1) {
-                                    selectedItems[companyItems.indexOf(itemsCompanySpinnerThree.get(l))] = true;
-
-                                }
-                            }
-                            companySpinnerThree.setSelected(selectedItems);*/
                             companySpinnerThree.setText(profile.getCompany3());
                             companySpinnerThreeValue = profile.getCompany3();
                         }
 
-                       /* company1TextView.setText(profile.getCompany1());
-                        company2TextView.setText(profile.getCompany2());
-                        company3TextView.setText(profile.getCompany3());
 
-                        Log.e("c1",""+company1TextView.getText().toString());
-                        Log.e("c2",""+company2TextView.getText().toString());
-                        Log.e("c3",""+company3TextView.getText().toString());
-
-                        if (!company1TextView.getText().toString().equals("")) {
-                            companySpinnerOne.setVisibility(View.GONE);
-                            company1TextView.setVisibility(View.VISIBLE);
-                        }
-                        if (!company1TextView.getText().toString().equals("")) {
-                            companySpinnerTwo.setVisibility(View.GONE);
-                            company2TextView.setVisibility(View.VISIBLE);
-                        }
-                        if (!company1TextView.getText().toString().equals("")) {
-                            companySpinnerThree.setVisibility(View.GONE);
-                            company3TextView.setVisibility(View.VISIBLE);
-                        }*/
                         profileImage.setImageUrl(Utils.BaseImageUri + profile.getImageName(), NetworkController.getInstance(EditProfileActivity.this).getImageLoader());
 
 

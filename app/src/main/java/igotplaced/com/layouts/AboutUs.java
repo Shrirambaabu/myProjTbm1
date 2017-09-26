@@ -20,7 +20,7 @@ import static igotplaced.com.layouts.Utils.Utils.screenSize;
 
 public class AboutUs extends AppCompatActivity implements View.OnClickListener {
 
-    private Toolbar toolbar;
+
     private AppCompatEditText emailAddress;
     private TextView phoneNumber;
     private Button subscribe;
@@ -30,7 +30,7 @@ public class AboutUs extends AppCompatActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_us);
         settingToolbar();
-       addressingView();
+        addressingView();
         addingListeners();
     }
 
@@ -57,7 +57,7 @@ public class AboutUs extends AppCompatActivity implements View.OnClickListener {
     }
 
     private void settingToolbar() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
