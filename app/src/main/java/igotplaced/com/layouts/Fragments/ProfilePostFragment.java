@@ -53,7 +53,7 @@ public class ProfilePostFragment extends Fragment implements ClickListener {
     private Context context;
     private RequestQueue queue;
 
-
+  private   TextView noData;
     private String userId;
     private List<Post> postList = new ArrayList<Post>();
     private RecyclerAdapterProfilePost recyclerAdapterProfilePost;
@@ -73,7 +73,7 @@ public class ProfilePostFragment extends Fragment implements ClickListener {
         context = getActivity().getApplicationContext();
 
         mLayoutManager = new LinearLayoutManager(context);
-
+         noData=(TextView) view.findViewById(R.id.no_data);
         SharedPreferences sharedpreferences = context.getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
 
         userId = sharedpreferences.getString(Id, null);
@@ -122,7 +122,7 @@ public class ProfilePostFragment extends Fragment implements ClickListener {
 
             @Override
             public void onResponse(JSONArray response) {
-
+                postList.clear();
 
                 for (int i = 0; i < response.length(); i++) {
 
@@ -143,6 +143,12 @@ public class ProfilePostFragment extends Fragment implements ClickListener {
                         recyclerAdapterProfilePost.notifyDataSetChanged();
 
                     }
+                }
+
+                if (postList.isEmpty()){
+                    noData.setVisibility(View.VISIBLE);
+                }else {
+                    noData.setVisibility(View.GONE);
                 }
             }
 

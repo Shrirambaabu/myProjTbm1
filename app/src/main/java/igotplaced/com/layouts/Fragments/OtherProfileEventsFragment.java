@@ -46,7 +46,7 @@ public class OtherProfileEventsFragment extends Fragment {
     private List<Events> eventsList = new ArrayList<Events>();
     private RecyclerAdapterOtherProfileEvent recyclerAdapterOtherProfileEvent;
     private String userId;
-
+    private TextView noData;
     private LinearLayoutManager mLayoutManager;
 
     public OtherProfileEventsFragment() {
@@ -61,7 +61,7 @@ public class OtherProfileEventsFragment extends Fragment {
 
         context = getActivity().getApplicationContext();
        // mLayoutManager = new LinearLayoutManager(context);
-
+        noData=(TextView) view.findViewById(R.id.no_data);
         Bundle bundle = this.getArguments();
 
         if (bundle != null) {
@@ -109,7 +109,7 @@ public class OtherProfileEventsFragment extends Fragment {
 
             @Override
             public void onResponse(JSONArray response) {
-
+                eventsList.clear();
                 for (int i = 0; i < response.length(); i++) {
                     Log.d("error", response.toString());
                     try {
@@ -127,6 +127,11 @@ public class OtherProfileEventsFragment extends Fragment {
                         //Notify adapter about data changes
                         recyclerAdapterOtherProfileEvent.notifyDataSetChanged();
                     }
+                }
+                if (eventsList.isEmpty()){
+                    noData.setVisibility(View.VISIBLE);
+                }else {
+                    noData.setVisibility(View.GONE);
                 }
             }
 

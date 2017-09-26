@@ -53,15 +53,13 @@ public class ProfileQuestionFragment extends Fragment implements ClickListener {
     private Context context;
     private RequestQueue queue;
 
-
+    private   TextView noData;
     private String userId;
     private List<Questions> questionsList = new ArrayList<Questions>();
     private RecyclerAdapterProfileQuestions recyclerAdapterProfileQuestions;
 
-    int lastVisiblesItems, visibleItemCount, totalItemCount;
 
     private LinearLayoutManager mLayoutManager;
-    private boolean loading, swipe = false;
 
     public ProfileQuestionFragment() {
         // Required empty public constructor
@@ -76,7 +74,7 @@ public class ProfileQuestionFragment extends Fragment implements ClickListener {
         context = getActivity().getApplicationContext();
 
       // mLayoutManager = new LinearLayoutManager(context);
-
+        noData=(TextView) view.findViewById(R.id.no_data);
         SharedPreferences sharedpreferences = context.getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         String userName = sharedpreferences.getString(Name, null);
         userId = sharedpreferences.getString(Id, null);
@@ -131,7 +129,7 @@ public class ProfileQuestionFragment extends Fragment implements ClickListener {
 
             @Override
             public void onResponse(JSONArray response) {
-
+                questionsList.clear();
                 for (int i = 0; i < response.length(); i++) {
                     Log.d("error", response.toString());
                     try {
@@ -150,6 +148,11 @@ public class ProfileQuestionFragment extends Fragment implements ClickListener {
                         //Notify adapter about data changes
                         recyclerAdapterProfileQuestions.notifyDataSetChanged();
                     }
+                }
+                if (questionsList.isEmpty()){
+                    noData.setVisibility(View.VISIBLE);
+                }else {
+                    noData.setVisibility(View.GONE);
                 }
             }
 
@@ -170,8 +173,6 @@ public class ProfileQuestionFragment extends Fragment implements ClickListener {
 
     // By default, we add 10 objects for first time.
     private void loadData() {
-        // I have not used current page for showing demo, if u use a webservice
-        // then it is useful for every call request
 
         makeJsonArrayRequestQuestionsHome();
 

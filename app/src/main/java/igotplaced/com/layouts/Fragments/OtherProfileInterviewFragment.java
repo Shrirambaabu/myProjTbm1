@@ -45,6 +45,7 @@ public class OtherProfileInterviewFragment extends Fragment {
     private Context context;
     private RequestQueue queue;
     private String userId;
+    private   TextView noData;
     private List<Interview> interviewList = new ArrayList<Interview>();
     private LinearLayoutManager mLayoutManager;
     private RecyclerAdapterOtherProfileInterview recyclerAdapterOtherProfileInterview;
@@ -60,7 +61,7 @@ public class OtherProfileInterviewFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_other_profile_interview, container, false);
         context = getActivity().getApplicationContext();
-
+        noData=(TextView) view.findViewById(R.id.no_data);
        // mLayoutManager = new LinearLayoutManager(context);
         Bundle bundle = this.getArguments();
 
@@ -107,7 +108,7 @@ public class OtherProfileInterviewFragment extends Fragment {
 
             @Override
             public void onResponse(JSONArray response) {
-
+                interviewList.clear();
                 for (int i = 0; i < response.length(); i++) {
                     Log.d("error", response.toString());
                     try {
@@ -125,6 +126,11 @@ public class OtherProfileInterviewFragment extends Fragment {
                         //Notify adapter about data changes
                         recyclerAdapterOtherProfileInterview.notifyDataSetChanged();
                     }
+                }
+                if (interviewList.isEmpty()){
+                    noData.setVisibility(View.VISIBLE);
+                }else {
+                    noData.setVisibility(View.GONE);
                 }
             }
 

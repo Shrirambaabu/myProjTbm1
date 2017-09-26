@@ -43,7 +43,7 @@ import static igotplaced.com.layouts.Utils.Utils.screenSize;
 
 
 public class CompanyEventFragment extends Fragment {
-
+    private TextView noData;
     private Context context;
     private RequestQueue queue;
     private List<Events> eventsList = new ArrayList<Events>();
@@ -64,7 +64,7 @@ public class CompanyEventFragment extends Fragment {
 
         context = getActivity().getApplicationContext();
         //  mLayoutManager = new LinearLayoutManager(context);
-
+        noData=(TextView) view.findViewById(R.id.no_data);
         Bundle bundle = this.getArguments();
 
         if (bundle != null) {
@@ -104,7 +104,7 @@ public class CompanyEventFragment extends Fragment {
 
             @Override
             public void onResponse(JSONArray response) {
-
+                eventsList.clear();
                 for (int i = 0; i < response.length(); i++) {
                     Log.d("error", response.toString());
                     try {
@@ -122,6 +122,11 @@ public class CompanyEventFragment extends Fragment {
                         //Notify adapter about data changes
                         recyclerCompanyEvents.notifyDataSetChanged();
                     }
+                }
+                if (eventsList.isEmpty()){
+                    noData.setVisibility(View.VISIBLE);
+                }else {
+                    noData.setVisibility(View.GONE);
                 }
             }
 

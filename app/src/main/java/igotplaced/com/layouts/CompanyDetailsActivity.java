@@ -158,6 +158,7 @@ public class CompanyDetailsActivity extends AppCompatActivity implements Connect
                         navDrawable.setColorFilter(ContextCompat.getColor(CompanyDetailsActivity.this, R.color.white), PorterDuff.Mode.SRC_ATOP);
                     }
 
+
                 } else {
                     toolbar.setBackgroundColor(ContextCompat.getColor(CompanyDetailsActivity.this, android.R.color.transparent));
 

@@ -43,7 +43,7 @@ import static igotplaced.com.layouts.Utils.Utils.screenSize;
 public class OtherProfileQuestionsFragment extends Fragment {
 
     private String userId;
-
+    private   TextView noData;
     private Context context;
     private RequestQueue queue;
     private List<Questions> questionsList = new ArrayList<Questions>();
@@ -64,7 +64,7 @@ public class OtherProfileQuestionsFragment extends Fragment {
         context = getActivity().getApplicationContext();
 
        // mLayoutManager = new LinearLayoutManager(context);
-
+        noData=(TextView) view.findViewById(R.id.no_data);
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             userId = bundle.getString("otherId");
@@ -107,7 +107,7 @@ public class OtherProfileQuestionsFragment extends Fragment {
 
             @Override
             public void onResponse(JSONArray response) {
-
+                questionsList.clear();
                 for (int i = 0; i < response.length(); i++) {
                     Log.d("error", response.toString());
                     try {
@@ -125,6 +125,11 @@ public class OtherProfileQuestionsFragment extends Fragment {
                         //Notify adapter about data changes
                         recyclerAdapterOtherProfileQuestions.notifyDataSetChanged();
                     }
+                }
+                if (questionsList.isEmpty()){
+                    noData.setVisibility(View.VISIBLE);
+                }else {
+                    noData.setVisibility(View.GONE);
                 }
             }
 

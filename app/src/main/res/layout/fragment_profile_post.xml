@@ -9,4 +9,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical" />
+    <TextView
+        android:id="@+id/no_data"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="Waiting for your Post "
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:visibility="gone" />
 </RelativeLayout>

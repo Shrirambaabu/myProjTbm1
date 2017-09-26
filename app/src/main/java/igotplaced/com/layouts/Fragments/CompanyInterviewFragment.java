@@ -48,6 +48,8 @@ public class CompanyInterviewFragment extends Fragment {
     private Context context;
     private RequestQueue queue;
     private String userId;
+    private TextView noData;
+
     private List<Interview> interviewList = new ArrayList<Interview>();
     private LinearLayoutManager mLayoutManager;
     private RecyclerCompanyInterview recyclerCompanyInterview;
@@ -62,12 +64,12 @@ public class CompanyInterviewFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_other_profile_interview, container, false);
+        View view = inflater.inflate(R.layout.fragment_company_interview, container, false);
         context = getActivity().getApplicationContext();
 
         //   mLayoutManager = new LinearLayoutManager(context);
         Bundle bundle = this.getArguments();
-
+        noData = (TextView) view.findViewById(R.id.no_data_inter);
         if (bundle != null) {
             userId = bundle.getString("otherId");
         }
@@ -111,7 +113,7 @@ public class CompanyInterviewFragment extends Fragment {
 
             @Override
             public void onResponse(JSONArray response) {
-
+                interviewList.clear();
                 for (int i = 0; i < response.length(); i++) {
                     Log.d("error", response.toString());
                     try {
@@ -130,14 +132,20 @@ public class CompanyInterviewFragment extends Fragment {
                         recyclerCompanyInterview.notifyDataSetChanged();
                     }
                 }
+                if (interviewList.isEmpty()) {
+                    noData.setVisibility(View.VISIBLE);
+                } else {
+                    noData.setVisibility(View.GONE);
+                }
             }
+
 
         }, new Response.ErrorListener() {
 
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("error", "Error: " + error.getMessage());
-                Utils.showDialogue(getActivity(),"Sorry! Server Error");
+                Utils.showDialogue(getActivity(), "Sorry! Server Error");
             }
         });
 

@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
@@ -126,7 +128,12 @@ public class Utils {
         customToast.show();
 
     }
-
+    public static void menuIconColor(Drawable drawable, int color, Activity activity) {
+        if (drawable != null) {
+            drawable.mutate();
+            drawable.setColorFilter(ContextCompat.getColor(activity, color), PorterDuff.Mode.SRC_ATOP);
+        }
+    }
     public static void showDialogue(final Activity activity, String message) {
 
         if (message.equals("Sorry! Not connected to internet")) {

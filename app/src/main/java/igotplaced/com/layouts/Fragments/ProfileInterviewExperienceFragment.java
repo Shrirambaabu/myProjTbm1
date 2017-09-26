@@ -53,7 +53,7 @@ public class ProfileInterviewExperienceFragment extends Fragment implements Clic
 
     private Context context;
     private RequestQueue queue;
-
+    private   TextView noData;
 
     private String userId;
     private List<Interview> interviewList = new ArrayList<Interview>();
@@ -75,7 +75,7 @@ public class ProfileInterviewExperienceFragment extends Fragment implements Clic
         context = getActivity().getApplicationContext();
 
       //  mLayoutManager = new LinearLayoutManager(context);
-
+        noData=(TextView) view.findViewById(R.id.no_data);
         SharedPreferences sharedpreferences = context.getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         String userName = sharedpreferences.getString(Name, null);
         userId = sharedpreferences.getString(Id, null);
@@ -131,7 +131,7 @@ public class ProfileInterviewExperienceFragment extends Fragment implements Clic
 
             @Override
             public void onResponse(JSONArray response) {
-
+                interviewList.clear();
                 for (int i = 0; i < response.length(); i++) {
                     Log.d("error", response.toString());
                     try {
@@ -149,6 +149,11 @@ public class ProfileInterviewExperienceFragment extends Fragment implements Clic
                         //Notify adapter about data changes
                         recyclerAdapterProfileInterview.notifyDataSetChanged();
                     }
+                }
+                if (interviewList.isEmpty()){
+                    noData.setVisibility(View.VISIBLE);
+                }else {
+                    noData.setVisibility(View.GONE);
                 }
             }
 

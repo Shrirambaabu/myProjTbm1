@@ -52,15 +52,12 @@ public class ProfileEventsFragment extends Fragment implements ClickListener {
     private Context context;
     private RequestQueue queue;
 
-
+private TextView noData;
     private String userId;
     private List<Events> eventsList = new ArrayList<Events>();
     private RecyclerAdapterProfileEvent recyclerAdapterProfileEvent;
 
-    int lastVisiblesItems, visibleItemCount, totalItemCount;
-
     private LinearLayoutManager mLayoutManager;
-    private boolean loading, swipe = false;
 
     public ProfileEventsFragment() {
         // Required empty public constructor
@@ -74,10 +71,11 @@ public class ProfileEventsFragment extends Fragment implements ClickListener {
         View view = inflater.inflate(R.layout.fragment_profile_events, container, false);
         context = getActivity().getApplicationContext();
       //  mLayoutManager = new LinearLayoutManager(context);
-
+        noData=(TextView) view.findViewById(R.id.no_data);
         SharedPreferences sharedpreferences = context.getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         String userName = sharedpreferences.getString(Name, null);
         userId = sharedpreferences.getString(Id, null);
+
 
         eventRecyclerView(view);
 
@@ -91,6 +89,7 @@ public class ProfileEventsFragment extends Fragment implements ClickListener {
         RecyclerView event_view = (RecyclerView) view.findViewById(R.id.recycler_view_profile_events);
         //feeding values to RecyclerView using custom RecyclerView adapter
         recyclerAdapterProfileEvent = new RecyclerAdapterProfileEvent(context, eventsList);
+
 
         //setting fixed size
         Log.e("ScreenSizeReecyvlr", "" + screenSize(getActivity()));
@@ -124,7 +123,7 @@ public class ProfileEventsFragment extends Fragment implements ClickListener {
 
             @Override
             public void onResponse(JSONArray response) {
-
+                eventsList.clear();
                 for (int i = 0; i < response.length(); i++) {
                     Log.d("error", response.toString());
                     try {
@@ -143,6 +142,11 @@ public class ProfileEventsFragment extends Fragment implements ClickListener {
                         //Notify adapter about data changes
                         recyclerAdapterProfileEvent.notifyDataSetChanged();
                     }
+                }
+                if (eventsList.isEmpty()){
+                    noData.setVisibility(View.VISIBLE);
+                }else {
+                    noData.setVisibility(View.GONE);
                 }
             }
 
