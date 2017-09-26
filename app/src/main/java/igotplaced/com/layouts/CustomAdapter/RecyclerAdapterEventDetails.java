@@ -3,6 +3,7 @@ package igotplaced.com.layouts.CustomAdapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
@@ -29,6 +30,7 @@ import java.util.List;
 import java.util.Map;
 
 import igotplaced.com.layouts.Model.Events;
+import igotplaced.com.layouts.OtherProfileActivity;
 import igotplaced.com.layouts.R;
 import igotplaced.com.layouts.Utils.NetworkController;
 import igotplaced.com.layouts.Utils.Utils;
@@ -78,6 +80,14 @@ public  class RecyclerAdapterEventDetails extends RecyclerView.Adapter<RecyclerA
             holder.delete.setVisibility(View.VISIBLE);
         } else {
             holder.delete.setVisibility(View.GONE);
+            holder.postImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent otherProfileDetails = new Intent(context, OtherProfileActivity.class);
+                    otherProfileDetails.putExtra("post_createdid", eventsList.get(position).getEventUserId());
+                    context.startActivity(otherProfileDetails);
+                }
+            });
         }
 
         holder.delete.setOnClickListener(new View.OnClickListener() {
