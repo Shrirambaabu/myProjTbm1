@@ -32,9 +32,6 @@ import static igotplaced.com.layouts.Utils.Utils.pushFragment;
 public class HomeFragment extends Fragment {
 
 
-    private RequestQueue queue;
-    private List<RecentFeedsHome> recentFeedsHomeList = new ArrayList<RecentFeedsHome>();
-    private RecyclerAdapterRecentFeedsHome recyclerAdapterRecentFeedsHome;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -46,7 +43,6 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         //getting context
-        Context context = getActivity().getApplicationContext();
 
         setupNavigationView(view);
 

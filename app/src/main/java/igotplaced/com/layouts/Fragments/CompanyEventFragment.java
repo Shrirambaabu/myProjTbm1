@@ -80,8 +80,6 @@ public class CompanyEventFragment extends Fragment {
         //feeding values to RecyclerView using custom RecyclerView adapter
         recyclerCompanyEvents = new RecyclerCompanyEvents(context, eventsList);
 
-        //setting fixed size
-        Log.e("ScreenSizeReecyvlr", "" + screenSize(getActivity()));
         if (screenSize(getActivity()) < 6.5)
             mLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         else {
@@ -231,7 +229,7 @@ public class CompanyEventFragment extends Fragment {
         public class MyViewHolder extends RecyclerView.ViewHolder {
 
             private TextView eventCaption, eventDesignation, eventVenue, viewMore, eventCompany, eventDate, eventRegistered, eventStatus, event, event_industry, event_profile_name, event_time;
-            private NetworkImageView event_img, userImage;
+            private NetworkImageView event_img;
 
 
             public MyViewHolder(View itemView) {

@@ -47,7 +47,7 @@ public class OtherProfileEventsFragment extends Fragment {
     private RecyclerAdapterOtherProfileEvent recyclerAdapterOtherProfileEvent;
     private String userId;
     private TextView noData;
-    private LinearLayoutManager mLayoutManager;
+
 
     public OtherProfileEventsFragment() {
         // Required empty public constructor
@@ -81,9 +81,8 @@ public class OtherProfileEventsFragment extends Fragment {
         RecyclerView event_view = (RecyclerView) view.findViewById(R.id.recycler_view_profile_events);
         //feeding values to RecyclerView using custom RecyclerView adapter
         recyclerAdapterOtherProfileEvent = new RecyclerAdapterOtherProfileEvent(context, eventsList);
+        LinearLayoutManager mLayoutManager;
 
-        //setting fixed size
-        Log.e("ScreenSizeReecyvlr", "" + screenSize(getActivity()));
         if (screenSize(getActivity()) < 6.5)
             mLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         else {
@@ -103,7 +102,7 @@ public class OtherProfileEventsFragment extends Fragment {
 
     private void makeJsonArrayRequestEventHome() {
 
-        Log.e("profEvents",""+BaseUri + "/profileService/profileEvent/" + userId);
+
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, BaseUri + "/profileService/profileEvent/" + userId, null, new Response.Listener<JSONArray>() {
 
 
@@ -241,8 +240,8 @@ public class OtherProfileEventsFragment extends Fragment {
         public class MyViewHolder extends RecyclerView.ViewHolder  {
 
             private TextView eventCaption, eventDesignation, eventVenue, eventCompany,viewMore, eventDate, eventRegistered, eventStatus, event, event_industry, event_profile_name, event_time;
-            private NetworkImageView event_img, userImage;
-            private ItemClickListener itemClickListener;
+            private NetworkImageView event_img;
+
 
             public MyViewHolder(View itemView) {
                 super(itemView);

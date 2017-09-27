@@ -36,6 +36,7 @@ import java.util.Map;
 
 import igotplaced.com.layouts.Utils.ConnectivityReceiver;
 import igotplaced.com.layouts.Utils.MyApplication;
+import igotplaced.com.layouts.Utils.MyService;
 import igotplaced.com.layouts.Utils.Utils;
 import igotplaced.com.layouts.Utils.Validation;
 
@@ -89,8 +90,8 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
      */
     @Override
     public void onNetworkConnectionChanged(boolean isConnected) {
-        if (!isConnected){
-            Log.e("Conn","Change");
+        if (!isConnected) {
+            Log.e("Conn", "Change");
             Utils.showDialogue(LoginActivity.this, "Sorry! Not connected to internet");
         }
 
@@ -129,7 +130,7 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.signInButton:
 
                 submitLoginDetails();
@@ -180,7 +181,8 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         intent.addCategory(Intent.CATEGORY_HOME);
                         startActivity(intent);*/
-                       LoginActivity.super.onBackPressed();
+
+                        LoginActivity.super.onBackPressed();
                        /* int pid = android.os.Process.myPid();
                         android.os.Process.killProcess(pid);*/
                     }

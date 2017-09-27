@@ -58,7 +58,7 @@ import static igotplaced.com.layouts.Utils.Utils.Name;
 import static igotplaced.com.layouts.Utils.Utils.screenSize;
 
 
-public class HomeQuestionsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, ClickListener {
+public class HomeQuestionsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private Context context;
     private RequestQueue queue;
@@ -69,10 +69,9 @@ public class HomeQuestionsFragment extends Fragment implements SwipeRefreshLayou
     private List<Questions> questionsList = new ArrayList<Questions>();
     private RecyclerAdapterQuestionsHome recyclerAdapterQuestionsHome;
 
-    int lastVisiblesItems, visibleItemCount, totalItemCount;
     int loadLimit;
     private LinearLayoutManager mLayoutManager;
-    private boolean loading, swipe = false;
+    private boolean loading;
 
     public HomeQuestionsFragment() {
         // Required empty public constructor
@@ -81,7 +80,7 @@ public class HomeQuestionsFragment extends Fragment implements SwipeRefreshLayou
     @Override
     public void onResume() {
         super.onResume();
-        Log.e("LoaDScreen", "" + screenSize(getActivity()));
+
         if (screenSize(getActivity()) < 6.5) {
             loadLimit = 5;
 
@@ -108,7 +107,7 @@ public class HomeQuestionsFragment extends Fragment implements SwipeRefreshLayou
         //  mLayoutManager = new LinearLayoutManager(context);
 
         SharedPreferences sharedpreferences = context.getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
-        String userName = sharedpreferences.getString(Name, null);
+
         userId = sharedpreferences.getString(Id, null);
 
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_layout);
@@ -142,7 +141,7 @@ public class HomeQuestionsFragment extends Fragment implements SwipeRefreshLayou
         recyclerAdapterQuestionsHome = new RecyclerAdapterQuestionsHome(context, questionsList);
 
         //setting fixed size
-        Log.e("ScreenSizeReecyvlr", "" + screenSize(getActivity()));
+
         if (screenSize(getActivity()) < 6.5)
             mLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         else {
@@ -169,14 +168,11 @@ public class HomeQuestionsFragment extends Fragment implements SwipeRefreshLayou
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 if (dy > 0) {
+                    int totalItemCount;
 
-                    visibleItemCount = mLayoutManager.getChildCount();
+
                     totalItemCount = mLayoutManager.getItemCount();
-                    lastVisiblesItems = mLayoutManager.findFirstVisibleItemPosition();
-/*
 
-                    Log.d("error", ""+visibleItemCount+totalItemCount+lastVisiblesItems);
-*/
 
                     if (!loading) {
                         loadMoreData(totalItemCount + 1);
@@ -187,7 +183,6 @@ public class HomeQuestionsFragment extends Fragment implements SwipeRefreshLayou
             }
         });
 
-        //  recyclerAdapterQuestionsHome.setClickListener(this);
 
     }
 
@@ -206,8 +201,7 @@ public class HomeQuestionsFragment extends Fragment implements SwipeRefreshLayou
 
             @Override
             public void onResponse(JSONObject jsonObject) {
-/*
-                Log.d("error", jsonObject.toString());*/
+
                 try {
                     jsonObjectJSON = jsonObject.getJSONArray("");
 
@@ -273,20 +267,11 @@ public class HomeQuestionsFragment extends Fragment implements SwipeRefreshLayou
     }
 
 
-    @Override
-    public void onClick(View view, int position) {
-        /*BlogHome blog = blogHomeList.get(position);
-        Intent i = new Intent(getContext(), BlogDetailsActivity.class);
-        i.putExtra("postId", blog.getId());
-        startActivity(i);*/
-    }
 
 
     class RecyclerAdapterQuestionsHome extends RecyclerView.Adapter<RecyclerAdapterQuestionsHome.MyViewHolder> {
 
-        private String userId = null, userName = null;
-        private String URL = BaseUri + "/home/questionsComments";
-        private String questionsId, postedQuestionUserId, userPostedComment;
+        private String userId = null;
 
         private List<Questions> questionsList;
         private Context context;
@@ -294,7 +279,7 @@ public class HomeQuestionsFragment extends Fragment implements SwipeRefreshLayou
 
         public RecyclerAdapterQuestionsHome(Context context, List<Questions> questionsList) {
             SharedPreferences sharedpreferences = context.getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
-            userName = sharedpreferences.getString(Name, null);
+
             userId = sharedpreferences.getString(Id, null);
             this.context = context;
             this.questionsList = questionsList;
@@ -311,7 +296,7 @@ public class HomeQuestionsFragment extends Fragment implements SwipeRefreshLayou
         @Override
         public void onBindViewHolder(final RecyclerAdapterQuestionsHome.MyViewHolder holder, final int position) {
             Questions questions = questionsList.get(position);
-            questionsId = questions.getQuestionId();
+            String postedQuestionUserId;
             postedQuestionUserId = questions.getQuestionUserId();
             //Pass the values of feeds object to Views
             holder.questions.setText(questions.getQuestions());
@@ -379,7 +364,7 @@ public class HomeQuestionsFragment extends Fragment implements SwipeRefreshLayou
         public class MyViewHolder extends RecyclerView.ViewHolder {
 
             private TextView questions, questionsIndustry, questionsProfileName, questionsCompany, questionsTime, viewMore;
-            private NetworkImageView questionsImage, comment_profile_img;
+            private NetworkImageView questionsImage;
 
 
             public MyViewHolder(View itemView) {
@@ -394,7 +379,6 @@ public class HomeQuestionsFragment extends Fragment implements SwipeRefreshLayou
 
                 // Volley's NetworkImageView which will load Image from URL
                 questionsImage = (NetworkImageView) itemView.findViewById(R.id.questions_img);
-                //      comment_profile_img = (NetworkImageView) itemView.findViewById(R.id.comment_profile_img);
 
 
             }

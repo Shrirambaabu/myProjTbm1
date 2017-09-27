@@ -21,6 +21,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity
             android:name=".SplashScreenActivity"
             android:configChanges="orientation"
@@ -58,14 +59,7 @@
         <activity
             android:name=".AddUserQuestions"
             android:theme="@android:style/Theme.DeviceDefault.Light.Dialog" />
-         
-        <receiver
-            android:name=".Utils.ConnectivityReceiver"
-            android:enabled="true">
-            <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-            </intent-filter>
-        </receiver>
+         <service android:name=".Utils.MyService"/>
 
         <activity android:name=".BlogDetailsActivity" />
         <activity android:name=".EditProfileActivity" />

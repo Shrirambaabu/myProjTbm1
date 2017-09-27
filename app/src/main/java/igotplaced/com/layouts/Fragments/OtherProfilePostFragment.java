@@ -46,7 +46,7 @@ public class OtherProfilePostFragment extends Fragment {
     private RequestQueue queue;
     private String userId;
     private List<Post> postList = new ArrayList<Post>();
-    private LinearLayoutManager mLayoutManager;
+
     private RecyclerAdapterOtherProfilePost recyclerAdapterOtherProfilePost;
 
     public OtherProfilePostFragment() {
@@ -67,7 +67,6 @@ public class OtherProfilePostFragment extends Fragment {
         if (bundle != null) {
             userId = bundle.getString("otherId");
         }
-     //   mLayoutManager = new LinearLayoutManager(context);
 
         postRecyclerView(view);
         return view;
@@ -79,8 +78,7 @@ public class OtherProfilePostFragment extends Fragment {
         RecyclerView post_view = (RecyclerView) view.findViewById(R.id.recycler_view_profile_post);
         //feeding values to RecyclerView using custom RecyclerView adapter
         recyclerAdapterOtherProfilePost = new RecyclerAdapterOtherProfilePost(context, postList);
-//setting fixed size
-        Log.e("ScreenSizeReecyvlr", "" + screenSize(getActivity()));
+        LinearLayoutManager mLayoutManager;
         if (screenSize(getActivity()) < 6.5)
             mLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         else {
@@ -204,7 +202,7 @@ public class OtherProfilePostFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
                         Intent otherProfileDetails = new Intent(context, OtherProfileActivity.class);
-Log.e("Tag","DiffUser");
+
                         otherProfileDetails.putExtra("post_createdid", postList.get(position).getPostedUserId());
                         otherProfileDetails.putExtra("created_uname", postList.get(position).getPostProfileName());
                         startActivity(otherProfileDetails);

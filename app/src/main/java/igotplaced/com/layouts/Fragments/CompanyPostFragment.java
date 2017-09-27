@@ -50,7 +50,6 @@ public class CompanyPostFragment extends Fragment {
     private RequestQueue queue;
     private String userId;
     private List<Post> postList = new ArrayList<Post>();
-    private LinearLayoutManager mLayoutManager;
     private RecyclerCompanyPost recyclerCompanyPost;
 
     public CompanyPostFragment() {
@@ -83,8 +82,8 @@ public class CompanyPostFragment extends Fragment {
         //feeding values to RecyclerView using custom RecyclerView adapter
         recyclerCompanyPost = new RecyclerCompanyPost(context, postList);
 
-        //setting fixed size
-        Log.e("ScreenSizeReecyvlr", "" + screenSize(getActivity()));
+
+        LinearLayoutManager mLayoutManager;
         if (screenSize(getActivity()) < 6.5)
             mLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         else {
@@ -103,7 +102,7 @@ public class CompanyPostFragment extends Fragment {
 
     private void makeJsonArrayRequestPostHome() {
 
-        Log.e("PostCompany", "" + BaseUri + "/profileService/companyProfilePost/" + userId);
+
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, BaseUri + "/profileService/companyProfilePost/" + userId, null, new Response.Listener<JSONArray>() {
 
 

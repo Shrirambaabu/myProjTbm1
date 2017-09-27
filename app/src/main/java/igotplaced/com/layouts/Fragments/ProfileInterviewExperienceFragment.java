@@ -49,7 +49,7 @@ import static igotplaced.com.layouts.Utils.Utils.Name;
 import static igotplaced.com.layouts.Utils.Utils.screenSize;
 
 
-public class ProfileInterviewExperienceFragment extends Fragment implements ClickListener {
+public class ProfileInterviewExperienceFragment extends Fragment {
 
     private Context context;
     private RequestQueue queue;
@@ -59,7 +59,6 @@ public class ProfileInterviewExperienceFragment extends Fragment implements Clic
     private List<Interview> interviewList = new ArrayList<Interview>();
     private RecyclerAdapterProfileInterview recyclerAdapterProfileInterview;
 
-    private LinearLayoutManager mLayoutManager;
 
 
     public ProfileInterviewExperienceFragment() {
@@ -77,12 +76,8 @@ public class ProfileInterviewExperienceFragment extends Fragment implements Clic
       //  mLayoutManager = new LinearLayoutManager(context);
         noData=(TextView) view.findViewById(R.id.no_data);
         SharedPreferences sharedpreferences = context.getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
-        String userName = sharedpreferences.getString(Name, null);
+
         userId = sharedpreferences.getString(Id, null);
-
-
-
-        Log.d("error", userId);
 
         interviewRecyclerView(view);
 
@@ -96,9 +91,9 @@ public class ProfileInterviewExperienceFragment extends Fragment implements Clic
         RecyclerView interview_view = (RecyclerView) view.findViewById(R.id.recycler_view_profile_interview);
         //feeding values to RecyclerView using custom RecyclerView adapter
         recyclerAdapterProfileInterview = new RecyclerAdapterProfileInterview(context, interviewList);
-
+        LinearLayoutManager mLayoutManager;
          //setting fixed size
-        Log.e("ScreenSizeReecyvlr", "" + screenSize(getActivity()));
+
         if (screenSize(getActivity()) < 6.5)
             mLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         else {
@@ -114,17 +109,13 @@ public class ProfileInterviewExperienceFragment extends Fragment implements Clic
         loadData();
 
 
-
-
-       // recyclerAdapterInterviewHome.setClickListener(this);
-
     }
 
 
     private void makeJsonArrayRequestInterviewHome() {
 
 
-        Log.d("error", "loaded" + BaseUri + "/profileService/profileInterviewExperience/"+userId );
+
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, BaseUri + "/profileService/profileInterviewExperience/" + userId, null,  new Response.Listener<JSONArray>() {
 
@@ -184,13 +175,6 @@ public class ProfileInterviewExperienceFragment extends Fragment implements Clic
     }
 
 
-    @Override
-    public void onClick(View view, int position) {
-        /*BlogHome blog = blogHomeList.get(position);
-        Intent i = new Intent(getContext(), BlogDetailsActivity.class);
-        i.putExtra("postId", blog.getId());
-        startActivity(i);*/
-    }
 
 
     class RecyclerAdapterProfileInterview extends RecyclerView.Adapter<RecyclerAdapterProfileInterview.MyViewHolder>{
@@ -274,7 +258,7 @@ public class ProfileInterviewExperienceFragment extends Fragment implements Clic
 
         public class MyViewHolder extends RecyclerView.ViewHolder {
             private TextView interview, interviewIndustry, interviewProfileName, interviewTime,interviewCompany,viewMore;
-            private NetworkImageView interviewImage, userImage;
+            private NetworkImageView interviewImage;
 
             public MyViewHolder(View itemView) {
                 super(itemView);

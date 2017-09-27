@@ -59,7 +59,7 @@ import static igotplaced.com.layouts.Utils.Utils.MyPREFERENCES;
 import static igotplaced.com.layouts.Utils.Utils.Name;
 import static igotplaced.com.layouts.Utils.Utils.screenSize;
 
-public class HomeEventFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, ClickListener {
+public class HomeEventFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private Context context;
     private RequestQueue queue;
@@ -70,10 +70,9 @@ public class HomeEventFragment extends Fragment implements SwipeRefreshLayout.On
     private List<Events> eventList = new ArrayList<Events>();
     private RecyclerAdapterEventHome recyclerAdapterEventHome;
 
-    int lastVisiblesItems, visibleItemCount, totalItemCount;
     int loadLimit;
     private LinearLayoutManager mLayoutManager;
-    private boolean loading, swipe = false;
+    private boolean loading;
 
     public HomeEventFragment() {
         // Required empty public constructor
@@ -112,7 +111,7 @@ public class HomeEventFragment extends Fragment implements SwipeRefreshLayout.On
     @Override
     public void onResume() {
         super.onResume();
-        Log.e("LoaDScreen", "" + screenSize(getActivity()));
+
         if (screenSize(getActivity()) < 6.5) {
             loadLimit = 5;
 
@@ -130,7 +129,7 @@ public class HomeEventFragment extends Fragment implements SwipeRefreshLayout.On
         recyclerAdapterEventHome = new RecyclerAdapterEventHome(context, eventList);
 
         //setting fixed size
-        Log.e("ScreenSizeReecyvlr", "" + screenSize(getActivity()));
+
         if (screenSize(getActivity()) < 6.5)
             mLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         else {
@@ -143,7 +142,7 @@ public class HomeEventFragment extends Fragment implements SwipeRefreshLayout.On
         //Getting Instance of Volley Request Queue
         queue = NetworkController.getInstance(context).getRequestQueue();
 
-        //  loadData();
+
 
         swipeRefreshLayout.post(new Runnable() {
             @Override
@@ -157,14 +156,11 @@ public class HomeEventFragment extends Fragment implements SwipeRefreshLayout.On
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 if (dy > 0) {
+                    int  totalItemCount;
 
-                    visibleItemCount = mLayoutManager.getChildCount();
+
                     totalItemCount = mLayoutManager.getItemCount();
-                    lastVisiblesItems = mLayoutManager.findFirstVisibleItemPosition();
-/*
 
-                    Log.d("error", ""+visibleItemCount+totalItemCount+lastVisiblesItems);
-*/
 
                     if (!loading) {
                         loadMoreData(totalItemCount + 1);
@@ -177,7 +173,7 @@ public class HomeEventFragment extends Fragment implements SwipeRefreshLayout.On
 
         });
 
-        //  recyclerAdapterEventHome.setClickListener(this);
+
 
 
     }
@@ -232,8 +228,7 @@ public class HomeEventFragment extends Fragment implements SwipeRefreshLayout.On
 
             @Override
             public void onResponse(JSONObject jsonObject) {
-/*
-                Log.d("error", jsonObject.toString());*/
+
                 try {
                     jsonObjectJSON = jsonObject.getJSONArray("");
 
@@ -241,7 +236,7 @@ public class HomeEventFragment extends Fragment implements SwipeRefreshLayout.On
                     // postList.clear();
 
                     for (int i = 0; i < jsonObjectJSON.length(); i++) {
-                     /*   Log.d("error", jsonObjectJSON.toString());*/
+
                         try {
 
                             JSONObject obj = jsonObjectJSON.getJSONObject(i);
@@ -277,18 +272,12 @@ public class HomeEventFragment extends Fragment implements SwipeRefreshLayout.On
         queue.add(jsonObjectRequest);
     }
 
-    @Override
-    public void onClick(View view, int position) {
-
-    }
 
 
     class RecyclerAdapterEventHome extends RecyclerView.Adapter<RecyclerAdapterEventHome.MyViewHolder> {
 
 
-        private String userId = null, userName = null;
-        private String URL = BaseUri + "/home/eventsComments";
-        private String eventsId, postedEventsUserId, userPostedComment;
+        private String userId = null;
 
         private List<Events> eventsList;
         private Context context;
@@ -297,7 +286,7 @@ public class HomeEventFragment extends Fragment implements SwipeRefreshLayout.On
         public RecyclerAdapterEventHome(Context context, List<Events> eventsList) {
 
             SharedPreferences sharedpreferences = context.getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
-            userName = sharedpreferences.getString(Name, null);
+
             userId = sharedpreferences.getString(Id, null);
 
             this.context = context;
@@ -316,7 +305,7 @@ public class HomeEventFragment extends Fragment implements SwipeRefreshLayout.On
         public void onBindViewHolder(final MyViewHolder holder, final int position) {
             Events events = eventsList.get(position);
 
-            eventsId = events.getEventId();
+            String  postedEventsUserId;
             postedEventsUserId = events.getEventUserId();
 
             holder.event_industry.setText("#" + events.getEventIndustry());
@@ -388,7 +377,7 @@ public class HomeEventFragment extends Fragment implements SwipeRefreshLayout.On
 
         public class MyViewHolder extends RecyclerView.ViewHolder {
             private TextView eventCaption, eventDesignation, eventVenue, eventCompany, eventDate, eventRegistered, eventStatus, event, event_industry, event_profile_name, event_time, viewMore;
-            private NetworkImageView event_img, userImage;
+            private NetworkImageView event_img;
 
 
             public MyViewHolder(View itemView) {
@@ -411,8 +400,6 @@ public class HomeEventFragment extends Fragment implements SwipeRefreshLayout.On
                 event_time = (TextView) itemView.findViewById(R.id.event_time);
                 // Volley's NetworkImageView which will load Image from URL
                 event_img = (NetworkImageView) itemView.findViewById(R.id.event_img);
-                // userImage = (NetworkImageView) itemView.findViewById(R.id.comment_profile_img);
-
 
             }
 

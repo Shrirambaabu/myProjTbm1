@@ -47,7 +47,7 @@ import static igotplaced.com.layouts.Utils.Utils.MyPREFERENCES;
 import static igotplaced.com.layouts.Utils.Utils.Name;
 import static igotplaced.com.layouts.Utils.Utils.screenSize;
 
-public class ProfileEventsFragment extends Fragment implements ClickListener {
+public class ProfileEventsFragment extends Fragment {
 
     private Context context;
     private RequestQueue queue;
@@ -57,7 +57,6 @@ private TextView noData;
     private List<Events> eventsList = new ArrayList<Events>();
     private RecyclerAdapterProfileEvent recyclerAdapterProfileEvent;
 
-    private LinearLayoutManager mLayoutManager;
 
     public ProfileEventsFragment() {
         // Required empty public constructor
@@ -73,7 +72,7 @@ private TextView noData;
       //  mLayoutManager = new LinearLayoutManager(context);
         noData=(TextView) view.findViewById(R.id.no_data);
         SharedPreferences sharedpreferences = context.getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
-        String userName = sharedpreferences.getString(Name, null);
+
         userId = sharedpreferences.getString(Id, null);
 
 
@@ -90,9 +89,8 @@ private TextView noData;
         //feeding values to RecyclerView using custom RecyclerView adapter
         recyclerAdapterProfileEvent = new RecyclerAdapterProfileEvent(context, eventsList);
 
+        LinearLayoutManager mLayoutManager;
 
-        //setting fixed size
-        Log.e("ScreenSizeReecyvlr", "" + screenSize(getActivity()));
         if (screenSize(getActivity()) < 6.5)
             mLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         else {
@@ -108,15 +106,13 @@ private TextView noData;
         loadData();
 
 
-        //recyclerAdapterEventHome.setClickListener(this);
-
     }
 
 
     private void makeJsonArrayRequestEventHome() {
 
 
-        Log.e("error",  BaseUri + "/profileService/profileEvent/" + userId);
+
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, BaseUri + "/profileService/profileEvent/" + userId, null, new Response.Listener<JSONArray>() {
 
@@ -177,13 +173,6 @@ private TextView noData;
     }
 
 
-    @Override
-    public void onClick(View view, int position) {
-        /*BlogHome blog = blogHomeList.get(position);
-        Intent i = new Intent(getContext(), BlogDetailsActivity.class);
-        i.putExtra("postId", blog.getId());
-        startActivity(i);*/
-    }
 
     class RecyclerAdapterProfileEvent extends RecyclerView.Adapter<RecyclerAdapterProfileEvent.MyViewHolder> {
 
@@ -265,7 +254,7 @@ private TextView noData;
         public class MyViewHolder extends RecyclerView.ViewHolder  {
 
             private TextView eventCaption, eventDesignation, eventVenue, eventCompany, eventDate, eventRegistered, eventStatus, event, event_industry, event_profile_name, event_time,viewMore;
-            private NetworkImageView event_img, userImage;
+            private NetworkImageView event_img;
 
 
             public MyViewHolder(View itemView) {

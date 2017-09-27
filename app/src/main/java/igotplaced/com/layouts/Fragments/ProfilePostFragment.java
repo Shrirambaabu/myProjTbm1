@@ -48,7 +48,7 @@ import static igotplaced.com.layouts.Utils.Utils.MyPREFERENCES;
 import static igotplaced.com.layouts.Utils.Utils.Name;
 import static igotplaced.com.layouts.Utils.Utils.screenSize;
 
-public class ProfilePostFragment extends Fragment implements ClickListener {
+public class ProfilePostFragment extends Fragment  {
 
     private Context context;
     private RequestQueue queue;
@@ -92,7 +92,6 @@ public class ProfilePostFragment extends Fragment implements ClickListener {
         recyclerAdapterProfilePost = new RecyclerAdapterProfilePost(context, postList);
 
 
-        Log.e("ScreenSizeReecyvlr", "" + screenSize(getActivity()));
         if (screenSize(getActivity()) < 6.5)
             mLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         else {
@@ -102,15 +101,14 @@ public class ProfilePostFragment extends Fragment implements ClickListener {
         post_view.setHasFixedSize(true);
 
         post_view.setLayoutManager(mLayoutManager);
-      //  mLayoutManager = (LinearLayoutManager) post_view.getLayoutManager();
-        //setting RecyclerView adapter
+
         post_view.setAdapter(recyclerAdapterProfilePost);
 
         //Getting Instance of Volley Request Queue
         queue = NetworkController.getInstance(context).getRequestQueue();
         loadData();
 
-        //    recyclerAdapterProfilePost.setClickListener(this);
+
 
     }
 
@@ -174,14 +172,6 @@ public class ProfilePostFragment extends Fragment implements ClickListener {
 
     }
 
-
-    @Override
-    public void onClick(View view, int position) {
-        /*BlogHome blog = blogHomeList.get(position);
-        Intent i = new Intent(getContext(), BlogDetailsActivity.class);
-        i.putExtra("postId", blog.getId());
-        startActivity(i);*/
-    }
 
 
     class RecyclerAdapterProfilePost extends RecyclerView.Adapter<RecyclerAdapterProfilePost.MyViewHolder> {
@@ -266,7 +256,7 @@ public class ProfilePostFragment extends Fragment implements ClickListener {
 
             private TextView post, postIndustry, postProfileName, postTime,postCompany,viewMore;
             private NetworkImageView postImage;
-            private ItemClickListener itemClickListener;
+
 
             public MyViewHolder(View itemView) {
 

@@ -50,7 +50,7 @@ public class CompanyQuestionFragment extends Fragment {
     private Context context;
     private RequestQueue queue;
     private List<Questions> questionsList = new ArrayList<Questions>();
-    private LinearLayoutManager mLayoutManager;
+
     private RecyclerQuestionCompany recyclerQuestionCompany;
 
 
@@ -86,8 +86,7 @@ public class CompanyQuestionFragment extends Fragment {
         //feeding values to RecyclerView using custom RecyclerView adapter
         recyclerQuestionCompany = new RecyclerQuestionCompany(context, questionsList);
 
-        //setting fixed size
-        Log.e("ScreenSizeReecyvlr", "" + screenSize(getActivity()));
+        LinearLayoutManager mLayoutManager;
         if (screenSize(getActivity()) < 6.5)
             mLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         else {
@@ -106,7 +105,6 @@ public class CompanyQuestionFragment extends Fragment {
 
     private void makeJsonArrayRequestQuestionsHome() {
 
-        Log.e("QuesURL", "" + BaseUri + "/profileService/companyProfileQuestions/" + userId);
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, BaseUri + "/profileService/companyProfileQuestions/" + userId, null, new Response.Listener<JSONArray>() {
 
@@ -233,7 +231,7 @@ public class CompanyQuestionFragment extends Fragment {
 
             private TextView questions, questionsIndustry, questionsProfileName, questionsTime, questionsCompany, viewMore;
             private NetworkImageView questionsImage;
-            private ItemClickListener itemClickListener;
+
 
             public MyViewHolder(View itemView) {
                 super(itemView);
@@ -247,7 +245,6 @@ public class CompanyQuestionFragment extends Fragment {
 
                 // Volley's NetworkImageView which will load Image from URL
                 questionsImage = (NetworkImageView) itemView.findViewById(R.id.questions_img);
-
 
             }
 

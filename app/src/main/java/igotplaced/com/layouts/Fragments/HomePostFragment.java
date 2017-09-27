@@ -58,7 +58,7 @@ import static igotplaced.com.layouts.Utils.Utils.MyPREFERENCES;
 import static igotplaced.com.layouts.Utils.Utils.Name;
 import static igotplaced.com.layouts.Utils.Utils.screenSize;
 
-public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, ClickListener {
+public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private Context context;
     private RequestQueue queue;
@@ -69,10 +69,9 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
     private List<Post> postList = new ArrayList<Post>();
     private RecyclerAdapterPostHome recyclerAdapterPostHome;
 
-    int lastVisiblesItems, visibleItemCount, totalItemCount;
     int loadLimit;
     private LinearLayoutManager mLayoutManager;
-    private boolean loading, swipe = false;
+    private boolean loading;
 
     public HomePostFragment() {
         // Required empty public constructor
@@ -94,7 +93,7 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
 
 
         SharedPreferences sharedpreferences = context.getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
-        String userName = sharedpreferences.getString(Name, null);
+
         userId = sharedpreferences.getString(Id, null);
 
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_layout);
@@ -110,7 +109,7 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
     @Override
     public void onResume() {
         super.onResume();
-        Log.e("LoaDScreen", "" + screenSize(getActivity()));
+
         if (screenSize(getActivity()) < 6.5) {
             loadLimit = 5;
 
@@ -141,7 +140,6 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
         //feeding values to RecyclerView using custom RecyclerView adapter
         recyclerAdapterPostHome = new RecyclerAdapterPostHome(context, postList);
         //setting fixed size
-        Log.e("ScreenSizeReecyvlr", "" + screenSize(getActivity()));
         if (screenSize(getActivity()) < 6.5)
             mLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         else {
@@ -171,14 +169,10 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 if (dy > 0) {
+                    int  totalItemCount;
 
-                    visibleItemCount = mLayoutManager.getChildCount();
                     totalItemCount = mLayoutManager.getItemCount();
-                    lastVisiblesItems = mLayoutManager.findFirstVisibleItemPosition();
-/*
 
-                    Log.d("error", ""+visibleItemCount+totalItemCount+lastVisiblesItems);
-*/
 
                     if (!loading) {
                         loadMoreData(totalItemCount + 1);
@@ -189,7 +183,6 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
             }
         });
 
-        // recyclerAdapterPostHome.setClickListener(this);
 
     }
 
@@ -208,8 +201,7 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
 
             @Override
             public void onResponse(JSONObject jsonObject) {
-/*
-                Log.d("error", jsonObject.toString());*/
+
                 try {
                     jsonObjectJSON = jsonObject.getJSONArray("");
 
@@ -217,7 +209,7 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
                     //postList.clear();
 
                     for (int i = 0; i < jsonObjectJSON.length(); i++) {
-                     /*   Log.d("error", jsonObjectJSON.toString());*/
+
                         try {
 
                             JSONObject obj = jsonObjectJSON.getJSONObject(i);
@@ -246,7 +238,7 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("error", "Error: " + error.getMessage());
-                Utils.showDialogue(getActivity(),"Sorry! Server Error");
+                Utils.showDialogue(getActivity(), "Sorry! Server Error");
             }
         });
 
@@ -277,20 +269,9 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
     }
 
 
-    @Override
-    public void onClick(View view, int position) {
-        /*BlogHome blog = blogHomeList.get(position);
-        Intent i = new Intent(getContext(), BlogDetailsActivity.class);
-        i.putExtra("postId", blog.getId());
-        startActivity(i);*/
-    }
-
-
     class RecyclerAdapterPostHome extends RecyclerView.Adapter<RecyclerAdapterPostHome.MyViewHolder> {
 
-        private String userId = null, userName = null;
-        private String URL = BaseUri + "/home/postComments";
-        private String postId, postedUserId, userPostedComment;
+        private String userId = null;
 
 
         private List<Post> postList;
@@ -300,7 +281,7 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
 
         public RecyclerAdapterPostHome(Context context, List<Post> postList) {
             SharedPreferences sharedpreferences = context.getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
-            userName = sharedpreferences.getString(Name, null);
+
             userId = sharedpreferences.getString(Id, null);
             this.context = context;
             this.postList = postList;
@@ -317,7 +298,8 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
         @Override
         public void onBindViewHolder(final MyViewHolder holder, final int position) {
             Post post = postList.get(position);
-            postId = post.getPostId();
+
+            String postedUserId;
             postedUserId = post.getPostedUserId();
             holder.post.setText(post.getPost());
             holder.postIndustry.setText("#" + post.getPostIndustry());
@@ -329,7 +311,6 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
                 holder.postCompany.setText("#" + post.getPostCompany());
             }
 
-            //  holder.userImage.setImageUrl(Utils.BaseImageUri + post.getUserImage(), NetworkController.getInstance(context).getImageLoader());
             holder.postImage.setImageUrl(Utils.BaseImageUri + post.getPostImage(), NetworkController.getInstance(context).getImageLoader());
 
             holder.postCompany.setOnClickListener(new View.OnClickListener() {
@@ -387,8 +368,7 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
         public class MyViewHolder extends RecyclerView.ViewHolder {
             private TextView post, postIndustry, postProfileName, postTime, postCompany, viewMore;
 
-            private NetworkImageView postImage, userImage;
-            private ItemClickListener itemClickListener;
+            private NetworkImageView postImage;
 
 
             public MyViewHolder(View itemView) {
@@ -400,18 +380,9 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
                 viewMore = (TextView) itemView.findViewById(R.id.view_more);
                 postCompany = (TextView) itemView.findViewById(R.id.post_company);
 
-
-                // postTime = (TextView) itemView.findViewById(R.id.post_time);
-                // Volley's NetworkImageView which will load Image from URL
                 postImage = (NetworkImageView) itemView.findViewById(R.id.post_img);
-
-                // userImage = (NetworkImageView) itemView.findViewById(R.id.comment_profile_img);
-
             }
-
-
         }
-
 
     }
 

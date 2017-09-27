@@ -47,9 +47,8 @@ public class NotificationFragment extends Fragment implements SwipeRefreshLayout
     private SwipeRefreshLayout swipeRefreshLayout;
 
     private String userId;
-    int lastVisiblesItems, visibleItemCount, totalItemCount;
     private LinearLayoutManager mLayoutManager;
-    private boolean loading, swipe = false;
+    private boolean loading;
 
     private List<NotificationView> notificationViewList = new ArrayList<NotificationView>();
     private RecyclerAdapterNotification recyclerAdapterNotification;
@@ -128,29 +127,25 @@ public class NotificationFragment extends Fragment implements SwipeRefreshLayout
 
         // show loader and fetch messages
         swipeRefreshLayout.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        //Volley's inbuilt class to make Json array request
-                        loadData();
-                    }
-                }
+                                    @Override
+                                    public void run() {
+                                        //Volley's inbuilt class to make Json array request
+                                        loadData();
+                                    }
+                                }
         );
         notification_view.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 if (dy > 0) {
+                    int totalItemCount;
 
-                    visibleItemCount = mLayoutManager.getChildCount();
+
                     totalItemCount = mLayoutManager.getItemCount();
-                    lastVisiblesItems = mLayoutManager.findFirstVisibleItemPosition();
-                    Log.e("Notigy",""+mLayoutManager.getItemCount());
-/*
 
-                    Log.d("error", ""+visibleItemCount+totalItemCount+lastVisiblesItems);
-*/
 
                     if (!loading) {
-                        Log.e("Tag","Scroll");
+                        Log.e("Tag", "Scroll");
                         loadMoreData(totalItemCount + 1);
                         loading = true;
                     }
@@ -168,7 +163,7 @@ public class NotificationFragment extends Fragment implements SwipeRefreshLayout
         // then it is useful for every call request
         makeJsonArrayRequestNotification(totalItemCount, totalItemCount + 8);
 
-       // recyclerAdapterNotification.notifyDataSetChanged();
+        // recyclerAdapterNotification.notifyDataSetChanged();
 
     }
 
@@ -184,11 +179,10 @@ public class NotificationFragment extends Fragment implements SwipeRefreshLayout
 
             @Override
             public void onResponse(JSONObject jsonObject) {
-/*
-                Log.d("error", jsonObject.toString());*/
+                notificationViewList.clear();
                 try {
                     jsonObjectJSON = jsonObject.getJSONArray("");
-                  //  notificationViewList.clear();
+                    //  notificationViewList.clear();
 
                     for (int i = 0; i < jsonObjectJSON.length(); i++) {
                      /*   Log.d("error", jsonObjectJSON.toString());*/

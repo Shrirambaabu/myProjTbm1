@@ -57,6 +57,7 @@ import igotplaced.com.layouts.Model.Profile;
 import igotplaced.com.layouts.Utils.ConnectivityReceiver;
 import igotplaced.com.layouts.Utils.CustomAutoCompleteView;
 import igotplaced.com.layouts.Utils.MyApplication;
+import igotplaced.com.layouts.Utils.MyService;
 import igotplaced.com.layouts.Utils.NetworkController;
 import igotplaced.com.layouts.Utils.Utils;
 import igotplaced.com.layouts.Utils.Validation;
@@ -78,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
 
     JSONArray terms;
 
-
+    private Intent serviceIntent;
     //Defining Variables
     private Toolbar toolbar;
     private Context context;
@@ -101,7 +102,7 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        serviceIntent = new Intent(MainActivity.this, MyService.class);
         // Initializing Toolbar and setting it as the actionbar
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -114,7 +115,8 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
 
 
         queue = NetworkController.getInstance(context).getRequestQueue();
-
+        Log.e("LoginService",""+Thread.currentThread().getId());
+        startService(serviceIntent);
 
         navigation();
         makeJsonArrayRequestProfile();
@@ -275,8 +277,11 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
                                 editor.putString(Name, null);
                                 editor.commit();
                                 Intent logOut = new Intent(MainActivity.this, LoginActivity.class);
+                                stopService(serviceIntent);
+                                Log.e("MainOut","Out");
                                 logOut.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 startActivity(logOut);
+
                             }
                         }).setNegativeButton("No", null).show();
                /* Intent logOut = new Intent(this, LoginActivity.class);
@@ -379,6 +384,8 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             MainActivity.super.onBackPressed();
+                            Log.e("MainOut","Out");
+                            stopService(serviceIntent);
                         }
                     }).setNegativeButton("No", null).show();
 

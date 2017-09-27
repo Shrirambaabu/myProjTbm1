@@ -56,7 +56,7 @@ public class InterviewDetails extends Fragment implements View.OnClickListener {
 
     private EditText userComment;
     private ImageView sendComment;
-    private LinearLayoutManager mLayoutManager;
+
 
     private RecyclerAdapterInterviewDetails recyclerAdapterInterviewDetails;
     private RequestQueue queue;
@@ -123,8 +123,9 @@ public class InterviewDetails extends Fragment implements View.OnClickListener {
         //setting fixed size
         postRecycler.setHasFixedSize(true);
         //setting horizontal layout
+
         postRecycler.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        mLayoutManager = (LinearLayoutManager) postRecycler.getLayoutManager();
+
         //setting RecyclerView adapter
         postRecycler.setAdapter(recyclerAdapterInterviewDetails);
         //Getting Instance of Volley Request Queue
@@ -201,7 +202,7 @@ public class InterviewDetails extends Fragment implements View.OnClickListener {
             userPostedComment = userComment.getText().toString();
             insertUserComment();
             recyclerAdapterInterviewDetails.notifyDataSetChanged();
-            Toast.makeText(getContext(), "Comment added", Toast.LENGTH_SHORT).show();
+
         }
         userComment.setText("");
     }

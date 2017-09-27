@@ -48,20 +48,15 @@ import static igotplaced.com.layouts.Utils.Utils.Name;
 
 
 public class EventDetailsFragment extends Fragment implements View.OnClickListener {
-    private String id = null,image=null,name=null,time=null,caption=null,designation=null,venue=null,date=null,registered=null,status=null,event=null,industry=null,postedUserId=null;
+    private String id = null, image = null, name = null, time = null, caption = null, designation = null, venue = null, date = null, registered = null, status = null, event = null, industry = null, postedUserId = null;
 
     private String userId = null, userName = null;
     private String userPostedComment;
     private String URL = BaseUri + "/home/eventsComments";
 
-    private NetworkImageView eventImage;
-    private TextView eventName,eventTime,eventCaption,eventDesignation,eventVenue,eventDate,eventRegistered,eventStatus,eventMessage,eventIndustry;
-
     private EditText userComment;
-    private ImageView sendComment;
 
     private List<Events> eventList = new ArrayList<Events>();
-    private LinearLayoutManager mLayoutManager;
 
     private RequestQueue queue;
 
@@ -83,8 +78,9 @@ public class EventDetailsFragment extends Fragment implements View.OnClickListen
 
         View view = inflater.inflate(R.layout.fragment_event_details, container, false);
         addressingView(view);
-        addingListeners(view);
 
+        ImageView sendComment = (ImageView) view.findViewById(R.id.send_comment);
+        sendComment.setOnClickListener(this);
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             id = bundle.getString("eid");
@@ -101,6 +97,18 @@ public class EventDetailsFragment extends Fragment implements View.OnClickListen
             industry = bundle.getString("eIndustry");
             postedUserId = bundle.getString("eUserId");
         }
+
+        NetworkImageView eventImage = (NetworkImageView) view.findViewById(R.id.event_img);
+        TextView eventName = (TextView) view.findViewById(R.id.event_profile_name);
+        TextView eventTime = (TextView) view.findViewById(R.id.event_time);
+        TextView eventCaption = (TextView) view.findViewById(R.id.eventCaption);
+        TextView eventDesignation = (TextView) view.findViewById(R.id.eventDesignation);
+        TextView eventVenue = (TextView) view.findViewById(R.id.eventVenue);
+        TextView eventDate = (TextView) view.findViewById(R.id.eventDate);
+        TextView eventRegistered = (TextView) view.findViewById(R.id.eventRegistered);
+        TextView eventStatus = (TextView) view.findViewById(R.id.eventStatus);
+        TextView eventMessage = (TextView) view.findViewById(R.id.event);
+        TextView eventIndustry = (TextView) view.findViewById(R.id.event_industry);
 
         eventImage.setImageUrl(Utils.BaseImageUri + image, NetworkController.getInstance(getContext()).getImageLoader());
         eventName.setText(name);
@@ -127,7 +135,6 @@ public class EventDetailsFragment extends Fragment implements View.OnClickListen
         eventRecycler.setHasFixedSize(true);
         //setting horizontal layout
         eventRecycler.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        mLayoutManager = (LinearLayoutManager) eventRecycler.getLayoutManager();
         //setting RecyclerView adapter
         eventRecycler.setAdapter(recyclerAdapterEventDetails);
         //Getting Instance of Volley Request Queue
@@ -139,7 +146,7 @@ public class EventDetailsFragment extends Fragment implements View.OnClickListen
 
     private void makePostCommentsRequest() {
 
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, BaseUri + "/home/eventCommentList/" + id, null,  new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, BaseUri + "/home/eventCommentList/" + id, null, new Response.Listener<JSONArray>() {
 
 
             @Override
@@ -155,7 +162,7 @@ public class EventDetailsFragment extends Fragment implements View.OnClickListen
                         // adding movie to blogHomeList array
                         eventList.add(events);
 
-                        Log.e("Comments",""+ obj.getString("comments"));
+                        Log.e("Comments", "" + obj.getString("comments"));
 
                     } catch (Exception e) {
                         Log.d("error", e.getMessage());
@@ -172,7 +179,7 @@ public class EventDetailsFragment extends Fragment implements View.OnClickListen
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("error", "Error: " + error.getMessage());
-                Utils.showDialogue(getActivity(),"Sorry! Server Error");
+                Utils.showDialogue(getActivity(), "Sorry! Server Error");
             }
         });
 
@@ -180,25 +187,11 @@ public class EventDetailsFragment extends Fragment implements View.OnClickListen
     }
 
     private void addressingView(View view) {
-        eventImage=(NetworkImageView) view.findViewById(R.id.event_img);
-        eventName=(TextView) view.findViewById(R.id.event_profile_name);
-        eventTime=(TextView) view.findViewById(R.id.event_time);
-        eventCaption=(TextView) view.findViewById(R.id.eventCaption);
-        eventDesignation=(TextView) view.findViewById(R.id.eventDesignation);
-        eventVenue=(TextView) view.findViewById(R.id.eventVenue);
-        eventDate=(TextView) view.findViewById(R.id.eventDate);
-        eventRegistered=(TextView) view.findViewById(R.id.eventRegistered);
-        eventStatus=(TextView) view.findViewById(R.id.eventStatus);
-        eventMessage=(TextView) view.findViewById(R.id.event);
-        eventIndustry=(TextView) view.findViewById(R.id.event_industry);
-        userComment=(EditText) view.findViewById(R.id.user_comment);
-        sendComment=(ImageView) view.findViewById(R.id.send_comment);
+
+        userComment = (EditText) view.findViewById(R.id.user_comment);
+
     }
 
-    private void addingListeners(View view) {
-
-        sendComment.setOnClickListener(this);
-    }
 
     @Override
     public void onClick(View v) {

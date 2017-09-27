@@ -87,8 +87,7 @@ public class CompanyInterviewFragment extends Fragment {
         //feeding values to RecyclerView using custom RecyclerView adapter
         recyclerCompanyInterview = new RecyclerCompanyInterview(context, interviewList);
 
-        //setting fixed size
-        Log.e("ScreenSizeReecyvlr", "" + screenSize(getActivity()));
+
         if (screenSize(getActivity()) < 6.5)
             mLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         else {
@@ -107,7 +106,6 @@ public class CompanyInterviewFragment extends Fragment {
 
     private void makeJsonArrayRequestInterviewHome() {
 
-        Log.e("URL Interview", "" + BaseUri + "/profileService/companyProfileInterview/" + userId);
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, BaseUri + "/profileService/companyProfileInterview/" + userId, null, new Response.Listener<JSONArray>() {
 
 
@@ -233,7 +231,7 @@ public class CompanyInterviewFragment extends Fragment {
 
         public class MyViewHolder extends RecyclerView.ViewHolder {
             private TextView interview, interviewIndustry, interviewProfileName, interviewTime, interviewCompany, viewMore;
-            private NetworkImageView interviewImage, userImage;
+            private NetworkImageView interviewImage;
 
 
             public MyViewHolder(View itemView) {

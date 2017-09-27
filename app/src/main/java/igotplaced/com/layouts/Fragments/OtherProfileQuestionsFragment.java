@@ -48,7 +48,7 @@ public class OtherProfileQuestionsFragment extends Fragment {
     private RequestQueue queue;
     private List<Questions> questionsList = new ArrayList<Questions>();
     private RecyclerAdapterOtherProfileQuestions recyclerAdapterOtherProfileQuestions;
-    private LinearLayoutManager mLayoutManager;
+
 
     public OtherProfileQuestionsFragment() {
         // Required empty public constructor
@@ -81,9 +81,7 @@ public class OtherProfileQuestionsFragment extends Fragment {
         //feeding values to RecyclerView using custom RecyclerView adapter
         recyclerAdapterOtherProfileQuestions = new RecyclerAdapterOtherProfileQuestions(context, questionsList);
 
-
-        //setting fixed size
-        Log.e("ScreenSizeReecyvlr", "" + screenSize(getActivity()));
+        LinearLayoutManager mLayoutManager;
         if (screenSize(getActivity()) < 6.5)
             mLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         else {

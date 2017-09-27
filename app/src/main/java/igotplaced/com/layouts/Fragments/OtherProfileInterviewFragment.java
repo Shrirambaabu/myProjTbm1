@@ -45,9 +45,9 @@ public class OtherProfileInterviewFragment extends Fragment {
     private Context context;
     private RequestQueue queue;
     private String userId;
-    private   TextView noData;
+    private TextView noData;
     private List<Interview> interviewList = new ArrayList<Interview>();
-    private LinearLayoutManager mLayoutManager;
+
     private RecyclerAdapterOtherProfileInterview recyclerAdapterOtherProfileInterview;
 
     public OtherProfileInterviewFragment() {
@@ -61,15 +61,15 @@ public class OtherProfileInterviewFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_other_profile_interview, container, false);
         context = getActivity().getApplicationContext();
-        noData=(TextView) view.findViewById(R.id.no_data);
-       // mLayoutManager = new LinearLayoutManager(context);
+        noData = (TextView) view.findViewById(R.id.no_data);
+        // mLayoutManager = new LinearLayoutManager(context);
         Bundle bundle = this.getArguments();
 
         if (bundle != null) {
             userId = bundle.getString("otherId");
         }
 
-        Log.e("InterExId",""+userId);
+        Log.e("InterExId", "" + userId);
 
         interviewRecyclerView(view);
         // Inflate the layout for this fragment
@@ -83,8 +83,7 @@ public class OtherProfileInterviewFragment extends Fragment {
         //feeding values to RecyclerView using custom RecyclerView adapter
         recyclerAdapterOtherProfileInterview = new RecyclerAdapterOtherProfileInterview(context, interviewList);
 
-        //setting fixed size
-        Log.e("ScreenSizeReecyvlr", "" + screenSize(getActivity()));
+        LinearLayoutManager mLayoutManager;
         if (screenSize(getActivity()) < 6.5)
             mLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         else {
@@ -103,7 +102,7 @@ public class OtherProfileInterviewFragment extends Fragment {
 
     private void makeJsonArrayRequestInterviewHome() {
 
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, BaseUri + "/profileService/profileInterviewExperience/" + userId, null,  new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, BaseUri + "/profileService/profileInterviewExperience/" + userId, null, new Response.Listener<JSONArray>() {
 
 
             @Override
@@ -114,7 +113,7 @@ public class OtherProfileInterviewFragment extends Fragment {
                     try {
 
                         JSONObject obj = response.getJSONObject(i);
-                        Interview interview = new Interview(obj.getString("fid"), obj.getString("user_id"), obj.getString("feedback"), obj.getString("industryname"), obj.getString("interviewExperienceimgname"), obj.getString("username"), obj.getString("created_by"), obj.getString("interviewExperienceimgname"), obj.getString("username"),obj.getString("companyname"),obj.getString("company_id"));
+                        Interview interview = new Interview(obj.getString("fid"), obj.getString("user_id"), obj.getString("feedback"), obj.getString("industryname"), obj.getString("interviewExperienceimgname"), obj.getString("username"), obj.getString("created_by"), obj.getString("interviewExperienceimgname"), obj.getString("username"), obj.getString("companyname"), obj.getString("company_id"));
                         // adding movie to blogHomeList array
                         interviewList.add(interview);
 
@@ -127,9 +126,9 @@ public class OtherProfileInterviewFragment extends Fragment {
                         recyclerAdapterOtherProfileInterview.notifyDataSetChanged();
                     }
                 }
-                if (interviewList.isEmpty()){
+                if (interviewList.isEmpty()) {
                     noData.setVisibility(View.VISIBLE);
-                }else {
+                } else {
                     noData.setVisibility(View.GONE);
                 }
             }
@@ -139,7 +138,7 @@ public class OtherProfileInterviewFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("error", "Error: " + error.getMessage());
-                Utils.showDialogue(getActivity(),"Sorry! Server Error");
+                Utils.showDialogue(getActivity(), "Sorry! Server Error");
             }
         });
 
@@ -175,11 +174,11 @@ public class OtherProfileInterviewFragment extends Fragment {
 
             //Pass the values of feeds object to Views
             holder.interview.setText(interview.getInterview());
-            holder.interviewIndustry.setText("#"+interview.getInterviewIndustry());
-            if (interview.getInterviewCompany().equals("")){
+            holder.interviewIndustry.setText("#" + interview.getInterviewIndustry());
+            if (interview.getInterviewCompany().equals("")) {
                 holder.interviewCompany.setText(interview.getInterviewCompany());
-            }else{
-                holder.interviewCompany.setText("#"+interview.getInterviewCompany());
+            } else {
+                holder.interviewCompany.setText("#" + interview.getInterviewCompany());
             }
             holder.interviewProfileName.setText(interview.getInterviewProfileName());
             holder.interviewTime.setText(interview.getInterviewTime());
@@ -202,18 +201,17 @@ public class OtherProfileInterviewFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     Intent companyDetails = new Intent(context, CompanyDetailsActivity.class);
-                    companyDetails.putExtra("postCompany",  interviewList.get(position).getInterviewCompany());
-                    companyDetails.putExtra("companyId",  interviewList.get(position).getCompanyId());
+                    companyDetails.putExtra("postCompany", interviewList.get(position).getInterviewCompany());
+                    companyDetails.putExtra("companyId", interviewList.get(position).getCompanyId());
                     startActivity(companyDetails);
                 }
             });
 
 
-
             holder.viewMore.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent profileInterview=new Intent(getContext(), ProfileInterviewDetailsActivity.class);
+                    Intent profileInterview = new Intent(getContext(), ProfileInterviewDetailsActivity.class);
 
                     profileInterview.putExtra("iid", interviewList.get(position).getInterviewId());
                     profileInterview.putExtra("created_uname", interviewList.get(position).getInterviewProfileName());
@@ -234,10 +232,10 @@ public class OtherProfileInterviewFragment extends Fragment {
             return interviewList.size();
         }
 
-        public class MyViewHolder extends RecyclerView.ViewHolder  {
-            private TextView interview, interviewIndustry, interviewProfileName, interviewTime,interviewCompany, viewMore;
-            private NetworkImageView interviewImage, userImage;
-            private ItemClickListener itemClickListener;
+        public class MyViewHolder extends RecyclerView.ViewHolder {
+            private TextView interview, interviewIndustry, interviewProfileName, interviewTime, interviewCompany, viewMore;
+            private NetworkImageView interviewImage;
+
 
             public MyViewHolder(View itemView) {
                 super(itemView);

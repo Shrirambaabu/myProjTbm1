@@ -48,18 +48,16 @@ import static igotplaced.com.layouts.Utils.Utils.MyPREFERENCES;
 import static igotplaced.com.layouts.Utils.Utils.Name;
 import static igotplaced.com.layouts.Utils.Utils.screenSize;
 
-public class ProfileQuestionFragment extends Fragment implements ClickListener {
+public class ProfileQuestionFragment extends Fragment  {
 
     private Context context;
     private RequestQueue queue;
 
-    private   TextView noData;
+    private TextView noData;
     private String userId;
     private List<Questions> questionsList = new ArrayList<Questions>();
     private RecyclerAdapterProfileQuestions recyclerAdapterProfileQuestions;
 
-
-    private LinearLayoutManager mLayoutManager;
 
     public ProfileQuestionFragment() {
         // Required empty public constructor
@@ -73,10 +71,10 @@ public class ProfileQuestionFragment extends Fragment implements ClickListener {
         View view = inflater.inflate(R.layout.fragment_profile_question, container, false);
         context = getActivity().getApplicationContext();
 
-      // mLayoutManager = new LinearLayoutManager(context);
-        noData=(TextView) view.findViewById(R.id.no_data);
+        // mLayoutManager = new LinearLayoutManager(context);
+        noData = (TextView) view.findViewById(R.id.no_data);
         SharedPreferences sharedpreferences = context.getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
-        String userName = sharedpreferences.getString(Name, null);
+
         userId = sharedpreferences.getString(Id, null);
 
         postRecyclerView(view);
@@ -86,17 +84,13 @@ public class ProfileQuestionFragment extends Fragment implements ClickListener {
     }
 
 
-
-
     private void postRecyclerView(View view) {
         //mapping RecyclerView
         RecyclerView post_view = (RecyclerView) view.findViewById(R.id.recycler_view_profile_questions);
         //feeding values to RecyclerView using custom RecyclerView adapter
         recyclerAdapterProfileQuestions = new RecyclerAdapterProfileQuestions(context, questionsList);
 
-
-        //setting fixed size
-        Log.e("ScreenSizeReecyvlr", "" + screenSize(getActivity()));
+        LinearLayoutManager mLayoutManager;
         if (screenSize(getActivity()) < 6.5)
             mLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         else {
@@ -112,8 +106,7 @@ public class ProfileQuestionFragment extends Fragment implements ClickListener {
         loadData();
 
 
-
-      //  recyclerAdapterProfileQuestions.setClickListener(this);
+        //  recyclerAdapterProfileQuestions.setClickListener(this);
 
     }
 
@@ -122,9 +115,7 @@ public class ProfileQuestionFragment extends Fragment implements ClickListener {
 
 
 
-        Log.d("error", "loaded" + BaseUri + "/profileService/profileQuestion/"+userId );
-
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, BaseUri + "/profileService/profileQuestion/"+ userId, null,  new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, BaseUri + "/profileService/profileQuestion/" + userId, null, new Response.Listener<JSONArray>() {
 
 
             @Override
@@ -135,10 +126,9 @@ public class ProfileQuestionFragment extends Fragment implements ClickListener {
                     try {
 
                         JSONObject obj = response.getJSONObject(i);
-                        Questions questions = new Questions(obj.getString("qid"),obj.getString("created_user"),obj.getString("question"), obj.getString("industryname"), obj.getString("questionimgname"), obj.getString("created_uname"), obj.getString("created_by"), obj.getString("questionimgname"), obj.getString("created_uname"),obj.getString("companyname"),obj.getString("company_id"));
+                        Questions questions = new Questions(obj.getString("qid"), obj.getString("created_user"), obj.getString("question"), obj.getString("industryname"), obj.getString("questionimgname"), obj.getString("created_uname"), obj.getString("created_by"), obj.getString("questionimgname"), obj.getString("created_uname"), obj.getString("companyname"), obj.getString("company_id"));
                         // adding movie to blogHomeList array
                         questionsList.add(questions);
-
 
 
                     } catch (Exception e) {
@@ -149,9 +139,9 @@ public class ProfileQuestionFragment extends Fragment implements ClickListener {
                         recyclerAdapterProfileQuestions.notifyDataSetChanged();
                     }
                 }
-                if (questionsList.isEmpty()){
+                if (questionsList.isEmpty()) {
                     noData.setVisibility(View.VISIBLE);
-                }else {
+                } else {
                     noData.setVisibility(View.GONE);
                 }
             }
@@ -161,12 +151,11 @@ public class ProfileQuestionFragment extends Fragment implements ClickListener {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("error", "Error: " + error.getMessage());
-                Utils.showDialogue(getActivity(),"Sorry! Server Error");
+                Utils.showDialogue(getActivity(), "Sorry! Server Error");
             }
         });
 
         queue.add(jsonArrayRequest);
-
 
 
     }
@@ -182,16 +171,9 @@ public class ProfileQuestionFragment extends Fragment implements ClickListener {
     }
 
 
-    @Override
-    public void onClick(View view, int position) {
-        /*BlogHome blog = blogHomeList.get(position);
-        Intent i = new Intent(getContext(), BlogDetailsActivity.class);
-        i.putExtra("postId", blog.getId());
-        startActivity(i);*/
-    }
 
 
-    class RecyclerAdapterProfileQuestions extends RecyclerView.Adapter<RecyclerAdapterProfileQuestions.MyViewHolder>{
+    class RecyclerAdapterProfileQuestions extends RecyclerView.Adapter<RecyclerAdapterProfileQuestions.MyViewHolder> {
 
 
         private List<Questions> questionsList;
@@ -220,13 +202,13 @@ public class ProfileQuestionFragment extends Fragment implements ClickListener {
 
             //Pass the values of feeds object to Views
             holder.questions.setText(questions.getQuestions());
-            if (questions.getQuestionsCompany().equals("Select Company")||questions.getQuestionsCompany().equals("")){
+            if (questions.getQuestionsCompany().equals("Select Company") || questions.getQuestionsCompany().equals("")) {
                 holder.questionsCompany.setText("");
-            }else{
-                holder.questionsCompany.setText("#"+questions.getQuestionsCompany());
+            } else {
+                holder.questionsCompany.setText("#" + questions.getQuestionsCompany());
             }
 
-            holder.questionsIndustry.setText("#"+questions.getQuestionsIndustry());
+            holder.questionsIndustry.setText("#" + questions.getQuestionsIndustry());
             holder.questionsProfileName.setText(questions.getQuestionsProfileName());
             holder.questionsTime.setText(questions.getQuestionsTime());
             //      holder.comment_profile_img.setImageUrl(Utils.BaseImageUri + questions.getCommentProfileImage(), NetworkController.getInstance(context).getImageLoader());
@@ -235,7 +217,7 @@ public class ProfileQuestionFragment extends Fragment implements ClickListener {
             holder.questionsCompany.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent companyDetails=new Intent(context,CompanyDetailsActivity.class);
+                    Intent companyDetails = new Intent(context, CompanyDetailsActivity.class);
                     companyDetails.putExtra("postCompany", questionsList.get(position).getQuestionsCompany());
                     companyDetails.putExtra("companyId", questionsList.get(position).getCompanyId());
                     startActivity(companyDetails);
@@ -243,11 +225,10 @@ public class ProfileQuestionFragment extends Fragment implements ClickListener {
             });
 
 
-
             holder.viewMore.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent questionDetails=new Intent(getContext(), ProfileQuestionsDetailsActivity.class);
+                    Intent questionDetails = new Intent(getContext(), ProfileQuestionsDetailsActivity.class);
 
                     questionDetails.putExtra("qid", questionsList.get(position).getQuestionId());
                     questionDetails.putExtra("created_uname", questionsList.get(position).getQuestionsProfileName());
@@ -269,11 +250,10 @@ public class ProfileQuestionFragment extends Fragment implements ClickListener {
             return questionsList.size();
         }
 
-        public class MyViewHolder extends RecyclerView.ViewHolder  {
+        public class MyViewHolder extends RecyclerView.ViewHolder {
 
-            private TextView questions, questionsIndustry, questionsProfileName, questionsTime,questionsCompany,viewMore;
+            private TextView questions, questionsIndustry, questionsProfileName, questionsTime, questionsCompany, viewMore;
             private NetworkImageView questionsImage;
-
 
 
             public MyViewHolder(View itemView) {
