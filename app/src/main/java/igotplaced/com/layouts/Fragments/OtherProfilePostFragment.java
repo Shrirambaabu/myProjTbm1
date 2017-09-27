@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -42,6 +43,7 @@ import static igotplaced.com.layouts.Utils.Utils.screenSize;
 public class OtherProfilePostFragment extends Fragment {
 
     private   TextView noData;
+    private ImageView logo;
     private Context context;
     private RequestQueue queue;
     private String userId;
@@ -62,6 +64,7 @@ public class OtherProfilePostFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_other_profile_post, container, false);
         context = getActivity().getApplicationContext();
         noData=(TextView) view.findViewById(R.id.no_data);
+        logo=(ImageView) view.findViewById(R.id.logo);
         Bundle bundle = this.getArguments();
 
         if (bundle != null) {
@@ -127,8 +130,10 @@ public class OtherProfilePostFragment extends Fragment {
                 }
                 if (postList.isEmpty()){
                     noData.setVisibility(View.VISIBLE);
+                    logo.setVisibility(View.VISIBLE);
                 }else {
                     noData.setVisibility(View.GONE);
+                    logo.setVisibility(View.GONE);
                 }
             }
 

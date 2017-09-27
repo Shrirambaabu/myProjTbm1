@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -46,6 +47,7 @@ public class OtherProfileInterviewFragment extends Fragment {
     private RequestQueue queue;
     private String userId;
     private TextView noData;
+    private ImageView logo;
     private List<Interview> interviewList = new ArrayList<Interview>();
 
     private RecyclerAdapterOtherProfileInterview recyclerAdapterOtherProfileInterview;
@@ -62,6 +64,7 @@ public class OtherProfileInterviewFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_other_profile_interview, container, false);
         context = getActivity().getApplicationContext();
         noData = (TextView) view.findViewById(R.id.no_data);
+        logo=(ImageView) view.findViewById(R.id.logo);
         // mLayoutManager = new LinearLayoutManager(context);
         Bundle bundle = this.getArguments();
 
@@ -128,8 +131,10 @@ public class OtherProfileInterviewFragment extends Fragment {
                 }
                 if (interviewList.isEmpty()) {
                     noData.setVisibility(View.VISIBLE);
+                    logo.setVisibility(View.VISIBLE);
                 } else {
                     noData.setVisibility(View.GONE);
+                    logo.setVisibility(View.GONE);
                 }
             }
 

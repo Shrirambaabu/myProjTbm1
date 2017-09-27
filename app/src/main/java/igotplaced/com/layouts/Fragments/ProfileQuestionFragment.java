@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -52,7 +53,7 @@ public class ProfileQuestionFragment extends Fragment  {
 
     private Context context;
     private RequestQueue queue;
-
+    private ImageView logo;
     private TextView noData;
     private String userId;
     private List<Questions> questionsList = new ArrayList<Questions>();
@@ -73,6 +74,7 @@ public class ProfileQuestionFragment extends Fragment  {
 
         // mLayoutManager = new LinearLayoutManager(context);
         noData = (TextView) view.findViewById(R.id.no_data);
+        logo = (ImageView) view.findViewById(R.id.logo);
         SharedPreferences sharedpreferences = context.getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
 
         userId = sharedpreferences.getString(Id, null);
@@ -141,8 +143,10 @@ public class ProfileQuestionFragment extends Fragment  {
                 }
                 if (questionsList.isEmpty()) {
                     noData.setVisibility(View.VISIBLE);
+                    logo.setVisibility(View.VISIBLE);
                 } else {
                     noData.setVisibility(View.GONE);
+                    logo.setVisibility(View.GONE);
                 }
             }
 

@@ -23,6 +23,7 @@ import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.ContextThemeWrapper;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -259,8 +260,8 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
 
 
             case R.id.log_out:
-
-                new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_alert).setTitle("Logout")
+                ContextThemeWrapper ctw = new ContextThemeWrapper(MainActivity.this, R.style.Theme_AppCompat_DayNight_Dialog_Alert);
+                new AlertDialog.Builder(ctw).setTitle("Logout")
                         .setMessage("Are you sure you want to Logout?")
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
@@ -343,7 +344,9 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
         } else if (selectedPosition != 0) {
             displaySelectedScreen(R.id.home);
         } else {
-            new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_alert).setTitle("Exit")
+            ContextThemeWrapper ctw = new ContextThemeWrapper(MainActivity.this, R.style.Theme_AppCompat_DayNight_Dialog_Alert);
+
+            new AlertDialog.Builder(ctw).setTitle("Exit")
                     .setMessage("Are you sure you want to exit?")
                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         @Override

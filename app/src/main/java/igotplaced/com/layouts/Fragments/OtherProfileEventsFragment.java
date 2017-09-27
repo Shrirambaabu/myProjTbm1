@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -43,6 +44,7 @@ public class OtherProfileEventsFragment extends Fragment {
 
     private Context context;
     private RequestQueue queue;
+    private ImageView logo;
     private List<Events> eventsList = new ArrayList<Events>();
     private RecyclerAdapterOtherProfileEvent recyclerAdapterOtherProfileEvent;
     private String userId;
@@ -62,6 +64,7 @@ public class OtherProfileEventsFragment extends Fragment {
         context = getActivity().getApplicationContext();
        // mLayoutManager = new LinearLayoutManager(context);
         noData=(TextView) view.findViewById(R.id.no_data);
+        logo=(ImageView) view.findViewById(R.id.logo);
         Bundle bundle = this.getArguments();
 
         if (bundle != null) {
@@ -129,8 +132,10 @@ public class OtherProfileEventsFragment extends Fragment {
                 }
                 if (eventsList.isEmpty()){
                     noData.setVisibility(View.VISIBLE);
+                    logo.setVisibility(View.VISIBLE);
                 }else {
                     noData.setVisibility(View.GONE);
+                    logo.setVisibility(View.GONE);
                 }
             }
 

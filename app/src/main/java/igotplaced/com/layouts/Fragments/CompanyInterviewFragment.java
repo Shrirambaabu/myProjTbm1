@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -49,9 +50,8 @@ public class CompanyInterviewFragment extends Fragment {
     private RequestQueue queue;
     private String userId;
     private TextView noData;
-
+    private ImageView logo;
     private List<Interview> interviewList = new ArrayList<Interview>();
-    private LinearLayoutManager mLayoutManager;
     private RecyclerCompanyInterview recyclerCompanyInterview;
 
     public CompanyInterviewFragment() {
@@ -69,7 +69,8 @@ public class CompanyInterviewFragment extends Fragment {
 
         //   mLayoutManager = new LinearLayoutManager(context);
         Bundle bundle = this.getArguments();
-        noData = (TextView) view.findViewById(R.id.no_data_inter);
+        noData = (TextView) view.findViewById(R.id.no_data);
+        logo=(ImageView) view.findViewById(R.id.logo);
         if (bundle != null) {
             userId = bundle.getString("otherId");
         }
@@ -88,6 +89,7 @@ public class CompanyInterviewFragment extends Fragment {
         recyclerCompanyInterview = new RecyclerCompanyInterview(context, interviewList);
 
 
+        LinearLayoutManager mLayoutManager;
         if (screenSize(getActivity()) < 6.5)
             mLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         else {
@@ -132,8 +134,10 @@ public class CompanyInterviewFragment extends Fragment {
                 }
                 if (interviewList.isEmpty()) {
                     noData.setVisibility(View.VISIBLE);
+                    logo.setVisibility(View.VISIBLE);
                 } else {
                     noData.setVisibility(View.GONE);
+                    logo.setVisibility(View.GONE);
                 }
             }
 

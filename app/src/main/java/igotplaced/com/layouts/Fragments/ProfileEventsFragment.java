@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -52,7 +53,8 @@ public class ProfileEventsFragment extends Fragment {
     private Context context;
     private RequestQueue queue;
 
-private TextView noData;
+    private TextView noData;
+    private ImageView logo;
     private String userId;
     private List<Events> eventsList = new ArrayList<Events>();
     private RecyclerAdapterProfileEvent recyclerAdapterProfileEvent;
@@ -69,8 +71,9 @@ private TextView noData;
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_profile_events, container, false);
         context = getActivity().getApplicationContext();
-      //  mLayoutManager = new LinearLayoutManager(context);
-        noData=(TextView) view.findViewById(R.id.no_data);
+        //  mLayoutManager = new LinearLayoutManager(context);
+        noData = (TextView) view.findViewById(R.id.no_data);
+        logo = (ImageView) view.findViewById(R.id.logo);
         SharedPreferences sharedpreferences = context.getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
 
         userId = sharedpreferences.getString(Id, null);
@@ -112,8 +115,6 @@ private TextView noData;
     private void makeJsonArrayRequestEventHome() {
 
 
-
-
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, BaseUri + "/profileService/profileEvent/" + userId, null, new Response.Listener<JSONArray>() {
 
 
@@ -139,10 +140,12 @@ private TextView noData;
                         recyclerAdapterProfileEvent.notifyDataSetChanged();
                     }
                 }
-                if (eventsList.isEmpty()){
+                if (eventsList.isEmpty()) {
                     noData.setVisibility(View.VISIBLE);
-                }else {
+                    logo.setVisibility(View.VISIBLE);
+                } else {
                     noData.setVisibility(View.GONE);
+                    logo.setVisibility(View.GONE);
                 }
             }
 
@@ -151,7 +154,7 @@ private TextView noData;
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("error", "Error: " + error.getMessage());
-                Utils.showDialogue(getActivity(),"Sorry! Server Error");
+                Utils.showDialogue(getActivity(), "Sorry! Server Error");
             }
         });
 
@@ -171,7 +174,6 @@ private TextView noData;
         recyclerAdapterProfileEvent.notifyDataSetChanged();
 
     }
-
 
 
     class RecyclerAdapterProfileEvent extends RecyclerView.Adapter<RecyclerAdapterProfileEvent.MyViewHolder> {
@@ -208,14 +210,13 @@ private TextView noData;
 
             holder.eventStatus.setText(events.getEventStatus());
             holder.event.setText(events.getEvent());
-            holder.event_industry.setText("#"+events.getEventIndustry());
+            holder.event_industry.setText("#" + events.getEventIndustry());
             holder.event_profile_name.setText(events.getEventProfileName());
             holder.eventCompany.setText("");
             holder.event_time.setText(events.getEventTime());
 
             //  holder.userImage.setImageUrl(Utils.BaseImageUri + events.getCommentProfileImage(), NetworkController.getInstance(context).getImageLoader());
             holder.event_img.setImageUrl(Utils.BaseImageUri + events.getEventImage(), NetworkController.getInstance(context).getImageLoader());
-
 
 
             holder.viewMore.setOnClickListener(new View.OnClickListener() {
@@ -251,9 +252,9 @@ private TextView noData;
             return eventsList.size();
         }
 
-        public class MyViewHolder extends RecyclerView.ViewHolder  {
+        public class MyViewHolder extends RecyclerView.ViewHolder {
 
-            private TextView eventCaption, eventDesignation, eventVenue, eventCompany, eventDate, eventRegistered, eventStatus, event, event_industry, event_profile_name, event_time,viewMore;
+            private TextView eventCaption, eventDesignation, eventVenue, eventCompany, eventDate, eventRegistered, eventStatus, event, event_industry, event_profile_name, event_time, viewMore;
             private NetworkImageView event_img;
 
 
@@ -279,7 +280,6 @@ private TextView noData;
 
 
             }
-
 
 
         }

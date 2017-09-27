@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,12 +49,12 @@ import static igotplaced.com.layouts.Utils.Utils.MyPREFERENCES;
 import static igotplaced.com.layouts.Utils.Utils.Name;
 import static igotplaced.com.layouts.Utils.Utils.screenSize;
 
-public class ProfilePostFragment extends Fragment  {
+public class ProfilePostFragment extends Fragment {
 
     private Context context;
     private RequestQueue queue;
-
-  private   TextView noData;
+    private ImageView logo;
+    private TextView noData;
     private String userId;
     private List<Post> postList = new ArrayList<Post>();
     private RecyclerAdapterProfilePost recyclerAdapterProfilePost;
@@ -73,7 +74,8 @@ public class ProfilePostFragment extends Fragment  {
         context = getActivity().getApplicationContext();
 
         mLayoutManager = new LinearLayoutManager(context);
-         noData=(TextView) view.findViewById(R.id.no_data);
+        noData = (TextView) view.findViewById(R.id.no_data);
+        logo = (ImageView) view.findViewById(R.id.logo);
         SharedPreferences sharedpreferences = context.getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
 
         userId = sharedpreferences.getString(Id, null);
@@ -109,7 +111,6 @@ public class ProfilePostFragment extends Fragment  {
         loadData();
 
 
-
     }
 
 
@@ -128,7 +129,7 @@ public class ProfilePostFragment extends Fragment  {
 
                         JSONObject obj = response.getJSONObject(i);
 
-                        Post post = new  Post(obj.getString("pid"),obj.getString("created_user"),obj.getString("post"), obj.getString("Industry"), obj.getString("post_created_user_image"), obj.getString("created_uname"), obj.getString("created_by"), obj.getString("post_created_user_image"), obj.getString("created_uname"),obj.getString("companyname"),obj.getString("company_id"));
+                        Post post = new Post(obj.getString("pid"), obj.getString("created_user"), obj.getString("post"), obj.getString("Industry"), obj.getString("post_created_user_image"), obj.getString("created_uname"), obj.getString("created_by"), obj.getString("post_created_user_image"), obj.getString("created_uname"), obj.getString("companyname"), obj.getString("company_id"));
 
                         postList.add(post);
 
@@ -143,10 +144,12 @@ public class ProfilePostFragment extends Fragment  {
                     }
                 }
 
-                if (postList.isEmpty()){
+                if (postList.isEmpty()) {
                     noData.setVisibility(View.VISIBLE);
-                }else {
+                    logo.setVisibility(View.VISIBLE);
+                } else {
                     noData.setVisibility(View.GONE);
+                    logo.setVisibility(View.GONE);
                 }
             }
 
@@ -155,7 +158,7 @@ public class ProfilePostFragment extends Fragment  {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("error", "Error: " + error.getMessage());
-                Utils.showDialogue(getActivity(),"Sorry! Server Error");
+                Utils.showDialogue(getActivity(), "Sorry! Server Error");
             }
         });
 
@@ -171,7 +174,6 @@ public class ProfilePostFragment extends Fragment  {
         // recyclerAdapterProfilePost.notifyDataSetChanged();
 
     }
-
 
 
     class RecyclerAdapterProfilePost extends RecyclerView.Adapter<RecyclerAdapterProfilePost.MyViewHolder> {
@@ -199,11 +201,11 @@ public class ProfilePostFragment extends Fragment  {
 
             Post post = postList.get(position);
             holder.post.setText(post.getPost());
-            holder.postIndustry.setText("#"+post.getPostIndustry());
-            if (post.getPostCompany().equals("")){
+            holder.postIndustry.setText("#" + post.getPostIndustry());
+            if (post.getPostCompany().equals("")) {
                 holder.postCompany.setText(post.getPostCompany());
-            }else{
-                holder.postCompany.setText("#"+post.getPostCompany());
+            } else {
+                holder.postCompany.setText("#" + post.getPostCompany());
             }
             holder.postProfileName.setText(post.getPostProfileName());
             holder.postTime.setText(post.getPostTime());
@@ -215,12 +217,10 @@ public class ProfilePostFragment extends Fragment  {
                 public void onClick(View v) {
                     Intent companyDetails = new Intent(context, CompanyDetailsActivity.class);
                     companyDetails.putExtra("postCompany", postList.get(position).getPostCompany());
-                    companyDetails.putExtra("companyId",  postList.get(position).getCompanyId());
+                    companyDetails.putExtra("companyId", postList.get(position).getCompanyId());
                     startActivity(companyDetails);
                 }
             });
-
-
 
 
             holder.viewMore.setOnClickListener(new View.OnClickListener() {
@@ -228,7 +228,7 @@ public class ProfilePostFragment extends Fragment  {
                 public void onClick(View v) {
                     Log.e("tag", "click" + postList.get(position).getPostId());
 
-                    Intent profileDetails=new Intent(getContext(), ProfilePostDetailsActivity.class);
+                    Intent profileDetails = new Intent(getContext(), ProfilePostDetailsActivity.class);
 
                     profileDetails.putExtra("pid", postList.get(position).getPostId());
                     profileDetails.putExtra("created_uname", postList.get(position).getPostProfileName());
@@ -252,9 +252,9 @@ public class ProfilePostFragment extends Fragment  {
             return postList.size();
         }
 
-        public class MyViewHolder extends RecyclerView.ViewHolder  {
+        public class MyViewHolder extends RecyclerView.ViewHolder {
 
-            private TextView post, postIndustry, postProfileName, postTime,postCompany,viewMore;
+            private TextView post, postIndustry, postProfileName, postTime, postCompany, viewMore;
             private NetworkImageView postImage;
 
 

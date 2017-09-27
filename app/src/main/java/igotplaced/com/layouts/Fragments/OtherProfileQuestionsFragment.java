@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -44,6 +45,7 @@ public class OtherProfileQuestionsFragment extends Fragment {
 
     private String userId;
     private   TextView noData;
+    private ImageView logo;
     private Context context;
     private RequestQueue queue;
     private List<Questions> questionsList = new ArrayList<Questions>();
@@ -65,6 +67,7 @@ public class OtherProfileQuestionsFragment extends Fragment {
 
        // mLayoutManager = new LinearLayoutManager(context);
         noData=(TextView) view.findViewById(R.id.no_data);
+        logo=(ImageView) view.findViewById(R.id.logo);
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             userId = bundle.getString("otherId");
@@ -126,8 +129,10 @@ public class OtherProfileQuestionsFragment extends Fragment {
                 }
                 if (questionsList.isEmpty()){
                     noData.setVisibility(View.VISIBLE);
+                    logo.setVisibility(View.VISIBLE);
                 }else {
                     noData.setVisibility(View.GONE);
+                    logo.setVisibility(View.GONE);
                 }
             }
 

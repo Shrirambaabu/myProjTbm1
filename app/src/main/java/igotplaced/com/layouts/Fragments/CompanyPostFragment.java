@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -46,6 +47,7 @@ import static igotplaced.com.layouts.Utils.Utils.screenSize;
 
 public class CompanyPostFragment extends Fragment {
     private   TextView noData;
+    private   ImageView logo;
     private Context context;
     private RequestQueue queue;
     private String userId;
@@ -67,6 +69,7 @@ public class CompanyPostFragment extends Fragment {
         context = getActivity().getApplicationContext();
         Bundle bundle = this.getArguments();
         noData=(TextView) view.findViewById(R.id.no_data);
+        logo=(ImageView) view.findViewById(R.id.logo);
         if (bundle != null) {
             userId = bundle.getString("otherId");
         }
@@ -132,8 +135,10 @@ public class CompanyPostFragment extends Fragment {
                 }
                 if (postList.isEmpty()){
                     noData.setVisibility(View.VISIBLE);
+                    logo.setVisibility(View.VISIBLE);
                 }else {
                     noData.setVisibility(View.GONE);
+                    logo.setVisibility(View.GONE);
                 }
             }
 

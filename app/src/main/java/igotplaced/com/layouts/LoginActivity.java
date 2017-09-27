@@ -12,6 +12,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.ContextThemeWrapper;
 import android.support.v7.widget.AppCompatEditText;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -172,19 +173,16 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
 
     @Override
     public void onBackPressed() {
-        new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_alert).setTitle("Exit")
+        ContextThemeWrapper ctw = new ContextThemeWrapper(LoginActivity.this, R.style.Theme_AppCompat_DayNight_Dialog_Alert);
+
+        new AlertDialog.Builder(ctw).setTitle("Exit")
                 .setMessage("Are you sure you want to exit?")
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                       /* Intent intent = new Intent(Intent.ACTION_MAIN);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        intent.addCategory(Intent.CATEGORY_HOME);
-                        startActivity(intent);*/
 
                         LoginActivity.super.onBackPressed();
-                       /* int pid = android.os.Process.myPid();
-                        android.os.Process.killProcess(pid);*/
+
                     }
                 }).setNegativeButton("No", null).show();
 
