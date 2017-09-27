@@ -60,17 +60,15 @@ public class PostPopUpActivity extends AppCompatActivity implements View.OnClick
     private ImageView sendComment;
 
     private List<Post> postList = new ArrayList<Post>();
-    private LinearLayoutManager mLayoutManager;
+
 
     private RequestQueue queue;
-    private Intent intent;
     private String id = null,company,companyId,postedUserId;
     private RecyclerAdapterPostDetails recyclerAdapterPostDetails;
 
     private String userId = null, userName = null,userImage = null,postId;
     private String URL = BaseUri + "/home/postComments";
     private String userPostedComment;
-    private Toolbar toolbar;
 
 
     @Override
@@ -126,7 +124,7 @@ public class PostPopUpActivity extends AppCompatActivity implements View.OnClick
         postRecycler.setHasFixedSize(true);
         //setting horizontal layout
         postRecycler.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
-        mLayoutManager = (LinearLayoutManager) postRecycler.getLayoutManager();
+
         //setting RecyclerView adapter
         postRecycler.setAdapter(recyclerAdapterPostDetails);
 
@@ -215,6 +213,7 @@ public class PostPopUpActivity extends AppCompatActivity implements View.OnClick
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("error", "Error: " + error.getMessage());
+                Utils.showDialogue(PostPopUpActivity.this, "Sorry! Server Error");
             }
         });
 
@@ -235,7 +234,7 @@ public class PostPopUpActivity extends AppCompatActivity implements View.OnClick
     }
 
     private void setupToolbar() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
@@ -247,7 +246,8 @@ public class PostPopUpActivity extends AppCompatActivity implements View.OnClick
     }
 
     private void initialization() {
-        intent = getIntent();
+
+        Intent intent = getIntent();
         //getting value from intent
         id = intent.getStringExtra("pid");
     }
@@ -262,7 +262,6 @@ public class PostPopUpActivity extends AppCompatActivity implements View.OnClick
                     userPostedComment = userComment.getText().toString();
                     insertUserComment();
 
-                    Toast.makeText(getApplicationContext(), "Comment added", Toast.LENGTH_SHORT).show();
                 }
                 userComment.setText("");
                 break;

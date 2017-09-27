@@ -66,11 +66,9 @@ public class ProfileEventDetails extends AppCompatActivity implements View.OnCli
     private ImageView sendComment;
 
     private List<Events> eventList = new ArrayList<Events>();
-    private LinearLayoutManager mLayoutManager;
+
 
     private RequestQueue queue;
-    private Intent intent;
-    private Toolbar toolbar;
 
     private RecyclerAdapterEventDetails recyclerAdapterEventDetails;
 
@@ -143,7 +141,7 @@ public class ProfileEventDetails extends AppCompatActivity implements View.OnCli
         return true;
     }
     private void setupToolbar() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
@@ -161,7 +159,7 @@ public class ProfileEventDetails extends AppCompatActivity implements View.OnCli
         eventRecycler.setHasFixedSize(true);
         //setting horizontal layout
         eventRecycler.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
-        mLayoutManager = (LinearLayoutManager) eventRecycler.getLayoutManager();
+
         //setting RecyclerView adapter
         eventRecycler.setAdapter(recyclerAdapterEventDetails);
         //Getting Instance of Volley Request Queue
@@ -172,7 +170,7 @@ public class ProfileEventDetails extends AppCompatActivity implements View.OnCli
 
     private void makePostCommentsRequest() {
 
-        Log.e("URL",""+ BaseUri + "/home/eventCommentList/" + id);
+
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, BaseUri + "/home/eventCommentList/" + id, null,  new Response.Listener<JSONArray>() {
 
 
@@ -237,11 +235,11 @@ public class ProfileEventDetails extends AppCompatActivity implements View.OnCli
     }
 
     private void initialization() {
-        intent = getIntent();
+        Intent intent = getIntent();
 
         id = intent.getStringExtra("eid");
         image = intent.getStringExtra("eImage");
-        name =intent.getStringExtra("ename");
+        name = intent.getStringExtra("ename");
         time = intent.getStringExtra("eTime");
         caption = intent.getStringExtra("eCaption");
         designation = intent.getStringExtra("eDesign");
@@ -266,7 +264,6 @@ public class ProfileEventDetails extends AppCompatActivity implements View.OnCli
                     userPostedComment = userComment.getText().toString();
                     insertUserComment();
 
-                    Toast.makeText(getApplicationContext(), "Comment added", Toast.LENGTH_SHORT).show();
                 }
                 userComment.setText("");
                 break;

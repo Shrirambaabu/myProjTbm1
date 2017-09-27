@@ -61,12 +61,9 @@ public class ProfileInterviewDetailsActivity extends AppCompatActivity implement
 
     private EditText userComment;
     private ImageView sendComment;
-    private LinearLayoutManager mLayoutManager;
-    private RecyclerView postRecycler;
+
     private RecyclerAdapterInterviewDetails recyclerAdapterInterviewDetails;
     private RequestQueue queue;
-    private Intent intent;
-    private Toolbar toolbar;
     private List<Interview> interviewList = new ArrayList<Interview>();
 
     private String userId = null, userName = null, userImage = null,interviewId;
@@ -144,7 +141,7 @@ public class ProfileInterviewDetailsActivity extends AppCompatActivity implement
     }
 
     private void setupToolbar() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
@@ -197,13 +194,13 @@ public class ProfileInterviewDetailsActivity extends AppCompatActivity implement
 
     private void postRecyclerView() {
 
-        postRecycler = (RecyclerView) findViewById(R.id.comments_interview_recycler);
+        RecyclerView postRecycler = (RecyclerView) findViewById(R.id.comments_interview_recycler);
         recyclerAdapterInterviewDetails = new RecyclerAdapterInterviewDetails(ProfileInterviewDetailsActivity.this, interviewList);
         //setting fixed size
         postRecycler.setHasFixedSize(true);
         //setting horizontal layout
         postRecycler.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
-        mLayoutManager = (LinearLayoutManager) postRecycler.getLayoutManager();
+
         //setting RecyclerView adapter
         postRecycler.setAdapter(recyclerAdapterInterviewDetails);
         //Getting Instance of Volley Request Queue
@@ -230,7 +227,7 @@ public class ProfileInterviewDetailsActivity extends AppCompatActivity implement
     }
 
     private void initialization() {
-        intent = getIntent();
+        Intent intent = getIntent();
 
         id = intent.getStringExtra("iid");
         name = intent.getStringExtra("created_uname");
@@ -253,7 +250,6 @@ public class ProfileInterviewDetailsActivity extends AppCompatActivity implement
                     userPostedComment = userComment.getText().toString();
                     insertUserComment();
 
-                    Toast.makeText(getApplicationContext(), "Comment added", Toast.LENGTH_SHORT).show();
                 }
                 userComment.setText("");
                 break;

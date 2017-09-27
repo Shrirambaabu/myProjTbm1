@@ -96,7 +96,7 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
     private TextInputLayout profileName, profileEmailAddress, profileViewCollege, profileViewDepartment;
     private AppCompatButton submitbtn;
     private AppCompatCheckBox checkBoxIntrested;
-    private NetworkImageView profileImage;
+
     private ArrayAdapter<String> departmentAutoCompleteAdapter, collegeAutoCompleteAdapter;
     private List<String> itemsCompanySpinnerOne, itemsCompanySpinnerTwo, itemsCompanySpinnerThree;
     private String department, college;
@@ -223,13 +223,10 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
 
         industrySpinnerOne.setOnItemSelectedListener(this);
         industrySpinnerTwo.setOnItemSelectedListener(this);
-        industrySpinnerThree.setOnItemSelectedListener(this);/*
-        companySpinnerOne.setOnItemSelectedListener(this);
-        companySpinnerTwo.setOnItemSelectedListener(this);
-        companySpinnerThree.setOnItemSelectedListener(this);*/
+        industrySpinnerThree.setOnItemSelectedListener(this);
 
         scrollView.setOnClickListener(this);
-        // checkBoxIntrested.setOnClickListener(this);
+
 
         submitbtn.setOnClickListener(this);
 
@@ -938,7 +935,9 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
 
                 if (Integer.parseInt(s) != 0) {
                     Toast.makeText(EditProfileActivity.this, "Your profile updated Successfully", Toast.LENGTH_LONG).show();
-
+                    Intent profileUpdated = new Intent(new Intent(EditProfileActivity.this, MainActivity.class));
+                    profileUpdated.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(profileUpdated);
                 } else {
                     Utils.showDialogue(EditProfileActivity.this, "Already Your Profile is upp-to date!!!");
                 }
@@ -1002,9 +1001,7 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
 
         RequestQueue rQueue = Volley.newRequestQueue(EditProfileActivity.this);
         rQueue.add(request);
-        Intent profileUpdated = new Intent(new Intent(EditProfileActivity.this, MainActivity.class));
-        profileUpdated.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(profileUpdated);
+
     }
 
 
@@ -1076,7 +1073,6 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
         profileViewCollege = (TextInputLayout) findViewById(R.id.profileViewCollege);
         profileViewDepartment = (TextInputLayout) findViewById(R.id.profileViewDepartment);
 
-        profileImage = (NetworkImageView) findViewById(R.id.editProfileImage);
 
 
         editProfileName = (AppCompatEditText) findViewById(R.id.editProfileName);
@@ -1211,6 +1207,7 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
                             companySpinnerThreeValue = profile.getCompany3();
                         }
 
+                        NetworkImageView  profileImage = (NetworkImageView) findViewById(R.id.editProfileImage);
 
                         profileImage.setImageUrl(Utils.BaseImageUri + profile.getImageName(), NetworkController.getInstance(EditProfileActivity.this).getImageLoader());
 

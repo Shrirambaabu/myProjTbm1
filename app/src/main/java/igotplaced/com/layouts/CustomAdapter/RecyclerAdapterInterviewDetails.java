@@ -116,7 +116,7 @@ public class RecyclerAdapterInterviewDetails extends RecyclerView.Adapter<Recycl
             @Override
             public void onResponse(String s) {
                 notifyDataSetChanged();
-                Toast.makeText(context, "Comment deleted", Toast.LENGTH_SHORT).show();
+
             }
         }, new Response.ErrorListener() {
 

@@ -151,7 +151,7 @@ public class OtherProfileActivity extends AppCompatActivity implements Connectiv
                         userProfileDepartment.setText(profileHome.getDepartmentName());
                         userProfileCollege.setText(profileHome.getCollegeName());
 
-                        Log.d("error", "Error: " + Utils.BaseImageUri + profileHome.getImageName());
+
                         profile_img.setImageUrl(Utils.BaseImageUri + profileHome.getImageName(), NetworkController.getInstance(OtherProfileActivity.this).getImageLoader());
 
 

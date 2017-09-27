@@ -56,7 +56,7 @@ public class ProfileQuestionsDetailsActivity extends AppCompatActivity implement
 
 
     private String id = null,name=null,time=null,image=null,companyId=null,message=null,industry=null,postedUserId=null,company=null;
-    private String userId = null, userName = null, userImage = null,commentedId;
+    private String userId = null, userName = null, userImage = null;
     private NetworkImageView questionImage;
     private TextView profileName, profileTime, questionMessage, questionIndustry,questionsCompany;
     private String userPostedComment;
@@ -64,11 +64,9 @@ public class ProfileQuestionsDetailsActivity extends AppCompatActivity implement
     private EditText userComment;
     private ImageView sendComment;
 
-    private LinearLayoutManager mLayoutManager;
+
 
     private RequestQueue queue;
-    private Intent intent;
-    private Toolbar toolbar;
     private List<Questions> questionsList = new ArrayList<Questions>();
 
     private RecyclerAdapterQuestionDetails recyclerAdapterQuestionDetails;
@@ -135,7 +133,7 @@ public class ProfileQuestionsDetailsActivity extends AppCompatActivity implement
     }
 
     private void setupToolbar() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
@@ -152,7 +150,7 @@ public class ProfileQuestionsDetailsActivity extends AppCompatActivity implement
         postRecycler.setHasFixedSize(true);
         //setting horizontal layout
         postRecycler.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
-        mLayoutManager = (LinearLayoutManager) postRecycler.getLayoutManager();
+
         //setting RecyclerView adapter
         postRecycler.setAdapter(recyclerAdapterQuestionDetails);
         //Getting Instance of Volley Request Queue
@@ -222,10 +220,10 @@ public class ProfileQuestionsDetailsActivity extends AppCompatActivity implement
     }
 
     private void initialization() {
-        intent = getIntent();
+        Intent intent = getIntent();
 
         id = intent.getStringExtra("qid");
-        name =intent.getStringExtra("created_uname");
+        name = intent.getStringExtra("created_uname");
         time = intent.getStringExtra("created_by");
         image = intent.getStringExtra("postImage");
         message = intent.getStringExtra("question");
@@ -246,7 +244,6 @@ public class ProfileQuestionsDetailsActivity extends AppCompatActivity implement
                     userPostedComment = userComment.getText().toString();
                     insertUserComment();
 
-                    Toast.makeText(getApplicationContext(), "Comment added", Toast.LENGTH_SHORT).show();
                 }
                 userComment.setText("");
                 break;
@@ -275,10 +272,10 @@ public class ProfileQuestionsDetailsActivity extends AppCompatActivity implement
             @Override
             public void onResponse(String s) {
 
-                Log.e("InserString",""+s);
-                commentedId=s;
 
-                Questions questions = new Questions(userImage, userPostedComment,commentedId,userId);
+
+
+                Questions questions = new Questions(userImage, userPostedComment,s,userId);
                 // adding movie to blogHomeList array
                 questionsList.add(questions);
                 recyclerAdapterQuestionDetails.notifyDataSetChanged();

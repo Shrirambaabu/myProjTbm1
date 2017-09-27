@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
 
     JSONArray terms;
 
-    private Intent serviceIntent;
+
     //Defining Variables
     private Toolbar toolbar;
     private Context context;
@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        serviceIntent = new Intent(MainActivity.this, MyService.class);
+
         // Initializing Toolbar and setting it as the actionbar
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -115,8 +115,6 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
 
 
         queue = NetworkController.getInstance(context).getRequestQueue();
-        Log.e("LoginService",""+Thread.currentThread().getId());
-        startService(serviceIntent);
 
         navigation();
         makeJsonArrayRequestProfile();
@@ -259,10 +257,6 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
                 fragment = new BlogFragment();
                 break;
 
-            /*case R.id.about_us:
-                selectedPosition = 4;
-                fragment = new AboutUsFragment();
-                break;*/
 
             case R.id.log_out:
 
@@ -277,51 +271,22 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
                                 editor.putString(Name, null);
                                 editor.commit();
                                 Intent logOut = new Intent(MainActivity.this, LoginActivity.class);
-                                stopService(serviceIntent);
-                                Log.e("MainOut","Out");
+
                                 logOut.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 startActivity(logOut);
 
                             }
                         }).setNegativeButton("No", null).show();
-               /* Intent logOut = new Intent(this, LoginActivity.class);
-                logOut.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(logOut);*/
+
                 break;
 
 
             case R.id.settings:
                 selectedPosition = 5;
-                navigationView.getMenu().findItem(R.id.settings).setChecked(false);
                 Intent i = new Intent(this, SettingsActivity.class);
+                navigationView.getMenu().findItem(R.id.settings).setChecked(false);
                 startActivity(i);
-               /* fragment=new SettingsFragment();
 
-                FragmentManager mFragmentManager = getFragmentManager();
-
-                android.app.FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
-                SettingsFragment settingsFragment = new SettingsFragment();
-                mFragmentTransaction.replace(R.id.frame, settingsFragment);
-                mFragmentTransaction.commit();*/
-
-                break;
-
-                  /*   case R.id.privacy_policy:
-
-
-                        HomeFragment homeFragment = new HomeFragment();
-                        android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                        fragmentTransaction.replace(R.id.frame, homeFragment);
-                        fragmentTransaction.commit();
-                        return true;
-
-                    case R.id.terms_and_conditions:
-
-                        HomeFragment homeFragment = new HomeFragment();
-                        android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                        fragmentTransaction.replace(R.id.frame, homeFragment);
-                        fragmentTransaction.commit();
-                        return true;*/
 
             default:
 
@@ -384,8 +349,7 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             MainActivity.super.onBackPressed();
-                            Log.e("MainOut","Out");
-                            stopService(serviceIntent);
+
                         }
                     }).setNegativeButton("No", null).show();
 

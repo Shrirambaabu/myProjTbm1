@@ -65,17 +65,13 @@ public class ProfilePostDetailsActivity extends AppCompatActivity implements Vie
     private ImageView sendComment;
 
     private List<Post> postList = new ArrayList<Post>();
-    private LinearLayoutManager mLayoutManager;
-private RecyclerView postRecycler;
+
     private RequestQueue queue;
-    private Intent intent;
-    private ProgressDialog pDialog;
     private RecyclerAdapterPostDetails recyclerAdapterPostDetails;
 
     private String userId = null, userName = null, userImage = null,postId;
     private String URL = BaseUri + "/home/postComments";
     private String userPostedComment;
-    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,9 +89,11 @@ private RecyclerView postRecycler;
         addressingView();
         addingListeners();
 
-        pDialog = new ProgressDialog(ProfilePostDetailsActivity.this, R.style.MyThemeProgress);
+        ProgressDialog pDialog = new ProgressDialog(ProfilePostDetailsActivity.this, R.style.MyThemeProgress);
         pDialog.setProgressStyle(android.R.style.Widget_ProgressBar_Large);
         pDialog.onBackPressed();
+        pDialog.setCancelable(false);
+        pDialog.setCanceledOnTouchOutside(false);
         getWindow().setSoftInputMode(
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
@@ -146,7 +144,7 @@ private RecyclerView postRecycler;
     }
 
     private void setupToolbar() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
@@ -157,13 +155,13 @@ private RecyclerView postRecycler;
     }
 
     private void postRecyclerView() {
-         postRecycler = (RecyclerView) findViewById(R.id.comments_post_recycler);
+        RecyclerView postRecycler = (RecyclerView) findViewById(R.id.comments_post_recycler);
         recyclerAdapterPostDetails = new RecyclerAdapterPostDetails(ProfilePostDetailsActivity.this, postList);
         //setting fixed size
         postRecycler.setHasFixedSize(true);
         //setting horizontal layout
         postRecycler.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
-        mLayoutManager = (LinearLayoutManager) postRecycler.getLayoutManager();
+
         //setting RecyclerView adapter
         postRecycler.setAdapter(recyclerAdapterPostDetails);
         //Getting Instance of Volley Request Queue
@@ -235,7 +233,7 @@ private RecyclerView postRecycler;
     }
 
     private void initialization() {
-        intent = getIntent();
+        Intent intent = getIntent();
         //getting value from intent
         id = intent.getStringExtra("pid");
         name = intent.getStringExtra("created_uname");
@@ -258,8 +256,6 @@ private RecyclerView postRecycler;
                     userPostedComment = userComment.getText().toString();
                     insertUserComment();
 
-
-                    Toast.makeText(getApplicationContext(), "Comment added", Toast.LENGTH_SHORT).show();
                 }
                 userComment.setText("");
                 break;

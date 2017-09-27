@@ -53,11 +53,9 @@ import static igotplaced.com.layouts.Utils.Utils.screenSize;
 
 public class QuestionsPopUpActivity extends AppCompatActivity implements View.OnClickListener, ConnectivityReceiver.ConnectivityReceiverListener {
 
-    private Intent intent;
-    private String id = null,userImage = null,commentedId;
+    private String id = null,userImage = null;
     private  String  company,companyId,postedUserId,userId;
-    private Toolbar toolbar;
-    private LinearLayoutManager mLayoutManager;
+
 
     private RequestQueue queue;
     private List<Questions> questionsList = new ArrayList<Questions>();
@@ -163,7 +161,7 @@ public class QuestionsPopUpActivity extends AppCompatActivity implements View.On
         postRecycler.setHasFixedSize(true);
         //setting horizontal layout
         postRecycler.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
-        mLayoutManager = (LinearLayoutManager) postRecycler.getLayoutManager();
+
         //setting RecyclerView adapter
         postRecycler.setAdapter(recyclerAdapterQuestionDetails);
 
@@ -247,7 +245,7 @@ public class QuestionsPopUpActivity extends AppCompatActivity implements View.On
 
     private void setupToolbar() {
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
@@ -258,7 +256,7 @@ public class QuestionsPopUpActivity extends AppCompatActivity implements View.On
     }
 
     private void initialization() {
-        intent = getIntent();
+        Intent intent = getIntent();
         id = intent.getStringExtra("qid");
 
     }
@@ -273,7 +271,6 @@ public class QuestionsPopUpActivity extends AppCompatActivity implements View.On
                     userPostedComment = userComment.getText().toString();
                     insertUserComment();
 
-                    Toast.makeText(getApplicationContext(), "Comment added", Toast.LENGTH_SHORT).show();
                 }
                 userComment.setText("");
                 break;
@@ -302,9 +299,8 @@ public class QuestionsPopUpActivity extends AppCompatActivity implements View.On
         StringRequest request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
-                commentedId=s;
 
-                Questions questions = new Questions(userImage, userPostedComment,commentedId,userId);
+                Questions questions = new Questions(userImage, userPostedComment, s,userId);
                 // adding movie to blogHomeList array
                 questionsList.add(questions);
                 recyclerAdapterQuestionDetails.notifyDataSetChanged();
@@ -333,7 +329,6 @@ public class QuestionsPopUpActivity extends AppCompatActivity implements View.On
                 parameters.put("comments", userPostedComment);
                 parameters.put("created_uname", profileName.getText().toString());
 
-                Log.e("Passs",""+parameters);
                 return parameters;
             }
         };

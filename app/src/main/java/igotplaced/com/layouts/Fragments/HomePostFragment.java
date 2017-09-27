@@ -112,10 +112,13 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
 
         if (screenSize(getActivity()) < 6.5) {
             loadLimit = 5;
-
+            postList.clear();
+            loadData();
         } else {
 
             loadLimit = 15;
+            postList.clear();
+            loadData();
         }
 
     }

@@ -1,5 +1,6 @@
 package igotplaced.com.layouts;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -42,7 +43,7 @@ public class ForgetPasswordActivity extends AppCompatActivity implements View.On
     private AppCompatEditText emailEditText;
     private TextInputLayout inputLayoutEmail;
     private Button forgetPasswordSubmit;
-
+    ProgressDialog pDialog;
     private String URL = BaseUri + "/ForgetPasswordService/forgotPassword";
 
     @Override
@@ -106,6 +107,11 @@ public class ForgetPasswordActivity extends AppCompatActivity implements View.On
         }
 
         if (Utils.checkConnection(forgetPasswordSubmit, ForgetPasswordActivity.this)) {
+            pDialog = new ProgressDialog(ForgetPasswordActivity.this, R.style.MyThemeProgress);
+            pDialog.setProgressStyle(android.R.style.Widget_ProgressBar_Large);
+            pDialog.onBackPressed();
+            pDialog.setCancelable(false);
+            pDialog.setCanceledOnTouchOutside(false);
             forgetPassword();
         }else{
             Utils.showDialogue(ForgetPasswordActivity.this, "Sorry! Not connected to internet");
@@ -118,7 +124,7 @@ public class ForgetPasswordActivity extends AppCompatActivity implements View.On
         StringRequest request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
-
+                pDialog.dismiss();
                 if (Integer.parseInt(s) != 0) {
 
                     Toast.makeText(getApplicationContext(), "Email send Successfully", Toast.LENGTH_SHORT).show();

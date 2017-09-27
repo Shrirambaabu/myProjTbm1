@@ -60,7 +60,7 @@ public class EventsPopUpActivity extends AppCompatActivity implements View.OnCli
     private RequestQueue queue;
 
     private TextView eventName, eventTime,eventCompany, eventCaption, eventDesignation, eventVenue, eventDate, eventRegistered, eventStatus, eventMessage, eventIndustry;
-    private String userId = null,userName=null,userImage = null,eventComentId;
+    private String userId = null,userName=null,userImage = null;
     private EditText userComment;
     private ImageView sendComment;
     private String URL = BaseUri + "/home/eventsComments";
@@ -114,7 +114,7 @@ public class EventsPopUpActivity extends AppCompatActivity implements View.OnCli
 
     private void makePostCommentsRequest() {
 
-        Log.e("URL",""+ BaseUri + "/home/eventCommentList/" + id);
+
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, BaseUri + "/home/eventCommentList/" + id, null,  new Response.Listener<JSONArray>() {
 
 
@@ -166,7 +166,7 @@ public class EventsPopUpActivity extends AppCompatActivity implements View.OnCli
 
     private void makeJsonEventRequest() {
 
-        Log.e("EventUrl",""+BaseUri + "/notificationService/questionPopUp/" + id);
+
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(BaseUri + "/notificationService/eventPopUp/" + id, new Response.Listener<JSONArray>() {
 
             @Override
@@ -210,6 +210,7 @@ public class EventsPopUpActivity extends AppCompatActivity implements View.OnCli
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("error", "Error: " + error.getMessage());
+                Utils.showDialogue(EventsPopUpActivity.this, "Sorry! Server Error");
             }
         });
 
@@ -291,9 +292,9 @@ public class EventsPopUpActivity extends AppCompatActivity implements View.OnCli
             @Override
             public void onResponse(String s) {
 
-                eventComentId=s;
 
-                Events events = new Events(userImage, userPostedComment,eventComentId,userId);
+
+                Events events = new Events(userImage, userPostedComment,s,userId);
                 // adding movie to blogHomeList array
                 eventList.add(events);
                 recyclerAdapterEventDetails.notifyDataSetChanged();
