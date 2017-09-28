@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/logo"
         android:layout_centerInParent="true"
-        android:text="No data found "
+        android:text="No Interview Experience found "
         android:textColor="@color/colorAccent"
         android:textSize="18sp"
         android:visibility="gone"/>

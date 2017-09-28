@@ -179,7 +179,7 @@ public class NotificationFragment extends Fragment implements SwipeRefreshLayout
 
             @Override
             public void onResponse(JSONObject jsonObject) {
-                notificationViewList.clear();
+               // notificationViewList.clear();
                 try {
                     jsonObjectJSON = jsonObject.getJSONArray("");
                     //  notificationViewList.clear();
