@@ -3,6 +3,8 @@ package igotplaced.com.layouts;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.PorterDuff;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatCheckBox;
@@ -73,6 +75,7 @@ public class AddUserInterviewExperience extends Activity implements View.OnClick
 
         //Setting company spinner value
         settingCompanySpinner();
+
     }
     @Override
     public void onNetworkConnectionChanged(boolean isConnected) {
@@ -179,7 +182,12 @@ public class AddUserInterviewExperience extends Activity implements View.OnClick
                     Utils.setSpinnerError(industrySpinnerTwo, "Field can't be empty", AddUserInterviewExperience.this);
                     return;
                 }
-
+                else if (addUserData.getText().toString().equals("")) {
+                    addUserData.requestFocus();
+                    addUserData.setFocusable(true);
+                    addUserData.setFocusableInTouchMode(true);
+                    return;
+                }
                 if (!addUserData.getText().toString().equals("")) {
                     Intent intent = new Intent();
                     intent.putExtra("interviewNew", addUserData.getText().toString());
@@ -189,8 +197,6 @@ public class AddUserInterviewExperience extends Activity implements View.OnClick
 
                     setResult(Activity.RESULT_OK, intent);
                     finish();
-                } else if (addUserData.getText().toString().equals("")) {
-                    addUserData.requestFocus();
                 }
                 break;
             case R.id.cancel:
@@ -215,6 +221,9 @@ public class AddUserInterviewExperience extends Activity implements View.OnClick
                 if (position != 0) {
                     companySpinnerTwoValue = companySpinnerTwo.getSelectedItem().toString();
 
+                    if (companySpinnerTwoValue.equals("No company to select")){
+                        companySpinnerTwoValue="";
+                    }
                 } else {
                     companySpinnerTwoValue = "";
                 }

@@ -3,6 +3,7 @@ package igotplaced.com.layouts;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.PorterDuff;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
@@ -210,7 +211,7 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
     }
 
     private void networkCompanySpinnerArrayRequest1(String keyword) {
-
+        companySpinnerOne.setDefaultText(" --Select-- ");
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(BaseUri + "/spinner/company/" + keyword, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -262,7 +263,7 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
 
 
     private void networkCompanySpinnerArrayRequest2(String keyword) {
-
+        companySpinnerTwo.setDefaultText(" --Select-- ");
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(BaseUri + "/spinner/company/" + keyword, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -314,7 +315,7 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
     }
 
     private void networkCompanySpinnerArrayRequest3(String keyword) {
-
+        companySpinnerThree.setDefaultText(" --Select-- ");
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(BaseUri + "/spinner/company/" + keyword, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -380,9 +381,9 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
         companySpinnerOne = (MultiSpinner) findViewById(R.id.company_spinner1);
         companySpinnerTwo = (MultiSpinner) findViewById(R.id.company_spinner2);
         companySpinnerThree = (MultiSpinner) findViewById(R.id.company_spinner3);
-
-        //   companySpinnerOne.setBackgroundTintList(ContextCompat.getColorStateList(RegisterPasswordActivity.this, R.color.white));
-
+        companySpinnerOne.getBackground().setColorFilter(ContextCompat.getColor(getApplicationContext(),R.color.white), PorterDuff.Mode.SRC_ATOP);
+        companySpinnerTwo.getBackground().setColorFilter(ContextCompat.getColor(getApplicationContext(),R.color.white), PorterDuff.Mode.SRC_ATOP);
+        companySpinnerThree.getBackground().setColorFilter(ContextCompat.getColor(getApplicationContext(),R.color.white), PorterDuff.Mode.SRC_ATOP);
 
         checkBoxPassword = (AppCompatCheckBox) findViewById(R.id.checkBoxPassword);
         regBtn = (AppCompatButton) findViewById(R.id.register_submit);
@@ -555,7 +556,7 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
             case R.id.industry_spinner1:
                 if (position != 0) {
                     industrySpinnerOneValue = industrySpinnerOne.getSelectedItem().toString();
-                    networkCompanySpinnerArrayRequest1(industrySpinnerOneValue.replaceAll("\\s+", "").substring(0, 2));
+                    networkCompanySpinnerArrayRequest1(industrySpinnerOneValue.replaceAll("\\s+", "").substring(0, 3));
                 } else {
                     industrySpinnerOneValue = "-- Select --";
                 }
@@ -564,7 +565,7 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
             case R.id.industry_spinner2:
                 if (position != 0) {
                     industrySpinnerTwoValue = industrySpinnerTwo.getSelectedItem().toString();
-                    networkCompanySpinnerArrayRequest2(industrySpinnerTwoValue.replaceAll("\\s+", "").substring(0, 2));
+                    networkCompanySpinnerArrayRequest2(industrySpinnerTwoValue.replaceAll("\\s+", "").substring(0, 3));
                 } else {
                     industrySpinnerTwoValue = "";
                 }
@@ -573,7 +574,7 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
             case R.id.industry_spinner3:
                 if (position != 0) {
                     industrySpinnerThreeValue = industrySpinnerThree.getSelectedItem().toString();
-                    networkCompanySpinnerArrayRequest3(industrySpinnerThreeValue.replaceAll("\\s+", "").substring(0, 2));
+                    networkCompanySpinnerArrayRequest3(industrySpinnerThreeValue.replaceAll("\\s+", "").substring(0, 3));
                 } else {
                     industrySpinnerThreeValue = "";
                 }
@@ -657,11 +658,13 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
 
             for (int i = 0; i < selected.length; i++) {
                 if (selected[i]) {
+                    selected[0] = false;
+                    companySpinnerOne.setSelected(selected);
                     builder.append(companyArrayAdapter1.getItem(i)).append(",");
                 }
             }
-            if (!builder.toString().equals("")) {
-                companySpinnerOneValue = builder.toString();
+            if (!builder.toString().equals("")&&!builder.toString().equals(" --Select-- ,")&&!builder.toString().equals("No company to select,")) {
+                companySpinnerOneValue = builder.toString().replaceAll(",$", "").replaceAll(" --Select-- ,", "");
             } else {
                 companySpinnerOneValue = "";
             }
@@ -676,11 +679,13 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
 
             for (int i = 0; i < selected.length; i++) {
                 if (selected[i]) {
+                    selected[0] = false;
+                    companySpinnerTwo.setSelected(selected);
                     builder.append(companyArrayAdapter2.getItem(i)).append(",");
                 }
             }
-            if (!builder.toString().equals("")) {
-                companySpinnerTwoValue = builder.toString();
+            if (!builder.toString().equals("")&&!builder.toString().equals(" --Select-- ,")&&!builder.toString().equals("No company to select,")) {
+                companySpinnerTwoValue = builder.toString().replaceAll(",$", "").replaceAll(" --Select-- ,", "");
             } else {
                 companySpinnerTwoValue = "";
             }
@@ -695,12 +700,14 @@ public class RegisterPasswordActivity extends AppCompatActivity implements Adapt
 
             for (int i = 0; i < selected.length; i++) {
                 if (selected[i]) {
+                    selected[0] = false;
+                    companySpinnerThree.setSelected(selected);
                     builder.append(companyArrayAdapter3.getItem(i)).append(",");
                 }
             }
 
-            if (!builder.toString().equals("")) {
-                companySpinnerThreeValue = builder.toString();
+            if (!builder.toString().equals("")&&!builder.toString().equals(" --Select-- ,")&&!builder.toString().equals("No company to select,")) {
+                companySpinnerThreeValue = builder.toString().replaceAll(",$", "").replaceAll(" --Select-- ,", "");
             } else {
                 companySpinnerThreeValue = "";
             }

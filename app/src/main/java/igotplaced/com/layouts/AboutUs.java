@@ -14,11 +14,13 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import igotplaced.com.layouts.Utils.ConnectivityReceiver;
 import igotplaced.com.layouts.Utils.MyApplication;
+import igotplaced.com.layouts.Utils.Utils;
 
 import static igotplaced.com.layouts.Utils.Utils.screenSize;
 
-public class AboutUs extends AppCompatActivity implements View.OnClickListener {
+public class AboutUs extends AppCompatActivity implements View.OnClickListener,ConnectivityReceiver.ConnectivityReceiverListener {
 
 
     private AppCompatEditText emailAddress;
@@ -33,7 +35,13 @@ public class AboutUs extends AppCompatActivity implements View.OnClickListener {
         addressingView();
         addingListeners();
     }
+    @Override
+    public void onNetworkConnectionChanged(boolean isConnected) {
+        if (!isConnected){
+            Utils.showDialogue(AboutUs.this, "Sorry! Not connected to internet");
+        }
 
+    }
     @Override
     protected void onResume() {
         super.onResume();

@@ -180,7 +180,12 @@ public class AddUserQuestions extends Activity implements View.OnClickListener, 
                         Utils.setSpinnerError(industrySpinnerThree, "Field can't be empty", AddUserQuestions.this);
                         return;
                     }
-
+                    else if (addUserData.getText().toString().equals("")) {
+                        addUserData.requestFocus();
+                        addUserData.setFocusable(true);
+                        addUserData.setFocusableInTouchMode(true);
+                        return;
+                    }
                 if (!addUserData.getText().toString().equals("")) {
                     Intent intent = new Intent();
                     intent.putExtra("questionsNew", addUserData.getText().toString());
@@ -188,8 +193,6 @@ public class AddUserQuestions extends Activity implements View.OnClickListener, 
                     intent.putExtra("company3", companySpinnerThreeValue);
                     setResult(Activity.RESULT_OK, intent);
                     finish();
-                } else if (addUserData.getText().toString().equals("")) {
-                    addUserData.requestFocus();
                 }
                 break;
             case R.id.cancel:
@@ -213,6 +216,9 @@ public class AddUserQuestions extends Activity implements View.OnClickListener, 
                 if (position != 0) {
                     companySpinnerThreeValue = companySpinnerThree.getSelectedItem().toString();
 
+                    if (companySpinnerThreeValue.equals("No company to select")){
+                        companySpinnerThreeValue="";
+                    }
                 } else {
                     companySpinnerThreeValue = "";
                 }

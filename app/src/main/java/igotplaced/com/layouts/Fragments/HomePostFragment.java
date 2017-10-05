@@ -162,7 +162,7 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
             @Override
             public void run() {
 
-                Log.e("ScreenRUn", "SwipeRefresh");
+
                 loadData();
 
             }
@@ -240,7 +240,7 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("error", "Error: " + error.getMessage());
+                Log.e("error", "Error: " + error.getMessage());
                 Utils.showDialogue(getActivity(), "Sorry! Server Error");
             }
         });
@@ -253,8 +253,6 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
     private void loadData() {
         // I have not used current page for showing demo, if u use a webservice
         // then it is useful for every call request
-
-        Log.e("ScreenRUn", "Load!1");
 
         makeJsonObjectRequestPostHome(0, loadLimit);
 

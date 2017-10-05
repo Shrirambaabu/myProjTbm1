@@ -169,6 +169,7 @@ public class AddUserExperience extends Activity implements View.OnClickListener,
                     addUserData.requestFocus();
                     addUserData.setFocusable(true);
                     addUserData.setFocusableInTouchMode(true);
+                    return;
                 }
                 if (!addUserData.getText().toString().equals("")) {
                     Intent intent = new Intent();
@@ -194,7 +195,7 @@ public class AddUserExperience extends Activity implements View.OnClickListener,
             case R.id.industry_spinner1:
                 if (position != 0) {
                     industrySpinnerOneValue = industrySpinnerOne.getSelectedItem().toString();
-                    networkCompanySpinnerArrayRequest1(industrySpinnerOneValue.replaceAll("\\s+", "").substring(0, 2));
+                    networkCompanySpinnerArrayRequest1(industrySpinnerOneValue.replaceAll("\\s+", "").substring(0, 3));
                 } else {
                     industrySpinnerOneValue = "";
                 }
@@ -203,6 +204,9 @@ public class AddUserExperience extends Activity implements View.OnClickListener,
                 if (position != 0) {
                     companySpinnerOneValue = companySpinnerOne.getSelectedItem().toString();
 
+                    if (companySpinnerOneValue.equals("No company to select")){
+                        companySpinnerOneValue="";
+                    }
                 } else {
                     companySpinnerOneValue = "";
                 }

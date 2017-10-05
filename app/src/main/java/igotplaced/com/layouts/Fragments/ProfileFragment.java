@@ -272,7 +272,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 industryNew = data.getStringExtra("industry1");
                 companyNew = data.getStringExtra("company1");
 
-                Toast.makeText(getContext(),"Thanks for Sharing",Toast.LENGTH_SHORT).show();
+
                 addPostDb();
 
             } else if (resultCode == Activity.RESULT_CANCELED) {
@@ -285,7 +285,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 placedData = data.getStringExtra("interest");
                 industryPlaced = data.getStringExtra("industry2");
                 companyPlaced = data.getStringExtra("company2");
-                Toast.makeText(getContext(),"Thanks for Sharing",Toast.LENGTH_SHORT).show();
+
                 addInterviewDb();
 
             } else if (resultCode == Activity.RESULT_CANCELED) {
@@ -297,7 +297,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                  questionsNew = data.getStringExtra("questionsNew");
                  industryQuestion = data.getStringExtra("industry3");
                  companyQuestion = data.getStringExtra("company3");
-                Toast.makeText(getContext(),"Thanks for Sharing",Toast.LENGTH_SHORT).show();
+
                 addQuestionsDb();
             } else if (resultCode == Activity.RESULT_CANCELED) {
                // Toast.makeText(context, "User Cancelled", Toast.LENGTH_LONG).show();

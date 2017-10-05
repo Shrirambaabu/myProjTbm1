@@ -59,7 +59,13 @@
         <activity
             android:name=".AddUserQuestions"
             android:theme="@android:style/Theme.DeviceDefault.Light.Dialog" />
-         <service android:name=".Utils.MyService"/>
+        <receiver
+            android:name=".Utils.ConnectivityReceiver"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
 
         <activity android:name=".BlogDetailsActivity" />
         <activity android:name=".EditProfileActivity" />
