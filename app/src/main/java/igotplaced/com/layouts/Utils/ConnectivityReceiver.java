@@ -25,24 +25,24 @@ public class ConnectivityReceiver extends BroadcastReceiver {
         ConnectivityManager cm = (ConnectivityManager) context
                 .getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        if (AppManager.isActivityVisible()) {
+            if (activeNetwork == null) {
+                if (firstConnect) {
+                    boolean isConnected = activeNetwork != null
+                            && activeNetwork.isConnectedOrConnecting();
 
-        if (activeNetwork==null) {
-            if (firstConnect) {
-                boolean isConnected = activeNetwork != null
-                        && activeNetwork.isConnectedOrConnecting();
-
-                if (connectivityReceiverListener != null) {
-                    connectivityReceiverListener.onNetworkConnectionChanged(isConnected);
+                    if (connectivityReceiverListener != null) {
+                        connectivityReceiverListener.onNetworkConnectionChanged(isConnected);
+                    }
+                    firstConnect = false;
+                } else {
+                    firstConnect = false;
                 }
-                firstConnect = false;
             } else {
-                firstConnect = false;
+                firstConnect = true;
             }
-        }else {
-            firstConnect=true;
         }
     }
-
 
 
     public static boolean isConnected() {

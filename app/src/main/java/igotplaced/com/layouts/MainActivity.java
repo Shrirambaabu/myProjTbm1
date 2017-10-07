@@ -55,6 +55,7 @@ import igotplaced.com.layouts.Fragments.ProfileFragment;
 import igotplaced.com.layouts.Fragments.SearchResults;
 import igotplaced.com.layouts.Fragments.SettingsFragment;
 import igotplaced.com.layouts.Model.Profile;
+import igotplaced.com.layouts.Utils.AppManager;
 import igotplaced.com.layouts.Utils.ConnectivityReceiver;
 import igotplaced.com.layouts.Utils.CustomAutoCompleteView;
 import igotplaced.com.layouts.Utils.MyApplication;
@@ -136,9 +137,14 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        AppManager.activityPaused();
+    }
+    @Override
     protected void onResume() {
         super.onResume();
-
+        AppManager.activityResumed();
         // register connection status listener
         MyApplication.getInstance().setConnectivityListener(MainActivity.this);
 
