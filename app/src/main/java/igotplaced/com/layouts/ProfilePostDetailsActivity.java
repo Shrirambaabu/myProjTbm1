@@ -13,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -229,6 +230,21 @@ public class ProfilePostDetailsActivity extends AppCompatActivity implements Vie
         postIndustry = (TextView) findViewById(R.id.post_industry);
         postCompany = (TextView) findViewById(R.id.post_company);
         userComment = (EditText) findViewById(R.id.user_comment);
+        userComment.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (v.getId() == R.id.user_comment) {
+                    v.getParent().requestDisallowInterceptTouchEvent(true);
+                    switch (event.getAction() & MotionEvent.ACTION_MASK) {
+                        case MotionEvent.ACTION_UP:
+                            v.getParent().requestDisallowInterceptTouchEvent(false);
+                            break;
+                    }
+                }
+
+                return false;
+            }
+        });
         sendComment = (ImageView) findViewById(R.id.send_comment);
     }
 

@@ -76,6 +76,10 @@
     <style name="Theme.MyDialog" parent="@style/Theme.AppCompat.Light.Dialog">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <!-- Color palette -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
     </style>
 
     <style name="my_toogle">
@@ -86,6 +90,13 @@
     <style name="MyCheckBox" parent="Theme.AppCompat.Light">
         <item name="colorControlNormal">@color/colorBackground</item>
         <item name="colorControlActivated">@color/colorAccent</item>
+    </style>
+
+    <style name="MyPopupStyle" parent="@android:style/Theme.DeviceDefault.Light.Dialog">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:colorBackground">?attr/colorPrimary</item>
     </style>
 
 </resources>

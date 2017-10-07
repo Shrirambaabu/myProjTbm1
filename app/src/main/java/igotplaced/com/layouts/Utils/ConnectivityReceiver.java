@@ -14,6 +14,7 @@ import android.util.Log;
 public class ConnectivityReceiver extends BroadcastReceiver {
 
     public static ConnectivityReceiverListener connectivityReceiverListener;
+    private static boolean firstConnect = true;
 
     public ConnectivityReceiver() {
         super();
@@ -24,13 +25,25 @@ public class ConnectivityReceiver extends BroadcastReceiver {
         ConnectivityManager cm = (ConnectivityManager) context
                 .getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-        boolean isConnected = activeNetwork != null
-                && activeNetwork.isConnectedOrConnecting();
 
-        if (connectivityReceiverListener != null) {
-            connectivityReceiverListener.onNetworkConnectionChanged(isConnected);
+        if (activeNetwork==null) {
+            if (firstConnect) {
+                boolean isConnected = activeNetwork != null
+                        && activeNetwork.isConnectedOrConnecting();
+
+                if (connectivityReceiverListener != null) {
+                    connectivityReceiverListener.onNetworkConnectionChanged(isConnected);
+                }
+                firstConnect = false;
+            } else {
+                firstConnect = false;
+            }
+        }else {
+            firstConnect=true;
         }
     }
+
+
 
     public static boolean isConnected() {
         ConnectivityManager

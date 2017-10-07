@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
     @Override
     public void onNetworkConnectionChanged(boolean isConnected) {
         if (!isConnected) {
-            Log.e("Cn","Main");
+
             Utils.showDialogue(MainActivity.this, "Sorry! Not connected to internet");
         }
     }

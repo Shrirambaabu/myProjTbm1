@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -231,6 +232,21 @@ public class EventsPopUpActivity extends AppCompatActivity implements View.OnCli
         eventIndustry = (TextView) findViewById(R.id.event_industry);
         eventCompany = (TextView) findViewById(R.id.event_company);
         userComment = (EditText) findViewById(R.id.user_comment);
+        userComment.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (v.getId() == R.id.user_comment) {
+                    v.getParent().requestDisallowInterceptTouchEvent(true);
+                    switch (event.getAction() & MotionEvent.ACTION_MASK) {
+                        case MotionEvent.ACTION_UP:
+                            v.getParent().requestDisallowInterceptTouchEvent(false);
+                            break;
+                    }
+                }
+
+                return false;
+            }
+        });
         sendComment = (ImageView) findViewById(R.id.send_comment);
     }
     @Override

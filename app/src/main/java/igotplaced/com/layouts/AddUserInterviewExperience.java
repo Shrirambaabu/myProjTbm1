@@ -11,6 +11,7 @@ import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatSpinner;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
@@ -143,6 +144,21 @@ public class AddUserInterviewExperience extends Activity implements View.OnClick
 
     private void mapping() {
         addUserData = (EditText) findViewById(R.id.getUserInterviewData);
+        addUserData.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (v.getId() == R.id.getUserInterviewData) {
+                    v.getParent().requestDisallowInterceptTouchEvent(true);
+                    switch (event.getAction() & MotionEvent.ACTION_MASK) {
+                        case MotionEvent.ACTION_UP:
+                            v.getParent().requestDisallowInterceptTouchEvent(false);
+                            break;
+                    }
+                }
+
+                return false;
+            }
+        });
         addBtn = (Button) findViewById(R.id.add);
         cancelBtn = (Button) findViewById(R.id.cancel);
         gotPlaced = (CheckBox) findViewById(R.id.checkBoxPlaced);
@@ -212,7 +228,7 @@ public class AddUserInterviewExperience extends Activity implements View.OnClick
             case R.id.industry_spinner2:
                 if (position != 0) {
                     industrySpinnerTwoValue = industrySpinnerTwo.getSelectedItem().toString();
-                    networkCompanySpinnerArrayRequest2(industrySpinnerTwoValue.replaceAll("\\s+", "").substring(0, 2));
+                    networkCompanySpinnerArrayRequest2(industrySpinnerTwoValue.replaceAll("\\s+", "").substring(0, 3));
                 } else {
                     industrySpinnerTwoValue = "";
                 }

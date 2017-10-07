@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatSpinner;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -137,6 +138,21 @@ public class AddUserExperience extends Activity implements View.OnClickListener,
 
     private void mapping() {
         addUserData = (EditText) findViewById(R.id.getUserData);
+        addUserData.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (v.getId() == R.id.getUserData) {
+                    v.getParent().requestDisallowInterceptTouchEvent(true);
+                    switch (event.getAction() & MotionEvent.ACTION_MASK) {
+                        case MotionEvent.ACTION_UP:
+                            v.getParent().requestDisallowInterceptTouchEvent(false);
+                            break;
+                    }
+                }
+
+                return false;
+            }
+        });
         addBtn = (Button) findViewById(R.id.add);
         cancelBtn = (Button) findViewById(R.id.cancel);
         industrySpinnerOne = (AppCompatSpinner) findViewById(R.id.industry_spinner1);
@@ -195,7 +211,7 @@ public class AddUserExperience extends Activity implements View.OnClickListener,
             case R.id.industry_spinner1:
                 if (position != 0) {
                     industrySpinnerOneValue = industrySpinnerOne.getSelectedItem().toString();
-                    networkCompanySpinnerArrayRequest1(industrySpinnerOneValue.replaceAll("\\s+", "").substring(0, 3));
+                    networkCompanySpinnerArrayRequest1(industrySpinnerOneValue.replaceAll("\\s+", "").substring(0, 2));
                 } else {
                     industrySpinnerOneValue = "";
                 }

@@ -115,7 +115,6 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
             postList.clear();
             loadData();
         } else {
-
             loadLimit = 15;
             postList.clear();
             loadData();
@@ -196,8 +195,6 @@ public class HomePostFragment extends Fragment implements SwipeRefreshLayout.OnR
             swipeRefreshLayout.setRefreshing(false);
         }
 
-
-        Log.d("error", "loaded" + BaseUri + "/home/topPost/" + userId + "?start=" + start + "&size=" + size);
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, BaseUri + "/home/topPost/" + userId + "?start=" + start + "&size=" + size, null, new Response.Listener<JSONObject>() {
             JSONArray jsonObjectJSON = null;
