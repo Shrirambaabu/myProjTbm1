@@ -2,9 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/IGotPlaced.iml" filepath="$PROJECT_DIR$/IGotPlaced.iml" />
-      <module fileurl="file://$PROJECT_DIR$/MyApplication.iml" filepath="$PROJECT_DIR$/MyApplication.iml" />
+      <module fileurl="file://C:\Users\Shriram\AndroidStudioProjects\iGotPlaced\IGotPlaced.iml" filepath="C:\Users\Shriram\AndroidStudioProjects\iGotPlaced\IGotPlaced.iml" />
+      <module fileurl="file://C:\Users\Shriram\AndroidStudioProjects\iGotPlaced\MyApplication.iml" filepath="C:\Users\Shriram\AndroidStudioProjects\iGotPlaced\MyApplication.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/iGotPlaced.iml" filepath="$PROJECT_DIR$/.idea/iGotPlaced.iml" />
     </modules>
   </component>
 </project>
